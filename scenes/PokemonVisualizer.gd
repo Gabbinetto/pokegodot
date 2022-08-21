@@ -26,10 +26,15 @@ func _ready() -> void:
 	stats.rect_position.y = front.texture.get_height() + back.texture.get_height()
 	
 	$Types.rect_position.y = stats.rect_position.y + stats.rect_size.y + 32
-	$Types/Type1.region_rect.position.y = 28 * pokemon_species.TYPES[pokemon_species.type_1]
+	$Types/Type1.region_rect.position.y = 28 * (pokemon_species.TYPES[pokemon_species.type_1])
+	$Types/Type2.visible = false
+	print(28 * (pokemon_species.TYPES[pokemon_species.type_1]))
 	if pokemon_species.type_2:
 		$Types/Type2.visible = true
-		$Types/Type2.region_rect.position.y = 28 * pokemon_species.TYPES[pokemon_species.type_2]
+		$Types/Type2.region_rect.position.y = 28 * (pokemon_species.TYPES[pokemon_species.type_2])
+		print(28 * (pokemon_species.TYPES[pokemon_species.type_1]))
+	print(pokemon_species.type_1)
+	print(pokemon_species.type_2)
 
 	stats.get_node('HP/Bar/BarShade').rect_size.x = stats.get_node('HP/Bar').rect_size.x
 	stats.get_node('ATTACK/Bar/BarShade').rect_size.x = stats.get_node('ATTACK/Bar').rect_size.x

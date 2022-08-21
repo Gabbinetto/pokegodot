@@ -2,6 +2,7 @@ extends Resource
 class_name PokemonSpecies, 'res://icons/pokeball.svg'
 
 export var ID : = 'BULBASAUR'
+signal done_loading
 
 # Main data
 var name : = 'Bulbasaur'
@@ -24,6 +25,7 @@ var happiness : = 70
 var ability_1 = null
 var ability_2 = null
 var hidden_ability = null
+var evolutions : = []
 
 # Moves data
 var moves : = []
@@ -31,27 +33,38 @@ var tutor_moves : = []
 var egg_moves : = []
 
 # Breeding data
-var egg_group_1 : = -1
-var egg_group_2 : = -1
+var egg_group_1 = EGG_GROUPS.Undiscovered
+var egg_group_2 = EGG_GROUPS.Undiscovered
 var hatch_steps : = 1
 var offspring = null
+var breeding_item : = ''
 
 # Pokedex data
-var weight : = 0.0
 var height : = 0.0
-var color : = ''
-var shape : = ''
-var habitat : = ''
-var category : = ''
-var description : = ''
-var form_name : = ''
+var weight : = 0.0
+var color : = 'Red'
+var shape : = 'Head'
+var habitat : = 'None'
+var category : = '???'
+var description : = '???'
+var form_name = null
 var generation : = 0
+var flags : = []
 
-var sprite_front : Texture
-var sprite_back : Texture
+var wild_item_common : = ''
+var wild_item_uncommon : = ''
+var wild_item_rare : = ''
+
+export var sprite_front : Texture
+export var sprite_back : Texture
 var sprite_front_s : Texture
 var sprite_back_s : Texture
 
+var f_sprite_front : Texture
+var f_sprite_back : Texture
+var f_sprite_front_s : Texture
+var f_sprite_back_s : Texture
+var icon
 
 const GENDER_RATIOS = {
 	'AlwaysMale': 0,
@@ -62,28 +75,6 @@ const GENDER_RATIOS = {
 	'FemaleSevenEights': 7/8,
 	'AlwaysFemale': 1/1,
 	'Genderless': -1,
-}
-
-const TYPES = {
-	'NORMAL': 0,
-	'FIGHT': 1,
-	'FLYING': 2,
-	'POISON': 3,
-	'GROUND': 4,
-	'ROCK': 5,
-	'BUG': 6,
-	'GHOST': 7,
-	'STEEL': 8,
-	'???': 10,
-	'FIRE': 11,
-	'WATER': 12,
-	'GRASS': 13,
-	'ELECTRIC': 14,
-	'PSYCHIC': 15,
-	'ICE': 16,
-	'DRAGON': 17,
-	'DARK': 18,
-	'FAIRY': 19,
 }
 
 enum EGG_GROUPS {
@@ -114,7 +105,7 @@ func load_data():
 		var line = f.get_line()
 		if line == target:
 			found = true
-			
+	assert(found, ID + ': Pokemon not found!')
 
 	for i in 32:
 		var line = f.get_line()
@@ -123,6 +114,7 @@ func load_data():
 		set_data(line)
 
 	f.close()
+	emit_signal('done_loading')
 	return
 
 func set_data(data : String):
@@ -133,6 +125,14 @@ func set_data(data : String):
 	sprite_front_s = load(Globals.sprites_front_shiny + ID + '.png')
 	sprite_back = load(Globals.sprites_back + ID + '.png')
 	sprite_back_s = load(Globals.sprites_back_shiny + ID + '.png')
+	icon = load(Globals.icons + ID + '.png')
+	
+	var dir = Directory.new()
+	if dir.file_exists('res://Graphics/Pokemon/Front/' + ID + '_female.png'):
+		f_sprite_front = load('res://Graphics/Pokemon/Front/' + ID + '_female.png')
+		f_sprite_front_s = load('res://Graphics/Pokemon/FrontShiny/' + ID + '_female.png')
+		f_sprite_back = load('res://Graphics/Pokemon/Back/' + ID + '_female.png')
+		f_sprite_back_s = load('res://Graphics/Pokemon/BackShiny/' + ID + '_female.png')
 	
 	var split_line : = data.split(' = ') # Split data between: 
 	var type : String = split_line[0] # type of data
@@ -151,9 +151,9 @@ func set_data(data : String):
 			base_stats.HP = int(stats[0])
 			base_stats.ATTACK = int(stats[1])
 			base_stats.DEFENSE = int(stats[2])
-			base_stats.SPECIAL_ATTACK = int(stats[3])
-			base_stats.SPECIAL_DEFENSE = int(stats[4])
-			base_stats.SPEED = int(stats[5])
+			base_stats.SPECIAL_ATTACK = int(stats[4])
+			base_stats.SPECIAL_DEFENSE = int(stats[5])
+			base_stats.SPEED = int(stats[3])
 		'GenderRatio':
 			gender_ratio = GENDER_RATIOS[value]
 		'GrowthRate':
@@ -188,6 +188,38 @@ func set_data(data : String):
 				egg_group_2 = EGG_GROUPS[egg_groups[1]]
 		'HatchSteps':
 			hatch_steps = int(value)
+		'OffSpring':
+			offspring = value
+		'Height':
+			height = float(value)
+		'Weight':
+			weight = float(value)
+		'Color':
+			color = value
+		'Shape':
+			shape = value
+		'Habitat':
+			habitat = value
+		'Category':
+			category = value
+		'Pokedex':
+			description = value
+		'FormName':
+			form_name = value
+		'Generation':
+			generation = int(value)
+		'Flags':
+			flags = value.split(',')
+		'WildItemCommon':
+			wild_item_common = value
+		'WildItemUncommon':
+			wild_item_uncommon = value
+		'WildItemRare':
+			wild_item_rare = value
+		'Evolutions':
+			evolutions = value.split(',')
+		'Incense':
+			breeding_item = value
 		_:
 			pass
 

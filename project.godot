@@ -10,6 +10,21 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Resource",
+"class": "Pokemon",
+"language": "GDScript",
+"path": "res://scripts/Pokemon.gd"
+}, {
+"base": "PokemonSpecies",
+"class": "PokemonForm",
+"language": "GDScript",
+"path": "res://scripts/PokemonForm.gd"
+}, {
+"base": "Resource",
+"class": "PokemonMove",
+"language": "GDScript",
+"path": "res://scripts/PokemonMove.gd"
+}, {
+"base": "Resource",
 "class": "PokemonSpecies",
 "language": "GDScript",
 "path": "res://scripts/PokemonSpecies.gd"
@@ -35,6 +50,9 @@ _global_script_classes=[ {
 "path": "res://addons/text_editor/TE_Util.gd"
 } ]
 _global_script_class_icons={
+"Pokemon": "",
+"PokemonForm": "",
+"PokemonMove": "",
 "PokemonSpecies": "res://icons/pokeball.svg",
 "TE_Editor": "",
 "TE_ExtensionHelper": "",
@@ -45,6 +63,7 @@ _global_script_class_icons={
 [application]
 
 config/name="pokegodot"
+run/main_scene="res://scenes/TestMap.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -52,6 +71,15 @@ config/icon="res://icon.png"
 IconLoader="*res://addons/file-editor/scripts/IconLoader.gd"
 LastOpenedFiles="*res://addons/file-editor/scripts/LastOpenedFiles.gd"
 Globals="*res://scripts/Globals.gd"
+
+[display]
+
+window/size/width=512
+window/size/height=384
+window/size/test_width=1024
+window/size/test_height=768
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 
@@ -87,6 +115,33 @@ texture={
 "size_limit": 0,
 "stream": false,
 "svg/scale": 1.0
+}
+
+[input]
+
+up={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":87,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":-1.0,"script":null)
+ ]
+}
+down={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":1,"axis_value":1.0,"script":null)
+ ]
+}
+left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":-1.0,"script":null)
+ ]
+}
+right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":0,"axis":0,"axis_value":1.0,"script":null)
+ ]
 }
 
 [physics]

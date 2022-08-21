@@ -5,9 +5,9 @@
 	"tabs": {
 		"PBS/pokemon.txt": {
 			"hscroll": 0,
-			"vscroll": 0,
+			"vscroll": 22095,
 			"cursor": [
-				12410,
+				22109,
 				0
 			]
 		},
@@ -18,9 +18,49 @@
 				121,
 				0
 			]
+		},
+		"PBS/pokemon_forms.txt": {
+			"hscroll": 0,
+			"vscroll": 0,
+			"cursor": [
+				1480,
+				0,
+				1480,
+				0,
+				1480,
+				11
+			]
+		},
+		"PBS/moves.txt": {
+			"hscroll": 0,
+			"vscroll": 0,
+			"cursor": [
+				3261,
+				0,
+				3261,
+				1,
+				3261,
+				11
+			]
+		},
+		"PBS/types.txt": {
+			"hscroll": 0,
+			"vscroll": 0,
+			"cursor": [
+				0,
+				0
+			]
+		},
+		"PBS/trainers.txt": {
+			"hscroll": 0,
+			"vscroll": 0,
+			"cursor": [
+				12,
+				0
+			]
 		}
 	},
-	"selected": "res://PBS/pokemon.txt",
+	"selected": "res://PBS/trainers.txt",
 	"word_wrap": false,
 	"ignore_head_numbers": true,
 	"show_tab_color": true,
@@ -68,6 +108,7 @@
 		"": {
 			"file_path": "res://",
 			"all": {
+				"README.md": "res://README.md",
 				"Fonts": {
 					"file_path": "res://Fonts",
 					"all": {
@@ -722,217 +763,6 @@
 							"open": true,
 							"tint": "1,1,1,1"
 						},
-						"EBDX": {
-							"file_path": "res://Graphics/EBDX",
-							"all": {
-								"Battlers": {
-									"file_path": "res://Graphics/EBDX/Battlers",
-									"all": {
-										"Back": {
-											"file_path": "res://Graphics/EBDX/Battlers/Back",
-											"all": {
-												"Gigantamax": {
-													"file_path": "res://Graphics/EBDX/Battlers/Back/Gigantamax",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												},
-												"Female": {
-													"file_path": "res://Graphics/EBDX/Battlers/Back/Female",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												}
-											},
-											"files": [
-
-											],
-											"dirs": [
-												"Female",
-												"Gigantamax"
-											],
-											"show": true,
-											"open": true,
-											"tint": "1,1,1,1"
-										},
-										"BackShiny": {
-											"file_path": "res://Graphics/EBDX/Battlers/BackShiny",
-											"all": {
-												"Gigantamax": {
-													"file_path": "res://Graphics/EBDX/Battlers/BackShiny/Gigantamax",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												},
-												"Female": {
-													"file_path": "res://Graphics/EBDX/Battlers/BackShiny/Female",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												}
-											},
-											"files": [
-
-											],
-											"dirs": [
-												"Female",
-												"Gigantamax"
-											],
-											"show": true,
-											"open": true,
-											"tint": "1,1,1,1"
-										},
-										"FrontShiny": {
-											"file_path": "res://Graphics/EBDX/Battlers/FrontShiny",
-											"all": {
-												"Gigantamax": {
-													"file_path": "res://Graphics/EBDX/Battlers/FrontShiny/Gigantamax",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												},
-												"Female": {
-													"file_path": "res://Graphics/EBDX/Battlers/FrontShiny/Female",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												}
-											},
-											"files": [
-
-											],
-											"dirs": [
-												"Female",
-												"Gigantamax"
-											],
-											"show": true,
-											"open": true,
-											"tint": "1,1,1,1"
-										},
-										"Front": {
-											"file_path": "res://Graphics/EBDX/Battlers/Front",
-											"all": {
-												"Gigantamax": {
-													"file_path": "res://Graphics/EBDX/Battlers/Front/Gigantamax",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												},
-												"Female": {
-													"file_path": "res://Graphics/EBDX/Battlers/Front/Female",
-													"all": {
-
-													},
-													"files": [
-
-													],
-													"dirs": [
-
-													],
-													"show": true,
-													"open": true,
-													"tint": "1,1,1,1"
-												}
-											},
-											"files": [
-
-											],
-											"dirs": [
-												"Female",
-												"Gigantamax"
-											],
-											"show": true,
-											"open": true,
-											"tint": "1,1,1,1"
-										}
-									},
-									"files": [
-
-									],
-									"dirs": [
-										"Back",
-										"BackShiny",
-										"Front",
-										"FrontShiny"
-									],
-									"show": true,
-									"open": true,
-									"tint": "1,1,1,1"
-								}
-							},
-							"files": [
-
-							],
-							"dirs": [
-								"Battlers"
-							],
-							"show": true,
-							"open": true,
-							"tint": "1,1,1,1"
-						},
 						"Battlebacks": {
 							"file_path": "res://Graphics/Battlebacks",
 							"all": {
@@ -1017,7 +847,6 @@
 						"Battle animations",
 						"Battlebacks",
 						"Characters",
-						"EBDX",
 						"Fogs",
 						"Gameovers",
 						"Icons",
@@ -1105,158 +934,17 @@
 						"cup_little_trainers.txt": "res://PBS/cup_little_trainers.txt",
 						"pokemon.txt": "res://PBS/pokemon.txt",
 						"regional_dexes.txt": "res://PBS/regional_dexes.txt",
-						"Gen 6": {
-							"file_path": "res://PBS/Gen 6",
-							"all": {
-								"encounters.txt": "res://PBS/Gen 6/encounters.txt",
-								"berry_plants.txt": "res://PBS/Gen 6/berry_plants.txt",
-								"pokemon_metrics.txt": "res://PBS/Gen 6/pokemon_metrics.txt",
-								"pokemon_forms.txt": "res://PBS/Gen 6/pokemon_forms.txt",
-								"types.txt": "res://PBS/Gen 6/types.txt",
-								"abilities.txt": "res://PBS/Gen 6/abilities.txt",
-								"pokemon.txt": "res://PBS/Gen 6/pokemon.txt",
-								"moves.txt": "res://PBS/Gen 6/moves.txt",
-								"items.txt": "res://PBS/Gen 6/items.txt"
-							},
-							"files": [
-								"res://PBS/Gen 6/abilities.txt",
-								"res://PBS/Gen 6/berry_plants.txt",
-								"res://PBS/Gen 6/encounters.txt",
-								"res://PBS/Gen 6/items.txt",
-								"res://PBS/Gen 6/moves.txt",
-								"res://PBS/Gen 6/pokemon.txt",
-								"res://PBS/Gen 6/pokemon_forms.txt",
-								"res://PBS/Gen 6/pokemon_metrics.txt",
-								"res://PBS/Gen 6/types.txt"
-							],
-							"dirs": [
-
-							],
-							"show": true,
-							"open": false,
-							"tint": "1,1,1,1"
-						},
 						"battle_tower_pokemon.txt": "res://PBS/battle_tower_pokemon.txt",
-						"Gen 5": {
-							"file_path": "res://PBS/Gen 5",
-							"all": {
-								"encounters.txt": "res://PBS/Gen 5/encounters.txt",
-								"berry_plants.txt": "res://PBS/Gen 5/berry_plants.txt",
-								"pokemon_metrics.txt": "res://PBS/Gen 5/pokemon_metrics.txt",
-								"pokemon_forms.txt": "res://PBS/Gen 5/pokemon_forms.txt",
-								"types.txt": "res://PBS/Gen 5/types.txt",
-								"abilities.txt": "res://PBS/Gen 5/abilities.txt",
-								"pokemon.txt": "res://PBS/Gen 5/pokemon.txt",
-								"moves.txt": "res://PBS/Gen 5/moves.txt",
-								"items.txt": "res://PBS/Gen 5/items.txt"
-							},
-							"files": [
-								"res://PBS/Gen 5/abilities.txt",
-								"res://PBS/Gen 5/berry_plants.txt",
-								"res://PBS/Gen 5/encounters.txt",
-								"res://PBS/Gen 5/items.txt",
-								"res://PBS/Gen 5/moves.txt",
-								"res://PBS/Gen 5/pokemon.txt",
-								"res://PBS/Gen 5/pokemon_forms.txt",
-								"res://PBS/Gen 5/pokemon_metrics.txt",
-								"res://PBS/Gen 5/types.txt"
-							],
-							"dirs": [
-
-							],
-							"show": true,
-							"open": false,
-							"tint": "1,1,1,1"
-						},
 						"moves.txt": "res://PBS/moves.txt",
 						"cup_fancy_pkmn_single.txt": "res://PBS/cup_fancy_pkmn_single.txt",
 						"cup_fancy_trainers.txt": "res://PBS/cup_fancy_trainers.txt",
 						"battle_facility_lists.txt": "res://PBS/battle_facility_lists.txt",
 						"map_connections.txt": "res://PBS/map_connections.txt",
-						"EBDX": {
-							"file_path": "res://PBS/EBDX",
-							"all": {
-								"pokemon.txt": "res://PBS/EBDX/pokemon.txt"
-							},
-							"files": [
-								"res://PBS/EBDX/pokemon.txt"
-							],
-							"dirs": [
-
-							],
-							"show": true,
-							"open": false,
-							"tint": "1,1,1,1"
-						},
 						"cup_pika_pkmn.txt": "res://PBS/cup_pika_pkmn.txt",
 						"cup_little_pkmn.txt": "res://PBS/cup_little_pkmn.txt",
 						"trainers.txt": "res://PBS/trainers.txt",
-						"Gen 8": {
-							"file_path": "res://PBS/Gen 8",
-							"all": {
-								"encounters.txt": "res://PBS/Gen 8/encounters.txt",
-								"berry_plants.txt": "res://PBS/Gen 8/berry_plants.txt",
-								"pokemon_metrics.txt": "res://PBS/Gen 8/pokemon_metrics.txt",
-								"pokemon_forms.txt": "res://PBS/Gen 8/pokemon_forms.txt",
-								"types.txt": "res://PBS/Gen 8/types.txt",
-								"abilities.txt": "res://PBS/Gen 8/abilities.txt",
-								"pokemon.txt": "res://PBS/Gen 8/pokemon.txt",
-								"moves.txt": "res://PBS/Gen 8/moves.txt",
-								"items.txt": "res://PBS/Gen 8/items.txt",
-								"pokemon_metrics (FROM GEN 8 PACK).txt": "res://PBS/Gen 8/pokemon_metrics (FROM GEN 8 PACK).txt"
-							},
-							"files": [
-								"res://PBS/Gen 8/abilities.txt",
-								"res://PBS/Gen 8/berry_plants.txt",
-								"res://PBS/Gen 8/encounters.txt",
-								"res://PBS/Gen 8/items.txt",
-								"res://PBS/Gen 8/moves.txt",
-								"res://PBS/Gen 8/pokemon.txt",
-								"res://PBS/Gen 8/pokemon_forms.txt",
-								"res://PBS/Gen 8/pokemon_metrics.txt",
-								"res://PBS/Gen 8/pokemon_metrics (FROM GEN 8 PACK).txt",
-								"res://PBS/Gen 8/types.txt"
-							],
-							"dirs": [
-
-							],
-							"show": true,
-							"open": false,
-							"tint": "1,1,1,1"
-						},
 						"phone.txt": "res://PBS/phone.txt",
-						"items.txt": "res://PBS/items.txt",
-						"Gen 7": {
-							"file_path": "res://PBS/Gen 7",
-							"all": {
-								"encounters.txt": "res://PBS/Gen 7/encounters.txt",
-								"berry_plants.txt": "res://PBS/Gen 7/berry_plants.txt",
-								"pokemon_metrics.txt": "res://PBS/Gen 7/pokemon_metrics.txt",
-								"pokemon_forms.txt": "res://PBS/Gen 7/pokemon_forms.txt",
-								"types.txt": "res://PBS/Gen 7/types.txt",
-								"abilities.txt": "res://PBS/Gen 7/abilities.txt",
-								"pokemon.txt": "res://PBS/Gen 7/pokemon.txt",
-								"moves.txt": "res://PBS/Gen 7/moves.txt",
-								"items.txt": "res://PBS/Gen 7/items.txt"
-							},
-							"files": [
-								"res://PBS/Gen 7/abilities.txt",
-								"res://PBS/Gen 7/berry_plants.txt",
-								"res://PBS/Gen 7/encounters.txt",
-								"res://PBS/Gen 7/items.txt",
-								"res://PBS/Gen 7/moves.txt",
-								"res://PBS/Gen 7/pokemon.txt",
-								"res://PBS/Gen 7/pokemon_forms.txt",
-								"res://PBS/Gen 7/pokemon_metrics.txt",
-								"res://PBS/Gen 7/types.txt"
-							],
-							"dirs": [
-
-							],
-							"show": true,
-							"open": false,
-							"tint": "1,1,1,1"
-						}
+						"items.txt": "res://PBS/items.txt"
 					},
 					"files": [
 						"res://PBS/abilities.txt",
@@ -1293,11 +981,7 @@
 						"res://PBS/types.txt"
 					],
 					"dirs": [
-						"EBDX",
-						"Gen 5",
-						"Gen 6",
-						"Gen 7",
-						"Gen 8"
+
 					],
 					"show": true,
 					"open": true,
@@ -1305,7 +989,7 @@
 				}
 			},
 			"files": [
-
+				"res://README.md"
 			],
 			"dirs": [
 				"Fonts",
@@ -1321,6 +1005,37 @@
 		}
 	},
 	"file_data": {
+		"res://README.md": {
+			"icon": "",
+			"tint": "",
+			"open": false,
+			"symbols": {
+				"-1": {
+					"deep": 0,
+					"name": "",
+					"tags": [
+
+					]
+				},
+				"0": {
+					"deep": 0,
+					"name": "Pokegodot",
+					"tags": [
+
+					]
+				},
+				"1": {
+					"deep": 1,
+					"name": "A base for Pokèmon Fangames made in Godot",
+					"tags": [
+
+					]
+				}
+			},
+			"tags": {
+
+			}
+		},
 		"res://PBS/items.txt": {
 			"icon": "",
 			"tint": "",
@@ -1672,429 +1387,11 @@
 			"tags": {
 
 			}
-		},
-		"res://PBS/Gen 7/items.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/moves.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/pokemon.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/abilities.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/types.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/pokemon_forms.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/pokemon_metrics.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/berry_plants.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 7/encounters.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/pokemon_metrics (FROM GEN 8 PACK).txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/items.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/moves.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/pokemon.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/abilities.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/types.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/pokemon_forms.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/pokemon_metrics.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/berry_plants.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 8/encounters.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/EBDX/pokemon.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/items.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/moves.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/pokemon.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/abilities.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/types.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/pokemon_forms.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/pokemon_metrics.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/berry_plants.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 5/encounters.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/items.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/moves.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/pokemon.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/abilities.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/types.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/pokemon_forms.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/pokemon_metrics.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/berry_plants.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
-		},
-		"res://PBS/Gen 6/encounters.txt": {
-			"icon": "",
-			"tint": "",
-			"open": false,
-			"symbols": {
-
-			},
-			"tags": {
-
-			}
 		}
 	},
 	"div1": -351,
-	"div2": -80,
-	"div3": 369,
+	"div2": 0,
+	"div3": 430,
 	"div4": 180,
 	"window_size": [
 		1920,
