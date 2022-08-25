@@ -1,0 +1,261 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Graphics/Windowskins/speech hgss 1.png" type="Texture" id=1]
+[ext_resource path="res://Graphics/Pokemon/Back/000.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Battle/BattleScene.gd" type="Script" id=4]
+[ext_resource path="res://Graphics/Battlebacks/cave1_bg.png" type="Texture" id=5]
+[ext_resource path="res://Graphics/Battlebacks/cave1_base1.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/pokemon-ds-font.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Scenes/Battle/EnemyDatabox.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Battle/PlayerDatabox.tscn" type="PackedScene" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+size = 28
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.882353, 0.882353, 0.882353, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="BattleScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+pokemon_1_data = {
+"FORM_NUMBER": 0,
+"GENDER": 0,
+"ID": "PIDOVE",
+"LEVEL": 100,
+"SHINY": true
+}
+pokemon_2_data = {
+"FORM_NUMBER": 0,
+"GENDER": 1,
+"ID": "Unfezant",
+"LEVEL": 100,
+"SHINY": false
+}
+
+[node name="Bg" type="TextureRect" parent="."]
+margin_right = 512.0
+margin_bottom = 288.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BgReverse" type="TextureRect" parent="Bg"]
+margin_left = 512.0
+margin_top = 576.0
+margin_right = 1024.0
+margin_bottom = 864.0
+rect_rotation = 180.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 2
+
+[node name="Ground1" type="Sprite" parent="."]
+position = Vector2( 145, 291 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite1" type="Sprite" parent="Ground1"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -48, -94 )
+
+[node name="Ground2" type="Sprite" parent="."]
+position = Vector2( 400, 148 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite2" type="Sprite" parent="Ground2"]
+position = Vector2( -2, 6 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( -48, -96 )
+
+[node name="MessageBox" type="NinePatchRect" parent="."]
+margin_top = 288.0
+margin_right = 512.0
+margin_bottom = 384.0
+texture = ExtResource( 1 )
+region_rect = Rect2( 4, 2, 88, 44 )
+patch_margin_left = 18
+patch_margin_top = 12
+patch_margin_right = 40
+patch_margin_bottom = 12
+
+[node name="Text" type="Label" parent="MessageBox"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 22.0
+margin_top = 10.0
+margin_right = -38.0
+margin_bottom = -10.0
+custom_colors/font_color = Color( 0.34902, 0.345098, 0.368627, 1 )
+custom_colors/font_color_shadow = Color( 0.694118, 0.690196, 0.713726, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = SubResource( 1 )
+text = "What will
+%s do?"
+valign = 1
+
+[node name="Actions" type="GridContainer" parent="MessageBox"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -178.0
+margin_top = 11.0
+margin_right = -39.0
+margin_bottom = -11.0
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 2
+
+[node name="Fight" type="Button" parent="MessageBox/Actions"]
+margin_right = 70.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.34902, 0.345098, 0.368627, 1 )
+custom_colors/font_color_hover = Color( 0.4085, 0.4042, 0.43, 1 )
+custom_colors/font_color_pressed = Color( 0.4845, 0.4794, 0.51, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "FIGHT"
+flat = true
+
+[node name="Pokemons" type="Button" parent="MessageBox/Actions"]
+margin_left = 70.0
+margin_right = 139.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.34902, 0.345098, 0.368627, 1 )
+custom_colors/font_color_hover = Color( 0.4085, 0.4042, 0.43, 1 )
+custom_colors/font_color_pressed = Color( 0.4845, 0.4794, 0.51, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "PKMNS"
+flat = true
+
+[node name="Bag" type="Button" parent="MessageBox/Actions"]
+margin_top = 37.0
+margin_right = 70.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.34902, 0.345098, 0.368627, 1 )
+custom_colors/font_color_hover = Color( 0.4085, 0.4042, 0.43, 1 )
+custom_colors/font_color_pressed = Color( 0.4845, 0.4794, 0.51, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "BAG"
+flat = true
+
+[node name="Run" type="Button" parent="MessageBox/Actions"]
+margin_left = 70.0
+margin_top = 37.0
+margin_right = 139.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.34902, 0.345098, 0.368627, 1 )
+custom_colors/font_color_hover = Color( 0.4085, 0.4042, 0.43, 1 )
+custom_colors/font_color_pressed = Color( 0.4845, 0.4794, 0.51, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "RUN"
+flat = true
+
+[node name="Moves" type="GridContainer" parent="MessageBox"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -151.0
+margin_top = 11.0
+margin_right = -12.0
+margin_bottom = -11.0
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 2
+
+[node name="Move1" type="Button" parent="MessageBox/Moves"]
+margin_right = 70.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "MOVE"
+flat = true
+
+[node name="Move2" type="Button" parent="MessageBox/Moves"]
+margin_left = 70.0
+margin_right = 139.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "MOVE"
+flat = true
+
+[node name="Move3" type="Button" parent="MessageBox/Moves"]
+margin_top = 37.0
+margin_right = 70.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "MOVE"
+flat = true
+
+[node name="Move4" type="Button" parent="MessageBox/Moves"]
+margin_left = 70.0
+margin_top = 37.0
+margin_right = 139.0
+margin_bottom = 74.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+text = "MOVE"
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="DataboxPokemon1" parent="." instance=ExtResource( 12 )]
+position = Vector2( 384, 182 )
+
+[node name="DataboxPokemon2" parent="." instance=ExtResource( 9 )]

@@ -9,25 +9,30 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Control",
+"class": "CodeSnapshotInstance",
+"language": "GDScript",
+"path": "res://addons/code-snapshot/Instance/instance.gd"
+}, {
 "base": "Resource",
 "class": "Pokemon",
 "language": "GDScript",
-"path": "res://scripts/Pokemon.gd"
+"path": "res://Scripts/Pokemon.gd"
 }, {
 "base": "PokemonSpecies",
 "class": "PokemonForm",
 "language": "GDScript",
-"path": "res://scripts/PokemonForm.gd"
+"path": "res://Scripts/PokemonForm.gd"
 }, {
 "base": "Resource",
 "class": "PokemonMove",
 "language": "GDScript",
-"path": "res://scripts/PokemonMove.gd"
+"path": "res://Scripts/PokemonMove.gd"
 }, {
 "base": "Resource",
 "class": "PokemonSpecies",
 "language": "GDScript",
-"path": "res://scripts/PokemonSpecies.gd"
+"path": "res://Scripts/PokemonSpecies.gd"
 }, {
 "base": "Control",
 "class": "TE_Editor",
@@ -50,6 +55,7 @@ _global_script_classes=[ {
 "path": "res://addons/text_editor/TE_Util.gd"
 } ]
 _global_script_class_icons={
+"CodeSnapshotInstance": "",
 "Pokemon": "",
 "PokemonForm": "",
 "PokemonMove": "",
@@ -63,14 +69,14 @@ _global_script_class_icons={
 [application]
 
 config/name="pokegodot"
-run/main_scene="res://scenes/TestMap.tscn"
+run/main_scene="res://Scenes/TestMap.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 IconLoader="*res://addons/file-editor/scripts/IconLoader.gd"
 LastOpenedFiles="*res://addons/file-editor/scripts/LastOpenedFiles.gd"
-Globals="*res://scripts/Globals.gd"
+Globals="*res://Scripts/Globals.gd"
 
 [display]
 
@@ -83,7 +89,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/imrp/plugin.cfg", "res://addons/text_editor/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/code-snapshot/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/text_editor/plugin.cfg" )
 
 [global]
 

@@ -1,0 +1,105 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fonts/pokemon-ds-font.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Fonts/hgss_health.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Graphics/Pictures/Battle/databox_hgss.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Battle/PlayerDatabox.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=4]
+size = 8
+extra_spacing_top = 3
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 1 )
+
+[node name="PlayerDatabox" type="Sprite"]
+texture = ExtResource( 3 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 3, 34, 128, 47 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HealthBar" type="Sprite" parent="."]
+position = Vector2( 72, 25 )
+scale = Vector2( 8, 1 )
+texture = ExtResource( 3 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 2, 13, 3, 3 )
+
+[node name="ExpBar" type="Sprite" parent="."]
+position = Vector2( 24, 42 )
+scale = Vector2( 32, 1 )
+texture = ExtResource( 3 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 2, 28, 3, 2 )
+
+[node name="Level" type="Label" parent="."]
+margin_left = 104.0
+margin_top = 11.0
+margin_right = 128.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.286275, 0.286275, 0.286275, 1 )
+custom_colors/font_color_shadow = Color( 0.729412, 0.729412, 0.729412, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = SubResource( 4 )
+text = "100"
+valign = 1
+
+[node name="HealthText" type="HBoxContainer" parent="."]
+margin_left = 61.0
+margin_top = 31.0
+margin_right = 123.0
+margin_bottom = 42.0
+alignment = 1
+
+[node name="Label" type="Label" parent="HealthText"]
+margin_right = 62.0
+margin_bottom = 11.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.286275, 0.286275, 0.286275, 1 )
+custom_colors/font_color_shadow = Color( 0.729412, 0.729412, 0.729412, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = SubResource( 4 )
+text = "000/000"
+align = 1
+valign = 1
+
+[node name="NameContainer" type="MarginContainer" parent="."]
+margin_left = 24.0
+margin_top = 6.0
+margin_right = 103.0
+margin_bottom = 22.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Name" type="Label" parent="NameContainer"]
+margin_right = 79.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.286275, 0.286275, 0.286275, 1 )
+custom_colors/font_color_shadow = Color( 0.729412, 0.729412, 0.729412, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 1
+custom_fonts/font = SubResource( 5 )
+text = "Pokemon 1"
+valign = 1
+
+[node name="GenderSymbol" type="Sprite" parent="."]
+position = Vector2( 87, 9 )
+texture = ExtResource( 3 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 2, 1, 7, 11 )

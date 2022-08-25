@@ -5,9 +5,9 @@
 	"tabs": {
 		"PBS/pokemon.txt": {
 			"hscroll": 0,
-			"vscroll": 22095,
+			"vscroll": 0,
 			"cursor": [
-				22109,
+				22940,
 				0
 			]
 		},
@@ -15,8 +15,12 @@
 			"hscroll": 0,
 			"vscroll": 0,
 			"cursor": [
-				121,
-				0
+				110,
+				0,
+				110,
+				1,
+				110,
+				5
 			]
 		},
 		"PBS/pokemon_forms.txt": {
@@ -60,7 +64,7 @@
 			]
 		}
 	},
-	"selected": "res://PBS/trainers.txt",
+	"selected": "res://PBS/abilities.txt",
 	"word_wrap": false,
 	"ignore_head_numbers": true,
 	"show_tab_color": true,
@@ -108,6 +112,7 @@
 		"": {
 			"file_path": "res://",
 			"all": {
+				"export_presets.cfg": "res://export_presets.cfg",
 				"README.md": "res://README.md",
 				"Fonts": {
 					"file_path": "res://Fonts",
@@ -865,23 +870,66 @@
 					"open": false,
 					"tint": "1,1,1,1"
 				},
-				"scenes": {
-					"file_path": "res://scenes",
+				"Scripts": {
+					"file_path": "res://Scripts",
 					"all": {
+						"Battle": {
+							"file_path": "res://Scripts/Battle",
+							"all": {
 
+							},
+							"files": [
+
+							],
+							"dirs": [
+
+							],
+							"show": true,
+							"open": true,
+							"tint": "1,1,1,1"
+						}
 					},
 					"files": [
 
 					],
 					"dirs": [
-
+						"Battle"
 					],
 					"show": true,
 					"open": true,
 					"tint": "1,1,1,1"
 				},
-				"scripts": {
-					"file_path": "res://scripts",
+				"Scenes": {
+					"file_path": "res://Scenes",
+					"all": {
+						"Battle": {
+							"file_path": "res://Scenes/Battle",
+							"all": {
+
+							},
+							"files": [
+
+							],
+							"dirs": [
+
+							],
+							"show": true,
+							"open": true,
+							"tint": "1,1,1,1"
+						}
+					},
+					"files": [
+
+					],
+					"dirs": [
+						"Battle"
+					],
+					"show": true,
+					"open": true,
+					"tint": "1,1,1,1"
+				},
+				"build": {
+					"file_path": "res://build",
 					"all": {
 
 					},
@@ -940,6 +988,7 @@
 						"cup_fancy_trainers.txt": "res://PBS/cup_fancy_trainers.txt",
 						"battle_facility_lists.txt": "res://PBS/battle_facility_lists.txt",
 						"map_connections.txt": "res://PBS/map_connections.txt",
+						"exp.txt": "res://PBS/exp.txt",
 						"cup_pika_pkmn.txt": "res://PBS/cup_pika_pkmn.txt",
 						"cup_little_pkmn.txt": "res://PBS/cup_little_pkmn.txt",
 						"trainers.txt": "res://PBS/trainers.txt",
@@ -963,6 +1012,7 @@
 						"res://PBS/cup_poke_pkmn.txt",
 						"res://PBS/cup_poke_trainers.txt",
 						"res://PBS/encounters.txt",
+						"res://PBS/exp.txt",
 						"res://PBS/items.txt",
 						"res://PBS/map_connections.txt",
 						"res://PBS/map_metadata.txt",
@@ -989,15 +1039,17 @@
 				}
 			},
 			"files": [
+				"res://export_presets.cfg",
 				"res://README.md"
 			],
 			"dirs": [
 				"Fonts",
 				"Graphics",
 				"PBS",
-				"icons",
-				"scenes",
-				"scripts"
+				"Scenes",
+				"Scripts",
+				"build",
+				"icons"
 			],
 			"show": true,
 			"open": true,
@@ -1027,6 +1079,37 @@
 				"1": {
 					"deep": 1,
 					"name": "A base for Pokèmon Fangames made in Godot",
+					"tags": [
+
+					]
+				}
+			},
+			"tags": {
+
+			}
+		},
+		"res://export_presets.cfg": {
+			"icon": "",
+			"tint": "",
+			"open": false,
+			"symbols": {
+				"-1": {
+					"deep": 0,
+					"name": "",
+					"tags": [
+
+					]
+				},
+				"0": {
+					"deep": 0,
+					"name": "preset.0",
+					"tags": [
+
+					]
+				},
+				"13": {
+					"deep": 0,
+					"name": "preset.0.options",
 					"tags": [
 
 					]
@@ -1081,6 +1164,17 @@
 			}
 		},
 		"res://PBS/cup_pika_pkmn.txt": {
+			"icon": "",
+			"tint": "",
+			"open": false,
+			"symbols": {
+
+			},
+			"tags": {
+
+			}
+		},
+		"res://PBS/exp.txt": {
 			"icon": "",
 			"tint": "",
 			"open": false,
@@ -1391,7 +1485,7 @@
 	},
 	"div1": -351,
 	"div2": 0,
-	"div3": 430,
+	"div3": 189,
 	"div4": 180,
 	"window_size": [
 		1920,
