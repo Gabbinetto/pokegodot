@@ -22,13 +22,13 @@ func _init(id : String) -> void:
 
 func load_data():
 	var f = File.new()
-	var target = '[' + ID + ']'
+	var _target = '[' + ID + ']'
 	var found = false
 	
 	f.open(Globals.moves_file, File.READ)
 	while (not f.eof_reached()) and (not found):
 		var line = f.get_line()
-		if line == target:
+		if line == _target:
 			found = true
 	assert(found, ID + ': Move not found!')
 
@@ -46,16 +46,16 @@ func set_data(data : String):
 	ID = ID.to_upper()
 	
 	var split_line : = data.split(' = ') # Split data between: 
-	var type : String = split_line[0] # type of data
+	var _type : String = split_line[0] # type of data
 	var value : String = split_line[1] # value of data
 	
-	match type:
+	match _type:
 		'Name':
 			name = value
 		'Type':
 			type = value
 		'Category':
-			category = value
+			category = value.to_upper()
 		'Power':
 			base_power = int(value)
 		'Accuracy':

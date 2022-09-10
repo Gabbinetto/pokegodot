@@ -98,6 +98,6 @@ offset = Vector2( 0, -16 )
 script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2( 16, 16 )
+position = Vector2( 16, 16 )
 current = true
 smoothing_speed = 15.0

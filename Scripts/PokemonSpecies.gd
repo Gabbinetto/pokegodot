@@ -55,8 +55,9 @@ var wild_item_common : = ''
 var wild_item_uncommon : = ''
 var wild_item_rare : = ''
 
-export var sprite_front : Texture
-export var sprite_back : Texture
+# All possible sprites
+var sprite_front : Texture
+var sprite_back : Texture
 var sprite_front_s : Texture
 var sprite_back_s : Texture
 

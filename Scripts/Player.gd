@@ -9,13 +9,13 @@ var input_direction : = Vector2.ZERO
 func _ready() -> void:
 	position = position.snapped(TILE_SIZE)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var moving = input_direction != Vector2.ZERO
 	playing = moving
 	if !moving:
 		frame = 0
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if input_direction.y == 0:
 		input_direction.x = round(Input.get_action_strength('right') - Input.get_action_strength('left'))
 	if input_direction.x == 0:

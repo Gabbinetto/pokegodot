@@ -3,6 +3,13 @@ class_name PokemonForm
 
 export(int, 1, 2147483647) var FORM_NUMBER = 1
 
+# These types of data (type, stats, happiness)
+# can either be inherited from the base form or be
+# overwritten.
+# Example: Marowak and Marowak-Alola have the
+# same base stats, therefore in pokemon_forms.txt
+# they will not be listed and they will be inherited from the base
+# form of Marowak, in pokemon.txt
 var changed_type : = false
 var changed_stats : = false
 var changed_happiness : = false
@@ -14,10 +21,10 @@ var changed_shape : = false
 var changed_habitat : = false
 var changed_flags : = false
 
-var form_change_item : = ''
-var form_change_move : = ''
-var change_message : = 0
-var revert_form : = 0
+var form_change_item : = '' # Item needed to change into this form, like mega stones
+var form_change_move : = '' # Same as above, but with moves. Like Rayquaza and its Dragon Ascent
+var change_message : = 0 # The kind of message displayed when changing form
+var revert_form : = 0 # Whether the pokemon will go back to it's base form at the end of the battle
 var pokedex_form : = 0
 
 func load_data():
@@ -157,6 +164,7 @@ func set_data(data : String):
 			pass
 	
 	name = original_form.name
+	# If all of those didn't change with the form use the original form's ones
 	if not changed_type:
 		type_1 = original_form.type_1
 		type_2 = original_form.type_2

@@ -15,7 +15,7 @@ func _ready() -> void:
 	gender_width = $GenderSymbol.region_rect.size.x
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !pokemon:
 		return
 	

@@ -13,7 +13,7 @@
 		},
 		"PBS/abilities.txt": {
 			"hscroll": 0,
-			"vscroll": 0,
+			"vscroll": 85,
 			"cursor": [
 				110,
 				0,
@@ -363,13 +363,27 @@
 								"Battle": {
 									"file_path": "res://Graphics/Pictures/Battle",
 									"all": {
+										"Buttons": {
+											"file_path": "res://Graphics/Pictures/Battle/Buttons",
+											"all": {
 
+											},
+											"files": [
+
+											],
+											"dirs": [
+
+											],
+											"show": true,
+											"open": true,
+											"tint": "1,1,1,1"
+										}
 									},
 									"files": [
 
 									],
 									"dirs": [
-
+										"Buttons"
 									],
 									"show": true,
 									"open": true,
@@ -568,21 +582,6 @@
 						},
 						"Items": {
 							"file_path": "res://Graphics/Items",
-							"all": {
-
-							},
-							"files": [
-
-							],
-							"dirs": [
-
-							],
-							"show": true,
-							"open": true,
-							"tint": "1,1,1,1"
-						},
-						"Fogs": {
-							"file_path": "res://Graphics/Fogs",
 							"all": {
 
 							},
@@ -852,7 +851,6 @@
 						"Battle animations",
 						"Battlebacks",
 						"Characters",
-						"Fogs",
 						"Gameovers",
 						"Icons",
 						"Items",
@@ -868,6 +866,21 @@
 					],
 					"show": true,
 					"open": false,
+					"tint": "1,1,1,1"
+				},
+				".vscode": {
+					"file_path": "res://.vscode",
+					"all": {
+						"settings.json": "res://.vscode/settings.json"
+					},
+					"files": [
+						"res://.vscode/settings.json"
+					],
+					"dirs": [
+
+					],
+					"show": true,
+					"open": true,
 					"tint": "1,1,1,1"
 				},
 				"Scripts": {
@@ -1049,7 +1062,8 @@
 				"Scenes",
 				"Scripts",
 				"build",
-				"icons"
+				"icons",
+				".vscode"
 			],
 			"show": true,
 			"open": true,
@@ -1477,6 +1491,23 @@
 			"open": false,
 			"symbols": {
 
+			},
+			"tags": {
+
+			}
+		},
+		"res://.vscode/settings.json": {
+			"icon": "",
+			"tint": "",
+			"open": false,
+			"symbols": {
+				"-1": {
+					"deep": 0,
+					"name": "",
+					"tags": [
+
+					]
+				}
 			},
 			"tags": {
 

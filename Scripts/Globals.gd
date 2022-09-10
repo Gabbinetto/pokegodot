@@ -1,5 +1,6 @@
 extends Node
 
+# File paths
 const pokemon_file : = 'res://PBS/pokemon.txt'
 const pokemon_forms_file : = 'res://PBS/pokemon_forms.txt'
 const moves_file : = 'res://PBS/moves.txt'
@@ -9,6 +10,7 @@ const sprites_front_shiny : = 'res://Graphics/Pokemon/Front shiny/'
 const sprites_back : = 'res://Graphics/Pokemon/Back/'
 const sprites_back_shiny : = 'res://Graphics/Pokemon/Back shiny/'
 const icons : = 'res://Graphics/Pokemon/Icons/'
+
 
 const TYPES_INDEX = {
 	'NORMAL': 0,
@@ -30,6 +32,12 @@ const TYPES_INDEX = {
 	'DRAGON': 16,
 	'DARK': 17,
 	'FAIRY': 18,
+}
+
+const CATEGORIES_INDEX = {
+	'PHYSICAL': 0,
+	'SPECIAL': 1,
+	'STATUS': 2,
 }
 
 const NATURES = {
@@ -60,11 +68,20 @@ const NATURES = {
 	'QUIRKY': null,
 }
 
+enum {SLOW = 8, MEDIUM = 16, FAST = 32}
+
+var text_speed = FAST setget ,get_text_speed
+
+func get_text_speed():
+	return 1.0 / text_speed
+
+# Get the lowest non-opaque pixel in an image
+# Used to offset Pokemon sprites down to the ground
 func get_lowest_pixel_position(image : Image) -> Vector2:
 	var index = image.get_size() - Vector2.ONE
 	
 	image.lock()
-	for i in range(image.get_width() * image.get_height()):
+	for _i in range(image.get_width() * image.get_height()):
 		var pixel = image.get_pixelv(index)
 		if pixel.a > 0:
 			return index
@@ -72,5 +89,5 @@ func get_lowest_pixel_position(image : Image) -> Vector2:
 		if index.x < 0:
 			index.x = image.get_width() - 1
 			index.y -= 1
-#
+
 	return Vector2(-1, -1)

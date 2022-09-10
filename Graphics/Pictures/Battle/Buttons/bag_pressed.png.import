@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/triad_card_player.png-d70fd3e6db9741d5a248d21b9f9a1957.stex"
+path="res://.import/bag_pressed.png-e71ca0172f4cb15b399df0c5c3763d99.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Pictures/triad_card_player.png"
-dest_files=[ "res://.import/triad_card_player.png-d70fd3e6db9741d5a248d21b9f9a1957.stex" ]
+source_file="res://Graphics/Pictures/Battle/Buttons/bag_pressed.png"
+dest_files=[ "res://.import/bag_pressed.png-e71ca0172f4cb15b399df0c5c3763d99.stex" ]
 
 [params]
 
