@@ -1,0 +1,32 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://dsgr8k1jvh30t"
+path="res://.godot/imported/power red and blue intl.ttf-1a9234b8146529f10c8288d596a81dd6.fontdata"
+
+[deps]
+
+source_file="res://Fonts/power red and blue intl.ttf"
+dest_files=["res://.godot/imported/power red and blue intl.ttf-1a9234b8146529f10c8288d596a81dd6.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[]
+language_support={}
+script_support={}
+opentype_features={}

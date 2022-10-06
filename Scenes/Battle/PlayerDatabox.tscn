@@ -1,105 +1,92 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://wgs1qpbo0j5f"]
 
-[ext_resource path="res://Fonts/pokemon-ds-font.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Fonts/hgss_health.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Graphics/Pictures/Battle/databox_hgss.png" type="Texture" id=3]
-[ext_resource path="res://Scripts/Battle/PlayerDatabox.gd" type="Script" id=4]
+[ext_resource type="Texture2D" uid="uid://pjuugece5qkx" path="res://Graphics/Pictures/Battle/databox_hgss.png" id="3"]
+[ext_resource type="FontFile" uid="uid://bc0h4u24mdptb" path="res://Fonts/hgss_health.ttf" id="3_ay0qn"]
+[ext_resource type="Script" path="res://Scripts/Battle/PlayerDatabox.gd" id="4"]
+[ext_resource type="FontFile" uid="uid://ddq6mqha1adun" path="res://Fonts/pokemon-ds-font.ttf" id="4_6247j"]
 
-[sub_resource type="DynamicFont" id=4]
-size = 8
-extra_spacing_top = 3
-font_data = ExtResource( 2 )
+[sub_resource type="LabelSettings" id="LabelSettings_dengd"]
+font = ExtResource("3_ay0qn")
+font_size = 8
+font_color = Color(0.286275, 0.286275, 0.286275, 1)
 
-[sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 1 )
+[sub_resource type="LabelSettings" id="LabelSettings_iwdbg"]
+font = ExtResource("3_ay0qn")
+font_size = 8
+font_color = Color(0.286275, 0.286275, 0.286275, 1)
+shadow_color = Color(0.729412, 0.729412, 0.729412, 1)
 
-[node name="PlayerDatabox" type="Sprite"]
-texture = ExtResource( 3 )
+[sub_resource type="LabelSettings" id="LabelSettings_0bqq4"]
+font = ExtResource("4_6247j")
+font_color = Color(0.286275, 0.286275, 0.286275, 1)
+
+[node name="PlayerDatabox" type="Sprite2D"]
+texture_filter = 1
+texture = ExtResource("3")
 centered = false
 region_enabled = true
-region_rect = Rect2( 3, 34, 128, 47 )
-script = ExtResource( 4 )
-__meta__ = {
-"_edit_lock_": true
-}
+region_rect = Rect2(3, 34, 128, 47)
+script = ExtResource("4")
 
-[node name="HealthBar" type="Sprite" parent="."]
-position = Vector2( 72, 25 )
-scale = Vector2( 8, 1 )
-texture = ExtResource( 3 )
+[node name="HealthBar" type="Sprite2D" parent="."]
+position = Vector2(72, 25)
+scale = Vector2(8, 1)
+texture = ExtResource("3")
 centered = false
 region_enabled = true
-region_rect = Rect2( 2, 13, 3, 3 )
+region_rect = Rect2(2, 13, 3, 3)
 
-[node name="ExpBar" type="Sprite" parent="."]
-position = Vector2( 24, 42 )
-scale = Vector2( 32, 1 )
-texture = ExtResource( 3 )
+[node name="ExpBar" type="Sprite2D" parent="."]
+position = Vector2(24, 42)
+scale = Vector2(32, 1)
+texture = ExtResource("3")
 centered = false
 region_enabled = true
-region_rect = Rect2( 2, 28, 3, 2 )
+region_rect = Rect2(2, 28, 3, 2)
 
 [node name="Level" type="Label" parent="."]
-margin_left = 104.0
-margin_top = 11.0
-margin_right = 128.0
-margin_bottom = 22.0
+offset_left = 104.0
+offset_top = 15.0
+offset_right = 128.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_colors/font_color = Color( 0.286275, 0.286275, 0.286275, 1 )
-custom_colors/font_color_shadow = Color( 0.729412, 0.729412, 0.729412, 1 )
-custom_constants/shadow_offset_x = 0
-custom_constants/shadow_offset_y = 1
-custom_fonts/font = SubResource( 4 )
 text = "100"
-valign = 1
+label_settings = SubResource("LabelSettings_dengd")
 
 [node name="HealthText" type="HBoxContainer" parent="."]
-margin_left = 61.0
-margin_top = 31.0
-margin_right = 123.0
-margin_bottom = 42.0
+offset_left = 64.0
+offset_top = 34.0
+offset_right = 119.0
+offset_bottom = 45.0
 alignment = 1
 
 [node name="Label" type="Label" parent="HealthText"]
-margin_right = 62.0
-margin_bottom = 11.0
+offset_right = 55.0
+offset_bottom = 11.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_colors/font_color = Color( 0.286275, 0.286275, 0.286275, 1 )
-custom_colors/font_color_shadow = Color( 0.729412, 0.729412, 0.729412, 1 )
-custom_constants/shadow_offset_x = 0
-custom_constants/shadow_offset_y = 1
-custom_fonts/font = SubResource( 4 )
-text = "000/000"
-align = 1
-valign = 1
+text = "000/234"
+label_settings = SubResource("LabelSettings_iwdbg")
+horizontal_alignment = 1
 
 [node name="NameContainer" type="MarginContainer" parent="."]
-margin_left = 24.0
-margin_top = 6.0
-margin_right = 103.0
-margin_bottom = 22.0
-__meta__ = {
-"_edit_group_": true
-}
+offset_left = 20.0
+offset_top = 7.0
+offset_right = 87.0
+offset_bottom = 24.0
 
 [node name="Name" type="Label" parent="NameContainer"]
-margin_right = 79.0
-margin_bottom = 16.0
+offset_right = 67.0
+offset_bottom = 17.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_colors/font_color = Color( 0.286275, 0.286275, 0.286275, 1 )
-custom_colors/font_color_shadow = Color( 0.729412, 0.729412, 0.729412, 1 )
-custom_constants/shadow_offset_x = 0
-custom_constants/shadow_offset_y = 1
-custom_fonts/font = SubResource( 5 )
 text = "Pokemon 1"
-valign = 1
+label_settings = SubResource("LabelSettings_0bqq4")
 
-[node name="GenderSymbol" type="Sprite" parent="."]
-position = Vector2( 87, 9 )
-texture = ExtResource( 3 )
+[node name="GenderSymbol" type="Sprite2D" parent="."]
+position = Vector2(87, 9)
+texture = ExtResource("3")
 centered = false
 region_enabled = true
-region_rect = Rect2( 2, 1, 7, 11 )
+region_rect = Rect2(2, 1, 7, 11)

@@ -1,7 +1,36 @@
 extends Resource
-class_name PokemonSpecies, 'res://icons/pokeball.svg'
+class_name PokemonSpecies
 
-export var ID : = 'BULBASAUR'
+const GENDER_RATIOS = {
+	'AlwaysMale': 0,
+	'FemaleOneEighth': 1/8,
+	'Female25Percent': 1/4,
+	'Female50Percent': 1/2,
+	'Female75Percent': 3/4,
+	'FemaleSevenEights': 7/8,
+	'AlwaysFemale': 1/1,
+	'Genderless': -1,
+}
+
+enum EGG_GROUPS {
+	Monster,
+	Water1,
+	Bug,
+	Flying,
+	Field,
+	Fairy,
+	Grass,
+	Humanlike,
+	Water3,
+	Mineral,
+	Amorphous,
+	Water2,
+	Ditto,
+	Dragon,
+	Undiscovered
+}
+
+@export var ID : = 'BULBASAUR'
 signal done_loading
 
 # Main data
@@ -67,46 +96,16 @@ var f_sprite_front_s : Texture
 var f_sprite_back_s : Texture
 var icon
 
-const GENDER_RATIOS = {
-	'AlwaysMale': 0,
-	'FemaleOneEighth': 1/8,
-	'Female25Percent': 1/4,
-	'Female50Percent': 1/2,
-	'Female75Percent': 3/4,
-	'FemaleSevenEights': 7/8,
-	'AlwaysFemale': 1/1,
-	'Genderless': -1,
-}
-
-enum EGG_GROUPS {
-	Monster,
-	Water1,
-	Bug,
-	Flying,
-	Field,
-	Fairy,
-	Grass,
-	Humanlike,
-	Water3,
-	Mineral,
-	Amorphous,
-	Water2,
-	Ditto,
-	Dragon,
-	Undiscovered
-}
-
 func load_data():
-	var f = File.new()
+	var f = FileAccess.open(Globals.pokemon_file, FileAccess.READ)
 	var target = '[' + ID + ']'
 	var found = false
 	
-	f.open(Globals.pokemon_file, File.READ)
 	while (not f.eof_reached()) and (not found):
 		var line = f.get_line()
 		if line == target:
 			found = true
-	assert(found, ID + ': Pokemon not found!')
+	assert(found, 'Pokemon not found')
 
 	for i in 32:
 		var line = f.get_line()
@@ -114,7 +113,6 @@ func load_data():
 			break
 		set_data(line)
 
-	f.close()
 	emit_signal('done_loading')
 	return
 
@@ -128,8 +126,7 @@ func set_data(data : String):
 	sprite_back_s = load(Globals.sprites_back_shiny + ID + '.png')
 	icon = load(Globals.icons + ID + '.png')
 	
-	var dir = Directory.new()
-	if dir.file_exists('res://Graphics/Pokemon/Front/' + ID + '_female.png'):
+	if FileAccess.file_exists('res://Graphics/Pokemon/Front/' + ID + '_female.png'):
 		f_sprite_front = load('res://Graphics/Pokemon/Front/' + ID + '_female.png')
 		f_sprite_front_s = load('res://Graphics/Pokemon/FrontShiny/' + ID + '_female.png')
 		f_sprite_back = load('res://Graphics/Pokemon/Back/' + ID + '_female.png')
@@ -148,27 +145,27 @@ func set_data(data : String):
 			if types.size() > 1:
 				type_2 = types[1]
 		'BaseStats':
-			var stats = value.split(',')
-			base_stats.HP = int(stats[0])
-			base_stats.ATTACK = int(stats[1])
-			base_stats.DEFENSE = int(stats[2])
-			base_stats.SPECIAL_ATTACK = int(stats[4])
-			base_stats.SPECIAL_DEFENSE = int(stats[5])
-			base_stats.SPEED = int(stats[3])
+			var stats : PackedStringArray = value.split(',')
+			base_stats.HP = stats[0].to_int()
+			base_stats.ATTACK = stats[1].to_int()
+			base_stats.DEFENSE = stats[2].to_int()
+			base_stats.SPECIAL_ATTACK = stats[4].to_int()
+			base_stats.SPECIAL_DEFENSE = stats[5].to_int()
+			base_stats.SPEED = stats[3].to_int()
 		'GenderRatio':
 			gender_ratio = GENDER_RATIOS[value]
 		'GrowthRate':
 			growth_rate = value
 		'BaseExp':
-			base_exp = int(value)
+			base_exp = value.to_int()
 		'EVs':
 			var splitted = value.split(',')
 			ev_yield.stat = splitted[0]
 			ev_yield.quantity = splitted[1]
 		'CatchRate':
-			catch_rate = int(value)
+			catch_rate = value.to_int()
 		'Happiness':
-			happiness = int(value)
+			happiness = value.to_int()
 		'Abilities':
 			var abilities = value.split(',')
 			ability_1 = abilities[0]
@@ -188,13 +185,13 @@ func set_data(data : String):
 			if egg_groups.size() > 1:
 				egg_group_2 = EGG_GROUPS[egg_groups[1]]
 		'HatchSteps':
-			hatch_steps = int(value)
+			hatch_steps = value.to_int()
 		'OffSpring':
 			offspring = value
 		'Height':
-			height = float(value)
+			height = value.to_float()
 		'Weight':
-			weight = float(value)
+			weight = value.to_float()
 		'Color':
 			color = value
 		'Shape':
@@ -208,7 +205,7 @@ func set_data(data : String):
 		'FormName':
 			form_name = value
 		'Generation':
-			generation = int(value)
+			generation = value.to_int()
 		'Flags':
 			flags = value.split(',')
 		'WildItemCommon':

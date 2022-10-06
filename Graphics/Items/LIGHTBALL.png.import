@@ -1,8 +1,9 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path="res://.import/LIGHTBALL.png-d295897c8ea1a9acd994fa5063fd8eeb.stex"
+type="CompressedTexture2D"
+uid="uid://dc8fuq3wxc6pr"
+path="res://.godot/imported/LIGHTBALL.png-d295897c8ea1a9acd994fa5063fd8eeb.ctex"
 metadata={
 "vram_texture": false
 }
@@ -10,26 +11,24 @@ metadata={
 [deps]
 
 source_file="res://Graphics/Items/LIGHTBALL.png"
-dest_files=[ "res://.import/LIGHTBALL.png-d295897c8ea1a9acd994fa5063fd8eeb.stex" ]
+dest_files=["res://.godot/imported/LIGHTBALL.png-d295897c8ea1a9acd994fa5063fd8eeb.ctex"]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=true
-flags/mipmaps=false
-flags/anisotropic=false
-flags/srgb=2
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=true
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

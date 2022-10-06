@@ -1,292 +1,236 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://cis6fjhnb6knu"]
 
-[ext_resource path="res://Scenes/PokemonVisualizer.gd" type="Script" id=1]
-[ext_resource path="res://Scripts/PokemonSpecies.gd" type="Script" id=2]
-[ext_resource path="res://Fonts/power clear bold.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Graphics/Pictures/types.png" type="Texture" id=4]
-[ext_resource path="res://Fonts/power clear.ttf" type="DynamicFontData" id=5]
+[ext_resource type="Script" path="res://Scenes/PokemonVisualizer.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/PokemonSpecies.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://wt2qvudx1tux" path="res://Graphics/Pictures/types.png" id="4"]
 
-[sub_resource type="Resource" id=6]
-script = ExtResource( 2 )
-ID = "XERNEAS"
+[sub_resource type="Resource" id="6"]
+script = ExtResource("2")
+ID = "GALLADE"
 
-[sub_resource type="DynamicFont" id=4]
-size = 20
-font_data = ExtResource( 3 )
-
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 1, 1, 1, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5vodn"]
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id=3]
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="DynamicFont" id=5]
-size = 22
-font_data = ExtResource( 5 )
+[sub_resource type="Theme" id="Theme_577xq"]
+Panel/styles/panel = SubResource("StyleBoxFlat_5vodn")
 
 [node name="PokemonVisualizer" type="Node2D"]
-script = ExtResource( 1 )
-pokemon_species = SubResource( 6 )
+script = ExtResource("1")
+pokemon_species = SubResource("6")
 
 [node name="Stats" type="VBoxContainer" parent="."]
-margin_left = 8.0
-margin_right = 383.0
-margin_bottom = 104.0
+offset_top = 192.0
+offset_right = 260.0
+offset_bottom = 368.0
+theme = SubResource("Theme_577xq")
 alignment = 1
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="HP" type="HBoxContainer" parent="Stats"]
-margin_right = 375.0
-margin_bottom = 14.0
+offset_right = 260.0
+offset_bottom = 26.0
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/HP"]
-margin_right = 167.0
-margin_bottom = 14.0
+offset_right = 112.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 text = "HP:"
 
 [node name="Value" type="Label" parent="Stats/HP"]
-margin_left = 171.0
-margin_right = 204.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+offset_left = 116.0
+offset_right = 144.0
+offset_bottom = 26.0
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/HP"]
-margin_left = 208.0
-margin_right = 375.0
-margin_bottom = 14.0
+offset_left = 148.0
+offset_right = 260.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="BarShade" type="Panel" parent="Stats/HP/Bar"]
-modulate = Color( 0, 0, 0, 0.207843 )
-margin_top = 8.0
-margin_right = 100.0
-margin_bottom = 14.0
+modulate = Color(0, 0, 0, 0.207843)
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 3 )
 
 [node name="ATTACK" type="HBoxContainer" parent="Stats"]
-margin_top = 18.0
-margin_right = 375.0
-margin_bottom = 32.0
+offset_top = 30.0
+offset_right = 260.0
+offset_bottom = 56.0
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/ATTACK"]
-margin_right = 167.0
-margin_bottom = 14.0
+offset_right = 112.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 text = "ATTACK:"
 
 [node name="Value" type="Label" parent="Stats/ATTACK"]
-margin_left = 171.0
-margin_right = 204.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+offset_left = 116.0
+offset_right = 144.0
+offset_bottom = 26.0
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/ATTACK"]
-margin_left = 208.0
-margin_right = 375.0
-margin_bottom = 14.0
+offset_left = 148.0
+offset_right = 260.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="BarShade" type="Panel" parent="Stats/ATTACK/Bar"]
-modulate = Color( 0, 0, 0, 0.207843 )
-margin_top = 8.0
-margin_right = 100.0
-margin_bottom = 14.0
+modulate = Color(0, 0, 0, 0.207843)
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 3 )
 
 [node name="DEFENSE" type="HBoxContainer" parent="Stats"]
-margin_top = 36.0
-margin_right = 375.0
-margin_bottom = 50.0
+offset_top = 60.0
+offset_right = 260.0
+offset_bottom = 86.0
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/DEFENSE"]
-margin_right = 167.0
-margin_bottom = 14.0
+offset_right = 112.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 text = "DEFENSE:"
 
 [node name="Value" type="Label" parent="Stats/DEFENSE"]
-margin_left = 171.0
-margin_right = 204.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+offset_left = 116.0
+offset_right = 144.0
+offset_bottom = 26.0
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/DEFENSE"]
-margin_left = 208.0
-margin_right = 375.0
-margin_bottom = 14.0
+offset_left = 148.0
+offset_right = 260.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="BarShade" type="Panel" parent="Stats/DEFENSE/Bar"]
-modulate = Color( 0, 0, 0, 0.207843 )
-margin_top = 8.0
-margin_right = 100.0
-margin_bottom = 14.0
+modulate = Color(0, 0, 0, 0.207843)
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 3 )
 
 [node name="SPATTACK" type="HBoxContainer" parent="Stats"]
-margin_top = 54.0
-margin_right = 375.0
-margin_bottom = 68.0
+offset_top = 90.0
+offset_right = 260.0
+offset_bottom = 116.0
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/SPATTACK"]
-margin_right = 167.0
-margin_bottom = 14.0
+offset_right = 112.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 text = "SP.ATTACK:"
 
 [node name="Value" type="Label" parent="Stats/SPATTACK"]
-margin_left = 171.0
-margin_right = 204.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+offset_left = 116.0
+offset_right = 144.0
+offset_bottom = 26.0
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/SPATTACK"]
-margin_left = 208.0
-margin_right = 375.0
-margin_bottom = 14.0
+offset_left = 148.0
+offset_right = 260.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="BarShade" type="Panel" parent="Stats/SPATTACK/Bar"]
-modulate = Color( 0, 0, 0, 0.207843 )
-margin_top = 8.0
-margin_right = 100.0
-margin_bottom = 14.0
+modulate = Color(0, 0, 0, 0.207843)
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 3 )
 
 [node name="SPDEFENSE" type="HBoxContainer" parent="Stats"]
-margin_top = 72.0
-margin_right = 375.0
-margin_bottom = 86.0
+offset_top = 120.0
+offset_right = 260.0
+offset_bottom = 146.0
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/SPDEFENSE"]
-margin_right = 167.0
-margin_bottom = 14.0
+offset_right = 112.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 text = "SP.DEFENSE:"
 
 [node name="Value" type="Label" parent="Stats/SPDEFENSE"]
-margin_left = 171.0
-margin_right = 204.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+offset_left = 116.0
+offset_right = 144.0
+offset_bottom = 26.0
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/SPDEFENSE"]
-margin_left = 208.0
-margin_right = 375.0
-margin_bottom = 14.0
+offset_left = 148.0
+offset_right = 260.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="BarShade" type="Panel" parent="Stats/SPDEFENSE/Bar"]
-modulate = Color( 0, 0, 0, 0.207843 )
-margin_top = 8.0
-margin_right = 100.0
-margin_bottom = 14.0
+modulate = Color(0, 0, 0, 0.207843)
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 3 )
 
 [node name="SPEED" type="HBoxContainer" parent="Stats"]
-margin_top = 90.0
-margin_right = 375.0
-margin_bottom = 104.0
+offset_top = 150.0
+offset_right = 260.0
+offset_bottom = 176.0
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/SPEED"]
-margin_right = 167.0
-margin_bottom = 14.0
+offset_right = 112.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 4 )
 text = "SPEED:"
 
 [node name="Value" type="Label" parent="Stats/SPEED"]
-margin_left = 171.0
-margin_right = 204.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 4 )
+offset_left = 116.0
+offset_right = 144.0
+offset_bottom = 26.0
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/SPEED"]
-margin_left = 208.0
-margin_right = 375.0
-margin_bottom = 14.0
+offset_left = 148.0
+offset_right = 260.0
+offset_bottom = 26.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
 
 [node name="BarShade" type="Panel" parent="Stats/SPEED/Bar"]
-modulate = Color( 0, 0, 0, 0.207843 )
-margin_top = 8.0
-margin_right = 100.0
-margin_bottom = 14.0
+modulate = Color(0, 0, 0, 0.207843)
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 3 )
 
 [node name="Types" type="Control" parent="."]
-margin_left = 8.0
-margin_top = 119.0
-margin_right = 385.0
-margin_bottom = 159.0
+layout_mode = 3
+anchors_preset = 0
+offset_left = 192.0
+offset_top = 48.0
+offset_right = 192.0
+offset_bottom = 48.0
 
 [node name="Label" type="Label" parent="Types"]
-margin_right = 47.0
-margin_bottom = 23.0
-custom_fonts/font = SubResource( 5 )
 text = "Type:"
 
-[node name="Type1" type="Sprite" parent="Types"]
-position = Vector2( 54, 0 )
-texture = ExtResource( 4 )
+[node name="Type1" type="Sprite2D" parent="Types"]
+position = Vector2(54, 0)
+texture = ExtResource("4")
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 64, 28 )
+region_rect = Rect2(0, 0, 64, 28)
 
-[node name="Type2" type="Sprite" parent="Types"]
-position = Vector2( 126, 0 )
-texture = ExtResource( 4 )
+[node name="Type2" type="Sprite2D" parent="Types"]
+position = Vector2(126, 0)
+texture = ExtResource("4")
 centered = false
 region_enabled = true
-region_rect = Rect2( 0, 0, 64, 28 )
+region_rect = Rect2(0, 0, 64, 28)
 
 [node name="Sprites" type="Node2D" parent="."]
 
-[node name="Front" type="Sprite" parent="Sprites"]
+[node name="Front" type="Sprite2D" parent="Sprites"]
 centered = false
 
-[node name="FrontShiny" type="Sprite" parent="Sprites"]
+[node name="FrontShiny" type="Sprite2D" parent="Sprites"]
 centered = false
 
-[node name="Back" type="Sprite" parent="Sprites"]
+[node name="Back" type="Sprite2D" parent="Sprites"]
 centered = false
 
-[node name="BackShiny" type="Sprite" parent="Sprites"]
+[node name="BackShiny" type="Sprite2D" parent="Sprites"]
 centered = false

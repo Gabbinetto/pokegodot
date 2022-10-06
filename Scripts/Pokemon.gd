@@ -5,12 +5,19 @@ var species : Resource
 
 enum {MALE, FEMALE, GENDERLESS}
 
-export var species_id : String # The species ID, used to create the species
-export var nickname : = '' # The Pokemon nickname, if not set it uses the species name
-export var gender : = MALE
-export var shiny : = false
-export var level : = 1
-var current_exp : = 0
+@export var species_id : String # The species ID, used to create the species
+@export var nickname : = '' # The Pokemon nickname, if not set it uses the species name
+@export var gender : = MALE
+@export var shiny : = false
+@export var level : = 1
+var current_exp : = 0 :
+	set(value):
+		if level < GameVariables.MAX_LEVEL:
+			current_exp = value
+		else:
+			current_exp = GameVariables.exp_table[species.growth_rate][-1]
+		check_level()
+		
 var moves : = [
 	{'MOVE': null, 'PPs': 0, 'PPUPs': 0.0},
 	{'MOVE': null, 'PPs': 0, 'PPUPs': 0.0},
@@ -24,7 +31,7 @@ var status = null
 var volatile_statuses = []
 
 var held_item = null
-var nature = Globals.NATURES['HARDY']
+var nature = 'HARDY' # Insert this in nature boosts
 
 # Stats and stats-related values
 var stats : = {
@@ -35,7 +42,7 @@ var stats : = {
 	'SPECIAL_DEFENSE': 0,
 	'SPEED': 0,
 }
-export var ivs : = {
+@export var ivs : = {
 	'HP': 0,
 	'ATTACK': 0,
 	'DEFENSE': 0,
@@ -43,7 +50,7 @@ export var ivs : = {
 	'SPECIAL_DEFENSE': 0,
 	'SPEED': 0,
 }
-export var evs : = {
+@export var evs : = {
 	'HP': 0,
 	'ATTACK': 0,
 	'DEFENSE': 0,
@@ -63,7 +70,7 @@ var nature_boosts : = {
 var front : Texture
 var back : Texture
 
-func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _shiny = false, _gender = MALE) -> void:
+func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _shiny = false, _gender = MALE, _nature = 'HARDY') -> void:
 	# If the form is not 0 use a PokemonForm instead of PokemonSpecies
 	if form_number > 0:
 		species = PokemonForm.new()
@@ -74,11 +81,13 @@ func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _s
 	species.ID = species_id.to_upper() # Set the ID for the species
 	species.load_data() # and load it's data
 
+	# yield(GameVariables, 'finished_loading')
 	# Setting all data specific to one exemplary
 	nickname = _nickname
 	level = _level
 	shiny = _shiny
 	gender = _gender if species.gender_ratio != species.GENDER_RATIOS.Genderless else GENDERLESS
+	nature = GameVariables.NATURES[_nature]
 	
 	front = species.sprite_front if !shiny else species.sprite_front_s
 	back = species.sprite_back if !shiny else species.sprite_back_s
@@ -98,6 +107,8 @@ func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _s
 	hp = stats.HP
 		
 	set_moves_for_level()
+	
+#	current_exp = GameVariables.exp_table[species.growth_rate][level-1]
 
 # Set moves to the last 4 moves learnt at the pokemon level
 func set_moves_for_level():
@@ -105,7 +116,7 @@ func set_moves_for_level():
 	var move_index = 0 # This will cycle from 0 to 3, representing the move slot
 	for i in range(0, learnt_moves.size() - 1, 2):
 		if learnt_moves[i] != '0':
-			var move_level = int(learnt_moves[i])
+			var move_level = learnt_moves[i].to_int()
 			var move = learnt_moves[i+1]
 			if move_level > level:
 				break
@@ -133,3 +144,27 @@ func calc_stat(stat):
 	else:
 		var calculated = floor((floor(0.01 * (2 * species.base_stats[stat] + ivs[stat] + floor(0.25 * evs[stat])) * level) + 5) * nature_boosts[stat])
 		return calculated
+
+
+# Get the total exp for current level and total exp for next level
+func exp_to_next_level(_level = level):
+#	print(GameVariables.exp_table[species.growth_rate])
+	return [
+		GameVariables.exp_table[species.growth_rate][level - 1],
+		GameVariables.exp_table[species.growth_rate][level] if level < GameVariables.MAX_LEVEL else GameVariables.exp_table[species.growth_rate][level - 1],
+	]
+
+
+# Function to check level and exp
+func check_level():
+	var table = Globals.exp_table[species.growth_rate]
+	for i in 100:
+		if current_exp >= table[i]:
+			level = i+1
+		else:
+			break
+
+
+# Get a move's max pp
+func get_move_max_pp(slot):
+	return moves[slot].MOVE.total_pp * ((5 + moves[slot].PPUPs) / 5.0)

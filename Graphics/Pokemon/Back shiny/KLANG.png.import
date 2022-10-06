@@ -1,8 +1,9 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path="res://.import/KLANG.png-9655e1d7ce0a01a55ccff681875eb1ec.stex"
+type="CompressedTexture2D"
+uid="uid://c2rbmx8hml2wi"
+path="res://.godot/imported/KLANG.png-9655e1d7ce0a01a55ccff681875eb1ec.ctex"
 metadata={
 "vram_texture": false
 }
@@ -10,26 +11,24 @@ metadata={
 [deps]
 
 source_file="res://Graphics/Pokemon/Back shiny/KLANG.png"
-dest_files=[ "res://.import/KLANG.png-9655e1d7ce0a01a55ccff681875eb1ec.stex" ]
+dest_files=["res://.godot/imported/KLANG.png-9655e1d7ce0a01a55ccff681875eb1ec.ctex"]
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
-flags/filter=false
-flags/mipmaps=false
-flags/anisotropic=false
-flags/srgb=2
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
 process/normal_map_invert_y=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

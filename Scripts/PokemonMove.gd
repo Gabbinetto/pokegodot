@@ -1,7 +1,7 @@
 extends Resource
 class_name PokemonMove
 
-export var ID : = 'MEGAHORN'
+@export var ID : = 'MEGAHORN'
 
 var name : = 'Unnamed'
 var type : = '???'
@@ -21,16 +21,15 @@ func _init(id : String) -> void:
 	load_data()
 
 func load_data():
-	var f = File.new()
+	var f = FileAccess.open(Globals.moves_file, FileAccess.READ)
 	var _target = '[' + ID + ']'
 	var found = false
 	
-	f.open(Globals.moves_file, File.READ)
 	while (not f.eof_reached()) and (not found):
 		var line = f.get_line()
 		if line == _target:
 			found = true
-	assert(found, ID + ': Move not found!')
+	assert(found, 'Move not found!')
 
 	for i in 32:
 		var line = f.get_line()
@@ -38,7 +37,6 @@ func load_data():
 			break
 		set_data(line)
 
-	f.close()
 	return
 
 func set_data(data : String):
@@ -57,21 +55,21 @@ func set_data(data : String):
 		'Category':
 			category = value.to_upper()
 		'Power':
-			base_power = int(value)
+			base_power = value.to_int()
 		'Accuracy':
-			accuracy = int(value)
+			accuracy = value.to_int()
 		'TotalPP':
-			total_pp = int(value)
+			total_pp = value.to_int()
 		'Target':
 			target = value
 		'Priority':
-			priority = int(value)
+			priority = value.to_int()
 		'FunctionCode':
 			move_effect = value
 		'Flags':
 			flags = value.split(',')
 		'EffectChance':
-			effect_chance = int(value)
+			effect_chance = value.to_int()
 		'Description':
 			description = value
 		_:
