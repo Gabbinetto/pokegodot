@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Node2D",
+"class": &"GameMap",
+"language": &"GDScript",
+"path": "res://Scripts/MapScript.gd"
+}, {
 "base": "Resource",
 "class": &"Pokemon",
 "language": &"GDScript",
@@ -33,19 +38,27 @@ _global_script_classes=[{
 "class": &"PokemonSpecies",
 "language": &"GDScript",
 "path": "res://Scripts/PokemonSpecies.gd"
+}, {
+"base": "Resource",
+"class": &"WildPokemonData",
+"language": &"GDScript",
+"path": "res://Scripts/WildPokemonData.gd"
 }]
 _global_script_class_icons={
+"GameMap": "",
 "Pokemon": "",
 "PokemonData": "",
 "PokemonForm": "",
 "PokemonMove": "",
-"PokemonSpecies": ""
+"PokemonSpecies": "",
+"WildPokemonData": ""
 }
 
 [application]
 
 config/name="Pokegodot"
-run/main_scene="res://Scenes/Battle/BattleScene.tscn"
+config/description="A Pokemon Essentials-like template for Godot 4"
+run/main_scene="res://Scenes/Maps/TestMap.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
 
@@ -53,6 +66,7 @@ config/icon="res://icon.svg"
 
 GameVariables="*res://Scripts/GameVariables.gd"
 Globals="*res://Scripts/Globals.gd"
+GameFunctions="*res://Scripts/GameFunctions.gd"
 
 [display]
 

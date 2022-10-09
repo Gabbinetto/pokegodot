@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var move_speed : = 4.0
 @export var run_speed : = 8.0
-const TILE_SIZE : = 32
+
 
 var is_moving : = false
 var is_running : = false
@@ -11,15 +11,16 @@ var percent_to_next_tile : = 0.0
 var initial_position : = Vector2()
 var input_direction : = Vector2()
 var sprite : AnimatedSprite2D 
-var raycast : RayCast2D 
+var collision_checker : RayCast2D
+var event_checker : RayCast2D
 
 func _ready() -> void:
 	initial_position = position
 	sprite = $AnimatedSprite2d
-	raycast = $RayCast2d
+	collision_checker = $CollisionChecker
+	event_checker = $EventChecker
 
 func _physics_process(delta: float) -> void:
-	raycast.set_enabled(is_moving)
 	if is_moving == false:
 		_process_player_input()
 	elif input_direction != Vector2.ZERO:
@@ -42,19 +43,21 @@ func _process_player_input():
 
 func _move(delta):
 	percent_to_next_tile += delta * ((move_speed * int(!is_running)) + (run_speed * int(is_running)))
-	var desired_step : = input_direction * TILE_SIZE / 2 
-	raycast.set_target_position(desired_step)
-	raycast.force_raycast_update()
-	if raycast.is_colliding():
+	var desired_step : Vector2 = input_direction * GameVariables.TILE_SIZE / 2 
+	collision_checker.set_target_position(desired_step)
+	collision_checker.force_raycast_update()
+	event_checker.set_target_position(desired_step)
+	if collision_checker.is_colliding():
 		is_moving = false
 		percent_to_next_tile = 0.0
+		sprite.set_frame(0)
 	else:
 		if percent_to_next_tile >= 1.0:
-			position = initial_position + (TILE_SIZE * input_direction)
+			position = initial_position + (GameVariables.TILE_SIZE * input_direction)# + (GameVariables.TILE_SIZE * input_direction / 2)
 			percent_to_next_tile = 0.0
 			is_moving = false
 		else:
-			position = initial_position + (TILE_SIZE * input_direction * percent_to_next_tile)
+			position = initial_position + (GameVariables.TILE_SIZE * input_direction * percent_to_next_tile)# + (GameVariables.TILE_SIZE * input_direction / 2)
 		
 		
 func _handle_animation():

@@ -1,16 +1,7 @@
 extends Resource
 class_name PokemonSpecies
 
-const GENDER_RATIOS = {
-	'AlwaysMale': 0,
-	'FemaleOneEighth': 1/8,
-	'Female25Percent': 1/4,
-	'Female50Percent': 1/2,
-	'Female75Percent': 3/4,
-	'FemaleSevenEights': 7/8,
-	'AlwaysFemale': 1/1,
-	'Genderless': -1,
-}
+
 
 enum EGG_GROUPS {
 	Monster,
@@ -45,7 +36,7 @@ var base_stats : = {
 	'SPECIAL_DEFENSE': 0,
 	'SPEED': 0,
 }
-var gender_ratio = GENDER_RATIOS.Female50Percent
+var gender_ratio = GameVariables.GENDER_RATIOS.Female50Percent
 var growth_rate : = 'Medium'
 var base_exp : = 0
 var ev_yield : = {'stat': null, 'quantity': 1}
@@ -153,7 +144,7 @@ func set_data(data : String):
 			base_stats.SPECIAL_DEFENSE = stats[5].to_int()
 			base_stats.SPEED = stats[3].to_int()
 		'GenderRatio':
-			gender_ratio = GENDER_RATIOS[value]
+			gender_ratio = GameVariables.GENDER_RATIOS[value]
 		'GrowthRate':
 			growth_rate = value
 		'BaseExp':

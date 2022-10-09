@@ -178,8 +178,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twu60"]
 size = Vector2(32, 32)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 texture_filter = 1
+collision_layer = 3
 script = ExtResource("1_b2db6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -197,6 +198,10 @@ centered = false
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_twu60")
 
-[node name="RayCast2d" type="RayCast2D" parent="."]
+[node name="CollisionChecker" type="RayCast2D" parent="."]
 position = Vector2(16, 16)
-target_position = Vector2(0, 32)
+target_position = Vector2(0, 16)
+
+[node name="EventChecker" type="RayCast2D" parent="."]
+position = Vector2(16, 16)
+target_position = Vector2(0, 16)

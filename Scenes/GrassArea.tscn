@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4qlkiccdsorn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l1uns"]
+size = Vector2(16, 16)
+
+[node name="GrassArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_l1uns")

@@ -2,6 +2,21 @@ extends Node
 
 signal finished_loading
 
+const TILE_SIZE : = 32
+
+const SHINY_CHANCE : = 1.0 / 4096.0
+
+const GENDER_RATIOS = {
+	'AlwaysMale': 0,
+	'FemaleOneEighth': 1/8,
+	'Female25Percent': 1/4,
+	'Female50Percent': 1/2,
+	'Female75Percent': 3/4,
+	'FemaleSevenEights': 7/8,
+	'AlwaysFemale': 1/1,
+	'Genderless': -1,
+}
+
 const TYPES_INDEX = {
 	'NORMAL': 0,
 	'FIGHTING': 1,
@@ -182,6 +197,7 @@ func _generate_type_chart():
 
 
 func _ready() -> void:
+	
 	for i in exp_table.keys():
 		_generate_exp_table(i)
 	player_team[0] = Pokemon.new('CHARMANDER', 0, '', 1)

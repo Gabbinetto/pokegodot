@@ -1,7 +1,7 @@
 extends Resource
 class_name Pokemon
 
-var species : Resource
+var species : PokemonSpecies
 
 enum {MALE, FEMALE, GENDERLESS}
 
@@ -70,7 +70,7 @@ var nature_boosts : = {
 var front : Texture
 var back : Texture
 
-func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _shiny = false, _gender = MALE, _nature = 'HARDY') -> void:
+func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _shiny = false, _gender = MALE, _nature = 'HARDY', _ivs = {}, _evs = {}) -> void:
 	# If the form is not 0 use a PokemonForm instead of PokemonSpecies
 	if form_number > 0:
 		species = PokemonForm.new()
@@ -86,8 +86,12 @@ func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _s
 	nickname = _nickname
 	level = _level
 	shiny = _shiny
-	gender = _gender if species.gender_ratio != species.GENDER_RATIOS.Genderless else GENDERLESS
+	gender = _gender if species.gender_ratio != GameVariables.GENDER_RATIOS.Genderless else GENDERLESS
 	nature = GameVariables.NATURES[_nature]
+	if _ivs != {} and typeof(_ivs) == TYPE_DICTIONARY:
+		ivs = ivs
+	if _evs != {} and typeof(_evs) == TYPE_DICTIONARY:
+		evs = _evs
 	
 	front = species.sprite_front if !shiny else species.sprite_front_s
 	back = species.sprite_back if !shiny else species.sprite_back_s

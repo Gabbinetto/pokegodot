@@ -245,4 +245,5 @@ func _on_run_pressed() -> void:
 func _run_away() -> void:
 	var tween = create_tween()
 	tween.tween_property($BlackScreen, 'modulate:a', 1.0, 0.5)
-	tween.tween_callback(get_tree().quit)
+	tween.tween_callback(queue_free)
+	get_tree().paused = false
