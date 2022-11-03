@@ -10,6 +10,7 @@ enum {MALE, FEMALE, GENDERLESS}
 @export var gender : = MALE
 @export var shiny : = false
 @export var level : = 1
+@export var ability = null
 var current_exp : = 0 :
 	set(value):
 		if level < GameVariables.MAX_LEVEL:
@@ -18,7 +19,7 @@ var current_exp : = 0 :
 			current_exp = GameVariables.exp_table[species.growth_rate][-1]
 		check_level()
 		
-var moves : = [
+var moves : Array[Dictionary] = [
 	{'MOVE': null, 'PPs': 0, 'PPUPs': 0.0},
 	{'MOVE': null, 'PPs': 0, 'PPUPs': 0.0},
 	{'MOVE': null, 'PPs': 0, 'PPUPs': 0.0},
@@ -70,7 +71,7 @@ var nature_boosts : = {
 var front : Texture
 var back : Texture
 
-func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _shiny = false, _gender = MALE, _nature = 'HARDY', _ivs = {}, _evs = {}) -> void:
+func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _shiny = false, _gender = MALE, _nature = 'HARDY', _ivs = {}, _evs = {}, hidden_ability = false) -> void:
 	# If the form is not 0 use a PokemonForm instead of PokemonSpecies
 	if form_number > 0:
 		species = PokemonForm.new()
@@ -81,7 +82,6 @@ func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _s
 	species.ID = species_id.to_upper() # Set the ID for the species
 	species.load_data() # and load it's data
 
-	# yield(GameVariables, 'finished_loading')
 	# Setting all data specific to one exemplary
 	nickname = _nickname
 	level = _level
@@ -89,7 +89,7 @@ func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _s
 	gender = _gender if species.gender_ratio != GameVariables.GENDER_RATIOS.Genderless else GENDERLESS
 	nature = GameVariables.NATURES[_nature]
 	if _ivs != {} and typeof(_ivs) == TYPE_DICTIONARY:
-		ivs = ivs
+		ivs = _ivs
 	if _evs != {} and typeof(_evs) == TYPE_DICTIONARY:
 		evs = _evs
 	
@@ -110,9 +110,22 @@ func _init(_species_id : String, form_number = 0, _nickname = '', _level = 1, _s
 		stats[stat] = calc_stat(stat)
 	hp = stats.HP
 		
+	
+	if species.ability_2 != null:
+		var abilities : Array = [species.ability_1, species.ability_2]
+		abilities.shuffle()
+		ability = abilities.front()
+	else:
+		ability = species.ability_1
+	if hidden_ability:
+		ability = species.hidden_ability
+	
 	set_moves_for_level()
 	
-#	current_exp = GameVariables.exp_table[species.growth_rate][level-1]
+	if not GameVariables.loaded:
+		await GameVariables.finished_loading
+	
+	current_exp = GameVariables.exp_table[species.growth_rate][level-1]
 
 # Set moves to the last 4 moves learnt at the pokemon level
 func set_moves_for_level():
@@ -152,7 +165,6 @@ func calc_stat(stat):
 
 # Get the total exp for current level and total exp for next level
 func exp_to_next_level(_level = level):
-#	print(GameVariables.exp_table[species.growth_rate])
 	return [
 		GameVariables.exp_table[species.growth_rate][level - 1],
 		GameVariables.exp_table[species.growth_rate][level] if level < GameVariables.MAX_LEVEL else GameVariables.exp_table[species.growth_rate][level - 1],
@@ -161,7 +173,7 @@ func exp_to_next_level(_level = level):
 
 # Function to check level and exp
 func check_level():
-	var table = Globals.exp_table[species.growth_rate]
+	var table = GameVariables.exp_table[species.growth_rate]
 	for i in 100:
 		if current_exp >= table[i]:
 			level = i+1

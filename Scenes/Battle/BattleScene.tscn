@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bowutivjlm7jl" path="res://Graphics/Trainers/POKEMONTRAINER_Red_back.png" id="8"]
 [ext_resource type="PackedScene" uid="uid://d0hcpqva8e766" path="res://Scenes/Battle/EnemyDatabox.tscn" id="9"]
 [ext_resource type="FontFile" uid="uid://ddq6mqha1adun" path="res://Fonts/pokemon-ds-font.ttf" id="9_m5ews"]
-[ext_resource type="PackedScene" uid="uid://wgs1qpbo0j5f" path="res://Scenes/Battle/PlayerDatabox.tscn" id="12"]
+[ext_resource type="PackedScene" uid="uid://bq0wwmmch10kd" path="res://Scenes/Battle/PlayerDatabox.tscn" id="12"]
 [ext_resource type="Texture2D" uid="uid://wt2qvudx1tux" path="res://Graphics/Pictures/types.png" id="15"]
 [ext_resource type="Theme" uid="uid://baacunby43dm8" path="res://Scenes/Battle/battle_button_theme.tres" id="16"]
 [ext_resource type="Texture2D" uid="uid://08oc7fd24ds0" path="res://Graphics/Pictures/category.png" id="17"]
@@ -297,14 +297,16 @@ libraries = {
 }
 
 [node name="Bg" type="TextureRect" parent="."]
-layout_mode = 0
 texture = ExtResource("5")
 stretch_mode = 2
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="BgReverse" type="TextureRect" parent="Bg"]
-layout_mode = 0
+offset_top = 576.0
+offset_right = 512.0
+offset_bottom = 864.0
+scale = Vector2(1, -1)
 texture = ExtResource("5")
 stretch_mode = 2
 
@@ -349,7 +351,6 @@ centered = false
 offset = Vector2(-48, -96)
 
 [node name="MessageBox" type="NinePatchRect" parent="."]
-layout_mode = 0
 offset_top = 288.0
 offset_right = 512.0
 offset_bottom = 384.0
@@ -362,7 +363,6 @@ patch_margin_bottom = 12
 
 [node name="Text" type="Label" parent="MessageBox"]
 visible = false
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -379,7 +379,7 @@ vertical_alignment = 1
 
 [node name="ActionSelection" type="Control" parent="MessageBox"]
 visible = false
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -387,7 +387,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Actions" type="GridContainer" parent="MessageBox/ActionSelection"]
-layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
@@ -404,7 +403,6 @@ theme_override_constants/v_separation = 0
 columns = 2
 
 [node name="Fight" type="Button" parent="MessageBox/ActionSelection/Actions"]
-layout_mode = 2
 offset_right = 50.0
 offset_bottom = 38.0
 size_flags_horizontal = 3
@@ -417,7 +415,6 @@ text = "FIGHT"
 flat = true
 
 [node name="Pokemons" type="Button" parent="MessageBox/ActionSelection/Actions"]
-layout_mode = 2
 offset_left = 50.0
 offset_right = 112.0
 offset_bottom = 38.0
@@ -431,7 +428,6 @@ text = "POKEMONS"
 flat = true
 
 [node name="Bag" type="Button" parent="MessageBox/ActionSelection/Actions"]
-layout_mode = 2
 offset_top = 38.0
 offset_right = 50.0
 offset_bottom = 76.0
@@ -445,7 +441,6 @@ text = "BAG"
 flat = true
 
 [node name="Run" type="Button" parent="MessageBox/ActionSelection/Actions"]
-layout_mode = 2
 offset_left = 50.0
 offset_top = 38.0
 offset_right = 112.0
@@ -461,7 +456,6 @@ flat = true
 
 [node name="Moves" type="HBoxContainer" parent="MessageBox"]
 visible = false
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -473,7 +467,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MovesButtons" type="GridContainer" parent="MessageBox/Moves"]
-layout_mode = 2
 offset_right = 227.0
 offset_bottom = 76.0
 size_flags_horizontal = 3
@@ -482,47 +475,67 @@ theme = ExtResource("16")
 columns = 2
 
 [node name="Move1" type="Button" parent="MessageBox/Moves/MovesButtons"]
-layout_mode = 2
 offset_right = 114.0
 offset_bottom = 38.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Move2")
+focus_neighbor_top = NodePath("../Move3")
+focus_neighbor_right = NodePath("../Move2")
+focus_neighbor_bottom = NodePath("../Move3")
+focus_next = NodePath("../Move2")
+focus_previous = NodePath("../../MoveDescription/BackButton")
 text = "Move"
 flat = true
 
 [node name="Move2" type="Button" parent="MessageBox/Moves/MovesButtons"]
-layout_mode = 2
 offset_left = 114.0
 offset_right = 227.0
 offset_bottom = 38.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Move1")
+focus_neighbor_top = NodePath("../Move4")
+focus_neighbor_right = NodePath("../../MoveDescription/BackButton")
+focus_neighbor_bottom = NodePath("../Move4")
+focus_next = NodePath("../Move3")
+focus_previous = NodePath("../Move1")
 text = "Move"
 flat = true
 
 [node name="Move3" type="Button" parent="MessageBox/Moves/MovesButtons"]
-layout_mode = 2
 offset_top = 38.0
 offset_right = 114.0
 offset_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath("../../MoveDescription/BackButton")
+focus_neighbor_top = NodePath("../Move1")
+focus_neighbor_right = NodePath("../Move4")
+focus_neighbor_bottom = NodePath("../Move1")
+focus_next = NodePath("../Move4")
+focus_previous = NodePath("../Move2")
 text = "Move"
 flat = true
 
 [node name="Move4" type="Button" parent="MessageBox/Moves/MovesButtons"]
-layout_mode = 2
 offset_left = 114.0
 offset_top = 38.0
 offset_right = 227.0
 offset_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Move3")
+focus_neighbor_top = NodePath("../Move2")
+focus_neighbor_right = NodePath("../../MoveDescription/BackButton")
+focus_neighbor_bottom = NodePath("../Move2")
+focus_next = NodePath("../../MoveDescription/BackButton")
+focus_previous = NodePath("../Move3")
 text = "Move"
 flat = true
 
 [node name="MoveDescription" type="Control" parent="MessageBox/Moves"]
-layout_mode = 2
+layout_mode = 3
 anchors_preset = 0
 offset_left = 231.0
 offset_right = 458.0
@@ -530,7 +543,6 @@ offset_bottom = 76.0
 size_flags_horizontal = 3
 
 [node name="TypeLabel" type="Label" parent="MessageBox/Moves/MoveDescription"]
-layout_mode = 0
 offset_top = 9.0
 offset_right = 29.0
 offset_bottom = 26.0
@@ -546,7 +558,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 28)
 
 [node name="CategoryLabel" type="Label" parent="MessageBox/Moves/MoveDescription"]
-layout_mode = 0
 offset_left = 85.0
 offset_top = 9.0
 offset_right = 159.0
@@ -563,7 +574,6 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 28)
 
 [node name="PPLabel" type="Label" parent="MessageBox/Moves/MoveDescription"]
-layout_mode = 0
 offset_top = 51.0
 offset_right = 51.0
 offset_bottom = 68.0
@@ -571,7 +581,6 @@ text = "PP: 00/00"
 label_settings = SubResource("LabelSettings_xg83i")
 
 [node name="BackButton" type="Button" parent="MessageBox/Moves/MoveDescription"]
-layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.51542
 anchor_top = -0.131579
@@ -594,7 +603,6 @@ position = Vector2(-122, 55)
 
 [node name="BlackScreen" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0)
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -602,7 +610,3 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
-
-[connection signal="pressed" from="MessageBox/ActionSelection/Actions/Fight" to="." method="_on_fight_button_pressed"]
-[connection signal="pressed" from="MessageBox/ActionSelection/Actions/Run" to="." method="_on_run_pressed"]
-[connection signal="pressed" from="MessageBox/Moves/MoveDescription/BackButton" to="." method="_on_moves_back_pressed"]

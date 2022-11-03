@@ -17,6 +17,7 @@ func _on_grass_entered(_body):
 	
 	var random_pick : WildPokemonData = GameFunctions.weighted_random(grass_pool)
 	var level : int = round(randf_range(random_pick.min_level, random_pick.max_level))
-	var wild_pokemon : Pokemon = GameFunctions.generate_random_pokemon(random_pick.pokemon_id.to_upper(), random_pick.form_number, level)
+	var wild_pokemon : Pokemon = await GameFunctions.generate_random_pokemon(random_pick.pokemon_id.to_upper(), random_pick.form_number, level)
+
 	
 	GameFunctions.start_battle(wild_pokemon)

@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://dtaf63kebit2w"]
+
+[ext_resource type="Script" path="res://Scripts/Dialogue/Dialogue.gd" id="1_bstqv"]
+[ext_resource type="Texture2D" uid="uid://dfmyu80hssjxh" path="res://Graphics/Windowskins/speech hgss 1.png" id="2_j0387"]
+[ext_resource type="Texture2D" uid="uid://dxlehoigr58qc" path="res://Graphics/Windowskins/choice 1.png" id="3_fgphn"]
+[ext_resource type="LabelSettings" uid="uid://c5j1cwc8skyr0" path="res://Scripts/Dialogue/dialogue_label_settings.tres" id="3_frd62"]
+
+[node name="DialogueTestLayout" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dialogue" type="CanvasLayer" parent="."]
+script = ExtResource("1_bstqv")
+
+[node name="window" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_top = 288.0
+offset_right = 512.0
+offset_bottom = 384.0
+texture = ExtResource("2_j0387")
+region_rect = Rect2(4, 2, 88, 44)
+patch_margin_left = 22
+patch_margin_top = 14
+patch_margin_right = 44
+patch_margin_bottom = 14
+
+[node name="choice" type="NinePatchRect" parent="window"]
+texture_filter = 1
+layout_mode = 1
+offset_left = 343.0
+offset_top = -128.0
+offset_right = 512.0
+texture = ExtResource("3_fgphn")
+region_rect = Rect2(2, 2, 44, 44)
+patch_margin_left = 32
+patch_margin_top = 12
+patch_margin_right = 32
+patch_margin_bottom = 12
+
+[node name="text2" type="Button" parent="window/choice"]
+layout_mode = 2
+offset_left = -205.0
+offset_top = 10.0
+offset_right = 159.0
+offset_bottom = 118.0
+size_flags_vertical = 3
+flat = true
+alignment = 2
+text_overrun_behavior = 1
+
+[node name="text" type="Label" parent="window"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 12.0
+offset_right = 474.0
+offset_bottom = 86.0
+text = "Dummy text dummy text"
+label_settings = ExtResource("3_frd62")
+autowrap_mode = 2
+clip_text = true

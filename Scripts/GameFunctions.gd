@@ -50,7 +50,7 @@ func generate_random_pokemon(id : String, form_number : int, level : int) -> Pok
 	
 	var ivs : Dictionary = generate_random_ivs()
 	
-	var pokemon = Pokemon.new(id, form_number, '', level, is_shiny, 0, nature, ivs)
+	var pokemon = await Pokemon.new(id, form_number, '', level, is_shiny, 0, nature)
 	
 	var gender = 1 if randf() <= pokemon.species.gender_ratio else 0
 	if pokemon.species.gender_ratio == -1:

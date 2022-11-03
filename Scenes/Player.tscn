@@ -180,13 +180,14 @@ size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 texture_filter = 1
+z_index = 2
 collision_layer = 3
 script = ExtResource("1_b2db6")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(16, 16)
 current = true
-smoothing_speed = 15.0
 
 [node name="AnimatedSprite2d" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
@@ -204,4 +205,6 @@ target_position = Vector2(0, 16)
 
 [node name="EventChecker" type="RayCast2D" parent="."]
 position = Vector2(16, 16)
-target_position = Vector2(0, 16)
+target_position = Vector2(0, 32)
+collide_with_areas = true
+collide_with_bodies = false

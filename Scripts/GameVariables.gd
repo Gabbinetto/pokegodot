@@ -1,20 +1,21 @@
 extends Node
 
 signal finished_loading
+var loaded : = false
 
 const TILE_SIZE : = 32
 
 const SHINY_CHANCE : = 1.0 / 4096.0
 
 const GENDER_RATIOS = {
-	'AlwaysMale': 0,
-	'FemaleOneEighth': 1/8,
-	'Female25Percent': 1/4,
-	'Female50Percent': 1/2,
-	'Female75Percent': 3/4,
-	'FemaleSevenEights': 7/8,
-	'AlwaysFemale': 1/1,
-	'Genderless': -1,
+	'AlwaysMale': 0.0,
+	'FemaleOneEighth': 1.0/8.0,
+	'Female25Percent': 1.0/4.0,
+	'Female50Percent': 1.0/2.0,
+	'Female75Percent': 3.0/4.0,
+	'FemaleSevenEights': 7.0/8.0,
+	'AlwaysFemale': 1.0/1.0,
+	'Genderless': -1.0,
 }
 
 const TYPES_INDEX = {
@@ -43,7 +44,7 @@ const TYPES_INDEX = {
 # The numbers are 1.0: NORMAL, 2.0:SUPEREFFECTIVE, 0.5: NOT VERY EFFECTIVE, 0.0: IMMUNE
 # To point at something do TYPE_CHART[attacking_type_index][target_type_index] and get the damage multiplier
 # These get generated at runtime from types.txt
-const TYPE_CHART = [
+var TYPE_CHART = [
 #	NORM FIGH FLYN POIS GROU ROCK BUG  GHOS STEE ???  FIRE WATE GRAS ELEC PSYC ICE  DRAG DARK FAIR
 	[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], # NORMAL
 	[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], # FIGHTING
@@ -103,6 +104,21 @@ const NATURES = {
 
 const MAX_LEVEL = 100
 
+enum WEATHERS {
+	NONE,
+	SUN,
+	RAIN,
+	SANDSTORM,
+	HAIL,
+	HARSH_SUN,
+	STRONG_RAIN,
+	STRONG_WINDS
+}
+
+enum TERRAINS {
+	GRASS, ELECTRIC, PSYCHIC, MISTY
+}
+
 var player_team = {
 	0: null,
 	1: null,
@@ -120,13 +136,13 @@ var player_team = {
 #
 # }
 
-const exp_table = {
-	'Erratic': [0,0,0,0,0,0],
-	'Fast': [0,0,0,0,0,0],
-	'Medium': [0,0,0,0,0,0],
-	'Parabolic': [0,0,0,0,0,0],
-	'Slow': [0,0,0,0,0,0],
-	'Fluctuating': [0,0,0,0,0,0],
+var exp_table = {
+	'Erratic': [],
+	'Fast': [],
+	'Medium': [],
+	'Parabolic': [],
+	'Slow': [],
+	'Fluctuating': [],
 }
 
 enum {SLOW = 8, MEDIUM = 16, FAST = 32}
@@ -200,7 +216,9 @@ func _ready() -> void:
 	
 	for i in exp_table.keys():
 		_generate_exp_table(i)
-	player_team[0] = Pokemon.new('CHARMANDER', 0, '', 1)
+	player_team[0] = await Pokemon.new('CHARMANDER', 0, '', 5)
+
 	_generate_type_chart()
 
+	loaded = true
 	emit_signal('finished_loading')

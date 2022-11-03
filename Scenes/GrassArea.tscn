@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://c4qlkiccdsorn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l1uns"]
-size = Vector2(16, 16)
+size = Vector2(2, 2)
 
 [node name="GrassArea" type="Area2D"]
 collision_layer = 0

@@ -3,7 +3,6 @@ extends CharacterBody2D
 @export var move_speed : = 4.0
 @export var run_speed : = 8.0
 
-
 var is_moving : = false
 var is_running : = false
 var percent_to_next_tile : = 0.0
@@ -21,9 +20,9 @@ func _ready() -> void:
 	event_checker = $EventChecker
 
 func _physics_process(delta: float) -> void:
-	if is_moving == false:
+	if is_moving == false and Globals.movement_enabled:
 		_process_player_input()
-	elif input_direction != Vector2.ZERO:
+	elif is_moving:#input_direction != Vector2.ZERO:
 		_move(delta)
 		
 	_handle_animation()
@@ -32,6 +31,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _process_player_input():
+	
+	
 	if input_direction.y == 0:
 		input_direction.x = int(Input.get_axis('Left', 'Right'))
 	if input_direction.x == 0:
@@ -42,11 +43,16 @@ func _process_player_input():
 		is_moving = true
 
 func _move(delta):
-	percent_to_next_tile += delta * ((move_speed * int(!is_running)) + (run_speed * int(is_running)))
+	
+	if is_running:
+		percent_to_next_tile += delta * run_speed
+	else:
+		percent_to_next_tile += delta * move_speed
+	
 	var desired_step : Vector2 = input_direction * GameVariables.TILE_SIZE / 2 
 	collision_checker.set_target_position(desired_step)
 	collision_checker.force_raycast_update()
-	event_checker.set_target_position(desired_step)
+	event_checker.set_target_position(desired_step * 2)
 	if collision_checker.is_colliding():
 		is_moving = false
 		percent_to_next_tile = 0.0
@@ -64,8 +70,16 @@ func _handle_animation():
 	sprite.set_playing(is_moving)
 	if !is_moving:
 		if input_direction == Vector2.ZERO:
+			# Set the frame to the first frame to have an idle "animation"
 			sprite.set_frame(0)
+			
+			# If the player was running set the animation to the correspondent
+			# walk animation. Like if the animation was 'RUN_UP' set to 'WALK_UP' to avoid
+			# having running frames while idle
+			if String(sprite.animation).contains('RUN'):
+				sprite.animation = 'WALK' + String(sprite.animation).right(-3)
 	else:
+		# Set the animation according to the running state and direction
 		var anim_prefix = 'RUN' if is_running else 'WALK'
 		match input_direction:
 			Vector2.UP:
@@ -77,7 +91,15 @@ func _handle_animation():
 			Vector2.RIGHT:
 				sprite.set_animation(anim_prefix + '_RIGHT')
 
+func get_camera():
+	return %Camera
 
+func _unhandled_input(input_event: InputEvent) -> void:
+	if input_event.is_action_pressed('A'):
+		_check_event()
 
-
-
+func _check_event():
+	var event : Event = event_checker.get_collider()
+	if event_checker.is_colliding() and Globals.movement_enabled:
+		if !event.is_running:
+			event.run()

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=37 format=3 uid="uid://dodijhxu81ln2"]
+[gd_resource type="TileSet" load_steps=38 format=3 uid="uid://dodijhxu81ln2"]
 
 [ext_resource type="Texture2D" uid="uid://c4ay64w1aa83s" path="res://Graphics/Tilesets/Bike shop interior.png" id="1_u5yk1"]
 [ext_resource type="Texture2D" uid="uid://b6v0t3vou2hcy" path="res://Graphics/Tilesets/Interior general.png" id="2_hogqb"]
@@ -18,6 +18,9 @@
 [ext_resource type="Texture2D" uid="uid://dpvldapngahxx" path="res://Graphics/Tilesets/Gyms interior.png" id="16_fopiw"]
 [ext_resource type="Texture2D" uid="uid://nmcpuqkd0vgy" path="res://Graphics/Tilesets/Harbour interior.png" id="17_ok0i4"]
 [ext_resource type="Texture2D" uid="uid://6fm8du3atxcw" path="res://Graphics/Tilesets/hgss_tileset.png" id="18_odxqk"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_rtt7j"]
+tile_data = PackedInt32Array(0, 917513, 44, 65536, 917513, 45, 1, 983049, 44, 65537, 983049, 45)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t2us8"]
 texture = ExtResource("1_u5yk1")
@@ -29428,3 +29431,4 @@ sources/18 = SubResource("TileSetAtlasSource_phmw8")
 sources/19 = SubResource("TileSetAtlasSource_o2yok")
 sources/20 = SubResource("TileSetAtlasSource_p7wtw")
 sources/2 = SubResource("TileSetAtlasSource_nlm7l")
+pattern_0 = SubResource("TileMapPattern_rtt7j")

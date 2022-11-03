@@ -32,8 +32,6 @@ func _ready() -> void:
 		$Types/Type2.visible = true
 		$Types/Type2.region_rect.position.y = 28 * (GameVariables.TYPES_INDEX[pokemon_species.type_2])
 		print(28 * (GameVariables.TYPES_INDEX[pokemon_species.type_1]))
-	print(pokemon_species.type_1)
-	print(pokemon_species.type_2)
 
 	stats.get_node('HP/Bar/BarShade').size.x = stats.get_node('HP/Bar').size.x
 	stats.get_node('ATTACK/Bar/BarShade').size.x = stats.get_node('ATTACK/Bar').size.x

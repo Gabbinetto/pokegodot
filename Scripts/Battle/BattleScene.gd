@@ -68,7 +68,23 @@ var BATTLE_SETTINGS_SPRITES = {
 }
 
 var state : = -1
-var textbox : Label
+
+# Setting nodes
+@onready var textbox : = $MessageBox/Text
+@onready var pokemon_1_databox : Databox = $DataboxPokemon1
+@onready var pokemon_2_databox : Databox = $DataboxPokemon2
+@onready var ground_1 : = $Ground1
+@onready var ground_2 : = $Ground2
+@onready var background : = $Bg
+
+@onready var fight_button : Button = $MessageBox/ActionSelection/Actions/Fight
+@onready var pokemons_button : Button = $MessageBox/ActionSelection/Actions/Pokemons
+@onready var bag_button : Button = $MessageBox/ActionSelection/Actions/Bag
+@onready var run_button : Button = $MessageBox/ActionSelection/Actions/Run
+
+@onready var back_button : Button = $MessageBox/Moves/MoveDescription/BackButton
+
+
 
 # Data used if pokemons are not set. Should not be used if not for testing, scripts should invoke battles with pregenerated pokemons
 @export var pokemon_1_data : PokemonData
@@ -77,7 +93,7 @@ var textbox : Label
 
 @onready var sprite_1 : = $Ground1/Sprite1
 @onready var sprite_2 : = $Ground2/Sprite2
-@onready var move_buttons : = [
+@onready var move_buttons : Array[Node] = [
 	$MessageBox/Moves/MovesButtons/Move1,
 	$MessageBox/Moves/MovesButtons/Move2,
 	$MessageBox/Moves/MovesButtons/Move3,
@@ -85,20 +101,42 @@ var textbox : Label
 ]
 @onready var animation : AnimationPlayer = $AnimationPlayer
 
-var pokemon_1 : Resource
-var pokemon_2 : Resource
+var pokemon_1 : Pokemon
+var pokemon_2 : Pokemon
+
+var volatile_battle_data_1 : VolatileBattleData
+var volatile_battle_data_2 : VolatileBattleData
+
+var weather : GameVariables.WEATHERS = GameVariables.WEATHERS.NONE 
+
 
 func _ready() -> void:
 	var _unused = get_viewport().connect('gui_focus_changed', _on_focus_changed) 
-	textbox = $MessageBox/Text
 	
-	$MessageBox/ActionSelection/Actions/Fight.grab_focus()
+	# Setting nodes
+
+	fight_button.grab_focus()
 
 	pokemon_1 = GameVariables.player_team[0]
 
 	load_scene()
 
+	# Initializing the volatile data
+	volatile_battle_data_1 = VolatileBattleData.new(pokemon_1)
+	volatile_battle_data_2 = VolatileBattleData.new(pokemon_2)
+
 	_handle_state(STATES.START)
+	
+	# Connecting
+	fight_button.pressed.connect(_on_fight_button_pressed)
+	run_button.pressed.connect(_on_run_pressed)
+	back_button.pressed.connect(_on_moves_back_pressed)
+	
+	for i in move_buttons.size():
+		move_buttons[i].pressed.connect(
+			func():
+				_handle_state(STATES.ACTION_EXECUTION, {'move_index': i})
+		)
 
 func load_scene() -> void:
 	
@@ -106,9 +144,9 @@ func load_scene() -> void:
 	
 
 	if pokemon_1 == null:
-		pokemon_1 = Pokemon.new(pokemon_1_data.ID.to_upper(), pokemon_1_data.FORM_NUMBER, pokemon_1_data.NICKNAME, pokemon_1_data.LEVEL, pokemon_1_data.SHINY, pokemon_1_data.GENDER)
+		pokemon_1 = await Pokemon.new(pokemon_1_data.ID.to_upper(), pokemon_1_data.FORM_NUMBER, pokemon_1_data.NICKNAME, pokemon_1_data.LEVEL, pokemon_1_data.SHINY, pokemon_1_data.GENDER)
 	if pokemon_2 == null:
-		pokemon_2 = Pokemon.new(pokemon_2_data.ID.to_upper(), pokemon_2_data.FORM_NUMBER, pokemon_2_data.NICKNAME, pokemon_2_data.LEVEL, pokemon_2_data.SHINY, pokemon_2_data.GENDER)
+		pokemon_2 = await Pokemon.new(pokemon_2_data.ID.to_upper(), pokemon_2_data.FORM_NUMBER, pokemon_2_data.NICKNAME, pokemon_2_data.LEVEL, pokemon_2_data.SHINY, pokemon_2_data.GENDER)
 	
 	sprite_1.texture = pokemon_1.back
 	sprite_2.texture = pokemon_2.front
@@ -120,16 +158,16 @@ func load_scene() -> void:
 	sprite_1.offset.y += sprite_1.texture.get_height() - lowest_sprite1_pixel.y
 	sprite_2.offset.y += sprite_2.texture.get_height() - lowest_sprite2_pixel.y
 
-	$DataboxPokemon1.pokemon = pokemon_1
-	$DataboxPokemon2.pokemon = pokemon_2
+	pokemon_1_databox.pokemon = pokemon_1
+	pokemon_2_databox.pokemon = pokemon_2
 
-	$DataboxPokemon1.update_health_bar()
+#	pokemon_1_databox.update_health_bar()
 
 	# Set scenery
-	$Bg.texture = BATTLE_SETTINGS_SPRITES[setting][0]
-	$Bg/BgReverse.texture = $Bg.texture
-	$Ground1.texture = BATTLE_SETTINGS_SPRITES[setting][1]
-	$Ground2.texture = BATTLE_SETTINGS_SPRITES[setting][1]
+	background.texture = BATTLE_SETTINGS_SPRITES[setting][0]
+	background.get_node('BgReverse').texture = background.texture
+	ground_1.texture = BATTLE_SETTINGS_SPRITES[setting][1]
+	ground_2.texture = BATTLE_SETTINGS_SPRITES[setting][1]
 
 	sync_move_buttons()
 
@@ -163,7 +201,17 @@ func _handle_state(new_state : int, _data = {}):
 		_show_text(new_text)
 
 	elif state == STATES.ACTION_EXECUTION:
-		pass
+		var player_move = pokemon_1.moves[_data.move_index].MOVE 
+		var enemy_moves : Array[Dictionary] = pokemon_2.moves.duplicate()
+		for i in range(enemy_moves.size() - 1, 0, -1):
+			if enemy_moves[i].MOVE == null:
+				enemy_moves.remove_at(i)
+		enemy_moves.shuffle()
+		var enemy_move = enemy_moves.front().MOVE 
+		
+		_process_battle_turn(player_move, enemy_move)
+		
+		_handle_state(STATES.ACTION_SELECTION)
 
 	elif state == STATES.WIN:
 		pass
@@ -193,7 +241,7 @@ func _show_text(text : String):
 # Used only in the start animations, not intended to be used elsewhere
 # Shows the default wild pokemon text with the opposing pokemon name
 func _show_wild_text():
-	_show_text('A wild %s appeared!' % pokemon_2.nickname)
+	return _show_text('A wild %s appeared!' % pokemon_2.nickname)
 
 func _unhandled_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed('ui_page_up'):
@@ -247,3 +295,12 @@ func _run_away() -> void:
 	tween.tween_property($BlackScreen, 'modulate:a', 1.0, 0.5)
 	tween.tween_callback(queue_free)
 	get_tree().paused = false
+
+
+func _process_battle_turn(player_attack : PokemonMove, enemy_attack : PokemonMove) -> void:
+	
+	var damage_to_enemy = BattleFunctions.damage_calculation(player_attack, volatile_battle_data_1, volatile_battle_data_2)
+	var damage_to_player = BattleFunctions.damage_calculation(enemy_attack, volatile_battle_data_2, volatile_battle_data_1)
+	
+	pokemon_1.hp -= damage_to_player
+	pokemon_2.hp -= damage_to_enemy

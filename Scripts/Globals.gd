@@ -1,6 +1,5 @@
 extends Node
 
-
 # File paths
 const pokemon_file : = 'res://PBS/pokemon.txt'
 const pokemon_forms_file : = 'res://PBS/pokemon_forms.txt'
@@ -13,6 +12,8 @@ const sprites_front_shiny : = 'res://Graphics/Pokemon/Front shiny/'
 const sprites_back : = 'res://Graphics/Pokemon/Back/'
 const sprites_back_shiny : = 'res://Graphics/Pokemon/Back shiny/'
 const icons : = 'res://Graphics/Pokemon/Icons/'
+
+var movement_enabled : = true
 
 # Get the lowest non-opaque pixel in an image
 # Used to offset Pokemon sprites down to the ground

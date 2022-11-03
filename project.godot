@@ -9,6 +9,31 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Sprite2D",
+"class": &"Databox",
+"language": &"GDScript",
+"path": "res://Scripts/Battle/Databox.gd"
+}, {
+"base": "CanvasLayer",
+"class": &"Dialogue",
+"language": &"GDScript",
+"path": "res://Scripts/Dialogue/Dialogue.gd"
+}, {
+"base": "Resource",
+"class": &"DialogueEvent",
+"language": &"GDScript",
+"path": "res://Scripts/Dialogue/DialogueEvent.gd"
+}, {
+"base": "DialogueEvent",
+"class": &"DialogueTextEvent",
+"language": &"GDScript",
+"path": "res://Scripts/Dialogue/DialogueTextEvent.gd"
+}, {
+"base": "Area2D",
+"class": &"Event",
+"language": &"GDScript",
+"path": "res://Scripts/Event.gd"
+}, {
 "base": "Node2D",
 "class": &"GameMap",
 "language": &"GDScript",
@@ -39,18 +64,35 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://Scripts/PokemonSpecies.gd"
 }, {
+"base": "TileMap",
+"class": &"PokemonTilemap",
+"language": &"GDScript",
+"path": "res://Scripts/PokemonTilemap.gd"
+}, {
+"base": "Resource",
+"class": &"VolatileBattleData",
+"language": &"GDScript",
+"path": "res://Scripts/Battle/VolatileBattleData.gd"
+}, {
 "base": "Resource",
 "class": &"WildPokemonData",
 "language": &"GDScript",
 "path": "res://Scripts/WildPokemonData.gd"
 }]
 _global_script_class_icons={
+"Databox": "",
+"Dialogue": "",
+"DialogueEvent": "",
+"DialogueTextEvent": "",
+"Event": "",
 "GameMap": "",
 "Pokemon": "",
 "PokemonData": "",
 "PokemonForm": "",
 "PokemonMove": "",
 "PokemonSpecies": "",
+"PokemonTilemap": "",
+"VolatileBattleData": "",
 "WildPokemonData": ""
 }
 
@@ -67,6 +109,7 @@ config/icon="res://icon.svg"
 GameVariables="*res://Scripts/GameVariables.gd"
 Globals="*res://Scripts/Globals.gd"
 GameFunctions="*res://Scripts/GameFunctions.gd"
+BattleFunctions="*res://Scripts/Battle/BattleFunctions.gd"
 
 [display]
 
@@ -77,11 +120,12 @@ window/stretch/mode="canvas_items"
 
 [editor]
 
-movie_writer/movie_file="/home/gabriele/Documents/Godot4Projects/Pokegodot4/recording.avi"
+movie_writer/movie_file="/home/gabriele/Documents/Godot4Projects/Pokegodot/recording.avi"
+movie_writer/disable_vsync=true
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg")
 
 [input]
 
@@ -151,4 +195,5 @@ R={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 vulkan/rendering/back_end=1
