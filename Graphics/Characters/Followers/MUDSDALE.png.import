@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MUDSDALE.png-2d46b23a0c006fcd3c6b3bc0d0fe39bb
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

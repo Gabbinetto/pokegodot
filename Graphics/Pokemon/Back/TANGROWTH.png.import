@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TANGROWTH.png-8c1a940e64a5dda46e2ed0075b1273e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

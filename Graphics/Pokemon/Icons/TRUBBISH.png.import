@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TRUBBISH.png-5be4340fe7ab18c9ae2fc7367d9d9813
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

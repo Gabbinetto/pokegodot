@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PORYGONZ.png-7afd53c5690ec7ade6fd828e340ec376
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

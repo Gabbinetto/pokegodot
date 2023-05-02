@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DEWGONG.png-f366679ad3cdd76c8584ff2543d47ee6.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

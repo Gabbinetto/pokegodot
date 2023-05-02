@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CUTIEFLY.png-f7d8a7d7822df78c48ee5e2ae76ea214
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

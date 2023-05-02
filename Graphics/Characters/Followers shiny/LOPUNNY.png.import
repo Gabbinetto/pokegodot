@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LOPUNNY.png-38f61c72068c929894e7d5017fa278b3.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

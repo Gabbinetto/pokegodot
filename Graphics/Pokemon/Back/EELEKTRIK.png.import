@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/EELEKTRIK.png-809f62ab7f4fd343d66f7b81670ae16
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

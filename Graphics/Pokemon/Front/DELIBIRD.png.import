@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DELIBIRD.png-09f3a522e67a196e25d600a8069a97b1
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

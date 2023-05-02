@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SANDSLASH.png-0f3e51e2f7c9d70a34ae8db44461f7f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

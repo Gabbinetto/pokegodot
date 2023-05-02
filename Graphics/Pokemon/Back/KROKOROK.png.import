@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/KROKOROK.png-6458bf0fa60d4c607e33c9bcab4268e1
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

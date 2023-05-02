@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GEODUDE.png-f73f735d53ced175c72d5578cdd061f9.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

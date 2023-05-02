@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FOMANTIS.png-fc6f1df3b24061fae78c1de08d1af4b8
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

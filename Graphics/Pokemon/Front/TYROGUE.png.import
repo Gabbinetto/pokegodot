@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TYROGUE.png-ca9aa90718068af871abb9e4a8efc25e.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

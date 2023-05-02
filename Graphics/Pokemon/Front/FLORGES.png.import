@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FLORGES.png-e0495d4e22055a7f684db79676377e60.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

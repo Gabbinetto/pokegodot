@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SCIZOR_1.png-25a77e01a8439e68187746693db864f8
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

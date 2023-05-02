@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/OVALSTONE.png-5ea7c1f53d649c6d1df13e76a2da821
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

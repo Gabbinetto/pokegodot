@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MIMEJR.png-a594b91c90b6255c5e243d8da4ae7f86.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

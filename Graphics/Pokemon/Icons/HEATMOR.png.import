@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HEATMOR.png-74e6751d3ae297a6e04c565d529a47a0.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

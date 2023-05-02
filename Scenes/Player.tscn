@@ -134,42 +134,138 @@ region = Rect2(96, 144, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nfek2"]
 animations = [{
-"frames": [SubResource("AtlasTexture_6oblg"), SubResource("AtlasTexture_uqy0x"), SubResource("AtlasTexture_a3b4w"), SubResource("AtlasTexture_7wfih")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6oblg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqy0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a3b4w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wfih")
+}],
 "loop": true,
 "name": &"RUN_DOWN",
 "speed": 10.0
 }, {
-"frames": [SubResource("AtlasTexture_soomp"), SubResource("AtlasTexture_1jjrv"), SubResource("AtlasTexture_erm0d"), SubResource("AtlasTexture_wb0x2")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soomp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jjrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_erm0d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb0x2")
+}],
 "loop": true,
 "name": &"RUN_LEFT",
 "speed": 10.0
 }, {
-"frames": [SubResource("AtlasTexture_5qp1l"), SubResource("AtlasTexture_14nvr"), SubResource("AtlasTexture_4iea0"), SubResource("AtlasTexture_p860i")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qp1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14nvr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4iea0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p860i")
+}],
 "loop": true,
 "name": &"RUN_RIGHT",
 "speed": 10.0
 }, {
-"frames": [SubResource("AtlasTexture_620kr"), SubResource("AtlasTexture_ptmu0"), SubResource("AtlasTexture_dpyea"), SubResource("AtlasTexture_upbtw")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_620kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ptmu0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpyea")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upbtw")
+}],
 "loop": true,
 "name": &"RUN_UP",
 "speed": 10.0
 }, {
-"frames": [SubResource("2"), SubResource("3"), SubResource("4"), SubResource("5")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("2")
+}, {
+"duration": 1.0,
+"texture": SubResource("3")
+}, {
+"duration": 1.0,
+"texture": SubResource("4")
+}, {
+"duration": 1.0,
+"texture": SubResource("5")
+}],
 "loop": true,
 "name": &"WALK_DOWN",
 "speed": 5.0
 }, {
-"frames": [SubResource("6"), SubResource("7"), SubResource("8"), SubResource("9")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}, {
+"duration": 1.0,
+"texture": SubResource("8")
+}, {
+"duration": 1.0,
+"texture": SubResource("9")
+}],
 "loop": true,
 "name": &"WALK_LEFT",
 "speed": 5.0
 }, {
-"frames": [SubResource("10"), SubResource("11"), SubResource("12"), SubResource("13")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("10")
+}, {
+"duration": 1.0,
+"texture": SubResource("11")
+}, {
+"duration": 1.0,
+"texture": SubResource("12")
+}, {
+"duration": 1.0,
+"texture": SubResource("13")
+}],
 "loop": true,
 "name": &"WALK_RIGHT",
 "speed": 5.0
 }, {
-"frames": [SubResource("14"), SubResource("15"), SubResource("16"), SubResource("17")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("14")
+}, {
+"duration": 1.0,
+"texture": SubResource("15")
+}, {
+"duration": 1.0,
+"texture": SubResource("16")
+}, {
+"duration": 1.0,
+"texture": SubResource("17")
+}],
 "loop": true,
 "name": &"WALK_UP",
 "speed": 5.0
@@ -179,19 +275,18 @@ animations = [{
 size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-texture_filter = 1
 z_index = 2
+texture_filter = 1
 collision_layer = 3
 script = ExtResource("1_b2db6")
 
 [node name="Camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(16, 16)
-current = true
 
 [node name="AnimatedSprite2d" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
-frames = SubResource("SpriteFrames_nfek2")
+sprite_frames = SubResource("SpriteFrames_nfek2")
 animation = &"WALK_DOWN"
 centered = false
 

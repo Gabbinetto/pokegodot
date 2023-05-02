@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LIEPARD.png-56021e86f5d75f2089820805a304564e.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/AUDINO.png-64c537ac14d1431336524349b875f821.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

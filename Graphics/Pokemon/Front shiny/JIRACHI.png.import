@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/JIRACHI.png-e9c0302af2504e65378f450fe2b5fab6.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

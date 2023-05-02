@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/EISCUE_1.png-c7a6175905a26dd3777189806c2a8d5d
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

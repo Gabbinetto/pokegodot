@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/VIBRAVA.png-3ae1b8b6c42d0dd4092a23f02ccfc581.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

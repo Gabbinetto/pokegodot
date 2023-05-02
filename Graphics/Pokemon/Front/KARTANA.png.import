@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/KARTANA.png-4889f4059161f52539c7321404db722a.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HATTREM.png-9a8257a0532ee35938e9f63e6bcd0496.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

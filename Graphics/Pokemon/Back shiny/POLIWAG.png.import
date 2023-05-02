@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/POLIWAG.png-f8766b1c4e2f31f6af009a4ceb072130.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

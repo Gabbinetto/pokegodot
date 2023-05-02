@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/elite3_base0.png-a4ef6a989d90a5e6629340fe716d
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

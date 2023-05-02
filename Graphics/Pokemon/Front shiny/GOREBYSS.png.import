@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GOREBYSS.png-9d204209a09f9c68ea5e02a7e72d3cfe
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

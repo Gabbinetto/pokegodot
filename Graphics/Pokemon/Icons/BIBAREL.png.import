@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BIBAREL.png-b2879c898b5c65477f1e35a00f2c61f4.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

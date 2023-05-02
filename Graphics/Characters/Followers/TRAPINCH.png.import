@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TRAPINCH.png-e9fcd14e06fc8ea6a1863995b21a9f07
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

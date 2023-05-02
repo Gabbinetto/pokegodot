@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/NANABBERRY.png-6e776e9bb680379f41a6029ea7a94e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

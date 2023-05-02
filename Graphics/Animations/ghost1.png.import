@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ghost1.png-e63901c6e5f3f307cfbcb2b6479bc231.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

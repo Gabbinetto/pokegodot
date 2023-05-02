@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HOOTHOOT.png-6917fe9a31c2f2b6d0cc2a8c985ed50e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

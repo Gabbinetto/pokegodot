@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/RATTATA.png-7ef660021b9ba5549a23cbd49c33f592.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

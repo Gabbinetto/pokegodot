@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CRADILY.png-b768aebabf1e5ac9159c0d0ab65bcd10.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

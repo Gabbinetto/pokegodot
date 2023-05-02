@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SKUNTANK.png-9c70b622461aae0ec86cd2e9e8c926cf
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

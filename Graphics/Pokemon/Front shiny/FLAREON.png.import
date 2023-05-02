@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FLAREON.png-ef9ca04d5de5944d4bb8483d53bd87d9.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

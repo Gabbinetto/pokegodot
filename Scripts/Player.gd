@@ -67,7 +67,9 @@ func _move(delta):
 		
 		
 func _handle_animation():
-	sprite.set_playing(is_moving)
+	if !is_moving:
+		sprite.stop()
+	
 	if !is_moving:
 		if input_direction == Vector2.ZERO:
 			# Set the frame to the first frame to have an idle "animation"
@@ -83,13 +85,13 @@ func _handle_animation():
 		var anim_prefix = 'RUN' if is_running else 'WALK'
 		match input_direction:
 			Vector2.UP:
-				sprite.set_animation(anim_prefix + '_UP')
+				sprite.play(anim_prefix + '_UP')
 			Vector2.DOWN:
-				sprite.set_animation(anim_prefix + '_DOWN')
+				sprite.play(anim_prefix + '_DOWN')
 			Vector2.LEFT:
-				sprite.set_animation(anim_prefix + '_LEFT')
+				sprite.play(anim_prefix + '_LEFT')
 			Vector2.RIGHT:
-				sprite.set_animation(anim_prefix + '_RIGHT')
+				sprite.play(anim_prefix + '_RIGHT')
 
 func get_camera():
 	return %Camera

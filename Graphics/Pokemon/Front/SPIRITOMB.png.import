@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SPIRITOMB.png-ace429b2db2c7b71f4e86237d46e110
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

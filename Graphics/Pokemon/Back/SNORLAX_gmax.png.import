@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SNORLAX_gmax.png-c35ccf7cf114686c9ce2a6df98b2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

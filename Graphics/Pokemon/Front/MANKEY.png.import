@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MANKEY.png-d6253d73d7cdde611e5e0eee6368298f.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

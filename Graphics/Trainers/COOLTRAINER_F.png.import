@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/COOLTRAINER_F.png-0dc720b537c07d1b95bb267db39
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

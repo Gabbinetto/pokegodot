@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/STAKATAKA.png-3fcc4a4189d9e2e0da1d22b4a339eb2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

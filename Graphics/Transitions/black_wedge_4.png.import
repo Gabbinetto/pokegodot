@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/black_wedge_4.png-a0f2f2ce9fe0982cb1105549c4f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

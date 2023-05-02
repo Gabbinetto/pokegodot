@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BERGMITE.png-0ee88a2e1e5a1392fe19eed3d8d3993a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

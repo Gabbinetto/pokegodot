@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PYROAR.png-249f8e6f256f89b84deca9c2948a9ec3.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

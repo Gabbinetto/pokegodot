@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MINIOR_7.png-661fc691cef23f8661c2a71c1fa8492f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

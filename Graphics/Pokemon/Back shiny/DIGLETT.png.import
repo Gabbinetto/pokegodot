@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DIGLETT.png-d5d016276c9f51cb9428e2bb06e6efb2.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

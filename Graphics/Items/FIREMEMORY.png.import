@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FIREMEMORY.png-1d7dab89a5997d28dc40304c7bc4ad
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

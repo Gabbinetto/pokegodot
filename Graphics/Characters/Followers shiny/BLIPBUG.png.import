@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BLIPBUG.png-c4affe7b58333b461befd25dd16bf602.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

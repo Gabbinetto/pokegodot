@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TORKOAL.png-275b3c76e20909dad9002e58a3e9c217.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

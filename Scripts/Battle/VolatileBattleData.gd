@@ -3,7 +3,6 @@ class_name VolatileBattleData
 
 var pokemon : Pokemon
 
-var HP : = 0
 var ATTACK : = 0
 var DEFENSE : = 0
 var SPECIAL_ATTACK : = 0
@@ -64,6 +63,6 @@ func get_stat_boost(stat : String):
 # If raw_stat is true then return the raw stat with no boost
 func get_stat(stat : String, raw_stat : bool = false):
 	if raw_stat:
-		return get(stat)
+		return get(stat.to_upper())
 	
-	return get(stat) * get_stat_boost(stat)
+	return get(stat.to_upper()) * get_stat_boost(stat.to_upper())

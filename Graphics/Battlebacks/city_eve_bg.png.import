@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/city_eve_bg.png-da0bf81577ba344dd6867af23ad5b
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

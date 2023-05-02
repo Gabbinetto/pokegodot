@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ALTARIA_1.png-d1cdfa97366d98c301b4e91d1f7fad2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

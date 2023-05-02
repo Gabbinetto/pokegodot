@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TRANQUILL.png-3c92b4c122a46e81dae3d1b8e5f227a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

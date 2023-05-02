@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/RHYHORN.png-402b4dd2bb3a6555c2e2f8f35fa9f49b.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

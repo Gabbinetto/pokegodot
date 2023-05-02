@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/WINGULL.png-fe00db73aef1183b7704b09e93a68d57.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

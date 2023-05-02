@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/puddle_night_base1.png-fefe2b9b9975dadd97a759
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

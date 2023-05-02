@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/Sea.png-393a312fec55de6e5bff02659f0bc58f.ctex
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

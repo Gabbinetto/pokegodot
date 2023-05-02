@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ballBurst_ring1.png-72a19c914d1ab11e4ed7fe953
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

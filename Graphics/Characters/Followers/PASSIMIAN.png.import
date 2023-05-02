@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PASSIMIAN.png-0ea711559ff8d2e53eede9d4d17fcc7
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/WEEDLE.png-bf272d4b5dc6bca15b3a22af84bc8c57.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

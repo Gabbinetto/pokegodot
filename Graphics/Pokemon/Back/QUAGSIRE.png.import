@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/QUAGSIRE.png-89e53970796c4fa6b7085005127e146a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

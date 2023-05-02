@@ -1,6 +1,6 @@
 extends Node
 
-# Based of Bulbapedia's formula: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward
+# Based off of Bulbapedia's formula: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward
 func damage_calculation(move : PokemonMove, attacker : VolatileBattleData, defender : VolatileBattleData, weather = null, critical_boost = 0,  targets = 1.0, PB = 1.0, other = 1.0, z_move = 1.0):
 	if move.category == 'STATUS':
 		return 0
@@ -48,6 +48,7 @@ func damage_calculation(move : PokemonMove, attacker : VolatileBattleData, defen
 	var effectiveness = type_effectiveness(move.type, defender.type_1, defender.type_2, defender.type_3)
 	
 	return floor(factor_1 * PB * weather_boost * critical * random * stab * effectiveness * burn * other * z_move * 1.0) # Last one should be targets
+
 
 func type_effectiveness(attacking : String, defending_1 : String, defending_2 = null, defending_3 = null, type_chart : = GameVariables.TYPE_CHART.duplicate()):
 	if attacking == '???':

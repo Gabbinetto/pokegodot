@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FORRETRESS.png-80e94da21fed280e7e9c5a0d37b8ef
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TORNADUS_1.png-8668d0c0fbf9577523bdc6c6120514
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

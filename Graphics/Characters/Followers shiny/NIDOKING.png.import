@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/NIDOKING.png-a04d33e2b9ca25c6bf4d75f2a070bd35
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

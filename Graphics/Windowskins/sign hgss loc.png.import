@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/sign hgss loc.png-20183d6c54bbfb67c86db10e3b9
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

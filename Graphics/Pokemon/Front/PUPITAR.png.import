@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PUPITAR.png-1b1148f6d549d9023a9ac777c1f8cb36.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

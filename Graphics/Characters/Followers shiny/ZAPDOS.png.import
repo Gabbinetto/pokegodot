@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ZAPDOS.png-26d880f85c0262823af576cfba700848.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

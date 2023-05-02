@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/REGIGIGAS.png-8b38425d31530c1fe30b6eb28b40245
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

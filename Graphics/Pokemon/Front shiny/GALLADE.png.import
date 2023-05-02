@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GALLADE.png-7bec5b9e0d9f37c544699e2781427858.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

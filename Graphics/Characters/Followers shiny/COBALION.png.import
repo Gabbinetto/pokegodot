@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/COBALION.png-3257686bf6e3155bc56ac90bc9076e81
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

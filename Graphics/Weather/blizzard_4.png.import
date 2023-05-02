@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/blizzard_4.png-ef3d588818f11a8a20a933f184afdd
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

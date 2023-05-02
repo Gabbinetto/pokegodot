@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SIRFETCHD.png-991521fe4d68b70b76db8676a1c2d75
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

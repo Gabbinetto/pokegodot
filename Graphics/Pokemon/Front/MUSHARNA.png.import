@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MUSHARNA.png-72142af4b3abe71ff59da88bc30ba18b
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

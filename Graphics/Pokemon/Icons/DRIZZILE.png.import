@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DRIZZILE.png-a89ed6d9b01d3f56a09be6f1c9533272
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

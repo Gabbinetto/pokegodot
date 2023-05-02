@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/rain_4.png-d1ffe0db27cb54d4e71268fe1c16e2eb.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

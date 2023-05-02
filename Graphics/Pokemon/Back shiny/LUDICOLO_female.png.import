@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LUDICOLO_female.png-68dd5c3c41fee4c4f89f80ff6
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/OSHAWOTT.png-c099d6c41ed5427293a7f247499e7c0b
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

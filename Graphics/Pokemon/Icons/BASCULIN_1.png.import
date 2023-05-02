@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BASCULIN_1.png-2d5bcea3a4cf2a1ef7cbfd47199f87
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

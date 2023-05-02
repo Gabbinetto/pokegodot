@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CRABRAWLER.png-42095b0bfd966f4b5f4ed2e98412e2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SWABLU.png-78b121c9fa3f0f53ae6bdcb0f881e1be.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

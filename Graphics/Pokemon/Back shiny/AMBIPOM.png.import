@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/AMBIPOM.png-9ae5b946d9abd4a79d27048f50e6ef1e.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

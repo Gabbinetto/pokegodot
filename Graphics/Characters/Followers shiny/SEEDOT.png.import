@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SEEDOT.png-79eddaf03ba4c7b38661d4ea6c95e008.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

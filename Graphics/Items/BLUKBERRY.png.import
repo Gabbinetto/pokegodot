@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BLUKBERRY.png-ca5e1fff9e8fe15bac77896728a5416
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

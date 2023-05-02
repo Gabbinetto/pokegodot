@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/VAPOREON.png-226e19d680f69f162803f642a80d8b24
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

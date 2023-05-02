@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LUVDISC.png-8e5ef6829ec4069cfeca1bce2b5f7afa.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

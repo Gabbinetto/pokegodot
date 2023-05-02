@@ -1,5 +1,7 @@
 extends Control
 
+signal turn_processed
+
 enum STATES {
 	START, # Battle start
 	ACTION_SELECTION, # Action selection, like using a move or running away
@@ -7,6 +9,8 @@ enum STATES {
 	WIN, LOSE, # When the player wins/loses
 	RUN # When the player runs away
 }
+
+enum TURN_OUTCOMES {PLAYER_LOST, ENEMY_LOST, BOTH_ALIVE}
 
 # All the battle environments, like the background and the ground pokemons stand on
 enum BATTLE_SETTINGS {
@@ -38,6 +42,7 @@ enum BATTLE_SETTINGS {
 	field_night,
 }
 
+# Sprites in res://Graphics/Battlebacks/
 var BATTLE_SETTINGS_SPRITES = {
 	BATTLE_SETTINGS.cave1: [preload('res://Graphics/Battlebacks/cave1_bg.png'), preload('res://Graphics/Battlebacks/cave1_base1.png')],
 	BATTLE_SETTINGS.cave1_ice: [preload('res://Graphics/Battlebacks/cave1_bg.png'), preload('res://Graphics/Battlebacks/cave1_ice_base1.png')],
@@ -67,48 +72,59 @@ var BATTLE_SETTINGS_SPRITES = {
 	BATTLE_SETTINGS.field_night: [preload('res://Graphics/Battlebacks/field_night_bg.png'), preload('res://Graphics/Battlebacks/field_night_base1.png')],
 }
 
-var state : = -1
+var state: = -1
 
 # Setting nodes
-@onready var textbox : = $MessageBox/Text
-@onready var pokemon_1_databox : Databox = $DataboxPokemon1
-@onready var pokemon_2_databox : Databox = $DataboxPokemon2
-@onready var ground_1 : = $Ground1
-@onready var ground_2 : = $Ground2
-@onready var background : = $Bg
+@onready var textbox: = $MessageBox/Text
+@onready var action_selection_container: Control = $MessageBox/ActionSelection
+@onready var moves_container: HBoxContainer = $MessageBox/Moves
+@onready var pokemon_1_databox: Databox = $DataboxPokemon1
+@onready var pokemon_2_databox: Databox = $DataboxPokemon2
+@onready var ground_1: = $Ground1
+@onready var ground_2: = $Ground2
+@onready var background: = $Bg
 
-@onready var fight_button : Button = $MessageBox/ActionSelection/Actions/Fight
-@onready var pokemons_button : Button = $MessageBox/ActionSelection/Actions/Pokemons
-@onready var bag_button : Button = $MessageBox/ActionSelection/Actions/Bag
-@onready var run_button : Button = $MessageBox/ActionSelection/Actions/Run
+@onready var fight_button: Button = $MessageBox/ActionSelection/Actions/Fight
+@onready var pokemons_button: Button = $MessageBox/ActionSelection/Actions/Pokemons
+@onready var bag_button: Button = $MessageBox/ActionSelection/Actions/Bag
+@onready var run_button: Button = $MessageBox/ActionSelection/Actions/Run
 
-@onready var back_button : Button = $MessageBox/Moves/MoveDescription/BackButton
-
-
+@onready var back_button: Button = $MessageBox/Moves/MoveDescription/BackButton
 
 # Data used if pokemons are not set. Should not be used if not for testing, scripts should invoke battles with pregenerated pokemons
-@export var pokemon_1_data : PokemonData
-@export var pokemon_2_data : PokemonData
-@export var setting : = BATTLE_SETTINGS.cave1
+@export var pokemon_1_data: PokemonData
+@export var pokemon_2_data: PokemonData
+@export var setting: = BATTLE_SETTINGS.cave1
 
-@onready var sprite_1 : = $Ground1/Sprite1
-@onready var sprite_2 : = $Ground2/Sprite2
-@onready var move_buttons : Array[Node] = [
+@onready var sprite_1: Sprite2D = $Ground1/Sprite1
+@onready var sprite_2: Sprite2D = $Ground2/Sprite2
+@onready var move_buttons: Array[Node] = [
 	$MessageBox/Moves/MovesButtons/Move1,
 	$MessageBox/Moves/MovesButtons/Move2,
 	$MessageBox/Moves/MovesButtons/Move3,
 	$MessageBox/Moves/MovesButtons/Move4,
 ]
-@onready var animation : AnimationPlayer = $AnimationPlayer
+@onready var animation: AnimationPlayer = $AnimationPlayer
 
-var pokemon_1 : Pokemon
-var pokemon_2 : Pokemon
+var enemy_team = {
+	0: null,
+	1: null,
+	2: null,
+	3: null,
+	4: null,
+	5: null,
+}
 
-var volatile_battle_data_1 : VolatileBattleData
-var volatile_battle_data_2 : VolatileBattleData
+var pokemon_1: Pokemon
+var pokemon_2: Pokemon
 
-var weather : GameVariables.WEATHERS = GameVariables.WEATHERS.NONE 
+var volatile_battle_data_1: VolatileBattleData
+var volatile_battle_data_2: VolatileBattleData
 
+var weather: GameVariables.WEATHERS = GameVariables.WEATHERS.NONE 
+
+var current_attack_text: String
+var wild_battle: = true
 
 func _ready() -> void:
 	var _unused = get_viewport().connect('gui_focus_changed', _on_focus_changed) 
@@ -118,6 +134,7 @@ func _ready() -> void:
 	fight_button.grab_focus()
 
 	pokemon_1 = GameVariables.player_team[0]
+	pokemon_2 = enemy_team[0]
 
 	load_scene()
 
@@ -141,8 +158,6 @@ func _ready() -> void:
 func load_scene() -> void:
 	
 	# If Pokemons are not set, generate new ones
-	
-
 	if pokemon_1 == null:
 		pokemon_1 = await Pokemon.new(pokemon_1_data.ID.to_upper(), pokemon_1_data.FORM_NUMBER, pokemon_1_data.NICKNAME, pokemon_1_data.LEVEL, pokemon_1_data.SHINY, pokemon_1_data.GENDER)
 	if pokemon_2 == null:
@@ -185,24 +200,28 @@ func sync_move_buttons():
 
 # Change the state of the fight.
 # _data is an optional parameter only used by certain states of the fight like ACTION_EXECUTION
-func _handle_state(new_state : int, _data = {}):
+func _handle_state(new_state: STATES, _data = {}):
 	state = new_state
 	var secs_per_character = 0.03
+	
 	if state == STATES.START:
 		animation.play('StartWild')
 
 	elif state == STATES.ACTION_SELECTION:
-		$MessageBox/ActionSelection.show()
-		$MessageBox/Moves.hide()
-		$MessageBox/ActionSelection/Actions/Fight.grab_focus()
+		action_selection_container.show()
+		moves_container.hide()
+		fight_button.grab_focus()
 
 		var new_text = 'What will %s do?' % pokemon_1.nickname
 
 		_show_text(new_text)
 
 	elif state == STATES.ACTION_EXECUTION:
+		moves_container.hide()
+		action_selection_container.hide()
+		
 		var player_move = pokemon_1.moves[_data.move_index].MOVE 
-		var enemy_moves : Array[Dictionary] = pokemon_2.moves.duplicate()
+		var enemy_moves: Array[Dictionary] = pokemon_2.moves.duplicate()
 		for i in range(enemy_moves.size() - 1, 0, -1):
 			if enemy_moves[i].MOVE == null:
 				enemy_moves.remove_at(i)
@@ -210,32 +229,53 @@ func _handle_state(new_state : int, _data = {}):
 		var enemy_move = enemy_moves.front().MOVE 
 		
 		_process_battle_turn(player_move, enemy_move)
+		await turn_processed
 		
-		_handle_state(STATES.ACTION_SELECTION)
+		match _check_battle_outcome():
+			TURN_OUTCOMES.PLAYER_LOST:
+				print("Player lost")
+				_handle_state(STATES.LOSE)
+			TURN_OUTCOMES.ENEMY_LOST:
+				print("Enemy lost")
+				_handle_state(STATES.WIN)
+			TURN_OUTCOMES.BOTH_ALIVE:
+				print("Both alive")
+				_handle_state(STATES.ACTION_SELECTION)
 
 	elif state == STATES.WIN:
-		pass
+		var tween = _show_text("%s won the battle!" % GameVariables.player_name)
+		await tween.finished
+		await get_tree().create_timer(1).timeout
+		_screen_fade_out()
 		
 	elif state == STATES.LOSE:
-		pass
+		var tween = _show_text("%s lost the battle!" % GameVariables.player_name)
+		await tween.finished
+		await get_tree().create_timer(1).timeout
+		_screen_fade_out()
 		
 	elif state == STATES.RUN:
-		$MessageBox/ActionSelection.hide()
-		$MessageBox/Moves.hide()
 		var new_text = 'Ran away safely!'
 
-		var text_tween = _show_text(new_text)
-		text_tween.tween_callback(_run_away).set_delay(new_text.length() * secs_per_character)
+		var text_tween = _show_text(new_text, true, false)
+		text_tween.tween_callback(_screen_fade_out).set_delay(new_text.length() * secs_per_character)
 
 
 # Show text by setting the text in the label and tweening the percentage of visible characters
 # Percentage visible is used instead of visible characters because it will always be 1.0 in the end
-func _show_text(text : String):
+func _show_text(text: String = "", text_only: bool = false, restore_visibility_after_text: = !text_only):
 	textbox.text = text
 	textbox.visible_ratio = 0.0
 	textbox.show()
+	if text_only:
+		moves_container.hide()
+		action_selection_container.hide()
 	var tween = create_tween()
 	tween.tween_property(textbox, 'visible_ratio', 1.0, text.length() * GameVariables.text_speed)
+	if text_only and restore_visibility_after_text:
+		tween.tween_callback(moves_container.show)
+		tween.tween_callback(action_selection_container.show)
+		
 	return tween
 
 # Used only in the start animations, not intended to be used elsewhere
@@ -252,11 +292,11 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if animation.get_current_animation() == 'StartWild':
 			animation.advance(animation.get_current_animation_length())
 		if state == STATES.RUN:
-			_run_away()
+			_screen_fade_out()
 	pass
 
 
-func _on_focus_changed(node : Control):
+func _on_focus_changed(node: Control):
 	# If focused node is a move button, update move info
 	if node in move_buttons and node.disabled != true:
 		var index = move_buttons.find(node)
@@ -274,33 +314,136 @@ func _on_focus_changed(node : Control):
 func _on_fight_button_pressed() -> void:
 	# Hide action selection and show moves
 	textbox.hide()
-	$MessageBox/Moves.show()
-	$MessageBox/ActionSelection.hide()
-	$MessageBox/Moves/MovesButtons/Move1.grab_focus()
+	moves_container.show()
+	action_selection_container.hide()
+	move_buttons[0].grab_focus()
 
 
 func _on_moves_back_pressed() -> void:
 	# Go back to action selection
 	textbox.show()
-	$MessageBox/Moves.hide()
-	$MessageBox/ActionSelection.show()
-	$MessageBox/ActionSelection/Actions/Fight.grab_focus()
+	moves_container.hide()
+	action_selection_container.show()
+	fight_button.grab_focus()
 
 func _on_run_pressed() -> void:
 	# Exit battle (quitting the game is a placeholder)
 	_handle_state(STATES.RUN)
 
-func _run_away() -> void:
+func _screen_fade_out() -> void:
 	var tween = create_tween()
 	tween.tween_property($BlackScreen, 'modulate:a', 1.0, 0.5)
 	tween.tween_callback(queue_free)
 	get_tree().paused = false
 
 
-func _process_battle_turn(player_attack : PokemonMove, enemy_attack : PokemonMove) -> void:
+func _process_battle_turn(player_attack: PokemonMove, enemy_attack: PokemonMove) -> void:
 	
-	var damage_to_enemy = BattleFunctions.damage_calculation(player_attack, volatile_battle_data_1, volatile_battle_data_2)
-	var damage_to_player = BattleFunctions.damage_calculation(enemy_attack, volatile_battle_data_2, volatile_battle_data_1)
+	var speed_1 = volatile_battle_data_1.get_stat("SPEED")
+	var speed_2 = volatile_battle_data_2.get_stat("SPEED")
 	
-	pokemon_1.hp -= damage_to_player
-	pokemon_2.hp -= damage_to_enemy
+	var player_first = speed_1 > speed_2
+	if speed_1 == speed_2:
+		player_first = randf() <= 0.5
+	if player_attack.priority != enemy_attack.priority:
+		player_first = player_attack.priority > enemy_attack.priority
+	
+	if player_first:
+		# Player moves first
+		var tween = _show_text("%s used %s!" % [pokemon_1.nickname, player_attack.name], true, false)
+		await tween.finished
+		animation.play("DamageEnemy")
+		await animation.animation_finished
+		moves_container.show()
+		action_selection_container.show()
+		var damage_to_enemy = BattleFunctions.damage_calculation(player_attack, volatile_battle_data_1, volatile_battle_data_2)
+		pokemon_2.hp -= damage_to_enemy
+		
+		if pokemon_2.hp <= 0:
+			tween = _show_text("Enemy %s fainted!" % pokemon_2.nickname, true, false)
+			await tween.finished
+			tween = create_tween()
+			tween.tween_property(sprite_2, "scale", Vector2.ZERO, 0.3)
+			await tween.finished
+			turn_processed.emit()
+			return
+		
+		tween = _show_text("%s used %s!" % [pokemon_2.nickname, enemy_attack.name], true, false)
+		await tween.finished
+		animation.play("DamagePlayer")
+		await animation.animation_finished
+		moves_container.show()
+		action_selection_container.show()
+		var damage_to_player = BattleFunctions.damage_calculation(enemy_attack, volatile_battle_data_2, volatile_battle_data_1)
+		pokemon_1.hp -= damage_to_player
+		
+		if pokemon_1.hp <= 0:
+			tween = _show_text("%s fainted!" % pokemon_1.nickname, true, false)
+			await tween.finished
+			tween = create_tween()
+			tween.tween_property(sprite_1, "scale", Vector2.ZERO, 0.3)
+			await tween.finished
+			turn_processed.emit()
+			return
+		
+	else:
+		# Enemy moves first
+		var tween = _show_text("%s used %s!" % [pokemon_2.nickname, enemy_attack.name], true, false)
+		await tween.finished
+		animation.play("DamagePlayer")
+		await animation.animation_finished
+		moves_container.show()
+		action_selection_container.show()
+		var damage_to_player = BattleFunctions.damage_calculation(enemy_attack, volatile_battle_data_2, volatile_battle_data_1)
+		pokemon_1.hp -= damage_to_player
+		
+		if pokemon_1.hp <= 0:
+			tween = _show_text("%s fainted!" % pokemon_1.nickname, true, false)
+			await tween.finished
+			tween = create_tween()
+			tween.tween_property(sprite_1, "scale", Vector2.ZERO, 0.3)
+			await tween.finished
+			turn_processed.emit()
+			return
+		
+		tween = _show_text("%s used %s!" % [pokemon_1.nickname, player_attack.name], true, false)
+		await tween.finished
+		animation.play("DamageEnemy")
+		await animation.animation_finished
+		moves_container.show()
+		action_selection_container.show()
+		var damage_to_enemy = BattleFunctions.damage_calculation(player_attack, volatile_battle_data_1, volatile_battle_data_2)
+		pokemon_2.hp -= damage_to_enemy
+
+		if pokemon_2.hp <= 0:
+			tween = _show_text("Enemy %s fainted!" % pokemon_2.nickname, true, false)
+			await tween.finished
+			tween = create_tween()
+			tween.tween_property(sprite_2, "scale", Vector2.ZERO, 0.3)
+			await tween.finished
+			turn_processed.emit()
+			return
+	
+	turn_processed.emit()
+
+
+
+func _check_battle_outcome() -> TURN_OUTCOMES:
+	
+	var player_lost = true
+	for pokemon in GameVariables.player_team.values():
+		if pokemon != null and pokemon.hp > 0:
+			player_lost = false
+	if player_lost:
+		return TURN_OUTCOMES.PLAYER_LOST
+	
+	var enemy_lost = true
+	for pokemon in enemy_team.values():
+		if pokemon != null and pokemon.hp > 0:
+			prints(pokemon.nickname, pokemon.hp)
+			enemy_lost = false
+	if enemy_lost:
+		return TURN_OUTCOMES.ENEMY_LOST
+
+	prints(player_lost, enemy_lost)
+	return TURN_OUTCOMES.BOTH_ALIVE

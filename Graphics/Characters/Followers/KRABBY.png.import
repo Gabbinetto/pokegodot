@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/KRABBY.png-d183f9477b88fcbc80ba8f9e27d7b6ee.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

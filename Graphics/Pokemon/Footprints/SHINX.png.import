@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SHINX.png-d9de640af0d17353e7037778c93eaa95.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

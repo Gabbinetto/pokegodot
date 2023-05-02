@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/cursor_point_2_q.png-341d9c4b4298e49bd79375e8
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

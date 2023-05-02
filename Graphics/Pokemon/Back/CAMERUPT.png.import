@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CAMERUPT.png-d54aa83665eae27471d795e5a4e8a83f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

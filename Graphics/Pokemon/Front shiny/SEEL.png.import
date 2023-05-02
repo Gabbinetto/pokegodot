@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SEEL.png-e7a31c09553b5bdba4b9c8a6c122e48b.cte
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

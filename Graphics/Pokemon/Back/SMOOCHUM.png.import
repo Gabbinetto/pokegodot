@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SMOOCHUM.png-f1a6303a9082c60b06150f24c0432185
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

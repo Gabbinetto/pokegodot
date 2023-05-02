@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ROSELIA.png-8f39754e1bb6bd03a5d7271b79e7cb69.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

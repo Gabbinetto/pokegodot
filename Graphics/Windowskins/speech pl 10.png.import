@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/speech pl 10.png-0dca3de462cf4e1387edd1c836eb
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

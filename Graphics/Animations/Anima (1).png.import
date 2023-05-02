@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/Anima (1).png-a6536c8502b11749ee20d9ace7a5e9e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

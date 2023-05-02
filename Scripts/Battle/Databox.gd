@@ -2,26 +2,29 @@ extends Sprite2D
 class_name Databox
 
 
-@export var pokemon : Pokemon
-@export var health_bar_max_scale : = 48.0
-@export var exp_bar_max_scale : = 96.0
+@export var pokemon: Pokemon
+@export var health_bar_max_scale: = 48.0
+@export var exp_bar_max_scale: = 96.0
 
-@export var player : = true
+@export var player: = true
 
-var exp_bar : Sprite2D
-var health_bar : Sprite2D
-var health_text : Label
-var level : Label
-var gender_symbol : Sprite2D
+var name_box: Label
+var exp_bar: Sprite2D
+var health_bar: Sprite2D
+var health_text: Label
+var level: Label
+var gender_symbol: Sprite2D
 
 func _ready() -> void:
 	if player:
 		exp_bar = %ExpBar
 		health_text = %Health
 	
+	name_box = %Name
 	health_bar = %HealthBar
 	level = %Level
 	gender_symbol = %GenderSymbol
+
 
 func _process(delta: float) -> void:
 	if exp_bar:
@@ -29,6 +32,8 @@ func _process(delta: float) -> void:
 		var next_level_exp = pokemon.exp_to_next_level().back()
 		
 		exp_bar.scale.x = clamp(remap(pokemon.current_exp, current_level_exp, next_level_exp, 0, exp_bar_max_scale), 0, exp_bar_max_scale)
+	
+	name_box.text = pokemon.nickname
 
 	if health_text:
 		health_text.text = str(

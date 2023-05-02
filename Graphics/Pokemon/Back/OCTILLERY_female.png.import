@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/OCTILLERY_female.png-67220f0d788da51e9d16ff64
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

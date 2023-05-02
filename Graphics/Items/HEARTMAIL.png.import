@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HEARTMAIL.png-279412d153dc365d346c109342c9687
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

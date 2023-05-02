@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BONSLY.png-5cae2376ac4a33f2795f531d1211bf38.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GIGALITH.png-48ab3e9315a5c66446b8eb25e90c5bc2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

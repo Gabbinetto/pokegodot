@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DRAKLOAK.png-c62f6c026f90d8a527257b85ae2d9805
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

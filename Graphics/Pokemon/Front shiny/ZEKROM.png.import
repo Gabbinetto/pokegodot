@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ZEKROM.png-0d336e60f78dd2eed56c8ece7b39427e.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/URSARING.png-303f3c6fe3e61116289c1993003d1698
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

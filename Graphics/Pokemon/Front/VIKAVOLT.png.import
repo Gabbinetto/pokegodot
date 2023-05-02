@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/VIKAVOLT.png-e417d013e98d80a6b23954dbe153a7f6
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

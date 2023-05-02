@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ZUBAT_female.png-000aed7307712597af1dcd0258b0
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

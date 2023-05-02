@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/YOUNGCOUPLE.png-a5e2e7f46f55bc1a0b0ef525e2b17
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

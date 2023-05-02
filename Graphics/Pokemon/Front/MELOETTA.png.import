@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MELOETTA.png-f20ef1f1f8fa5db03b5d60e17a5e73ea
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

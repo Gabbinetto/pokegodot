@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CLEFAIRY.png-89d9b1f5b0474a333ad7d194b01e53a6
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

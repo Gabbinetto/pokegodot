@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MARILL.png-0e8595b0c21de00a6d72c56a7e15afcf.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

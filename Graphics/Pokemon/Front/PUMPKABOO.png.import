@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PUMPKABOO.png-4fa34b2714e48bb4ea1712dd49883d5
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/water_message.png-644c34c7a6ca027392b7c49eef3
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

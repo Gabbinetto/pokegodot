@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/EXPCHARM.png-bc2e8fefff5c7b32f56df3488669cf7e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

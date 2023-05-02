@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FIGYBERRY.png-0709be3e25a8ff5dc4c5f7518747f2a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

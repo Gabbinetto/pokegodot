@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ROTOM.png-24d74204f94f3045568515411325ff46.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

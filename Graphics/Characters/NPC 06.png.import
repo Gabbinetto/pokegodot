@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/NPC 06.png-4085b6cfea9ff9db0a12cf58e833bb16.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

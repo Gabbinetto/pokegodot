@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/THIEVUL.png-5c24b31c12ae8b054f86f49d8bf12aae.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

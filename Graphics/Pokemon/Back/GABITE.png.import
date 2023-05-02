@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GABITE.png-a45bc5d6b4d64cdd805bed3c43e8dede.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

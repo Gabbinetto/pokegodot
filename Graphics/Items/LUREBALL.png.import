@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LUREBALL.png-d8d492f5aac7364549ad6472b5ef8b7e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

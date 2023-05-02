@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BLAZIKEN_1.png-5cd8517d8e62aeeab48cf918dd6070
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

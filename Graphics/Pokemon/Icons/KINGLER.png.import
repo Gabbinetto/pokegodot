@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/KINGLER.png-9fd5b667dc24d9e894ce4c84f9ebc514.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

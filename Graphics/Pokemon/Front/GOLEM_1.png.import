@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GOLEM_1.png-573aea8a024d2a12c8be18d84060a1db.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

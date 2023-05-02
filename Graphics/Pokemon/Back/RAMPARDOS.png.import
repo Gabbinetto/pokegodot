@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/RAMPARDOS.png-dee8e9421d9bf8ee3d37e4a22e63f95
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

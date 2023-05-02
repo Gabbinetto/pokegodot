@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BRONZOR.png-8d2ab22268431ce3107c05aec5c4c2f4.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

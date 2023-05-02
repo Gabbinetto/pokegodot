@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CACTURNE.png-5e70ba1274ed181b504d19541ed15800
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

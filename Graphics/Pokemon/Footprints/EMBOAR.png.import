@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/EMBOAR.png-948afba0dc943cb52c3b1b1bd148d4db.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

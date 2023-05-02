@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BALTOY.png-c6d10efef77e327cfb20d75351b8d29a.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

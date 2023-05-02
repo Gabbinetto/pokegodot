@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SABLENITE.png-8b36e9dd7949442e625525f72b71332
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

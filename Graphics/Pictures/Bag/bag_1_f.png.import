@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/bag_1_f.png-568b17bf13cc2d22cd76ba3272cc6015.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

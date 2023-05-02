@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GURDURR.png-44332673379051ed9d67fa0e82ec6882.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

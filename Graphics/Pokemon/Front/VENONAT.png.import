@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/VENONAT.png-1b26c41f3dd9d015475f22e525b22f9d.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

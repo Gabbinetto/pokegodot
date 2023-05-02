@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/YVELTAL.png-93945ac12e4303767e9b1e2f3ef1bb61.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

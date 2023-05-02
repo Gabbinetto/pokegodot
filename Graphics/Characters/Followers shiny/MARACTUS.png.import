@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MARACTUS.png-c9a3296701d29c36d003a9e2d4b9de1b
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

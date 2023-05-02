@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HOUNDOOM.png-d7e77e6cdf594a232cd1b553bdba5977
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

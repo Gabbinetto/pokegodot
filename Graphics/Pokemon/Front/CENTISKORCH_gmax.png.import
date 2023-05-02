@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CENTISKORCH_gmax.png-f1d730b18dc6a3d89543c8c1
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

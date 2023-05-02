@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DITTO.png-30b22e95f0bc9525f011daf28dce4785.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

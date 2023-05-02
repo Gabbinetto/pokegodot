@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/UNFEZANT.png-476ac6cc4ef00afa21342367c8c78ac4
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

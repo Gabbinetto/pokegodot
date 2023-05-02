@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LEVELBALL.png-262d37b5f6ec164df5452d3c6e21bda
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SWADLOON.png-16a9e31a3fb0f342288f7872bc223ea6
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

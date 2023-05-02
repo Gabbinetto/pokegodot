@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FRAXURE.png-9a96c3e247718e93f7aea0974e225ebc.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CROAGUNK.png-8e05e20b7f2bca711b6b5c168a9710af
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

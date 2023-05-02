@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ZACIAN_2.png-efa2a4f0be8b2a73303cd3b0a2d597d5
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/AVALUGG.png-52acef16ee2feebf9fdc1159571dafdc.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

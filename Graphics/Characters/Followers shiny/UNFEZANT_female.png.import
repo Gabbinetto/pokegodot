@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/UNFEZANT_female.png-65e8d0b312547f3268b1d60e3
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

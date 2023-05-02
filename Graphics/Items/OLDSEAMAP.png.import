@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/OLDSEAMAP.png-8a09b0a71ff8a3627b3acbd3fbc56c3
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

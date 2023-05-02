@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HEALBALL.png-b381bf32e30dd198612a344c8d08da5a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

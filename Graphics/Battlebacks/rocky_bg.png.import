@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/rocky_bg.png-b7d3d00393775f2d8914feabbaef15aa
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BOLTUND.png-98f08cf06a981e8890bd7fe53d6147fd.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

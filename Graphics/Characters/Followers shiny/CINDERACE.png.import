@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CINDERACE.png-07e364ff62d87b8afa535e78ad4f6bc
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

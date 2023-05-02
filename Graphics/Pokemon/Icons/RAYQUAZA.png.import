@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/RAYQUAZA.png-974c16315d8ff396d42ca37e0396b0ce
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

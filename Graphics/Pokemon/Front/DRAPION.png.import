@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DRAPION.png-55c4c47b7701a24d8b0e6a12b3e97f2f.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

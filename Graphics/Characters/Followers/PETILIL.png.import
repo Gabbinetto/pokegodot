@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PETILIL.png-3167b5864745bd9d2d04489c42d0e574.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

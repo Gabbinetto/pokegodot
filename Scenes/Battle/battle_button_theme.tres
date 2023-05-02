@@ -9,7 +9,7 @@ bg_color = Color(0.376471, 0.376471, 0.407843, 0.176471)
 bg_color = Color(0.376471, 0.376471, 0.407843, 0.117647)
 
 [sub_resource type="FontFile" id="4"]
-fallbacks = [ExtResource("1")]
+fallbacks = Array[Font]([ExtResource("1")])
 face_index = null
 embolden = null
 transform = null

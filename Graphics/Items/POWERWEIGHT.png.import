@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/POWERWEIGHT.png-92f6f0c84f4f9a1294d1e54678f38
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

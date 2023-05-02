@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PANSEAR.png-a4673914c91f4c1b63578f5710ba15ec.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DREDNAW.png-2c217340e5a3155dab4e861ea517cb4e.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

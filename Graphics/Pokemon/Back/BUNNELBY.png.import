@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BUNNELBY.png-cd6707b4d32bf30b8b0c34a4c5f407b5
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

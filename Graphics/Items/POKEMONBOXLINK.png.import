@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/POKEMONBOXLINK.png-91b89cb024b5c5500c469b97b3
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

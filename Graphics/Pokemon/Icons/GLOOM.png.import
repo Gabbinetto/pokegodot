@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GLOOM.png-8df4c79b643d5e23eb4d129827168ec5.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

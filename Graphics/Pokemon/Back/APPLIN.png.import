@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/APPLIN.png-d6fc44fc36da1b8367dd53448b177967.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ELEKID.png-fc4b65585fd14e99e8b9e4fea172503b.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

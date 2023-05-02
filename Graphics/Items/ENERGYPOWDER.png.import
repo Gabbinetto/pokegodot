@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ENERGYPOWDER.png-e5a13a90cb664f78dde905a8e9f5
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

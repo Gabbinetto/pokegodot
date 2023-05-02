@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DUSKNOIR.png-1d4f51272e64bd521f09ec919514943a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

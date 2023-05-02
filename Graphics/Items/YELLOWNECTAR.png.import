@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/YELLOWNECTAR.png-5abcc2f958ea92c665f9585676a4
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

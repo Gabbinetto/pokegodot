@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/cursor_grab_q.png-4e024148b314b0ce96696d9f8aa
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

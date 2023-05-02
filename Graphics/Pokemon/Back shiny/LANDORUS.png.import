@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LANDORUS.png-cc1a5ad038a523060260d85736f7de08
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

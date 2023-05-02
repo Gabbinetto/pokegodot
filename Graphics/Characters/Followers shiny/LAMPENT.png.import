@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LAMPENT.png-61bf73d1ac8b61c2fdc4da43ff3de9dd.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

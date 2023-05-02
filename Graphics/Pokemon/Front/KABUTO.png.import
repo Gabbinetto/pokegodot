@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/KABUTO.png-7fabcf981e42fb4f2aeb9e041c17c599.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

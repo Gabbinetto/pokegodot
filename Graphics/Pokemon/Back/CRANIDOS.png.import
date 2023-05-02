@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CRANIDOS.png-4dbd48e1bd1052ae9134024aea8dd884
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

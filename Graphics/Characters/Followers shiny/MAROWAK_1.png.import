@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MAROWAK_1.png-3fd89d9a1e5fe461deb6ff49974c324
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

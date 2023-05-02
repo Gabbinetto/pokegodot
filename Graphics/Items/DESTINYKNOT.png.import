@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DESTINYKNOT.png-5f705be4caa339ded0dd7c0ea77db
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

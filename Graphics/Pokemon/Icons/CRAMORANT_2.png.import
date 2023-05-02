@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CRAMORANT_2.png-a7753fe4eed87f963958a75c8ff8a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/RESETURGE.png-9eb7960cbba9b96a800a1ef4e7460af
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

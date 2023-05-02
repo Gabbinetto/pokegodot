@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b4cms5lmybuh3"]
+[gd_scene load_steps=33 format=3 uid="uid://b4cms5lmybuh3"]
 
 [ext_resource type="Texture2D" uid="uid://dfmyu80hssjxh" path="res://Graphics/Windowskins/speech hgss 1.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://t4suj7kago87" path="res://Graphics/Pokemon/Back/000.png" id="2"]
@@ -23,6 +23,38 @@ NICKNAME = ""
 LEVEL = 2.0
 GENDER = 0
 SHINY = true
+
+[sub_resource type="Animation" id="Animation_jhjj4"]
+resource_name = "DamageEnemy"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ground2/Sprite2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cabjg"]
+resource_name = "DamagePlayer"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ground1/Sprite1:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="12"]
 length = 0.001
@@ -218,6 +250,8 @@ tracks/13/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cxhyb"]
 _data = {
+"DamageEnemy": SubResource("Animation_jhjj4"),
+"DamagePlayer": SubResource("Animation_cabjg"),
 "RESET": SubResource("12"),
 "StartWild": SubResource("13")
 }
@@ -244,7 +278,22 @@ region = Rect2(640, 0, 160, 160)
 
 [sub_resource type="SpriteFrames" id="9"]
 animations = [{
-"frames": [SubResource("4"), SubResource("5"), SubResource("6"), SubResource("7"), SubResource("8")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("4")
+}, {
+"duration": 1.0,
+"texture": SubResource("5")
+}, {
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}, {
+"duration": 1.0,
+"texture": SubResource("8")
+}],
 "loop": true,
 "name": &"Red",
 "speed": 5.0
@@ -256,7 +305,10 @@ region = Rect2(0, 0, 32, 64)
 
 [sub_resource type="SpriteFrames" id="11"]
 animations = [{
-"frames": [SubResource("10")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("10")
+}],
 "loop": true,
 "name": &"POKEBALL",
 "speed": 5.0
@@ -290,6 +342,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4")
 pokemon_2_data = SubResource("Resource_nlihj")
+metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -297,12 +350,14 @@ libraries = {
 }
 
 [node name="Bg" type="TextureRect" parent="."]
+layout_mode = 0
 texture = ExtResource("5")
 stretch_mode = 2
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="BgReverse" type="TextureRect" parent="Bg"]
+layout_mode = 0
 offset_top = 576.0
 offset_right = 512.0
 offset_bottom = 864.0
@@ -316,30 +371,30 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("6")
 
 [node name="Sprite1" type="Sprite2D" parent="Ground1"]
-visible = false
-scale = Vector2(1e-05, 1e-05)
+scale = Vector2(2, 2)
 texture = ExtResource("2")
 centered = false
 offset = Vector2(-48, -94)
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="Ground1"]
-position = Vector2(-110, 0)
+position = Vector2(-400, 0)
 scale = Vector2(1.33333, 1.33333)
-frames = SubResource("9")
+sprite_frames = SubResource("9")
 animation = &"Red"
+frame = 4
 centered = false
 offset = Vector2(0, -160)
 
 [node name="Ball" type="AnimatedSprite2D" parent="Ground1"]
 visible = false
-position = Vector2(0, -86)
+position = Vector2(20, 20)
 rotation = -12.5664
 scale = Vector2(1.33333, 1.33333)
-frames = SubResource("11")
+sprite_frames = SubResource("11")
 animation = &"POKEBALL"
 
 [node name="Ground2" type="Sprite2D" parent="."]
-position = Vector2(-96, 148)
+position = Vector2(400, 148)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("6")
 
@@ -351,6 +406,7 @@ centered = false
 offset = Vector2(-48, -96)
 
 [node name="MessageBox" type="NinePatchRect" parent="."]
+layout_mode = 0
 offset_top = 288.0
 offset_right = 512.0
 offset_bottom = 384.0
@@ -363,7 +419,7 @@ patch_margin_bottom = 12
 
 [node name="Text" type="Label" parent="MessageBox"]
 visible = false
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
@@ -379,7 +435,7 @@ vertical_alignment = 1
 
 [node name="ActionSelection" type="Control" parent="MessageBox"]
 visible = false
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -387,7 +443,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Actions" type="GridContainer" parent="MessageBox/ActionSelection"]
-anchors_preset = 11
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -403,8 +459,7 @@ theme_override_constants/v_separation = 0
 columns = 2
 
 [node name="Fight" type="Button" parent="MessageBox/ActionSelection/Actions"]
-offset_right = 50.0
-offset_bottom = 38.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Pokemons")
@@ -415,9 +470,7 @@ text = "FIGHT"
 flat = true
 
 [node name="Pokemons" type="Button" parent="MessageBox/ActionSelection/Actions"]
-offset_left = 50.0
-offset_right = 112.0
-offset_bottom = 38.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Fight")
@@ -428,9 +481,7 @@ text = "POKEMONS"
 flat = true
 
 [node name="Bag" type="Button" parent="MessageBox/ActionSelection/Actions"]
-offset_top = 38.0
-offset_right = 50.0
-offset_bottom = 76.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Run")
@@ -441,10 +492,7 @@ text = "BAG"
 flat = true
 
 [node name="Run" type="Button" parent="MessageBox/ActionSelection/Actions"]
-offset_left = 50.0
-offset_top = 38.0
-offset_right = 112.0
-offset_bottom = 76.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Bag")
@@ -456,7 +504,7 @@ flat = true
 
 [node name="Moves" type="HBoxContainer" parent="MessageBox"]
 visible = false
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
@@ -467,16 +515,14 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MovesButtons" type="GridContainer" parent="MessageBox/Moves"]
-offset_right = 227.0
-offset_bottom = 76.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("16")
 columns = 2
 
 [node name="Move1" type="Button" parent="MessageBox/Moves/MovesButtons"]
-offset_right = 114.0
-offset_bottom = 38.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Move2")
@@ -489,9 +535,7 @@ text = "Move"
 flat = true
 
 [node name="Move2" type="Button" parent="MessageBox/Moves/MovesButtons"]
-offset_left = 114.0
-offset_right = 227.0
-offset_bottom = 38.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Move1")
@@ -504,9 +548,7 @@ text = "Move"
 flat = true
 
 [node name="Move3" type="Button" parent="MessageBox/Moves/MovesButtons"]
-offset_top = 38.0
-offset_right = 114.0
-offset_bottom = 76.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../../MoveDescription/BackButton")
@@ -519,10 +561,7 @@ text = "Move"
 flat = true
 
 [node name="Move4" type="Button" parent="MessageBox/Moves/MovesButtons"]
-offset_left = 114.0
-offset_top = 38.0
-offset_right = 227.0
-offset_bottom = 76.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_left = NodePath("../Move3")
@@ -535,14 +574,11 @@ text = "Move"
 flat = true
 
 [node name="MoveDescription" type="Control" parent="MessageBox/Moves"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 231.0
-offset_right = 458.0
-offset_bottom = 76.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TypeLabel" type="Label" parent="MessageBox/Moves/MoveDescription"]
+layout_mode = 0
 offset_top = 9.0
 offset_right = 29.0
 offset_bottom = 26.0
@@ -558,6 +594,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 28)
 
 [node name="CategoryLabel" type="Label" parent="MessageBox/Moves/MoveDescription"]
+layout_mode = 0
 offset_left = 85.0
 offset_top = 9.0
 offset_right = 159.0
@@ -574,6 +611,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 28)
 
 [node name="PPLabel" type="Label" parent="MessageBox/Moves/MoveDescription"]
+layout_mode = 0
 offset_top = 51.0
 offset_right = 51.0
 offset_bottom = 68.0
@@ -581,7 +619,7 @@ text = "PP: 00/00"
 label_settings = SubResource("LabelSettings_xg83i")
 
 [node name="BackButton" type="Button" parent="MessageBox/Moves/MoveDescription"]
-anchors_preset = -1
+layout_mode = 0
 anchor_left = 1.51542
 anchor_top = -0.131579
 anchor_right = 1.51542
@@ -596,14 +634,13 @@ text = "Back"
 flat = true
 
 [node name="DataboxPokemon1" parent="." instance=ExtResource("12")]
-position = Vector2(512, 182)
+position = Vector2(384, 182)
 
 [node name="DataboxPokemon2" parent="." instance=ExtResource("9")]
-position = Vector2(-122, 55)
 
 [node name="BlackScreen" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GLAMEOW.png-45de60cd7dfab424df28e42e5575f189.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

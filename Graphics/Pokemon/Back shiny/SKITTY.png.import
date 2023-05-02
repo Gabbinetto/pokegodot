@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SKITTY.png-c7750b75d33ea2dd9a7f624a0c989276.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SWELLOW.png-9acc483e0a7f4787f7927363f7e712aa.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

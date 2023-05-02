@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SEVIPER.png-7e42af4ea1bc301ca93e0ef59076d335.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

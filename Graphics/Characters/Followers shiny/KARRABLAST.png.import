@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/KARRABLAST.png-81195582d4767442c0bf3168bf29a2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

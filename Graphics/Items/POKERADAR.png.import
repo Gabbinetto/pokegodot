@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/POKERADAR.png-077994a1800b0f1c68f210f4d4d3b75
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

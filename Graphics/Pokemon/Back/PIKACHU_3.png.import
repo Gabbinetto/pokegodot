@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/PIKACHU_3.png-942d1736e31211d80a1bd6016ae4507
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

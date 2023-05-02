@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GLIGAR_female.png-dd4617ce7725b4ecdaa7273ba0d
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

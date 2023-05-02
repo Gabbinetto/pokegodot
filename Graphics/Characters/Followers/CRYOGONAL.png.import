@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CRYOGONAL.png-8d5058c4c3194b9b6f9dba7c7f8e8c3
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

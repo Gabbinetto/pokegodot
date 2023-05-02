@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ZINC.png-f7a7fdac2768991c9666f312b92468bf.cte
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

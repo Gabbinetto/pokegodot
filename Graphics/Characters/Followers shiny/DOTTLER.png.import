@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DOTTLER.png-a32bb1e6ad33e38d4c46ec8997beabbc.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

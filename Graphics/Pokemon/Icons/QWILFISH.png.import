@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/QWILFISH.png-cb4d80054931842f9b6a45288b8f99e8
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

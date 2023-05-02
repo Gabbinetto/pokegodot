@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/boy_surf.png-e65cd725eee9150f22c64325545076dd
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

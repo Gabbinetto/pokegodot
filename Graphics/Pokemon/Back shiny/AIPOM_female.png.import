@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/AIPOM_female.png-2d0ee29e9cea62392bcc10931910
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

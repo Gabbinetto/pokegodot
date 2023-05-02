@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DELPHOX.png-e197f6fb3f4f245cb732e2ce28fe9ce9.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LUGIA.png-f8be8be0fb5df96b09f0558b96560e78.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

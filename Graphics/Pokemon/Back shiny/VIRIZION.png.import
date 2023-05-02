@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/VIRIZION.png-51cdab975d9c7286a6dd74476eabcef8
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

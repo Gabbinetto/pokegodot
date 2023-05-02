@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SUDOWOODO_female.png-8b2c6f69958d8d8f6929efa1
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

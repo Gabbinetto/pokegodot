@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CASTFORM_3.png-bc99f12c0d83832ab8a8e740e84d3b
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

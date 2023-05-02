@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/QUILAVA.png-3d0b4a1c90595353b3b4d8b36a1f0999.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

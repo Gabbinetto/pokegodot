@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/NIHILEGO.png-c83e3eddf7e0ce8428e16e4e05edad65
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

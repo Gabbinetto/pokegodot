@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SCATTERBUG.png-9ba2f7ed75feaa7b21f0d143fec6b6
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

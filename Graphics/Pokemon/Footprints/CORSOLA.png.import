@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CORSOLA.png-02493e79aaa35fa4f2598b1659c2cfa3.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

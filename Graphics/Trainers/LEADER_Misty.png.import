@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LEADER_Misty.png-a4398f77360681994b8ed91e1c9e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

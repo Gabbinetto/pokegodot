@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/RATICATE_1.png-eacd67a72cd77c968e3d6023604999
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ALCREMIE_39.png-8880f39827ecfd2321755a3ad6538
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

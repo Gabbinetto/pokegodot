@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/VIVILLON_12.png-12a59c7df40f7f4474e913995fcdf
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

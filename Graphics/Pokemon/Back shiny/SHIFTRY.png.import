@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SHIFTRY.png-7a352b25ed2eb613b5d0d31c677138f2.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

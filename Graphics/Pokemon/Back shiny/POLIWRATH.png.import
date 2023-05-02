@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/POLIWRATH.png-8b3da1b3a8a73a2ea073d93ba217a24
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

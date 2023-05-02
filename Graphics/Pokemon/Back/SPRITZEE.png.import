@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SPRITZEE.png-7182af0ab41f460f844a606dd88312dc
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

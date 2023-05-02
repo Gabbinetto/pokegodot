@@ -11,7 +11,7 @@ func start_battle(enemy : Pokemon) -> void:
 	var battle = BattleScene.instantiate()
 
 	battle.pokemon_1 = GameVariables.player_team[0]
-	battle.pokemon_2 = enemy
+	battle.enemy_team[0] = enemy
 	
 	var battle_canvas = CanvasLayer.new()
 	battle_canvas.add_child(battle)

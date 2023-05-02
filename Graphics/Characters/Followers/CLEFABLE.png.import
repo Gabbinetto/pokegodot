@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CLEFABLE.png-0fc2f5d5429502e5fcb7968d9fb687b5
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

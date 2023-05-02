@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/THROH.png-3ea2a3fbaccec6f557c07e16ec3f9763.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

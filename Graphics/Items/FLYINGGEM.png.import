@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/FLYINGGEM.png-a1899253f5931b500f540ec2002d98d
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

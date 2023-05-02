@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TAPULELE.png-7595949c91ec4474571a5ee347a97d3b
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/WALREIN.png-f0ce4b9bb3bed4f68e5a8256fab7d7e8.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

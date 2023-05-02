@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SCEPTILE.png-28b92d6de745c878709fb497e2bb5345
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

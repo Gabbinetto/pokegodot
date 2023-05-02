@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SHELGON.png-d6f6d9c9a09859f9d2155af9da41fd34.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

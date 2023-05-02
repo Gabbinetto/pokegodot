@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LILLIPUP.png-ad8c243edc7b4b24b7361946ee084bba
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

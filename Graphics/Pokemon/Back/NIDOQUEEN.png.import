@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/NIDOQUEEN.png-9195136b76759395d8a0fc6e4c432a8
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MUK.png-5ca6f4e01c8cc86b1042c4beeea5bd60.ctex
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

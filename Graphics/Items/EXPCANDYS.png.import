@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/EXPCANDYS.png-d7307eafde0e6a1173119ee768c2af7
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

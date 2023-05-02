@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TROPIUS.png-7854024c7e7dc5186883b650dad4f3df.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/DOUBLADE.png-5853598ff36309b5dd1a7bc1a44ea85f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

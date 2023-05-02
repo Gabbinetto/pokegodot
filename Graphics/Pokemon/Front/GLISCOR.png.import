@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GLISCOR.png-941832c2e68fe9aa5e86b3fd137bfdaf.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/box_32.png-69dd6a018c0d51b8a508aa4d183ee79e.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SLAKOTH.png-23b1b8eb9b69c6722a1dc502a4c0a57e.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

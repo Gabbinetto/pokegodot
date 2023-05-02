@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ZUBAT.png-2c9fab9b7bdc82f2d9bc1d904faf2951.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

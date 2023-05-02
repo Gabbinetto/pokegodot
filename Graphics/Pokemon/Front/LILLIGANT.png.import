@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/LILLIGANT.png-80d73210170fa6c68b5912078759c05
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

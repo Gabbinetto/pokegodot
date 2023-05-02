@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/BANETTE_1.png-2b7a1a1e70d4acc7f95b57d583dd1f5
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

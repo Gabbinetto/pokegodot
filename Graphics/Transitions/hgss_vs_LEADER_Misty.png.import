@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/hgss_vs_LEADER_Misty.png-f0f9c9a41f741fa2036e
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

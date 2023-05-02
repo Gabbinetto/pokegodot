@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/YANMEGA.png-05aa848d6c1a4924f77d44cf7e9ad8af.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

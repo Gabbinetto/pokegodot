@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SWIMMER_M.png-c570a2b59242dbe627d70ace7f4d3bc
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/GLALIE_1.png-abec03e053b7bdf91a4eea461e5aa47f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

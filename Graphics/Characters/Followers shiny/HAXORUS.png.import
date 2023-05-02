@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/HAXORUS.png-60c5113fe4fb1e25f4ce44c929910879.
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

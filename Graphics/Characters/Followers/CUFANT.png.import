@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/CUFANT.png-a5a60fe3a4555f187efb983a71441e2c.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

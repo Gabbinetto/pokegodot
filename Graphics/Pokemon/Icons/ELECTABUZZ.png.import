@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/ELECTABUZZ.png-130e94b7bde9a2ed8a556d4364dcc2
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

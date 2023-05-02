@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TENTACRUEL.png-66f04fdd75b8e065dc2c8935c11fc7
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

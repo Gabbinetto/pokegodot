@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/STONJOURNER.png-0fd21b9ee6c4e581f1bbc6ee4626f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

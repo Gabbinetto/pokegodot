@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/TOXTRICITY_1.png-fec1add8d0e8b1b99bd32ced1e4a
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

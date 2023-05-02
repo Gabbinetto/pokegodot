@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/Sand.png-506e17ea0cf7a55a87cf7bc5bd352d0e.cte
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

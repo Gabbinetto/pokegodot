@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/MAWILE.png-1171d82d3c9f2deff34c7d30c5f4b6ee.c
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SHAYMIN_1.png-1a5e9696c8f8a2a4ae13bdd73d0ac1f
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

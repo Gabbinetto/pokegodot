@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/icon_ball_MOONBALL.png-5b1c313b7d575e1d8a4f70
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

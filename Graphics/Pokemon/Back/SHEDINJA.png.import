@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/SHEDINJA.png-2995f435f9cec0d7440abbd65ca27346
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
