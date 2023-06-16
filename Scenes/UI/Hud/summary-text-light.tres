@@ -1,0 +1,12 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://byhvnnsp3ca0w"]
+
+[ext_resource type="FontFile" uid="uid://ddq6mqha1adun" path="res://Fonts/pokemon-ds-font.ttf" id="1_qj70w"]
+
+[resource]
+font = ExtResource("1_qj70w")
+font_size = 32
+font_color = Color(0.972549, 0.972549, 0.972549, 1)
+outline_color = Color(0.407843, 0.407843, 0.407843, 1)
+shadow_size = 2
+shadow_color = Color(0.172549, 0.172549, 0.172549, 1)
+shadow_offset = Vector2(0, 2)

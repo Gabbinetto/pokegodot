@@ -1,8 +1,9 @@
-[gd_scene load_steps=38 format=3 uid="uid://fucbb2lut76u"]
+[gd_scene load_steps=39 format=3 uid="uid://fucbb2lut76u"]
 
 [ext_resource type="Texture2D" uid="uid://ckf1cxjbr2r1r" path="res://Graphics/Characters/trainer_POKEMONTRAINER_Red.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_b2db6"]
 [ext_resource type="Texture2D" uid="uid://cybvpw38wkhvu" path="res://Graphics/Characters/boy_run.png" id="2_j2esd"]
+[ext_resource type="PackedScene" uid="uid://bpofx8q63wjj0" path="res://Scenes/UI/Hud/Hud.tscn" id="4_uteva"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6oblg"]
 atlas = ExtResource("2_j2esd")
@@ -303,3 +304,5 @@ position = Vector2(16, 16)
 target_position = Vector2(0, 32)
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="HUD" parent="." instance=ExtResource("4_uteva")]

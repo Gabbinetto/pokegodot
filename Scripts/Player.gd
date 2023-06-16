@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var move_speed : = 4.0
 @export var run_speed : = 8.0
@@ -7,17 +8,12 @@ var is_moving : = false
 var is_running : = false
 var percent_to_next_tile : = 0.0
 
-var initial_position : = Vector2()
+@onready var initial_position : = position
+@onready var hud: CanvasLayer = $HUD
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2d
+@onready var collision_checker : RayCast2D = $CollisionChecker
+@onready var event_checker : RayCast2D = $EventChecker
 var input_direction : = Vector2()
-var sprite : AnimatedSprite2D 
-var collision_checker : RayCast2D
-var event_checker : RayCast2D
-
-func _ready() -> void:
-	initial_position = position
-	sprite = $AnimatedSprite2d
-	collision_checker = $CollisionChecker
-	event_checker = $EventChecker
 
 func _physics_process(delta: float) -> void:
 	if is_moving == false and Globals.movement_enabled:
@@ -27,16 +23,16 @@ func _physics_process(delta: float) -> void:
 		
 	_handle_animation()
 	
-	is_running = Input.is_action_pressed('B')
+	is_running = Input.is_action_pressed("B")
 
 
 func _process_player_input():
 	
 	
 	if input_direction.y == 0:
-		input_direction.x = int(Input.get_axis('Left', 'Right'))
+		input_direction.x = int(Input.get_axis("Left", "Right"))
 	if input_direction.x == 0:
-		input_direction.y = int(Input.get_axis('Up', 'Down'))
+		input_direction.y = int(Input.get_axis("Up", "Down"))
 	
 	if input_direction != Vector2.ZERO:
 		initial_position = position
@@ -67,38 +63,49 @@ func _move(delta):
 		
 		
 func _handle_animation():
-	if !is_moving:
+
+	if input_direction != Vector2.ZERO:
+		if !sprite.is_playing():
+			sprite.play()
+	else:
 		sprite.stop()
 	
 	if !is_moving:
+
 		if input_direction == Vector2.ZERO:
 			# Set the frame to the first frame to have an idle "animation"
 			sprite.set_frame(0)
 			
 			# If the player was running set the animation to the correspondent
-			# walk animation. Like if the animation was 'RUN_UP' set to 'WALK_UP' to avoid
+			# walk animation. Like if the animation was "RUN_UP" set to "WALK_UP" to avoid
 			# having running frames while idle
-			if String(sprite.animation).contains('RUN'):
-				sprite.animation = 'WALK' + String(sprite.animation).right(-3)
+			if String(sprite.animation).contains("RUN"):
+				sprite.animation = "WALK" + String(sprite.animation).right(-3)
 	else:
+
 		# Set the animation according to the running state and direction
-		var anim_prefix = 'RUN' if is_running else 'WALK'
+		var anim_prefix = "RUN" if is_running else "WALK"
 		match input_direction:
 			Vector2.UP:
-				sprite.play(anim_prefix + '_UP')
+				sprite.animation = anim_prefix + "_UP"
 			Vector2.DOWN:
-				sprite.play(anim_prefix + '_DOWN')
+				sprite.animation = anim_prefix + "_DOWN"
 			Vector2.LEFT:
-				sprite.play(anim_prefix + '_LEFT')
+				sprite.animation = anim_prefix + "_LEFT"
 			Vector2.RIGHT:
-				sprite.play(anim_prefix + '_RIGHT')
+				sprite.animation = anim_prefix + "_RIGHT"
 
 func get_camera():
 	return %Camera
 
 func _unhandled_input(input_event: InputEvent) -> void:
-	if input_event.is_action_pressed('A'):
+	if input_event.is_action_pressed("A"):
 		_check_event()
+	if input_event.is_action_pressed("Start"):
+		if hud.visible:
+			hud.close()
+		else:
+			hud.open()
 
 func _check_event():
 	var event : Event = event_checker.get_collider()

@@ -1,20 +1,24 @@
 extends Resource
 class_name PokemonMove
 
-@export var ID : = 'MEGAHORN'
+## Pokegodot's move class
+##
+## Pokegodot's move class. It stores all the data relative to a pokemon move, such as it's typing, name or description.
 
-var name : = 'Unnamed'
-var type : = '???'
-var category : = 'Status'
+@export var ID : = "MEGAHORN"
+
+var name : = "Unnamed"
+var type : = "???"
+var category : = "Status"
 var base_power : = 0
 var accuracy : = 100
 var total_pp : = 5
 var target = null
 var priority : = 0
-var move_effect : = 'None'
+var move_effect : = "None"
 var flags : = []
 var effect_chance = 0
-var description = '???'
+var description = "???"
 
 func _init(id : String) -> void:
 	ID = id
@@ -22,18 +26,18 @@ func _init(id : String) -> void:
 
 func load_data():
 	var f = FileAccess.open(Globals.moves_file, FileAccess.READ)
-	var _target = '[' + ID + ']'
+	var _target = "[" + ID + "]"
 	var found = false
 	
 	while (not f.eof_reached()) and (not found):
 		var line = f.get_line()
 		if line == _target:
 			found = true
-	assert(found, 'Move not found!')
+	assert(found, "Move not found!")
 
 	for i in 32:
 		var line = f.get_line()
-		if line == '#-------------------------------':
+		if line == "#-------------------------------":
 			break
 		set_data(line)
 
@@ -43,34 +47,34 @@ func set_data(data : String):
 	
 	ID = ID.to_upper()
 	
-	var split_line : = data.split(' = ') # Split data between: 
+	var split_line : = data.split(" = ") # Split data between: 
 	var _type : String = split_line[0] # type of data
 	var value : String = split_line[1] # value of data
 	
 	match _type:
-		'Name':
+		"Name":
 			name = value
-		'Type':
+		"Type":
 			type = value
-		'Category':
+		"Category":
 			category = value.to_upper()
-		'Power':
+		"Power":
 			base_power = value.to_int()
-		'Accuracy':
+		"Accuracy":
 			accuracy = value.to_int()
-		'TotalPP':
+		"TotalPP":
 			total_pp = value.to_int()
-		'Target':
+		"Target":
 			target = value
-		'Priority':
+		"Priority":
 			priority = value.to_int()
-		'FunctionCode':
+		"FunctionCode":
 			move_effect = value
-		'Flags':
-			flags = value.split(',')
-		'EffectChance':
+		"Flags":
+			flags = value.split(",")
+		"EffectChance":
 			effect_chance = value.to_int()
-		'Description':
+		"Description":
 			description = value
 		_:
 			pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://c2k7pb4uv08f1"]
 
 [ext_resource type="Script" path="res://debugging/PokemonVisualizer.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/PokemonSpecies.gd" id="2"]
@@ -30,170 +30,135 @@ theme = SubResource("Theme_577xq")
 alignment = 1
 
 [node name="HP" type="HBoxContainer" parent="Stats"]
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/HP"]
-offset_right = 112.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "HP:"
 
 [node name="Value" type="Label" parent="Stats/HP"]
-offset_left = 116.0
-offset_right = 144.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/HP"]
-offset_left = 148.0
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BarShade" type="Panel" parent="Stats/HP/Bar"]
 modulate = Color(0, 0, 0, 0.207843)
+layout_mode = 0
 size_flags_horizontal = 3
 
 [node name="ATTACK" type="HBoxContainer" parent="Stats"]
-offset_top = 30.0
-offset_right = 260.0
-offset_bottom = 56.0
+layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/ATTACK"]
-offset_right = 112.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "ATTACK:"
 
 [node name="Value" type="Label" parent="Stats/ATTACK"]
-offset_left = 116.0
-offset_right = 144.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/ATTACK"]
-offset_left = 148.0
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BarShade" type="Panel" parent="Stats/ATTACK/Bar"]
 modulate = Color(0, 0, 0, 0.207843)
+layout_mode = 0
 size_flags_horizontal = 3
 
 [node name="DEFENSE" type="HBoxContainer" parent="Stats"]
-offset_top = 60.0
-offset_right = 260.0
-offset_bottom = 86.0
+layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/DEFENSE"]
-offset_right = 112.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "DEFENSE:"
 
 [node name="Value" type="Label" parent="Stats/DEFENSE"]
-offset_left = 116.0
-offset_right = 144.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/DEFENSE"]
-offset_left = 148.0
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BarShade" type="Panel" parent="Stats/DEFENSE/Bar"]
 modulate = Color(0, 0, 0, 0.207843)
+layout_mode = 0
 size_flags_horizontal = 3
 
 [node name="SPATTACK" type="HBoxContainer" parent="Stats"]
-offset_top = 90.0
-offset_right = 260.0
-offset_bottom = 116.0
+layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/SPATTACK"]
-offset_right = 112.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SP.ATTACK:"
 
 [node name="Value" type="Label" parent="Stats/SPATTACK"]
-offset_left = 116.0
-offset_right = 144.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/SPATTACK"]
-offset_left = 148.0
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BarShade" type="Panel" parent="Stats/SPATTACK/Bar"]
 modulate = Color(0, 0, 0, 0.207843)
+layout_mode = 0
 size_flags_horizontal = 3
 
 [node name="SPDEFENSE" type="HBoxContainer" parent="Stats"]
-offset_top = 120.0
-offset_right = 260.0
-offset_bottom = 146.0
+layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/SPDEFENSE"]
-offset_right = 112.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SP.DEFENSE:"
 
 [node name="Value" type="Label" parent="Stats/SPDEFENSE"]
-offset_left = 116.0
-offset_right = 144.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/SPDEFENSE"]
-offset_left = 148.0
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BarShade" type="Panel" parent="Stats/SPDEFENSE/Bar"]
 modulate = Color(0, 0, 0, 0.207843)
+layout_mode = 0
 size_flags_horizontal = 3
 
 [node name="SPEED" type="HBoxContainer" parent="Stats"]
-offset_top = 150.0
-offset_right = 260.0
-offset_bottom = 176.0
+layout_mode = 2
 alignment = 1
 
 [node name="Stat" type="Label" parent="Stats/SPEED"]
-offset_right = 112.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 text = "SPEED:"
 
 [node name="Value" type="Label" parent="Stats/SPEED"]
-offset_left = 116.0
-offset_right = 144.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "000"
 
 [node name="Bar" type="Panel" parent="Stats/SPEED"]
-offset_left = 148.0
-offset_right = 260.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="BarShade" type="Panel" parent="Stats/SPEED/Bar"]
 modulate = Color(0, 0, 0, 0.207843)
+layout_mode = 0
 size_flags_horizontal = 3
 
 [node name="Types" type="Control" parent="."]
@@ -205,6 +170,7 @@ offset_right = 192.0
 offset_bottom = 48.0
 
 [node name="Label" type="Label" parent="Types"]
+layout_mode = 0
 text = "Type:"
 
 [node name="Type1" type="Sprite2D" parent="Types"]

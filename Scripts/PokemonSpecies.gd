@@ -21,14 +21,14 @@ enum EGG_GROUPS {
 	Undiscovered
 }
 
-@export var ID : = 'BULBASAUR'
+@export var ID: = 'BULBASAUR'
 signal done_loading
 
 # Main data
-var name : = 'Bulbasaur'
+var name: = 'Bulbasaur'
 var type_1 = null
 var type_2 = null
-var base_stats : = {
+var base_stats: = {
 	'HP': 0,
 	'ATTACK': 0,
 	'DEFENSE': 0,
@@ -37,55 +37,55 @@ var base_stats : = {
 	'SPEED': 0,
 }
 var gender_ratio = GameVariables.GENDER_RATIOS.Female50Percent
-var growth_rate : = 'Medium'
-var base_exp : = 0
-var ev_yield : = {'stat': null, 'quantity': 1}
-var catch_rate : = 255
-var happiness : = 70
+var growth_rate: = 'Medium'
+var base_exp: = 0
+var ev_yield: = {'stat': null, 'quantity': 1}
+var catch_rate: = 255
+var happiness: = 70
 var ability_1 = null
 var ability_2 = null
 var hidden_ability = null
-var evolutions : = []
+var evolutions: = []
 
 # Moves data
-var moves : = []
-var tutor_moves : = []
-var egg_moves : = []
+var moves: = []
+var tutor_moves: = []
+var egg_moves: = []
 
 # Breeding data
 var egg_group_1 = EGG_GROUPS.Undiscovered
 var egg_group_2 = EGG_GROUPS.Undiscovered
-var hatch_steps : = 1
+var hatch_steps: = 1
 var offspring = null
-var breeding_item : = ''
+var breeding_item: = ''
 
 # Pokedex data
-var height : = 0.0
-var weight : = 0.0
-var color : = 'Red'
-var shape : = 'Head'
-var habitat : = 'None'
-var category : = '???'
-var description : = '???'
+var height: = 0.0
+var weight: = 0.0
+var color: = 'Red'
+var shape: = 'Head'
+var habitat: = 'None'
+var category: = '???'
+var description: = '???'
 var form_name = null
-var generation : = 0
-var flags : = []
+var generation: = 0
+var flags: = []
 
-var wild_item_common : = ''
-var wild_item_uncommon : = ''
-var wild_item_rare : = ''
+var wild_item_common: = ''
+var wild_item_uncommon: = ''
+var wild_item_rare: = ''
 
 # All possible sprites
-var sprite_front : Texture
-var sprite_back : Texture
-var sprite_front_s : Texture
-var sprite_back_s : Texture
+var sprite_front: Texture
+var sprite_back: Texture
+var sprite_front_s: Texture
+var sprite_back_s: Texture
 
-var f_sprite_front : Texture
-var f_sprite_back : Texture
-var f_sprite_front_s : Texture
-var f_sprite_back_s : Texture
-var icon
+var f_sprite_front: Texture
+var f_sprite_back: Texture
+var f_sprite_front_s: Texture
+var f_sprite_back_s: Texture
+var icon: Texture
 
 func load_data():
 	var f = FileAccess.open(Globals.pokemon_file, FileAccess.READ)
@@ -107,7 +107,7 @@ func load_data():
 	emit_signal('done_loading')
 	return
 
-func set_data(data : String):
+func set_data(data: String):
 	
 	ID = ID.to_upper()
 	
@@ -123,20 +123,20 @@ func set_data(data : String):
 		f_sprite_back = load('res://Graphics/Pokemon/Back/' + ID + '_female.png')
 		f_sprite_back_s = load('res://Graphics/Pokemon/BackShiny/' + ID + '_female.png')
 	
-	var split_line : = data.split(' = ') # Split data between: 
-	var type : String = split_line[0] # type of data
-	var value : String = split_line[1] # value of data
+	var split_line: = data.split(' = ') # Split data between: 
+	var type: String = split_line[0] # type of data
+	var value: String = split_line[1] # value of data
 	
 	match type:
 		'Name':
 			name = value
 		'Types':
-			var types : = value.split(',')
+			var types: = value.split(',')
 			type_1 = types[0]
 			if types.size() > 1:
 				type_2 = types[1]
 		'BaseStats':
-			var stats : PackedStringArray = value.split(',')
+			var stats: PackedStringArray = value.split(',')
 			base_stats.HP = stats[0].to_int()
 			base_stats.ATTACK = stats[1].to_int()
 			base_stats.DEFENSE = stats[2].to_int()

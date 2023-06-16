@@ -1,5 +1,9 @@
 extends Node
 
+## Pokegodot's game variables singleton
+##
+## This class holds important game data, suck as shiny chance, the type chart or natures. Not to be confused with [GameFunctions]
+
 signal finished_loading
 var loaded : = false
 
@@ -40,10 +44,10 @@ const TYPES_INDEX = {
 	"FAIRY": 18,
 }
 
-# Type chart, used to get the effectiveness of an attack.
-# The numbers are 1.0: NORMAL, 2.0:SUPEREFFECTIVE, 0.5: NOT VERY EFFECTIVE, 0.0: IMMUNE
-# To point at something do TYPE_CHART[attacking_type_index][target_type_index] and get the damage multiplier
-# These get generated at runtime from types.txt
+## Type chart, used to get the effectiveness of an attack.
+## The numbers are 1.0: NORMAL, 2.0:SUPEREFFECTIVE, 0.5: NOT VERY EFFECTIVE, 0.0: IMMUNE.
+## To point at something do TYPE_CHART[attacking_type_index][target_type_index] and get the damage multiplier.
+## These get generated at runtime from types.txt.
 var TYPE_CHART = [
 #	NORM FIGH FLYN POIS GROU ROCK BUG  GHOS STEE ???  FIRE WATE GRAS ELEC PSYC ICE  DRAG DARK FAIR
 	[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], # NORMAL
@@ -119,8 +123,17 @@ enum TERRAINS {
 	GRASS, ELECTRIC, PSYCHIC, MISTY
 }
 
-var player_name = "Red"
-var player_team = {
+var exp_table: = {
+	"Erratic": [],
+	"Fast": [],
+	"Medium": [],
+	"Parabolic": [],
+	"Slow": [],
+	"Fluctuating": [],
+}
+
+var player_name: String = "Red"
+var player_team: Dictionary = {
 	0: null,
 	1: null,
 	2: null,
@@ -137,17 +150,12 @@ var player_team = {
 #
 # }
 
-var exp_table = {
-	"Erratic": [],
-	"Fast": [],
-	"Medium": [],
-	"Parabolic": [],
-	"Slow": [],
-	"Fluctuating": [],
-}
 
-enum {SLOW = 8, MEDIUM = 16, FAST = 32}
-var text_speed = FAST :
+enum TEXT_SPEEDS {SLOW = 8, MEDIUM = 16, FAST = 32}
+## The text speed. The getter function returns 1 divided by the text speed.
+## It is intended to be the time (in seconds) between characters appearing in textboxes.
+## Refer to [constant TEXT_SPEEDS] for the possible text speeds.
+var text_speed = TEXT_SPEEDS.FAST :
 	get:
 		return 1.0 / text_speed
 
@@ -225,3 +233,4 @@ func _ready() -> void:
 	
 	player_team[0] = await Pokemon.new("CHARMANDER", 0, "", 5)
 	player_team[1] = await Pokemon.new("BULBASAUR", 0, "", 5)
+	player_team[2] = await Pokemon.new("XERNEAS", 0, "", 70)

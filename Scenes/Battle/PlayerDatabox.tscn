@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq0wwmmch10kd"]
+[gd_scene load_steps=7 format=3 uid="uid://bq0wwmmch10kd"]
 
 [ext_resource type="Script" path="res://Scripts/Battle/Databox.gd" id="2_lw285"]
 [ext_resource type="Texture2D" uid="uid://pjuugece5qkx" path="res://Graphics/Pictures/Battle/databox_hgss.png" id="3"]
 [ext_resource type="FontFile" uid="uid://bc0h4u24mdptb" path="res://Fonts/hgss_health.ttf" id="3_ay0qn"]
-[ext_resource type="FontFile" uid="uid://ddq6mqha1adun" path="res://Fonts/pokemon-ds-font.ttf" id="4_6247j"]
+[ext_resource type="LabelSettings" uid="uid://bihtvcenmh2ql" path="res://Scenes/Battle/databox_text.tres" id="4_kluv0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_dengd"]
 font = ExtResource("3_ay0qn")
@@ -15,10 +15,6 @@ font = ExtResource("3_ay0qn")
 font_size = 8
 font_color = Color(0.286275, 0.286275, 0.286275, 1)
 shadow_color = Color(0.729412, 0.729412, 0.729412, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_0bqq4"]
-font = ExtResource("4_6247j")
-font_color = Color(0.286275, 0.286275, 0.286275, 1)
 
 [node name="PlayerDatabox" type="Sprite2D"]
 texture_filter = 1
@@ -66,8 +62,7 @@ alignment = 1
 
 [node name="Health" type="Label" parent="HealthText"]
 unique_name_in_owner = true
-offset_right = 55.0
-offset_bottom = 11.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "000/000"
@@ -82,12 +77,11 @@ offset_bottom = 24.0
 
 [node name="Name" type="Label" parent="NameContainer"]
 unique_name_in_owner = true
-offset_right = 67.0
-offset_bottom = 17.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Pokemon 1"
-label_settings = SubResource("LabelSettings_0bqq4")
+label_settings = ExtResource("4_kluv0")
 
 [node name="GenderSymbol" type="Sprite2D" parent="."]
 unique_name_in_owner = true

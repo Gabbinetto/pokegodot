@@ -12,7 +12,13 @@ region = Rect2(7, 0, 7, 9)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_iu3wh"]
 animations = [{
-"frames": [SubResource("AtlasTexture_35pj6"), SubResource("AtlasTexture_uaf54")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35pj6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uaf54")
+}],
 "loop": true,
 "name": &"default",
 "speed": 5.0
@@ -20,6 +26,6 @@ animations = [{
 
 [node name="DialogueArrow" type="AnimatedSprite2D"]
 position = Vector2(488, 71)
-frames = SubResource("SpriteFrames_iu3wh")
-playing = true
+sprite_frames = SubResource("SpriteFrames_iu3wh")
+autoplay = "default"
 centered = false

@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1wuixyqg1dvq"]
+
+[ext_resource type="Script" path="res://Scripts/GameWorld.gd" id="1_d6gpb"]
+[ext_resource type="PackedScene" uid="uid://dsobsx0br00sw" path="res://Scenes/Maps/TestMap.tscn" id="2_e2n2r"]
+[ext_resource type="PackedScene" uid="uid://fucbb2lut76u" path="res://Scenes/Player.tscn" id="3_ufxe3"]
+
+[sub_resource type="GDScript" id="GDScript_vxsy2"]
+resource_name = "TestMapLabek"
+script/source = "extends Label
+
+func _process(delta: float) -> void:
+	text = owner.current_map.map_id
+"
+
+[node name="GameWorld" type="Node2D" node_paths=PackedStringArray("starting_map")]
+script = ExtResource("1_d6gpb")
+starting_map = NodePath("Maps/TestMap")
+
+[node name="Maps" type="Node" parent="."]
+
+[node name="TestMap" parent="Maps" instance=ExtResource("2_e2n2r")]
+neighbours_paths = Array[NodePath]([NodePath("../TestMap2")])
+
+[node name="TestMap2" parent="Maps" instance=ExtResource("2_e2n2r")]
+position = Vector2(0, 1536)
+map_id = "DEFAULT2"
+neighbours_paths = Array[NodePath]([NodePath("../TestMap"), NodePath("../TestMap3")])
+
+[node name="TestMap3" parent="Maps" instance=ExtResource("2_e2n2r")]
+position = Vector2(0, 3072)
+map_id = "DEFAULT3"
+neighbours_paths = Array[NodePath]([NodePath("../TestMap2")])
+
+[node name="Player" parent="." instance=ExtResource("3_ufxe3")]
+position = Vector2(256, 192)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "MAP NAME"
+script = SubResource("GDScript_vxsy2")

@@ -12,21 +12,24 @@ config_version=5
 
 config/name="Pokegodot"
 config/description="A Pokemon Essentials-like template for Godot 4"
-run/main_scene="res://Scenes/Maps/TestMap.tscn"
+run/main_scene="res://Scenes/GameWorld.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
 
 [autoload]
 
-GameVariables="*res://Scripts/GameVariables.gd"
 Globals="*res://Scripts/Globals.gd"
+GameVariables="*res://Scripts/GameVariables.gd"
 GameFunctions="*res://Scripts/GameFunctions.gd"
 BattleFunctions="*res://Scripts/Battle/BattleFunctions.gd"
+Flags="*res://Scripts/Flags.gd"
 
 [display]
 
 window/size/viewport_width=512
 window/size/viewport_height=384
+window/size/window_width_override=1024
+window/size/window_height_override=768
 window/stretch/mode="canvas_items"
 
 [editor]
@@ -107,4 +110,5 @@ R={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="mobile"
 vulkan/rendering/back_end=1

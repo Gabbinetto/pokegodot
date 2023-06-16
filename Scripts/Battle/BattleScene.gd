@@ -1,6 +1,8 @@
 extends Control
 
 signal turn_processed
+signal switched_in
+signal switched_out
 
 enum STATES {
 	START, # Battle start
@@ -133,7 +135,10 @@ func _ready() -> void:
 
 	fight_button.grab_focus()
 
-	pokemon_1 = GameVariables.player_team[0]
+	for pokemon in GameVariables.player_team.values():
+		if pokemon != null and pokemon.hp > 0:
+			pokemon_1 = pokemon
+			break
 	pokemon_2 = enemy_team[0]
 
 	load_scene()
@@ -163,20 +168,7 @@ func load_scene() -> void:
 	if pokemon_2 == null:
 		pokemon_2 = await Pokemon.new(pokemon_2_data.ID.to_upper(), pokemon_2_data.FORM_NUMBER, pokemon_2_data.NICKNAME, pokemon_2_data.LEVEL, pokemon_2_data.SHINY, pokemon_2_data.GENDER)
 	
-	sprite_1.texture = pokemon_1.back
-	sprite_2.texture = pokemon_2.front
-
-	# Offset sprites down to the ground
-	var lowest_sprite1_pixel = Globals.get_lowest_pixel_position(sprite_1.texture.get_image())
-	var lowest_sprite2_pixel = Globals.get_lowest_pixel_position(sprite_2.texture.get_image())
-
-	sprite_1.offset.y += sprite_1.texture.get_height() - lowest_sprite1_pixel.y
-	sprite_2.offset.y += sprite_2.texture.get_height() - lowest_sprite2_pixel.y
-
-	pokemon_1_databox.pokemon = pokemon_1
-	pokemon_2_databox.pokemon = pokemon_2
-
-#	pokemon_1_databox.update_health_bar()
+	_sync_ui_to_pokemon()
 
 	# Set scenery
 	background.texture = BATTLE_SETTINGS_SPRITES[setting][0]
@@ -184,15 +176,15 @@ func load_scene() -> void:
 	ground_1.texture = BATTLE_SETTINGS_SPRITES[setting][1]
 	ground_2.texture = BATTLE_SETTINGS_SPRITES[setting][1]
 
-	sync_move_buttons()
-
 
 # Sync move buttons with player Pokemon's moves
-func sync_move_buttons():
+func _sync_move_buttons():
 	for i in move_buttons.size():
 		move_buttons[i].text = ''
 		if pokemon_1.moves[i].MOVE != null:
 			move_buttons[i].text = pokemon_1.moves[i].MOVE.name
+			move_buttons[i].disabled = false
+			move_buttons[i].focus_mode = FOCUS_ALL
 		else:
 			move_buttons[i].disabled = true
 			move_buttons[i].focus_mode = FOCUS_NONE
@@ -240,6 +232,13 @@ func _handle_state(new_state: STATES, _data = {}):
 				_handle_state(STATES.WIN)
 			TURN_OUTCOMES.BOTH_ALIVE:
 				print("Both alive")
+
+				if pokemon_1.hp <= 0:
+					switch_in(GameVariables.player_team[
+						GameVariables.player_team.find_key(pokemon_1) + 1
+					])
+					await switched_in
+
 				_handle_state(STATES.ACTION_SELECTION)
 
 	elif state == STATES.WIN:
@@ -447,3 +446,32 @@ func _check_battle_outcome() -> TURN_OUTCOMES:
 
 	prints(player_lost, enemy_lost)
 	return TURN_OUTCOMES.BOTH_ALIVE
+
+
+func _sync_ui_to_pokemon():
+	sprite_1.texture = pokemon_1.back
+	sprite_2.texture = pokemon_2.front
+
+	# Offset sprites down to the ground
+	var lowest_sprite1_pixel = Globals.get_lowest_pixel_position(sprite_1.texture.get_image())
+	var lowest_sprite2_pixel = Globals.get_lowest_pixel_position(sprite_2.texture.get_image())
+
+	sprite_1.offset.y += sprite_1.texture.get_height() - lowest_sprite1_pixel.y
+	sprite_2.offset.y += sprite_2.texture.get_height() - lowest_sprite2_pixel.y
+
+	pokemon_1_databox.pokemon = pokemon_1
+	pokemon_2_databox.pokemon = pokemon_2
+
+#	pokemon_1_databox.update_health_bar()
+
+	_sync_move_buttons()
+
+func switch_in(pokemon: Pokemon):
+	pokemon_1 = pokemon
+	_sync_ui_to_pokemon()
+	_show_text("Go %s!" % pokemon_1.nickname)
+	animation.play("SwitchIn")
+	await animation.animation_finished
+	volatile_battle_data_1 = VolatileBattleData.new(pokemon_1)
+	switched_in.emit()
+	return [pokemon_1, volatile_battle_data_1]
