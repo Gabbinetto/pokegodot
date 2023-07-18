@@ -18,18 +18,18 @@ starting_map = NodePath("Maps/TestMap")
 
 [node name="Maps" type="Node" parent="."]
 
-[node name="TestMap" parent="Maps" instance=ExtResource("2_e2n2r")]
-neighbours_paths = Array[NodePath]([NodePath("../TestMap2")])
+[node name="TestMap" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_e2n2r")]
+neighbours = [NodePath("../TestMap2")]
 
-[node name="TestMap2" parent="Maps" instance=ExtResource("2_e2n2r")]
+[node name="TestMap2" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_e2n2r")]
 position = Vector2(0, 1536)
 map_id = "DEFAULT2"
-neighbours_paths = Array[NodePath]([NodePath("../TestMap"), NodePath("../TestMap3")])
+neighbours = [NodePath("../TestMap"), NodePath("../TestMap3")]
 
-[node name="TestMap3" parent="Maps" instance=ExtResource("2_e2n2r")]
+[node name="TestMap3" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_e2n2r")]
 position = Vector2(0, 3072)
 map_id = "DEFAULT3"
-neighbours_paths = Array[NodePath]([NodePath("../TestMap2")])
+neighbours = [NodePath("../TestMap2")]
 
 [node name="Player" parent="." instance=ExtResource("3_ufxe3")]
 position = Vector2(256, 192)

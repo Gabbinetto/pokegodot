@@ -26,8 +26,9 @@ func _load_map(map: GameMap, player: Player) -> void:
 	prints(map.map_id, "entered")
 
 func _unload_map(map: GameMap, player: Player) -> void:
+	
 	for neighbour in map.neighbours:
-		if !(neighbour in current_map.neighbours) or neighbour != current_map:
+		if !(neighbour in current_map.neighbours) and neighbour != current_map:
 			maps_container.remove_child(neighbour)
 	
 	prints(map.map_id, "exited")
