@@ -231,6 +231,6 @@ func _ready() -> void:
 	loaded = true
 	emit_signal("finished_loading")
 	
-	player_team[0] = await Pokemon.new("CHARMANDER", 0, "", 5)
-	player_team[1] = await Pokemon.new("BULBASAUR", 0, "", 5)
-	player_team[2] = await Pokemon.new("XERNEAS", 0, "", 70)
+	player_team[0] = await Pokemon.new("BULBASAUR", 0, "", 5)
+	player_team[1] = await Pokemon.new("CHARMANDER", 0, "", 5)
+	player_team[2] = await Pokemon.new("SQUIRTLE", 0, "", 5)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1wuixyqg1dvq"]
 
 [ext_resource type="Script" path="res://Scripts/GameWorld.gd" id="1_d6gpb"]
-[ext_resource type="PackedScene" uid="uid://dsobsx0br00sw" path="res://Scenes/Maps/TestMap.tscn" id="2_e2n2r"]
+[ext_resource type="PackedScene" uid="uid://dsobsx0br00sw" path="res://Scenes/Maps/TestMap.tscn" id="2_hfq53"]
 [ext_resource type="PackedScene" uid="uid://fucbb2lut76u" path="res://Scenes/Player.tscn" id="3_ufxe3"]
 
 [sub_resource type="GDScript" id="GDScript_vxsy2"]
@@ -18,26 +18,16 @@ starting_map = NodePath("Maps/TestMap")
 
 [node name="Maps" type="Node" parent="."]
 
-[node name="TestMap" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_e2n2r")]
-neighbours = [NodePath("../TestMap2")]
-
-[node name="TestMap2" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_e2n2r")]
-position = Vector2(0, 1536)
-map_id = "DEFAULT2"
-neighbours = [NodePath("../TestMap"), NodePath("../TestMap3")]
-
-[node name="TestMap3" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_e2n2r")]
-position = Vector2(0, 3072)
-map_id = "DEFAULT3"
-neighbours = [NodePath("../TestMap2")]
+[node name="TestMap" parent="Maps" instance=ExtResource("2_hfq53")]
 
 [node name="Player" parent="." instance=ExtResource("3_ufxe3")]
 position = Vector2(256, 192)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="MapLabel" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="Label" type="Label" parent="MapLabel"]
 offset_right = 40.0
 offset_bottom = 23.0
 text = "MAP NAME"
 script = SubResource("GDScript_vxsy2")
+metadata/_edit_use_anchors_ = true

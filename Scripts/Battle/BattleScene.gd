@@ -1,20 +1,22 @@
 extends Control
+class_name BattleScene
 
 signal turn_processed
 signal switched_in
 signal switched_out
 
+## Battle states
 enum STATES {
-	START, # Battle start
-	ACTION_SELECTION, # Action selection, like using a move or running away
-	ACTION_EXECUTION, # The phase where the action gets executed
-	WIN, LOSE, # When the player wins/loses
-	RUN # When the player runs away
+	START, ## Battle start
+	ACTION_SELECTION, ## Action selection, like using a move or running away
+	ACTION_EXECUTION, ## The phase where the action gets executed
+	WIN, LOSE, ## When the player wins/loses
+	RUN ## When the player runs away
 }
 
 enum TURN_OUTCOMES {PLAYER_LOST, ENEMY_LOST, BOTH_ALIVE}
 
-# All the battle environments, like the background and the ground pokemons stand on
+## All the battle environments, like the background and the ground pokemons stand on
 enum BATTLE_SETTINGS {
 	cave1,
 	cave1_ice,
@@ -44,7 +46,7 @@ enum BATTLE_SETTINGS {
 	field_night,
 }
 
-# Sprites in res://Graphics/Battlebacks/
+## Sprites in res://Graphics/Battlebacks/
 var BATTLE_SETTINGS_SPRITES = {
 	BATTLE_SETTINGS.cave1: [preload('res://Graphics/Battlebacks/cave1_bg.png'), preload('res://Graphics/Battlebacks/cave1_base1.png')],
 	BATTLE_SETTINGS.cave1_ice: [preload('res://Graphics/Battlebacks/cave1_bg.png'), preload('res://Graphics/Battlebacks/cave1_ice_base1.png')],
@@ -128,11 +130,16 @@ var weather: GameVariables.WEATHERS = GameVariables.WEATHERS.NONE
 var current_attack_text: String
 var wild_battle: = true
 
+var sprite_1_default_offset: Vector2
+var sprite_2_default_offset: Vector2
+
 func _ready() -> void:
 	var _unused = get_viewport().connect('gui_focus_changed', _on_focus_changed) 
 	
+	sprite_1_default_offset = sprite_1.offset
+	sprite_2_default_offset = sprite_2.offset
+	
 	# Setting nodes
-
 	fight_button.grab_focus()
 
 	for pokemon in GameVariables.player_team.values():
@@ -456,8 +463,8 @@ func _sync_ui_to_pokemon():
 	var lowest_sprite1_pixel = Globals.get_lowest_pixel_position(sprite_1.texture.get_image())
 	var lowest_sprite2_pixel = Globals.get_lowest_pixel_position(sprite_2.texture.get_image())
 
-	sprite_1.offset.y += sprite_1.texture.get_height() - lowest_sprite1_pixel.y
-	sprite_2.offset.y += sprite_2.texture.get_height() - lowest_sprite2_pixel.y
+	sprite_1.offset.y = sprite_1_default_offset.y + sprite_1.texture.get_height() - lowest_sprite1_pixel.y
+	sprite_2.offset.y = sprite_2_default_offset.y + sprite_2.texture.get_height() - lowest_sprite2_pixel.y
 
 	pokemon_1_databox.pokemon = pokemon_1
 	pokemon_2_databox.pokemon = pokemon_2

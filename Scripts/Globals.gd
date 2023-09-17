@@ -15,8 +15,8 @@ const icons : = 'res://Graphics/Pokemon/Icons/'
 
 var movement_enabled : = true
 
-# Get the lowest non-opaque pixel in an image
-# Used to offset Pokemon sprites down to the ground
+## Get the lowest non-opaque pixel in an image.
+## Used to offset Pokemon sprites down to the ground.
 func get_lowest_pixel_position(image : Image) -> Vector2:
 	var index = Vector2(image.get_size()) - Vector2.ONE
 	

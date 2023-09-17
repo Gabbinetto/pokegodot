@@ -15,6 +15,7 @@ func _ready() -> void:
 		maps_container.remove_child(map)
 		
 	maps_container.add_child(starting_map)
+	current_map = starting_map
 
 func _load_map(map: GameMap, player: Player) -> void:
 	current_map = map

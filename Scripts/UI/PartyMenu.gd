@@ -1,4 +1,5 @@
 extends Control
+class_name PartyMenu
 
 signal closed
 
@@ -30,7 +31,6 @@ func _ready() -> void:
 		for other in other_slots:
 			slot.focus_changed.connect(func():
 				other.focused = false
-				print(other)
 			)
 		slot.focus_changed.connect(func():
 			back_button.hide()
@@ -44,7 +44,7 @@ func _ready() -> void:
 	self.current_selected = selection_options.size() - 1
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down"):
 		self.current_selected += 2
 	elif event.is_action_pressed("ui_up"):
@@ -53,6 +53,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		self.current_selected += 1
 	elif event.is_action_pressed("ui_left"):
 		self.current_selected -= 1
+	elif event.is_action_pressed("B"):
+		close()
 
 func _load_selection_options() -> void:
 	selection_options = slots.filter(func(slot): return slot.pokemon != null)

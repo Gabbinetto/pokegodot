@@ -26,6 +26,7 @@ metadata/_edit_lock_ = true
 
 [node name="PartySlot1" parent="Slots" instance=ExtResource("2_yf5px")]
 position = Vector2(128, 49)
+is_round = true
 
 [node name="PartySlot2" parent="Slots" instance=ExtResource("2_yf5px")]
 position = Vector2(384, 65)

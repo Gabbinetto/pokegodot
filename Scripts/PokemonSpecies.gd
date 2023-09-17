@@ -96,7 +96,7 @@ func load_data():
 		var line = f.get_line()
 		if line == target:
 			found = true
-	assert(found, 'Pokemon not found')
+	assert(found, 'Pokemon %s not found' % ID)
 
 	for i in 32:
 		var line = f.get_line()

@@ -2,12 +2,11 @@ extends Node
 
 const BattleScene : = preload('res://Scenes/Battle/BattleScene.tscn')
 
-
 func get_player() -> CharacterBody2D:
 	return get_tree().get_first_node_in_group('Player')
 
+## Start a pokemon battle where [param enemy] is the wild pokemon
 func start_battle(enemy : Pokemon) -> void:
-	# Start a pokemon battle
 	var battle = BattleScene.instantiate()
 
 	battle.pokemon_1 = GameVariables.player_team[0]
@@ -19,15 +18,20 @@ func start_battle(enemy : Pokemon) -> void:
 	get_tree().paused = true
 
 
+## [param pool] must be an [Array] of [Dictionary]s. The dictionaries should follow this format:
+## [codeblock] 
+## {
+##    # The value to return when picked; 
+##	  value
+##    # (1 to 100) the chance to be picked from the pool. All the chances should add up to 100
+##	  chance
+## }
+## [/codeblock] 
+## This fills a "bag" with items from the pool array. The number of items depends on the chance.
+## By shuffling the bag and picking the front item the chance of picking an item should represent
+## the set chance. [br]
+## Probably it's not the most optimal way to do this, but if it works it works.
 func weighted_random(pool : Array[Dictionary]) -> Variant:
-	# 'pool' must be an Array of Dictionaries. The dictionaries should follow this format:
-	# {
-	#	value: the value to return when picked
-	#	chance: (1 to 100) the chance to be picked from the pool. All the chances should add up to 100
-	# }
-	# This fills a "bag" with items from the pool array. The number of items depends on the chance.
-	# By shuffling the bag and picking the front item the chance of picking an item should represent
-	# the set chance.
 	
 	var bag = [] # The bag 
 	for item in pool:
@@ -38,6 +42,7 @@ func weighted_random(pool : Array[Dictionary]) -> Variant:
 	bag.shuffle()
 	return bag.front()
 
+## Returns a [Dictionary] useful for [method weighted_random]
 func create_weighted_pool_element(value : Variant, chance : int) -> Dictionary:
 	return {'value': value, 'chance': chance}
 

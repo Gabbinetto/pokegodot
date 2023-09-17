@@ -20,10 +20,13 @@ func _ready() -> void:
 	
 	buttons = buttons_container.get_children()
 
+	# Setting the trainer buttons text
 	trainer_button.text = GameVariables.player_name
 	
 	pokedex_button.visible = Flags.pokedex_unlocked
 	
+	# Show the pokemon button only if pokemons are present
+	# in the player's team
 	var show_pokemon = false
 	for pokemon in GameVariables.player_team.values():
 		if pokemon != null:
@@ -31,16 +34,21 @@ func _ready() -> void:
 			break
 	pokemon_button.visible = show_pokemon
 
+	# Focus on the first button
 	for button in buttons:
 		if button.visible:
 			button.grab_focus()
 			break
 	
-	pokemon_button.pressed.connect(_open_party_menu)
+	pokemon_button.pressed.connect(func(): _open_menu(PartyMenu))
 	exit_button.pressed.connect(close)
 
-func _open_party_menu():
-	var menu: = PartyMenu.instantiate()
+func _input(event):
+	if event.is_action_pressed("B") and main_menu.visible:
+		close()
+
+func _open_menu(menu_scene: PackedScene):
+	var menu: = menu_scene.instantiate()
 	main_menu.hide()
 	menu.closed.connect(func():
 		main_menu.show()
