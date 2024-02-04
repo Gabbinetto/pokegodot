@@ -18,7 +18,18 @@ starting_map = NodePath("Maps/TestMap")
 
 [node name="Maps" type="Node" parent="."]
 
-[node name="TestMap" parent="Maps" instance=ExtResource("2_hfq53")]
+[node name="TestMap" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_hfq53")]
+neighbours = [NodePath("../TestMap2"), NodePath("../TestMap3")]
+
+[node name="TestMap2" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_hfq53")]
+position = Vector2(0, 1536)
+map_id = "DEFAULT2"
+neighbours = [NodePath("../TestMap")]
+
+[node name="TestMap3" parent="Maps" node_paths=PackedStringArray("neighbours") instance=ExtResource("2_hfq53")]
+position = Vector2(0, -1536)
+map_id = "DEFAULT3"
+neighbours = [NodePath("../TestMap")]
 
 [node name="Player" parent="." instance=ExtResource("3_ufxe3")]
 position = Vector2(256, 192)
