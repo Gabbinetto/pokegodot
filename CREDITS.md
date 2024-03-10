@@ -1,0 +1,2 @@
+- Pokemon Essentials team
+- [Relic castle's Generation 9 Resource Pack open project](https://reliccastle.com/resources/1101/)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cvekrr315uqws"
+path="res://.godot/imported/Battle catch click.ogg-c99312c92cc81e04bc5dcd3bbcaa3079.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Battle catch click.ogg"
+dest_files=["res://.godot/imported/Battle catch click.ogg-c99312c92cc81e04bc5dcd3bbcaa3079.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

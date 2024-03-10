@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://debuf2q7h8mmx"
+path="res://.godot/imported/Battle ball drop.ogg-6fe3f0debb4e6caaf4515ba6b4ba53a7.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Battle ball drop.ogg"
+dest_files=["res://.godot/imported/Battle ball drop.ogg-6fe3f0debb4e6caaf4515ba6b4ba53a7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

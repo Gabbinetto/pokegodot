@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://blkvbvbd2bq5j"
+path="res://.godot/imported/Defense Curl.ogg-1280c9dc285b1658c478d7ac603a4fa9.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Anim/Defense Curl.ogg"
+dest_files=["res://.godot/imported/Defense Curl.ogg-1280c9dc285b1658c478d7ac603a4fa9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

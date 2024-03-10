@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bentcjc0exmob"
+path="res://.godot/imported/Mining found all.ogg-bc8b1a603a4bde210346527ca43fb341.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Mining found all.ogg"
+dest_files=["res://.godot/imported/Mining found all.ogg-bc8b1a603a4bde210346527ca43fb341.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

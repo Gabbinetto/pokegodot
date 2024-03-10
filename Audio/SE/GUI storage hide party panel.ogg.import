@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://drbxpb2ec86ap"
+path="res://.godot/imported/GUI storage hide party panel.ogg-c22139fe6c84d745d61b485d0eb3cbca.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/GUI storage hide party panel.ogg"
+dest_files=["res://.godot/imported/GUI storage hide party panel.ogg-c22139fe6c84d745d61b485d0eb3cbca.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

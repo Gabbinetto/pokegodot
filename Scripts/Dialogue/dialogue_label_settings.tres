@@ -1,8 +1,0 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://c5j1cwc8skyr0"]
-
-[ext_resource type="FontFile" uid="uid://ddq6mqha1adun" path="res://Fonts/pokemon-ds-font.ttf" id="1_4kh0k"]
-
-[resource]
-font = ExtResource("1_4kh0k")
-font_size = 24
-font_color = Color(0.258824, 0.258824, 0.258824, 1)

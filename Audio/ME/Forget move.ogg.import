@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c8teodvs5i13y"
+path="res://.godot/imported/Forget move.ogg-19c6501ffbc1369b4d715837e2527e39.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/ME/Forget move.ogg"
+dest_files=["res://.godot/imported/Forget move.ogg-19c6501ffbc1369b4d715837e2527e39.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://df4b5y86fojtb"
+path="res://.godot/imported/Mining reveal.ogg-883637c30a18e694cfa241b87df59047.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Mining reveal.ogg"
+dest_files=["res://.godot/imported/Mining reveal.ogg-883637c30a18e694cfa241b87df59047.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

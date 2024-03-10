@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c4fsub10h46sa"
+path="res://.godot/imported/Dizzy Punch.ogg-89127514bf5ea3428606e490fd6e9529.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Anim/Dizzy Punch.ogg"
+dest_files=["res://.godot/imported/Dizzy Punch.ogg-89127514bf5ea3428606e490fd6e9529.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

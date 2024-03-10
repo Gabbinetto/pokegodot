@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d2de6skt03p25"
+path="res://.godot/imported/Pkmn level up.ogg-467ef20d1ba5e43c79cde69962926894.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Pkmn level up.ogg"
+dest_files=["res://.godot/imported/Pkmn level up.ogg-467ef20d1ba5e43c79cde69962926894.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

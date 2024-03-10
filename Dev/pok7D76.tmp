@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhomak2a60ydy"]
+
+[ext_resource type="Script" path="res://Dev/pokemon_visualizer.gd" id="1_aaawa"]
+
+[node name="PokemonVisualizer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aaawa")
+pokemon_id = null
+metadata/_edit_lock_ = true
+
+[node name="Sprite" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 0
+anchor_right = 0.375
+anchor_bottom = 0.5
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true

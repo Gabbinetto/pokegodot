@@ -1,3 +1,5 @@
 {
-    "workbench.colorTheme": "GDScript"
+  "workbench.colorTheme": "GDScript",
+  "godotTools.editorPath.godot4": "c:\\Users\\gabri\\Godot\\godot.exe",
+  "git.ignoreLimitWarning": true
 }

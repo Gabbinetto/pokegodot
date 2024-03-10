@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ph8ccejfmp6i"
+path="res://.godot/imported/Voltorb Flip win.ogg-5eaa0a2edf161d315f20349f8de2121b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/ME/Voltorb Flip win.ogg"
+dest_files=["res://.godot/imported/Voltorb Flip win.ogg-5eaa0a2edf161d315f20349f8de2121b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://88dt2x37sjag"
+path="res://.godot/imported/Battle ball shake.ogg-a9d053ed0bae75694d0e96c3191bba57.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Battle ball shake.ogg"
+dest_files=["res://.godot/imported/Battle ball shake.ogg-a9d053ed0bae75694d0e96c3191bba57.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

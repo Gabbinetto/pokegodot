@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://deaiyvt1ns3r"
+path="res://.godot/imported/Poison step.ogg-f991d18e00441e07d24dbbab1c5ebb1b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Poison step.ogg"
+dest_files=["res://.godot/imported/Poison step.ogg-f991d18e00441e07d24dbbab1c5ebb1b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

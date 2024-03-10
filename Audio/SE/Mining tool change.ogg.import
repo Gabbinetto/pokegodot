@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bshh7apb6hwi7"
+path="res://.godot/imported/Mining tool change.ogg-d18d87d8e1888e83e51734320c93fe1e.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Mining tool change.ogg"
+dest_files=["res://.godot/imported/Mining tool change.ogg-d18d87d8e1888e83e51734320c93fe1e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

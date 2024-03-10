@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://uhgk1wao2gt5"
+path="res://.godot/imported/Lovely Kiss.ogg-cfd18bbccdd871d0803b9ac90f175e48.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SE/Anim/Lovely Kiss.ogg"
+dest_files=["res://.godot/imported/Lovely Kiss.ogg-cfd18bbccdd871d0803b9ac90f175e48.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
