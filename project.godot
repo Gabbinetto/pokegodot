@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Flags="*res://Scripts/Flags.gd"
 Global="*res://Scripts/Global.gd"
 
 [display]

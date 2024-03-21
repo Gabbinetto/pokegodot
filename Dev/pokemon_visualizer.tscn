@@ -13,7 +13,8 @@ offset_bottom = 1920.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_aaawa")
-pokemon_id = "FUECOCO"
+pokemon_id = "SANDSLASH"
+form_number = 1
 metadata/_edit_lock_ = true
 
 [node name="Sprite" type="TextureRect" parent="."]

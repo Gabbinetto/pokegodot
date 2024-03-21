@@ -1,6 +1,7 @@
 extends Control
 
 @export var pokemon_id: = "BULBASAUR"
+@export var form_number: = 0
 
 @onready var sprite: TextureRect = %Sprite
 
@@ -9,7 +10,10 @@ var sprites: Array[Texture]
 var current_sprite: = 0
 
 func _ready() -> void:
-	species = PokemonSpecies.new(pokemon_id)
+	if form_number > 0:
+		species = PokemonForm.new(pokemon_id, form_number)
+	else:
+		species = PokemonSpecies.new(pokemon_id)
 	
 	sprites.append(species.front)
 	sprites.append(species.front_s)

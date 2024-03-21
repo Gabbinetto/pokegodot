@@ -12,7 +12,12 @@ class PBSParser:
         self.data["abilities"] = self.__default_parse("abilities.txt")
         self.data["items"] = self.__default_parse("items.txt")
         self.data["types"] = self.__default_parse("types.txt")
+        for type in self.data["types"]:
+            index = self.data["types"][type]["IconPosition"]
+            del self.data["types"][type]["IconPosition"]
+            self.data["types"][type]["Index"] = index
         self.data["forms"] = self.__forms_parse("pokemon_forms.txt")
+        self.data["moves"] = self.__default_parse("moves.txt")
 
     def __default_parse(self, filename: str):
 
