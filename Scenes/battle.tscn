@@ -1,0 +1,200 @@
+[gd_scene load_steps=14 format=3 uid="uid://cgjkgkf31kpua"]
+
+[ext_resource type="PackedScene" uid="uid://dkby0ctf0d1vd" path="res://Scenes/UI/databox.tscn" id="1_gkbae"]
+[ext_resource type="FontFile" uid="uid://cba48hbt7xd54" path="res://Fonts/power clear bold.ttf" id="2_omypp"]
+[ext_resource type="Texture2D" uid="uid://eqp2ncdmd08b" path="res://Graphics/Battlebacks/cave1_base1.png" id="3_rq7lt"]
+
+[sub_resource type="Theme" id="Theme_dw38w"]
+Button/font_sizes/font_size = 20
+Button/fonts/font = ExtResource("2_omypp")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj4wr"]
+bg_color = Color(0.909804, 0.219608, 0.219608, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.909804, 0.219608, 0.219608, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mwyo"]
+bg_color = Color(0.972549, 0.658824, 0.690196, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.972549, 0.658824, 0.690196, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stuu5"]
+bg_color = Color(0.972549, 0.658824, 0.690196, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.188235, 0.188235, 0.188235, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3k7n"]
+bg_color = Color(0.345098, 0.690196, 0.156863, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.345098, 0.690196, 0.156863, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krnfv"]
+bg_color = Color(0.533333, 0.878431, 0.470588, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.533333, 0.878431, 0.470588, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l142i"]
+bg_color = Color(0.878431, 0.596078, 0.156863, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.878431, 0.596078, 0.156863, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kmab3"]
+bg_color = Color(0.972549, 0.815686, 0.470588, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.972549, 0.815686, 0.470588, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fuehj"]
+bg_color = Color(0.156863, 0.564706, 0.784314, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.156863, 0.564706, 0.784314, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53n21"]
+bg_color = Color(0.470588, 0.815686, 0.972549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.470588, 0.815686, 0.972549, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[node name="Battle" type="CanvasLayer"]
+metadata/_edit_horizontal_guides_ = [384.0]
+metadata/_edit_vertical_guides_ = [512.0]
+
+[node name="Databox" parent="." instance=ExtResource("1_gkbae")]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="EXPBar" parent="Databox" index="1"]
+visible = false
+
+[node name="HPs" parent="Databox" index="4"]
+visible = false
+
+[node name="Databox2" parent="." instance=ExtResource("1_gkbae")]
+offset_left = 152.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 8.0
+
+[node name="EXPBar" parent="Databox2" index="1"]
+visible = false
+
+[node name="HPs" parent="Databox2" index="4"]
+visible = false
+
+[node name="Databox3" parent="." instance=ExtResource("1_gkbae")]
+offset_left = 8.0
+offset_top = 296.0
+offset_right = 8.0
+offset_bottom = 296.0
+
+[node name="Databox4" parent="." instance=ExtResource("1_gkbae")]
+offset_left = 144.0
+offset_top = 296.0
+offset_right = 144.0
+offset_bottom = 296.0
+
+[node name="Actions" type="VBoxContainer" parent="."]
+offset_left = 376.0
+offset_top = 248.0
+offset_right = 504.0
+offset_bottom = 376.0
+theme = SubResource("Theme_dw38w")
+theme_override_constants/separation = 4
+
+[node name="FightButton" type="Button" parent="Actions"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_cj4wr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cj4wr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1mwyo")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stuu5")
+text = "FIGHT"
+
+[node name="PkmnButton" type="Button" parent="Actions"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_b3k7n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b3k7n")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_krnfv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stuu5")
+text = "POKEMON"
+
+[node name="BagButton" type="Button" parent="Actions"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_l142i")
+theme_override_styles/hover = SubResource("StyleBoxFlat_l142i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kmab3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stuu5")
+text = "BAG"
+
+[node name="RunButton" type="Button" parent="Actions"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_fuehj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fuehj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_53n21")
+theme_override_styles/focus = SubResource("StyleBoxFlat_stuu5")
+text = "RUN"
+
+[node name="Ground" type="Sprite2D" parent="."]
+position = Vector2(144, 256)
+texture = ExtResource("3_rq7lt")
+
+[node name="Ground2" type="Sprite2D" parent="."]
+position = Vector2(384, 136)
+texture = ExtResource("3_rq7lt")
+
+[editable path="Databox"]
+[editable path="Databox2"]

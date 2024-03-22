@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 Flags="*res://Scripts/Flags.gd"
 Global="*res://Scripts/Global.gd"
+UI="*res://Scenes/ui.tscn"
 
 [display]
 

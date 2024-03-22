@@ -1,0 +1,113 @@
+[gd_scene load_steps=11 format=3 uid="uid://dkby0ctf0d1vd"]
+
+[ext_resource type="Script" path="res://Scripts/UIElements/Databox.gd" id="1_0rkg5"]
+[ext_resource type="FontFile" uid="uid://cocg8fk6xlbog" path="res://Fonts/power clear.ttf" id="1_qww6d"]
+[ext_resource type="Script" path="res://Scripts/UIElements/ColoredBar.gd" id="2_6f3eh"]
+[ext_resource type="FontFile" uid="uid://cba48hbt7xd54" path="res://Fonts/power clear bold.ttf" id="2_cqavg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b1v6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bhv7"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="Gradient" id="Gradient_fajsd"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.5)
+colors = PackedColorArray(0.972549, 0.345098, 0.156863, 1, 0.972549, 0.690196, 0, 1, 0.0941176, 0.752941, 0.12549, 1)
+metadata/_snap_count = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_053j5"]
+bg_color = Color(0.282353, 0.564706, 0.972549, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.188235, 0.376471, 0.847059, 0.596078)
+shadow_size = 1
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_n27sx"]
+font = ExtResource("1_qww6d")
+
+[sub_resource type="LabelSettings" id="LabelSettings_6s8u5"]
+font = ExtResource("2_cqavg")
+
+[node name="Databox" type="Control"]
+layout_mode = 3
+anchor_right = 0.25
+anchor_bottom = 0.166667
+script = ExtResource("1_0rkg5")
+metadata/_edit_vertical_guides_ = [512.0]
+metadata/_edit_horizontal_guides_ = [384.0]
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+
+[node name="HPBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.375
+anchor_right = 1.0
+anchor_bottom = 0.625
+theme_override_styles/background = SubResource("StyleBoxEmpty_3b1v6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0bhv7")
+step = 1.0
+value = 100.0
+show_percentage = false
+script = ExtResource("2_6f3eh")
+colors = SubResource("Gradient_fajsd")
+metadata/_edit_use_anchors_ = true
+
+[node name="EXPBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0625
+anchor_right = 1.0
+anchor_bottom = 1.1875
+theme_override_styles/background = SubResource("StyleBoxEmpty_3b1v6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_053j5")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.125
+anchor_right = 0.6875
+anchor_bottom = 0.3125
+text = "POKEMONNAME"
+label_settings = SubResource("LabelSettings_n27sx")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Level" type="Label" parent="."]
+layout_mode = 0
+anchor_left = 0.6875
+anchor_top = 0.125
+anchor_right = 1.01563
+anchor_bottom = 0.3125
+text = "Lv.100"
+label_settings = SubResource("LabelSettings_n27sx")
+horizontal_alignment = 2
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="HPs" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "999/999"
+label_settings = SubResource("LabelSettings_6s8u5")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

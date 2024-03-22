@@ -1,12 +1,14 @@
 extends Node
 
-const FRONT_SPRITES_PATH: = "res://Graphics/Pokemon/Front/"
-const BACK_SPRITES_PATH: = "res://Graphics/Pokemon/Back/"
-const ICONS_SPRITES_PATH: = "res://Graphics/Pokemon/Icons/"
-const SHINY_FRONT_SPRITES_PATH: = "res://Graphics/Pokemon/Front shiny/"
-const SHINY_BACK_SPRITES_PATH: = "res://Graphics/Pokemon/Back shiny/"
-const SHINY_ICONS_SPRITES_PATH: = "res://Graphics/Pokemon/Icons shiny/"
-const FOOTPRINTS_SPRITES_PATH: = "res://Graphics/Pokemon/Footprints/"
+#const POKEMON_GRAPHICS_PATH: = "res://Graphics/Pokemon/"
+const POKEMON_GRAPHICS_PATH: = "user://PokemonGraphics/"
+const FRONT_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Front/"
+const BACK_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Back/"
+const ICONS_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Icons/"
+const SHINY_FRONT_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Front shiny/"
+const SHINY_BACK_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Back shiny/"
+const SHINY_ICONS_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Icons shiny/"
+const FOOTPRINTS_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Footprints/"
 
 # PBS data
 var pokemons: = {}

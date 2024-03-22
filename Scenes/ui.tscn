@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://oihctalgejjj"]
+
+[ext_resource type="Script" path="res://Scripts/UI.gd" id="1_uy5qw"]
+[ext_resource type="LabelSettings" uid="uid://cp3vaywob4l4s" path="res://Resources/dialogue_text.tres" id="2_lt0cn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0mwrt"]
+bg_color = Color(1, 1, 1, 1)
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.75, 0.75, 0.75, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Theme" id="Theme_n5iyd"]
+Panel/styles/panel = SubResource("StyleBoxFlat_0mwrt")
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_uy5qw")
+
+[node name="Dialogue" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchor_top = 0.833333
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_n5iyd")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="DialoguePanel" type="Panel" parent="Dialogue"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_group_ = true
+
+[node name="DialogueText" type="Label" parent="Dialogue/DialoguePanel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015625
+anchor_top = 0.0625
+anchor_right = 0.984375
+anchor_bottom = 0.9375
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vestibulum nibh scelerisque risus ultrices commodo. Vestibulum dapibus vitae orci non congue. Sed massa quam, commodo eget mattis scelerisque, viverra vitae libero. Donec blandit vehicula lectus, bibendum pharetra nunc placerat vitae. Nullam tempor elementum ullamcorper. Vestibulum vitae dolor enim. Phasellus rhoncus leo tellus, sit amet vulputate nisl sollicitudin ut. Aliquam nisi urna, posuere eu porta id, ornare eu purus. Quisque et nunc sapien. "
+label_settings = ExtResource("2_lt0cn")
+vertical_alignment = 3
+autowrap_mode = 3
+clip_text = true
+metadata/_edit_use_anchors_ = true

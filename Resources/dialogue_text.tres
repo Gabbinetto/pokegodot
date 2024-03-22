@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cp3vaywob4l4s"]
+
+[ext_resource type="FontFile" uid="uid://cocg8fk6xlbog" path="res://Fonts/power clear.ttf" id="1_unxg1"]
+
+[resource]
+font = ExtResource("1_unxg1")
+font_color = Color(0, 0, 0, 1)
