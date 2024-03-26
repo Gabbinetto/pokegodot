@@ -1,2 +1,3 @@
 - Pokemon Essentials team
 - [Relic castle's Generation 9 Resource Pack open project](https://reliccastle.com/resources/1101/)
+	- [Link on Wayback Machine since reliccastle.com has been sadly shut down](https://web.archive.org/web/20221230211653/https://reliccastle.com/resources/1101/)

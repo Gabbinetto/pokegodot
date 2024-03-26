@@ -1,5 +1,6 @@
 extends Node
 
+# Graphics paths
 #const POKEMON_GRAPHICS_PATH: = "res://Graphics/Pokemon/"
 const POKEMON_GRAPHICS_PATH: = "user://PokemonGraphics/"
 const FRONT_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Front/"
@@ -10,6 +11,9 @@ const SHINY_BACK_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Back shiny/"
 const SHINY_ICONS_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Icons shiny/"
 const FOOTPRINTS_SPRITES_PATH: = POKEMON_GRAPHICS_PATH + "Footprints/"
 
+# Map data
+const TILE_SIZE: int = 32
+
 # PBS data
 var pokemons: = {}
 var items: = {}
@@ -17,7 +21,6 @@ var abilities: = {}
 var types: = {}
 var forms: = {}
 var moves: = {}
-
 
 var type_chart: Array[Array] = [
 	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], # NORMAL

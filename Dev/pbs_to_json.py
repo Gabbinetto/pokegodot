@@ -18,6 +18,7 @@ class PBSParser:
             self.data["types"][type]["Index"] = index
         self.data["forms"] = self.__forms_parse("pokemon_forms.txt")
         self.data["moves"] = self.__default_parse("moves.txt")
+        self.data["berries"] = self.__default_parse("berry_plants.txt")
 
     def __default_parse(self, filename: str):
 
