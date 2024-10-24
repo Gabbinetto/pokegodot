@@ -1,0 +1,326 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs6kk73asaqh"]
+
+[ext_resource type="Script" path="res://dev/pokemon_visualizer/pokemon_visualizer.gd" id="1_quspj"]
+
+[node name="PokemonVisualizer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_quspj")
+id = "VENUSAUR"
+metadata/_edit_lock_ = true
+
+[node name="Sprite" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Sprite"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Timer" parent="Sprite"]
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_right = 0.15
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Unnamed"
+metadata/_edit_group_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Name"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FormNumber" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.05
+anchor_right = 0.15
+anchor_bottom = 0.05
+offset_right = 76.0
+offset_bottom = 23.0
+text = "Form: 0"
+metadata/_edit_group_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="FormNumber"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FormName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.15
+anchor_bottom = 0.1
+offset_right = 76.0
+offset_bottom = 23.0
+metadata/_edit_group_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="FormName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Types" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.15
+anchor_right = 0.15
+anchor_bottom = 0.15
+offset_right = 76.0
+offset_bottom = 23.0
+metadata/_edit_group_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Types"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Abilities" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.2
+anchor_bottom = 0.2
+offset_right = 176.0
+offset_bottom = 23.0
+metadata/_edit_group_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Abilities"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HiddenAbilities" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.25
+anchor_bottom = 0.25
+offset_right = 176.0
+offset_bottom = 23.0
+metadata/_edit_group_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="HiddenAbilities"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_right = 0.4
+offset_right = 384.0
+offset_bottom = 192.0
+
+[node name="Stats" type="GridContainer" parent="ReferenceRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+metadata/_edit_group_ = true
+
+[node name="HP" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "255"
+
+[node name="HP2" type="ProgressBar" parent="ReferenceRect/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 255.0
+step = 1.0
+show_percentage = false
+
+[node name="HP3" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="ATTACK" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "255"
+
+[node name="ATTACK2" type="ProgressBar" parent="ReferenceRect/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 255.0
+step = 1.0
+show_percentage = false
+
+[node name="ATTACK3" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="DEFENSE" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "255"
+
+[node name="DEFENSE2" type="ProgressBar" parent="ReferenceRect/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 255.0
+step = 1.0
+show_percentage = false
+
+[node name="DEFENSE3" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="SPECIAL_ATTACK" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "255"
+
+[node name="SPECIAL_ATTACK2" type="ProgressBar" parent="ReferenceRect/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 255.0
+step = 1.0
+show_percentage = false
+
+[node name="SPECIAL_ATTACK3" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="SPECIAL_DEFENSE" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "255"
+
+[node name="SPECIAL_DEFENSE2" type="ProgressBar" parent="ReferenceRect/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 255.0
+step = 1.0
+show_percentage = false
+
+[node name="SPECIAL_DEFENSE3" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="SPEED" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "255"
+
+[node name="SPEED2" type="ProgressBar" parent="ReferenceRect/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 255.0
+step = 1.0
+show_percentage = false
+
+[node name="SPEED3" type="Label" parent="ReferenceRect/Stats"]
+layout_mode = 2
+text = "0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.4
+anchor_right = 1.0
+anchor_bottom = 0.4
+offset_bottom = 192.0
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_group_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/ReferenceRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MovesLabel" type="Label" parent="HBoxContainer/ReferenceRect2/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ReferenceRect3" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_group_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/ReferenceRect3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TutorMovesLabel" type="Label" parent="HBoxContainer/ReferenceRect3/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ReferenceRect4" type="ReferenceRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_group_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/ReferenceRect4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EggMovesLabel" type="Label" parent="HBoxContainer/ReferenceRect4/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

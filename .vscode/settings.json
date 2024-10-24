@@ -1,5 +1,4 @@
 {
-  "workbench.colorTheme": "GDScript",
-  "godotTools.editorPath.godot4": "c:\\Users\\gabri\\Godot\\godot.exe",
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "python.REPL.enableREPLSmartSend": false
 }
