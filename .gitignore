@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 recording.avi
+
+# VSCode
+.vscode/
+
+# Project ignores
+dev/essentials_converting/essentials/
