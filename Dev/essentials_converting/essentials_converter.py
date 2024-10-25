@@ -107,7 +107,7 @@ POKEMON_TEMPLATE: dict[str] = {
     "name": "Unnamed",
     "form_number": 0,
     "form_name": "",
-    "types": [-1, -1],
+    "types": [],
     "base_stats": {stat: 1 for stat in STATS},
     "gender_ratio": 4.0,
     "growth_rate": "Medium",
