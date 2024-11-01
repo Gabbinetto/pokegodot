@@ -1,9 +1,8 @@
 extends Node
 
 
-enum Enum {
-    NULL = -1,
-    NORMAL = 0,
+enum List {
+    NORMAL,
     FIGHTING,
     FLYING,
     POISON,

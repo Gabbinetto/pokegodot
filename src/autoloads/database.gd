@@ -9,7 +9,10 @@ const DEFAULT_BACK_SPRITE: Texture = preload("res://assets/graphics/pokemon_spri
 const DEFAULT_ICON_SPRITE: Texture = preload("res://assets/graphics/pokemon_sprites/_default/icon_n.png")
 
 var pokemon: Dictionary
+var natures: Dictionary
 
 
 func _init() -> void:
-    pokemon = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "pokemon.json"))
+	pokemon = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "pokemon.json"))
+	natures = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "natures.json"))
+

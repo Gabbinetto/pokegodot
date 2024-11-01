@@ -18,12 +18,15 @@ config/icon="res://icon.svg"
 [autoload]
 
 DB="*res://src/autoloads/database.gd"
+Experience="*res://src/autoloads/experience.gd"
 Types="*res://src/autoloads/types.gd"
+Battlebacks="*res://src/autoloads/battlebacks.gd"
+Globals="*res://src/autoloads/globals.gd"
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
+window/size/viewport_width=512
+window/size/viewport_height=384
 window/size/window_width_override=1024
 window/size/window_height_override=768
 window/stretch/mode="canvas_items"

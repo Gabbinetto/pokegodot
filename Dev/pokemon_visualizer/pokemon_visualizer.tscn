@@ -10,7 +10,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_quspj")
-id = "VENUSAUR"
 metadata/_edit_lock_ = true
 
 [node name="Sprite" type="TextureRect" parent="."]
@@ -150,8 +149,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4
 anchor_right = 0.4
-offset_right = 384.0
+offset_right = 376.0
 offset_bottom = 192.0
+metadata/_edit_group_ = true
 
 [node name="Stats" type="GridContainer" parent="ReferenceRect"]
 unique_name_in_owner = true

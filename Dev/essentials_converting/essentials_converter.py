@@ -1,10 +1,10 @@
 from typing import Self
 from enum import StrEnum, IntEnum
+from PIL import Image
 import json
 import shutil
 import os
 import copy
-import concurrent.futures
 
 
 BASE_PATH: str = os.path.join("essentials", "PBS")
@@ -12,6 +12,7 @@ GEN_9_CONTENT: str = os.path.join(BASE_PATH, "Gen 9 backup")
 VANILLA_PBS_CONTENT: str = os.path.join(BASE_PATH, "Gen 8 backup")
 GRAPHICS_PATH: str = os.path.join("essentials", "Graphics")
 POKEMON_SPRITES_PATH: str = os.path.join(GRAPHICS_PATH, "Pokemon")
+BATTLEBACKS_PATH: str = os.path.join(GRAPHICS_PATH, "Battlebacks")
 OUTPUT_PATH: str = "output"
 
 
@@ -22,6 +23,15 @@ class Files(StrEnum):
     POKEMON = "pokemon.txt"
     FORMS = "pokemon_forms.txt"
     TYPES = "types.txt"
+
+
+class GrowthRates(IntEnum):
+    FAST = 0
+    MEDIUM_FAST = 1
+    SLOW = 2
+    MEDIUM_SLOW = 3
+    ERRATIC = 4
+    FLUCTUATING = 5
 
 
 class Types(IntEnum):
@@ -82,7 +92,7 @@ class PokemonProperties(StrEnum):
     WILD_ITEM_UNCOMMON = "WildItemUncommon"
     WILD_ITEM_RARE = "WildItemRare"
     EVOLUTIONS = "Evolutions"
-    # Forms properties
+    # Forms properties TODO: Implement
     MEGA_STONE = "MegaStone"
     MEGA_MOVE = "MegaMove"
     MEGA_MESSAGE = "MegaMessage"
@@ -121,7 +131,7 @@ POKEMON_TEMPLATE: dict[str] = {
     "tutor_moves": [],
     "egg_moves": [],
     "egg_groups": [],
-    "hatch_steps": 1,
+    "egg_cycles": 1,
     "incense": "",
     "offspring": [],
     "info": {
@@ -261,7 +271,14 @@ class EssentialsConverter:
                     case PokemonProperties.GENDER_RATIO:
                         pokemon["gender_ratio"] = GENDER_RATIOS.get(value)
                     case PokemonProperties.GROWTH_RATE:
-                        pokemon["growth_rate"] = value  # TODO: Review
+                        pokemon["growth_rate"] = {
+                            "Fast": GrowthRates.FAST,
+                            "Medium": GrowthRates.MEDIUM_FAST,
+                            "Slow": GrowthRates.SLOW,
+                            "Parabolic": GrowthRates.MEDIUM_SLOW,
+                            "Erratic": GrowthRates.ERRATIC,
+                            "Fluctuating": GrowthRates.FLUCTUATING,
+                        }.get(value, GrowthRates.FAST)
                     case PokemonProperties.BASE_EXP:
                         pokemon["base_exp"] = int(value)
                     case PokemonProperties.EVS:
@@ -296,7 +313,7 @@ class EssentialsConverter:
                     case PokemonProperties.EGG_GROUPS:
                         pokemon["egg_groups"] = value.split(",")
                     case PokemonProperties.HATCH_STEPS:
-                        pokemon["hatch_steps"] = int(value)
+                        pokemon["egg_cycles"] = int(value) // 256
                     case PokemonProperties.INCENSE:
                         pokemon["incense"] = value  # TODO: Review
                     case PokemonProperties.OFFSPRING:
@@ -380,16 +397,16 @@ class EssentialsConverter:
         if stop_at == 0:
             stop_at = len(self.pokemon) + 1
 
-        self.__extract_pokemon_sprites("", default=True)
+        self.__extract_pokemon_sprite("", default=True)
 
         for key in list(self.pokemon.keys())[:stop_at]:
             for form in self.pokemon[key]["forms"]:
-                self.__extract_pokemon_sprites(key, form["form_number"])
+                self.__extract_pokemon_sprite(key, form["form_number"])
                 print(key, form["form_number"], "done")
 
         return self
 
-    def __extract_pokemon_sprites(
+    def __extract_pokemon_sprite(
         self, id: str, form: int = 0, default: bool = False
     ) -> None:
         SPRITES_FOLDER: str = os.path.join(
@@ -409,7 +426,7 @@ class EssentialsConverter:
                 "000.png"  # Nonexistant in base Essentials, for consistency
             )
 
-        # Front
+        # Front 192x192
         if os.path.exists(os.path.join(POKEMON_SPRITES_PATH, "Front", image_name)):
             shutil.copy2(
                 os.path.join(POKEMON_SPRITES_PATH, "Front", image_name),
@@ -437,7 +454,7 @@ class EssentialsConverter:
                 os.path.join(SPRITES_FOLDER, "front_s_f.png"),
             )
 
-        # Back
+        # Back 288x288
         if os.path.exists(os.path.join(POKEMON_SPRITES_PATH, "Back", image_name)):
             shutil.copy2(
                 os.path.join(POKEMON_SPRITES_PATH, "Back", image_name),
@@ -477,11 +494,93 @@ class EssentialsConverter:
                 os.path.join(SPRITES_FOLDER, "icon_s.png"),
             )
         # Footprint
-        if os.path.exists(os.path.join(POKEMON_SPRITES_PATH, "Footprints", footprint_image_name)):
+        if os.path.exists(
+            os.path.join(POKEMON_SPRITES_PATH, "Footprints", footprint_image_name)
+        ):
             shutil.copy2(
                 os.path.join(POKEMON_SPRITES_PATH, "Footprints", footprint_image_name),
                 os.path.join(SPRITES_FOLDER, "footprint.png"),
             )
+
+    def extract_battlebacks(self) -> Self:
+        output: str = os.path.join(OUTPUT_PATH, "battlebacks")
+
+        bases: list[str] | set[str] = []
+        backgrounds: list[str] | set[str] = []
+        messages: list[str] | set[str] = []
+
+        join_parts = lambda parts: parts[0] if len(parts) <= 2 else "_".join(parts[:-1])
+
+        with os.scandir(BATTLEBACKS_PATH) as dir:
+            for entry in dir:
+                if not entry.is_file():
+                    continue
+                filename: str = entry.name
+                file_parts: list[str] = filename.split("_")
+                match file_parts[-1]:
+                    case "base0.png" | "base1.png":
+                        bases.append(join_parts(file_parts))
+                    case "bg.png":
+                        backgrounds.append(join_parts(file_parts))
+                    case "message.png":
+                        messages.append(join_parts(file_parts))
+
+        # Get rid of duplicates
+        bases = set(bases)
+        backgrounds = set(backgrounds)
+        messages = set(messages)
+
+        # Bases
+        # Merge bases into one image
+        os.makedirs(os.path.join(OUTPUT_PATH, "battlebacks", "bases"), exist_ok=True)
+        for base in bases:
+            image: Image = merge_images_vertically(
+                os.path.join(BATTLEBACKS_PATH, base + "_base0.png"),
+                os.path.join(BATTLEBACKS_PATH, base + "_base1.png"),
+            )
+            image.save(os.path.join(OUTPUT_PATH, "battlebacks", "bases", f"{base}.png"))
+
+        # Backgrounds
+        os.makedirs(
+            os.path.join(OUTPUT_PATH, "battlebacks", "backgrounds"), exist_ok=True
+        )
+        for background in backgrounds:
+            shutil.copy2(
+                os.path.join(BATTLEBACKS_PATH, background + "_bg.png"),
+                os.path.join(
+                    OUTPUT_PATH, "battlebacks", "backgrounds", f"{background}.png"
+                ),
+            )
+        # Message boxes
+        os.makedirs(os.path.join(OUTPUT_PATH, "battlebacks", "messages"), exist_ok=True)
+        for message in messages:
+            shutil.copy2(
+                os.path.join(BATTLEBACKS_PATH, message + "_message.png"),
+                os.path.join(OUTPUT_PATH, "battlebacks", "messages", f"{message}.png"),
+            )
+
+        return self
+
+
+def merge_images_vertically(image1_path, image2_path) -> Image:
+    # Open the two images
+    image1 = Image.open(image1_path)
+    image2 = Image.open(image2_path)
+
+    # Calculate the width and total height of the new image
+    total_width = max(image1.width, image2.width)
+    total_height = image1.height + image2.height
+
+    # Create a new blank image with the calculated dimensions
+    merged_image = Image.new("RGBA", (total_width, total_height))
+
+    # Paste the first image at the top
+    merged_image.paste(image1, (0, 0))
+
+    # Paste the second image right below the first
+    merged_image.paste(image2, (0, image1.height))
+
+    return merged_image
 
 
 if __name__ == "__main__":
@@ -490,4 +589,4 @@ if __name__ == "__main__":
     converter.open(Files.POKEMON).fetch_pokemon()
     converter.open(Files.FORMS).fetch_pokemon()
     converter.save(pokemon=True)
-    converter.generate_sprites_folder(3)
+    # converter.generate_sprites_folder(3)

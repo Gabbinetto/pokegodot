@@ -2,16 +2,16 @@ extends Control
 
 @export var id: String = "BULBASAUR"
 @export var form: int = 0
-var pokemon: Species
+var pokemon: PokemonSpecies
 
 func _ready() -> void:
-	pokemon = Species.new(id, form)
+	pokemon = PokemonSpecies.new(id, form)
 	print(pokemon)
 
 	$Name.text = pokemon.name
 	$FormNumber.text = "Form: %s" % pokemon.form_number
 	$FormName.text = pokemon.form_name
-	$Types.text = "%s %s" % [Types.Enum.find_key(pokemon.types[0]), Types.Enum.find_key(pokemon.types[1])]
+	$Types.text = "%s %s" % [Types.List.find_key(pokemon.types[0]), Types.List.find_key(pokemon.types[1])]
 	$Abilities.text = str(pokemon.abilities)
 	$HiddenAbilities.text = str(pokemon.hidden_abilities)
 	var stats: GridContainer = %Stats

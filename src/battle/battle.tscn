@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqh1fa6ynb5cm"]
+
+[ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
+[ext_resource type="Texture2D" uid="uid://bly3i2pq8csog" path="res://assets/graphics/battlebacks/messages/cave1.png" id="1_n55km"]
+[ext_resource type="Texture2D" uid="uid://dqy8y4f2v3df3" path="res://assets/graphics/battlebacks/bases/cave1.png" id="2_0a26x"]
+
+[node name="Battle" type="CanvasLayer"]
+metadata/_edit_horizontal_guides_ = [266.0]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_2jehi")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="PlayerGround" type="Sprite2D" parent="."]
+position = Vector2(128, 272)
+texture = ExtResource("2_0a26x")
+region_enabled = true
+region_rect = Rect2(0, 0, 512, 64)
+metadata/_edit_lock_ = true
+
+[node name="EnemyGround" type="Sprite2D" parent="."]
+position = Vector2(384, 176)
+texture = ExtResource("2_0a26x")
+region_enabled = true
+region_rect = Rect2(0, 64, 256, 128)
+metadata/_edit_lock_ = true
+
+[node name="MessageBackground" type="Sprite2D" parent="."]
+position = Vector2(0, 288)
+texture = ExtResource("1_n55km")
+centered = false
+metadata/_edit_lock_ = true
