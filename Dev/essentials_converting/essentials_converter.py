@@ -1,11 +1,11 @@
-from typing import Self
-from enum import StrEnum, IntEnum
-from PIL import Image
-import json
-import shutil
-import os
 import copy
+import json
+import os
+import shutil
+from enum import IntEnum, StrEnum
+from typing import Self
 
+from PIL import Image
 
 BASE_PATH: str = os.path.join("essentials", "PBS")
 GEN_9_CONTENT: str = os.path.join(BASE_PATH, "Gen 9 backup")
@@ -56,6 +56,19 @@ class Types(IntEnum):
     FAIRY = 18
 
 
+class MoveTargets(IntEnum):
+    USER = 0
+    OTHER = 1
+    FOE = 2
+    FOE_SIDE = 3
+    RANDOM_FOE = 4
+    ALLY = 5
+    ALLY_SIDE = 6
+    USER_OR_ALLY = 7
+    ALL = 8
+    ALL_OTHER = 9
+
+
 class PokemonProperties(StrEnum):
     """Based on https://essentialsdocs.fandom.com/wiki/Defining_a_species"""
 
@@ -98,6 +111,23 @@ class PokemonProperties(StrEnum):
     MEGA_MESSAGE = "MegaMessage"
     UNMEGA_FORM = "UnmegaForm"
     POKEDEX_FORM = "PokedexForm"
+
+
+class MoveProperties(StrEnum):
+    """Based on https://essentialsdocs.fandom.com/wiki/Defining_a_move"""
+
+    NAME = "Name"
+    TYPE = "Type"
+    CATEGORY = "Category"
+    POWER = "Power"
+    ACCURACY = "Accuracy"
+    TOTAL_PP = "TotalPP"
+    TARGET = "Target"
+    PRIORITY = "Priority"
+    FUNCTION_CODE = "FunctionCode"
+    FLAGS = "Flags"
+    EFFECT_CHANCE = "EffectChance"
+    DESCRIPTION = "Description"
 
 
 STATS = ["HP", "ATTACK", "DEFENSE", "SPECIAL_ATTACK", "SPECIAL_DEFENSE", "SPEED"]
@@ -153,6 +183,19 @@ POKEMON_TEMPLATE: dict[str] = {
     "evolutions": [],
 }
 
+MOVE_TEMPLATE: dict[str] = {
+    "name": "Unnamed",
+    "type": 0,
+    "power": 0,
+    "accuracy": 100,
+    "total_pp": 5,
+    "target": 0,
+    "priority": 0,
+    "effects": [],  # Dictionaries {"effect_id": str, "effect_properties": dict}
+    "flags": [],
+    "description": "???",
+}
+
 
 class EssentialsConverter:
     @staticmethod
@@ -192,6 +235,7 @@ class EssentialsConverter:
         self.buffer: list[list[str]] = []
 
         self.pokemon: dict[str, dict[str]] = {}
+        self.moves: dict[str, dict[str]] = {}
 
         # Create an output path
         os.makedirs(OUTPUT_PATH, exist_ok=True)
@@ -377,12 +421,81 @@ class EssentialsConverter:
 
         return self
 
+    def fetch_moves(self) -> None:
+        for move_data in self.buffer:
+            move: dict[str] = copy.deepcopy(MOVE_TEMPLATE)
+            id: str = ""
+
+            for item in move_data:
+                if item.startswith("["):
+                    id = item.strip("[]")
+                    continue
+
+                key, value = self.__get_pair(item)
+                # region Properties
+                match key:
+                    case MoveProperties.NAME:
+                        move["name"] = value
+                    case MoveProperties.TYPE:
+                        move["type"] = Types[value]
+                    case MoveProperties.CATEGORY:
+                        move["category"] = {
+                            "Physical": 0,
+                            "Special": 1,
+                            "Status": 2,
+                        }.get(value, 0)
+                    case MoveProperties.POWER:
+                        move["power"] = int(value)
+                    case MoveProperties.ACCURACY:
+                        move["accuracy"] = int(value)
+                    case MoveProperties.TARGET:
+                        targets_conversion: dict[str, MoveTargets] = {
+                            "None": MoveTargets.USER,
+                            "User": MoveTargets.USER,
+                            "NearAlly": MoveTargets.ALLY,
+                            "UserOrNearAlly": MoveTargets.USER_OR_ALLY,
+                            "AllAllies": MoveTargets.ALLY,
+                            "UserAndAllies": MoveTargets.ALLY_SIDE,
+                            "NearFoe": MoveTargets.FOE,
+                            "RandomNearFoe": MoveTargets.RANDOM_FOE,
+                            "AllNearFoes": MoveTargets.FOE_SIDE,
+                            "Foe": MoveTargets.FOE,
+                            "AllFoes": MoveTargets.FOE_SIDE,
+                            "NearOther": MoveTargets.OTHER,
+                            "AllNearOthers": MoveTargets.ALL_OTHER,
+                            "Other": MoveTargets.OTHER,
+                            "AllBattlers": MoveTargets.ALL,
+                            "UserSide": MoveTargets.ALLY_SIDE,
+                            "FoeSide": MoveTargets.FOE_SIDE,
+                            "BothSides": MoveTargets.ALL,
+                        }
+                        move["target"] = targets_conversion.get(value, 0)
+                    case MoveProperties.PRIORITY:
+                        move["priority"] = int(value)
+                    case MoveProperties.FUNCTION_CODE:
+                        # Unprocessed. Move effects must be added manually
+                        pass
+                    case MoveProperties.FLAGS:
+                        move["flags"] = value.split(",")
+                    case MoveProperties.EFFECT_CHANCE:
+                        # Unprocessed like MoveProperties.FUNCTION_CODE
+                        pass
+                    case MoveProperties.DESCRIPTION:
+                        move["description"] = value
+                # endregion
+            self.moves[id] = move
+
     def save(self, **kwargs) -> Self:
         if kwargs.get("pokemon"):
             with open(
                 os.path.join(OUTPUT_PATH, "pokemon.json"), "w", encoding="utf-8"
             ) as f:
                 json.dump(self.pokemon, f, indent=2)
+        if kwargs.get("moves"):
+            with open(
+                os.path.join(OUTPUT_PATH, "moves.json"), "w", encoding="utf-8"
+            ) as f:
+                json.dump(self.moves, f, indent=2)
 
         return self
 
@@ -392,6 +505,11 @@ class EssentialsConverter:
                 os.path.join(OUTPUT_PATH, "pokemon.json"), "r", encoding="utf-8"
             ) as f:
                 self.pokemon = json.load(f)
+        if kwargs.get("moves"):
+            with open(
+                os.path.join(OUTPUT_PATH, "moves.json"), "r", encoding="utf-8"
+            ) as f:
+                self.moves = json.load(f)
 
     def generate_sprites_folder(self, stop_at: int = 0) -> Self:
         if stop_at == 0:
@@ -586,7 +704,9 @@ def merge_images_vertically(image1_path, image2_path) -> Image:
 if __name__ == "__main__":
     EssentialsConverter.merge_pbs()
     converter: EssentialsConverter = EssentialsConverter()
-    converter.open(Files.POKEMON).fetch_pokemon()
-    converter.open(Files.FORMS).fetch_pokemon()
-    converter.save(pokemon=True)
+    # converter.open(Files.POKEMON).fetch_pokemon()
+    # converter.open(Files.FORMS).fetch_pokemon()
+    # converter.save(pokemon=True)
     # converter.generate_sprites_folder(3)
+    converter.open(Files.MOVES).fetch_moves()
+    converter.save(moves=True)

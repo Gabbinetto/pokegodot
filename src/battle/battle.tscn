@@ -1,33 +1,80 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqh1fa6ynb5cm"]
+[gd_scene load_steps=6 format=3 uid="uid://bqh1fa6ynb5cm"]
 
 [ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
 [ext_resource type="Texture2D" uid="uid://bly3i2pq8csog" path="res://assets/graphics/battlebacks/messages/cave1.png" id="1_n55km"]
 [ext_resource type="Texture2D" uid="uid://dqy8y4f2v3df3" path="res://assets/graphics/battlebacks/bases/cave1.png" id="2_0a26x"]
 
-[node name="Battle" type="CanvasLayer"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj75k"]
+atlas = ExtResource("2_0a26x")
+region = Rect2(0, 0, 512, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1fi4"]
+atlas = ExtResource("2_0a26x")
+region = Rect2(0, 64, 256, 128)
+
+[node name="Battle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 metadata/_edit_horizontal_guides_ = [266.0]
+metadata/_edit_lock_ = true
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.75
+offset_right = -512.0
+offset_bottom = -288.0
 texture = ExtResource("1_2jehi")
-centered = false
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="PlayerGround" type="Sprite2D" parent="."]
-position = Vector2(128, 272)
-texture = ExtResource("2_0a26x")
-region_enabled = true
-region_rect = Rect2(0, 0, 512, 64)
+[node name="PlayerGround" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.708
+anchor_right = 0.25
+anchor_bottom = 0.708
+offset_left = -256.0
+offset_top = -31.872
+offset_right = 256.0
+offset_bottom = 32.128
+texture = SubResource("AtlasTexture_fj75k")
+stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="EnemyGround" type="Sprite2D" parent="."]
-position = Vector2(384, 176)
-texture = ExtResource("2_0a26x")
-region_enabled = true
-region_rect = Rect2(0, 64, 256, 128)
+[node name="EnemyGround" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.458
+anchor_right = 0.75
+anchor_bottom = 0.458
+offset_left = -128.0
+offset_top = -63.872
+offset_right = 128.0
+offset_bottom = 64.128
+texture = SubResource("AtlasTexture_i1fi4")
+stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="MessageBackground" type="Sprite2D" parent="."]
-position = Vector2(0, 288)
+[node name="MessageBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -96.0
+offset_right = -256.0
+offset_bottom = -96.0
 texture = ExtResource("1_n55km")
-centered = false
+stretch_mode = 4
 metadata/_edit_lock_ = true

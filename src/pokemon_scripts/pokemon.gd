@@ -22,7 +22,27 @@ var super_shiny: bool = false
 var ability: PokemonAbility
 var has_hidden_ability: bool:
 	get: return species.hidden_abilities.has(ability.id)
+	set(value):
+		if has_hidden_ability == value:
+			return
+		if value:
+			ability = PokemonAbility.new(species.hidden_abilities[0])
+		else:
+			ability = PokemonAbility.new(species.abilities[0])
+var ability_index: int:
+	get:
+		if has_hidden_ability:
+			return species.hidden_abilities.find(ability.id)
+		else:
+			return species.abilities.find(ability.id)
+	set(value):
+		if has_hidden_ability:
+			ability = PokemonAbility.new(species.hidden_abilities[value])
+		else:
+			ability = PokemonAbility.new(species.abilities[value])
 var personality_value: int = 0
+var encryption_constant: int = 0
+var secret_id: int = 0
 # Growth and stats
 var experience: int = 0:
 	set(value): experience = clampi(value, 0, Experience.tables[species.growth_rate][-1])
@@ -90,6 +110,7 @@ var egg_cycles_left: int = 0
 var is_egg: bool:
 	get: return egg_cycles_left > 0
 var original_trainer_id: int = 0
+var original_trainer_secret_id: int = 0
 var original_trainer_name: String = ""
 var trainer_id: int = 0
 var obtained_level: int = 1
@@ -122,13 +143,26 @@ var sprite_back: Texture
 var sprite_icon: Texture
 
 
-func _init(species_id: String, form: int = 0, attributes: Dictionary = {}) -> void:
-	species = PokemonSpecies.new(species_id, form)
+func _init(_species: Variant, form: int = 0, attributes: Dictionary = {}) -> void:
+
+	if _species is PokemonSpecies:
+		species = _species
+	elif _species is String:
+		species = PokemonSpecies.new(_species, form)
+
+	secret_id = Globals.rng.randi_range(0, 9999)
 
 	for attribute: String in attributes:
 		if attribute in self:
-			set(attribute, attributes[attribute])
+			match attribute:
+				"ability":
+					ability = PokemonAbility.new(attributes[attribute])
+				_:
+					set(attribute, attributes[attribute])
 	
+	if not ability:
+		ability = PokemonAbility.new(species.abilities[0])
+
 	set_sprites()
 
 
@@ -141,3 +175,50 @@ func set_sprites() -> void:
 	sprite_front = species.sprite_front_n_f if gender == Genders.FEMALE else species.sprite_front_n_m
 	sprite_back = species.sprite_back_n_f if gender == Genders.FEMALE else species.sprite_back_n_m
 	sprite_icon = species.sprite_icon_n
+
+
+static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary = {}) -> Pokemon:
+
+	var _species: PokemonSpecies = PokemonSpecies.new(species_id, form)
+
+	# Get personality value and encryption constant as most random properties are based on that
+	if not fixed_attributes.has("personality_value"):
+		fixed_attributes["personality_value"] = Globals.rng.randi()
+	var _personality_value = fixed_attributes["personality_value"]
+
+	if not fixed_attributes.has("encryption_constant"):
+		fixed_attributes["encryption_constant"] = Globals.rng.randi()
+	var _encryption_constant = fixed_attributes["encryption_constant"]
+
+
+	if not fixed_attributes.has("gender"):
+		var is_female: bool = Globals.rng.randf() <= _species.female_chance
+		if _species.gender_ratio == -1:
+			fixed_attributes["gender"] = Genders.GENDERLESS
+		elif is_female:
+			fixed_attributes["gender"] = Genders.FEMALE
+		else:
+			fixed_attributes["gender"] = Genders.MALE
+
+	if not fixed_attributes.has("nature"):
+		fixed_attributes["nature"] = Globals.natures.keys().pick_random()
+	
+	# TODO: Implement once trainer ids and secret ids are implemented
+	# https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess
+	# if not fixed_attributes.has("shiny") or not fixed_attributes.has("super_shiny"):
+	# 	var p1: int = _personality_value / 0x10000
+	# 	var p2: int = _personality_value % 0x10000
+	# 	var s: int = 
+
+	if not fixed_attributes.has("ability"):
+		fixed_attributes["ability"] = _species.abilities.pick_random()
+
+	if not fixed_attributes.has("ivs"):
+		var _ivs: Dictionary = {}
+		for stat: String in Globals.STATS.values():
+			_ivs[stat] = randi_range(0, 31)
+		fixed_attributes["ivs"] = _ivs
+
+	var pokemon: Pokemon = Pokemon.new(_species, 0, fixed_attributes)
+
+	return pokemon

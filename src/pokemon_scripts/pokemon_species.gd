@@ -22,6 +22,8 @@ var base_stats: Dictionary = {
 	Globals.STATS.SPEED: 1,
 }
 var gender_ratio: float = 4.0
+var female_chance: float:
+	get: return gender_ratio / 8.0
 var growth_rate: Experience.GrowthRates
 var base_exp: int = 0
 var evs: Dictionary = {

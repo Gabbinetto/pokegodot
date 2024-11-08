@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmh2ortvoisba"]
+
+[ext_resource type="Script" path="res://addons/expandable_viewport_container/expand_viewport_container.gd" id="1_lt4k4"]
+[ext_resource type="PackedScene" uid="uid://bqh1fa6ynb5cm" path="res://src/battle/battle.tscn" id="2_yvolb"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="ExpandableViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -256.0
+offset_right = 256.0
+offset_bottom = 384.0
+grow_horizontal = 2
+pivot_offset = Vector2(256, 192)
+script = ExtResource("1_lt4k4")
+
+[node name="SubViewport" type="SubViewport" parent="ExpandableViewportContainer"]
+handle_input_locally = false
+size = Vector2i(512, 384)
+render_target_update_mode = 4
+
+[node name="Battle" parent="ExpandableViewportContainer/SubViewport" instance=ExtResource("2_yvolb")]

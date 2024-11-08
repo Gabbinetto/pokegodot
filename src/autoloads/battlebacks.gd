@@ -104,7 +104,21 @@ var loaded_sets: Dictionary = {
 }
 
 class Set:
+    var background: Texture
+    var message: Texture
+    var player_base: Texture
+    var enemy_base: Texture
+
     func _init(_base: String, _background: String, _message: String) -> void:
+
         var base: Texture = load(BASES_PATH + _base.replace(".png", "") + ".png")
-        var background: Texture = load(BACKGROUNDS_PATH + _background.replace(".png", "") + ".png")
-        var message: Texture = load(MESSAGES_PATH + _message.replace(".png", "") + ".png")
+        player_base = AtlasTexture.new()
+        player_base.atlas = base
+        player_base.region = Rect2(Vector2(0, 0), Vector2(512, 64))
+        enemy_base = AtlasTexture.new()
+        enemy_base.atlas = base
+        enemy_base.region = Rect2(Vector2(0, 64), Vector2(256, 128))
+
+
+        background = load(BACKGROUNDS_PATH + _background.replace(".png", "") + ".png")
+        message = load(MESSAGES_PATH + _message.replace(".png", "") + ".png")

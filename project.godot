@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Pokegodot"
 config/description="A Pokemon Essentials-like template for Godot 4"
+run/main_scene="res://src/main.tscn"
 config/features=PackedStringArray("4.3")
 config/icon="res://icon.svg"
 
@@ -30,6 +31,7 @@ window/size/viewport_height=384
 window/size/window_width_override=1024
 window/size/window_height_override=768
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 
@@ -42,7 +44,7 @@ movie_writer/disable_vsync=true
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/expandable_viewport_container/plugin.cfg")
 
 [input]
 

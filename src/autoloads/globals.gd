@@ -28,9 +28,14 @@ const CONTEST_STATS: Dictionary = {
 	"SHEEN": "SHEEN",
 }
 
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var natures: Dictionary = {}
 
+
 func _init() -> void:
+	rng.randomize()
+	seed(rng.seed)
+
 	for nature: String in DB.natures:
 		var stats_multipliers: Dictionary = {}
 		for stat: String in STATS:
