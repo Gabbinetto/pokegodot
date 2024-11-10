@@ -1,19 +1,19 @@
 class_name PokemonSpecies extends Resource
 
 
-## Pokegodot's Pokemon class
+## Pokegodot's PokemonSpecies class
 ##
-## Pokegodot's Pokemon class. It defines a Pokemon species and all it's properties. Those aren't meant to change at runtime. 
-## The data is taken from [code]pokemon.json[/code]
-## Not to be confused with [Pokemon]
+## Pokegodot's PokemonSpecies class. It defines a Pokemon species and all it's properties. Those aren't meant to change at runtime. 
+## The data is taken from [member DB.pokemon], therefore [code]pokemon.json[/code].
+## Not to be confused with [Pokemon].
 
 
-var id: String = ""
-var name: String = "Unnamed"
-var form_number: int = 0
-var form_name: String = ""
-var types: Array[Types.List] = []
-var base_stats: Dictionary = {
+var id: String = "" ## The species id. Always all caps, like [code]BULBASAUR[/code]. Matches the key in [member DB.pokemon].
+var name: String = "Unnamed" ## The species name.
+var form_number: int = 0 ## The form number. 0 if is default form.
+var form_name: String = "" ## The form name, describes the form. For example, Alolan Vulpix form name is "Alolan".
+var types: Array[Types.List] = [] ## This species types.
+var base_stats: Dictionary = { ## This species base stats. The keys match [member Globals.STATS] and the values are [int].
 	Globals.STATS.HP: 1,
 	Globals.STATS.ATTACK: 1,
 	Globals.STATS.DEFENSE: 1,
@@ -21,12 +21,12 @@ var base_stats: Dictionary = {
 	Globals.STATS.SPECIAL_DEFENSE: 1,
 	Globals.STATS.SPEED: 1,
 }
-var gender_ratio: float = 4.0
-var female_chance: float:
+var gender_ratio: float = 4.0 ## This species chance of being female, in eights, it is -1 if the species is genderless. To get the actual chance as a float from 0 to 1, see [member female_chance].
+var female_chance: float: ## Returns the actual chance of being female, that being [member gender_ratio] divided by 8.
 	get: return gender_ratio / 8.0
-var growth_rate: Experience.GrowthRates
-var base_exp: int = 0
-var evs: Dictionary = {
+var growth_rate: Experience.GrowthRates ## The species growth rate.
+var base_exp: int = 0 ## The base value needed to calculate a species exp reward.
+var evs: Dictionary = { ## The evs given by this species. The keys match [member Globals.STATS] and the values are [int].
 	Globals.STATS.HP: 0,
 	Globals.STATS.ATTACK: 0,
 	Globals.STATS.DEFENSE: 0,
@@ -34,17 +34,45 @@ var evs: Dictionary = {
 	Globals.STATS.SPECIAL_DEFENSE: 0,
 	Globals.STATS.SPEED: 0,
 }
-var catch_rate: int = 255
-var base_happiness: int = 70
-var abilities: Array[String] = []
-var hidden_abilities: Array[String] = []
+var catch_rate: int = 255 ## This species catch rate.
+var base_happiness: int = 70 ## This species starting happiness when caught.
+var abilities: Array[String] = [] ## A list of this species possible abilities as [PokemonAbility] ids.
+var hidden_abilities: Array[String] = [] ## Same as [member abilities], but for hidden abilities. Usually pokemon have just one hidden ability.
+## A list of this species level up moves. Contains dictionaries with two keys.
+## [codeblock]
+## {
+##   "id": "", # The PokemonMove id
+##   "level": 0, # The level this move is learnt at
+## }
+## [/codeblock]
+## If the level is 0, it's learnt at evolution. If the level is -1, it's only learnt through move reminding.
 var moves: Array[Dictionary] = []
-var tutor_moves: Array[String] = []
-var egg_moves: Array[String] = []
-var egg_groups: Array[String] = []
-var egg_cycles: int = 1
-var incense: String = ""
+var tutor_moves: Array[String] = [] ## A list of this species tutor moves as [PokemonMove] ids. Learnable through Tutors, TMs and HMs.
+var egg_moves: Array[String] = [] ## A list of this species egg moves as [PokemonMove] ids. Learnable through breeding.
+var egg_groups: Array[String] = [] ## A list of all this species egg groups, used in breeding.
+var egg_cycles: int = 1 ## The egg cycles needed for this species to hatch. 1 egg cycle translates to 256 steps.
+## A list of dictionaries holding informations about a species possible offsprings
+## [codeblock]
+## {
+##   "id": "", # The id of the offspring
+##   "item": "" # The id of the item needed to get the offspring, such as incense for many babies
+##   "special_moves": [] # Special moves that the offspring will have. For Volt Tackle and Pichu
+## }
+## [/codeblock]
+## Offsprings have an equal chance to be picked, but offsprings requiring an item have priority over those who don't.
+## For example, if a species has 3 offsprings, and one of them requires an incense, 
+## if the pokemon has the incense the only possible offspring will be the one requiring the incense,
+## otherwise it will be a 50/50 between one of the other two offsprings.
 var offspring: Array[Dictionary] = []
+## Dictionary holding pokedex information. The keys are: [br]
+## - [code]height[/code]: [int][br]
+## - [code]weigth[/code]: [int][br]
+## - [code]color[/code]: [String][br]
+## - [code]shape[/code]: [String][br]
+## - [code]habitat[/code]: [String][br]
+## - [code]category[/code]: [String][br]
+## - [code]description[/code]: [String][br]
+## - [code]generation[/code]: [int]
 var info: Dictionary = {
 	"height": 0.0,
 	"weight": 0.0,
@@ -55,45 +83,43 @@ var info: Dictionary = {
 	"description": "???",
 	"generation": 0,
 }
+## Flags useful for various things, such as fateful encounters.
 var flags: Array[String] = []
-var items: Dictionary = {
-	"common": "",
-	"uncommon": "",
-	"rare": "",
-}
+## List of wild items. Those are dictionaries with the [code]id[/code] key, holding the id of the item, and the [code]weight[/code] key, used in the weigthed random function to spawn it.
+var items: Array[Dictionary] = []
 var evolutions: Array[Dictionary] = [] # TODO: Implement
 # TODO: Implement form properties
 
 # Sprites
-var sprite_front_n_m: Texture
-var sprite_front_n_f: Texture
-var sprite_front_s_m: Texture
-var sprite_front_s_f: Texture
-var sprite_back_n_m: Texture
-var sprite_back_n_f: Texture
-var sprite_back_s_m: Texture
-var sprite_back_s_f: Texture
-var sprite_icon_n: Texture
-var sprite_icon_s: Texture
-var sprite_footprint: Texture
+var sprite_front_n_m: Texture ## Front normal male sprite
+var sprite_front_n_f: Texture ## Front normal female sprite
+var sprite_front_s_m: Texture ## Front shiny male sprite
+var sprite_front_s_f: Texture ## Front shiny female sprite
+var sprite_back_n_m: Texture ## Back normal male sprite
+var sprite_back_n_f: Texture ## Back normal female sprite
+var sprite_back_s_m: Texture ## Back shiny male sprite
+var sprite_back_s_f: Texture ## Back shiny female sprite
+var sprite_icon_n: Texture ## Icon normal sprite
+var sprite_icon_s: Texture ## Icon shiny sprite
+var sprite_footprint: Texture ## Footprint sprite
 
 # Shorthand variables
-var hp: int:
+var hp: int: ## Shorthand for [member base_stats] HP key
 	get: return base_stats.HP
 	set(value): base_stats.HP = value
-var attack: int:
+var attack: int: ## Shorthand for [member base_stats] ATTACK key
 	get: return base_stats.ATTACK
 	set(value): base_stats.ATTACK = value
-var defense: int:
+var defense: int: ## Shorthand for [member base_stats] DEFENSE key
 	get: return base_stats.DEFENSE
 	set(value): base_stats.DEFENSE = value
-var spatk: int:
+var spattack: int: ## Shorthand for [member base_stats] SPECIAL_ATTACK key
 	get: return base_stats.SPECIAL_ATTACK
 	set(value): base_stats.SPECIAL_ATTACK = value
-var spdef: int:
+var spdefense: int: ## Shorthand for [member base_stats] SPECIAL_DEFENSE key
 	get: return base_stats.SPECIAL_DEFENSE
 	set(value): base_stats.SPECIAL_DEFENSE = value
-var speed: int:
+var speed: int: ## Shorthand for [member base_stats] SPEED key
 	get: return base_stats.SPEED
 	set(value): base_stats.SPEED = value
 
@@ -126,6 +152,10 @@ func _init(_id: String, _form_number: int = 0) -> void:
 	data.erase("egg_groups")
 	offspring.assign(data.offspring)
 	data.erase("offspring")
+	flags.assign(data.flags)
+	data.erase("flags")
+	items.assign(data.items)
+	data.erase("items")
 	evolutions.assign(data.evolutions)
 	data.erase("evolutions")
 

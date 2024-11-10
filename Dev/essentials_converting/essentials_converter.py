@@ -175,11 +175,7 @@ POKEMON_TEMPLATE: dict[str] = {
         "generation": 0,
     },
     "flags": [],
-    "items": {
-        "common": "",
-        "uncommon": "",
-        "rare": "",
-    },
+    "items": [],
     "evolutions": [],
 }
 
@@ -385,11 +381,11 @@ class EssentialsConverter:
                     case PokemonProperties.FLAGS:
                         pokemon["flags"] = value.split(",")
                     case PokemonProperties.WILD_ITEM_COMMON:
-                        pokemon["items"]["common"] = value
+                        pokemon["items"].append({"id": value, "weigth": 0.50})
                     case PokemonProperties.WILD_ITEM_UNCOMMON:
-                        pokemon["items"]["uncommon"] = value
+                        pokemon["items"].append({"id": value, "weigth": 0.05})
                     case PokemonProperties.WILD_ITEM_RARE:
-                        pokemon["items"]["rare"] = value
+                        pokemon["items"].append({"id": value, "weigth": 0.01})
                     case PokemonProperties.EVOLUTIONS:
                         pass  # TODO
             # endregion
@@ -704,9 +700,8 @@ def merge_images_vertically(image1_path, image2_path) -> Image:
 if __name__ == "__main__":
     EssentialsConverter.merge_pbs()
     converter: EssentialsConverter = EssentialsConverter()
-    # converter.open(Files.POKEMON).fetch_pokemon()
-    # converter.open(Files.FORMS).fetch_pokemon()
-    # converter.save(pokemon=True)
-    # converter.generate_sprites_folder(3)
+    converter.open(Files.POKEMON).fetch_pokemon()
+    converter.open(Files.FORMS).fetch_pokemon()
+    converter.save(pokemon=True)
     converter.open(Files.MOVES).fetch_moves()
     converter.save(moves=True)

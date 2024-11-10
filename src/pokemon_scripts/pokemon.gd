@@ -3,24 +3,25 @@ class_name Pokemon extends Resource
 ## Pokegodot's Pokemon class
 ##
 ## Pokegodot's Pokemon class. It defines a single Pokemon and all it's properties.
-## Not to be confused with [PokemonSpecies]
+## Not to be confused with [PokemonSpecies].
 
-signal hp_changed(old_hp: int, current_hp: int)
+signal hp_changed(old_hp: int, current_hp: int) ## Emitted when [member hp] changes.
 
-enum Genders {MALE, FEMALE, GENDERLESS}
-enum Markings {NONE, BLACK, BLUE, PINK}
+enum Genders {MALE, FEMALE, GENDERLESS} ## Possible pokemon genders.
+enum Markings {NONE, BLACK, BLUE, PINK} ## Possible markings states.
 
 
 # Core properties
-var species: PokemonSpecies
-var name: String = ""
-var happiness: int = 70
-var gender: Genders = Genders.MALE
-var nature: String = ""
-var shiny: bool = false
-var super_shiny: bool = false
-var ability: PokemonAbility
-var has_hidden_ability: bool:
+var species: PokemonSpecies ## This pokemon's species.
+var name: String = "": ## This pokemon's nickname. If set to empty, it will return the [member species] [member PokemonSpecies.name].
+	get: return species.name if not name else name
+var happiness: int = 70 ## This pokemon's happiness.
+var gender: Genders = Genders.MALE ## This pokemon's gender.
+var nature: String = "" ## This pokemon's nature. Must be one of [member Globals.natures] keys.
+var shiny: bool = false ## If true, this pokemon is shiny.
+var super_shiny: bool = false ## If true, this pokemon has shiny and has different, rarer sparkles.
+var ability: PokemonAbility ## This pokemon's ability.
+var has_hidden_ability: bool: ## True if [member ability] is an hidden ability set in the [member species] [member PokemonSpecies.hidden_abilities]. If set manually, sets [member ability] to the first hidden ability (If true) or the first normal ability (If false).
 	get: return species.hidden_abilities.has(ability.id)
 	set(value):
 		if has_hidden_ability == value:
@@ -29,6 +30,8 @@ var has_hidden_ability: bool:
 			ability = PokemonAbility.new(species.hidden_abilities[0])
 		else:
 			ability = PokemonAbility.new(species.abilities[0])
+## This pokemons [member ability] index. Corresponds to the index of the ability id in the [member species] [member PokemonSpecies.abilities]
+## property (If [member has_hidden_ability] is false) or the [member PokemonSpecies.hidden_abilities] property (If [member has_hidden_ability] is true)
 var ability_index: int:
 	get:
 		if has_hidden_ability:
@@ -40,12 +43,17 @@ var ability_index: int:
 			ability = PokemonAbility.new(species.hidden_abilities[value])
 		else:
 			ability = PokemonAbility.new(species.abilities[value])
+## Random value bound to the instance of one pokemon, used in things such as [url=https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess]shininess[/url]
 var personality_value: int = 0
+## Extension of [member personality_value]. Check [url]https://bulbapedia.bulbagarden.net/wiki/Personality_value[/url].
 var encryption_constant: int = 0
-var secret_id: int = 0
+var secret_id: int = 0 ## A random 4 digit number like [member personality_value].
 # Growth and stats
-var experience: int = 0:
+var experience: int = 0: ## This pokemon's experience points, limited between 0 and the highest value in the growth rate table ([member Experience.tables])
 	set(value): experience = clampi(value, 0, Experience.tables[species.growth_rate][-1])
+## This pokemon's level. When set, it also sets [member experience] to the closest needed experience points to get to the set level. [br]
+## For example, if level 2 requires 10 points, 3 requires 20 and 4 requires 40 and the pokemon has 23 points, when [member level] gets set to 2,
+## [member experience] will be 19. When set to 4, [member experience] will be 40. When set to 3, [member experience] will remain the same.
 var level: int = 1:
 	get:
 		var out: int = 1
@@ -58,15 +66,16 @@ var level: int = 1:
 		return out
 	set(value):
 		var table: Array[int] = Experience.tables[species.growth_rate]
-		level = value
-		if level >= table.size():
-			level = table.size()
+		value = clampi(value, 0, 100)
+		if value >= table.size():
+			value = table.size()
 			experience = table[-1]
 			return
-		if experience < table[level - 1]:
-			experience = table[level - 1]
-		elif experience >= table[level]:
-			experience = table[level] - 1
+		if experience < table[value - 1]:
+			experience = table[value - 1]
+		elif experience >= table[value]:
+			experience = table[value] - 1
+## This pokemon's stats, calculated through [method calculate_stats]. Keys should match [member Globals.STATS] values.
 var stats: Dictionary = {
 	Globals.STATS.HP: 1,
 	Globals.STATS.ATTACK: 1,
@@ -75,6 +84,7 @@ var stats: Dictionary = {
 	Globals.STATS.SPECIAL_DEFENSE: 1,
 	Globals.STATS.SPEED: 1,
 }
+## This pokemon's EVs. Keys should match [member Globals.STATS] values.
 var evs: Dictionary = {
 	Globals.STATS.HP: 0,
 	Globals.STATS.ATTACK: 0,
@@ -83,6 +93,7 @@ var evs: Dictionary = {
 	Globals.STATS.SPECIAL_DEFENSE: 0,
 	Globals.STATS.SPEED: 0,
 }
+## This pokemon's IVs. Keys should match [member Globals.STATS] values.
 var ivs: Dictionary = {
 	Globals.STATS.HP: 0,
 	Globals.STATS.ATTACK: 0,
@@ -98,32 +109,39 @@ var has_pokerus: bool:
 var has_pokerus_cured: bool:
 	get: return has_pokerus and pokerus_day_left <= 0
 # Status outside of battle
+## This pokemon's hp in and out of battle. Limited between 0 and [member max_hp].
 var hp: int = 1:
 	set(value):
 		var old: int = hp
-		hp = clamp(value, 0, stats.HP)
+		hp = clamp(value, 0, max_hp)
 		hp_changed.emit(old, hp)
-var status: PokemonStatus
-var held_item: Item
+var status: PokemonStatus ## This pokemon's current status.
+var held_item: Item ## The [Item] this pokemon holds currently.
 # Breeding and obtainement
-var egg_cycles_left: int = 0
-var is_egg: bool:
+var egg_cycles_left: int = 0 ## The egg cycles left for hatching. 1 cycle is 256 steps.
+var is_egg: bool: ## If this pokemon is in the egg, basically if [member egg_cycles_left] is greater than 0. When set, it either sets [member egg_cycles_left] to 0, if false, or to [member species] [code]egg_cycles[/code] if true.
 	get: return egg_cycles_left > 0
-var original_trainer_id: int = 0
-var original_trainer_secret_id: int = 0
-var original_trainer_name: String = ""
-var trainer_id: int = 0
-var obtained_level: int = 1
+	set(value):
+		if is_egg == value:
+			return
+		egg_cycles_left = species.egg_cycles * int(value)
+var original_trainer_id: int = 0 ## Original trainer's ID.
+var original_trainer_secret_id: int = 0 ## Original trainers's secred ID.
+var original_trainer_name: String = "" ## Original trainers's name.
+var trainer_id: int = 0 ## The current trainer's ID.
+var obtained_level: int = 1 ## The level this was obtained at.
+## The map this was obtained on.
 var obtained_map: String = "" # TODO: Review when maps are implemented
-var obtained_time: int = 0
-var has_hatched: bool = false
-var hatched_map: String = ""
-var hatched_time: int = 0
-var language: Globals.Languages = Globals.Languages.UNKNOWN
+var obtained_time: int = 0 ## The UNIX time this was obtained at.
+var has_hatched: bool = false ## If this pokemon was obtained through hatching or not.
+var hatched_map: String = "" ## The map this was hatched on.
+var hatched_time: int = 0 ## The UNIX time this pokemon was hatched at.
+var language: Globals.Languages = Globals.Languages.UNKNOWN ## This pokemon's language.
 # Moves
-var moves: Array[PokemonMove]
+var moves: Array[PokemonMove] ## This pokemon's 4 or less learnt moves.
 # Miscellaneous
-var pokeball: String
+var pokeball: String ## The pokeball id this pokemon was caught in.
+## This pokemon contest stats. Keys should match [member Globals.CONTEST_STATS] values. 
 var constest_stats: Dictionary = {
 	Globals.CONTEST_STATS.BEAUTY: 0,
 	Globals.CONTEST_STATS.COOL: 0,
@@ -132,15 +150,39 @@ var constest_stats: Dictionary = {
 	Globals.CONTEST_STATS.TOUGH: 0,
 	Globals.CONTEST_STATS.SHEEN: 0,
 }
+## This pokemon's markings.
 var markings: Array[Markings] = [Markings.NONE, Markings.NONE, Markings.NONE, Markings.NONE, Markings.NONE, Markings.NONE]
+## This pokemon's ribbons.
 var ribbons: Array[int] # TODO: Change to enum eventually
+## This pokemon's marks.
 var marks: Array[int] # TODO: Change to enum eventually
+## The pokemon this one is fused with. Used for pokemons like Kyurem (with Zekrom and Reshiram), Necrozma (With Solgaleo and Lunala), Calyrex (With Glastrier and Spectrier)
 var fused_pokemon: Pokemon
 
 # Sprites
-var sprite_front: Texture
-var sprite_back: Texture
-var sprite_icon: Texture
+var sprite_front: Texture ## This pokemon's front sprite.
+var sprite_back: Texture ## This pokemon's back sprite.
+var sprite_icon: Texture ## This pokemon's icon sprite.
+
+# Shorthands
+var max_hp: int: ## Shorthand for [member stats] HP key
+	get: return stats.HP
+	set(value): stats.HP = value
+var attack: int: ## Shorthand for [member stats] ATTACK key
+	get: return stats.ATTACK
+	set(value): stats.ATTACK = value
+var defense: int: ## Shorthand for [member stats] DEFENSE key
+	get: return stats.DEFENSE
+	set(value): stats.DEFENSE = value
+var spattack: int: ## Shorthand for [member stats] SPECIAL_ATTACK key
+	get: return stats.SPECIAL_ATTACK
+	set(value): stats.SPECIAL_ATTACK = value
+var spdefense: int: ## Shorthand for [member stats] SPECIAL_DEFENSE key
+	get: return stats.SPECIAL_DEFENSE
+	set(value): stats.SPECIAL_DEFENSE = value
+var speed: int: ## Shorthand for [member stats] SPEED key
+	get: return stats.SPEED
+	set(value): stats.SPEED = value
 
 
 func _init(_species: Variant, form: int = 0, attributes: Dictionary = {}) -> void:
@@ -163,9 +205,11 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary = {}) -> voi
 	if not ability:
 		ability = PokemonAbility.new(species.abilities[0])
 
+	calculate_stats()
 	set_sprites()
 
 
+## Resets the sprites.
 func set_sprites() -> void:
 	if shiny or super_shiny:
 		sprite_front = species.sprite_front_s_f if gender == Genders.FEMALE else species.sprite_front_s_m
@@ -177,6 +221,18 @@ func set_sprites() -> void:
 	sprite_icon = species.sprite_icon_n
 
 
+## Recalculates stats. See [url]https://bulbapedia.bulbagarden.net/wiki/Stat#Generation_III_onward[/url]
+func calculate_stats() -> void:
+	for stat: String in Globals.STATS:
+		stats[stat] = calculate_stat(self, stat)
+
+
+## Heal this pokemon.
+func heal() -> void:
+	hp = max_hp
+	status = null
+
+## Generate a random pokemon. [param fixed_attributes] is a dictionary of attributes you don't want to be randomly generated, rather be set to the value held in the dictionary.
 static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary = {}) -> Pokemon:
 
 	var _species: PokemonSpecies = PokemonSpecies.new(species_id, form)
@@ -222,3 +278,16 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 	var pokemon: Pokemon = Pokemon.new(_species, 0, fixed_attributes)
 
 	return pokemon
+
+
+## Calculate the [param pokemon] [param stat]. [param stat] should be in [member Globals.STATS].
+static func calculate_stat(pokemon: Pokemon, stat: String) -> int:
+	if stat == Globals.STATS.HP:
+		if pokemon.species.id == "SHEDINJA":
+			return 1
+		return floori(
+			((2.0 * pokemon.species.hp + pokemon.ivs[stat] + floorf(pokemon.evs[stat] / 4.0)) * pokemon.level) / 100.0
+		) + pokemon.level + 10
+	return floori(
+		(floorf((2.0 * pokemon.species.base_stats[stat] + pokemon.ivs[stat] + floorf(pokemon.evs[stat] / 4.0)) * pokemon.level / 100.0) + 5.0) * Globals.natures[pokemon.nature][stat]
+	)

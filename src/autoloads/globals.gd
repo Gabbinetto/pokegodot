@@ -1,6 +1,10 @@
 extends Node
 
-enum Languages {
+## Pokegodot's Globals singleton
+## 
+## A singleton holding general stuff, such as stats key names.
+
+enum Languages { ## Possible languages.
 	UNKNOWN,
 	JAPANESE,
 	ENGLISH,
@@ -11,7 +15,7 @@ enum Languages {
 	KOREAN,
 }
 
-const STATS: Dictionary = {
+const STATS: Dictionary = { ## Stat key names following an UPPERCASE_SNAKE_CASE format. Used in properties such as [member PokemonSpecies.base_stats]
 	"HP": "HP",
 	"ATTACK": "ATTACK",
 	"DEFENSE": "DEFENSE",
@@ -19,7 +23,7 @@ const STATS: Dictionary = {
 	"SPECIAL_DEFENSE": "SPECIAL_DEFENSE",
 	"SPEED": "SPEED",
 }
-const CONTEST_STATS: Dictionary = {
+const CONTEST_STATS: Dictionary = { ## Same as [member STATS], but for contest stats.
 	"BEAUTY": "BEAUTY",
 	"COOL": "COOL",
 	"CUTE": "CUTE",
@@ -28,7 +32,8 @@ const CONTEST_STATS: Dictionary = {
 	"SHEEN": "SHEEN",
 }
 
-var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var rng: RandomNumberGenerator = RandomNumberGenerator.new() ## A global random number generator. Useful to be "coherent" with randomness. Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
+## Dictionary where the key is the nature name in uppercase and the value is another dictionary the multiplier for each stat [member STATS] (10% increase or decrease).
 var natures: Dictionary = {}
 
 

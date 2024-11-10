@@ -4,7 +4,6 @@ recording.avi
 
 # VSCode
 .vscode/
-.vscode/*
 
 # Project ignores
 dev/essentials_converting/essentials/
