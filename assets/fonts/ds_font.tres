@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bcbnrhdpuihkq"]
+
+[ext_resource type="FontFile" uid="uid://dcqjr780x3nu6" path="res://assets/fonts/raw/pokemon-ds-font.ttf" id="1_blxhe"]
+
+[resource]
+base_font = ExtResource("1_blxhe")
+spacing_top = -4

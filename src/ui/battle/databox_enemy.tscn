@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://new8ewxbug0r"]
+
+[ext_resource type="Texture2D" uid="uid://cunan261w1n60" path="res://assets/graphics/ui/battle/databox_normal_foe.png" id="1_gma8s"]
+[ext_resource type="Script" path="res://src/ui/battle/databox.gd" id="2_1ke1u"]
+[ext_resource type="Texture2D" uid="uid://sii0yoe3vv85" path="res://assets/graphics/ui/battle/hp_bar.png" id="3_7frmg"]
+[ext_resource type="Script" path="res://src/ui/battle/databox_numbers.gd" id="5_2vsny"]
+[ext_resource type="Texture2D" uid="uid://ddg3xn2ws8l7p" path="res://assets/graphics/ui/battle/databox_numbers.png" id="6_imi6b"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="7_6wymj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y2fre"]
+atlas = ExtResource("3_7frmg")
+region = Rect2(0, 0, 96, 6)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6tbnn"]
+font = ExtResource("7_6wymj")
+font_size = 32
+font_color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[node name="DataboxEnemy" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "level_text")]
+offset_right = 260.0
+offset_bottom = 62.0
+texture = ExtResource("1_gma8s")
+stretch_mode = 2
+script = ExtResource("2_1ke1u")
+name_label = NodePath("PokemonName")
+hp_bar_texture = ExtResource("3_7frmg")
+hp_bar = NodePath("HPBar")
+level_text = NodePath("Level")
+
+[node name="HPBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.454
+anchor_top = 0.645
+anchor_right = 0.454
+anchor_bottom = 0.645
+offset_left = -0.0400085
+offset_top = 0.00999832
+offset_right = 95.96
+offset_bottom = 6.01
+value = 50.0
+texture_progress = SubResource("AtlasTexture_y2fre")
+
+[node name="Level" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.623
+anchor_top = 0.484
+anchor_right = 0.623
+anchor_bottom = 0.484
+offset_left = 0.019989
+offset_top = -14.008
+offset_right = 48.02
+offset_bottom = -0.00800514
+theme_override_constants/separation = 0
+script = ExtResource("5_2vsny")
+numbers_texture = ExtResource("6_imi6b")
+max_length = 3
+text = "100"
+
+[node name="PokemonName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.031
+anchor_top = 0.355
+anchor_right = 0.031
+anchor_bottom = 0.355
+offset_left = -0.0600014
+offset_top = -12.01
+offset_right = 127.94
+offset_bottom = 11.99
+text = "Pikachu"
+label_settings = SubResource("LabelSettings_6tbnn")

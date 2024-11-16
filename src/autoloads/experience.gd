@@ -8,6 +8,9 @@ enum GrowthRates {
     ERRATIC,
     FLUCTUATING,
 }
+
+const MAX_LEVEL: int = 100
+
 var tables: Dictionary = {
     GrowthRates.FAST: [] as Array[int],
     GrowthRates.MEDIUM_FAST: [] as Array[int],
@@ -20,12 +23,12 @@ var tables: Dictionary = {
 
 func _init() -> void:
     for rate: GrowthRates in GrowthRates.values():
-        for level: int in range(1, 101):
+        for level: int in range(1, MAX_LEVEL + 1):
             tables[rate].append(calculate_exp(level, rate))
 
 
 # Calculation functions
-static func calculate_exp(n: int, rate: GrowthRates) -> int:
+func calculate_exp(n: int, rate: GrowthRates) -> int:
     if n <= 1:
         return 0
     match rate:
@@ -44,21 +47,21 @@ static func calculate_exp(n: int, rate: GrowthRates) -> int:
         _:
             return 0
 
-static func fast(n: int) -> int:
+func fast(n: int) -> int:
     return floori((4.0 * (n ** 3.0)) / 5.0)
 
-static func medium_fast(n: int) -> int:
+func medium_fast(n: int) -> int:
     return n ** 3
 
-static func slow(n: int) -> int:
+func slow(n: int) -> int:
     return floori((5.0 * (n ** 3.0)) / 4.0)
 
-static func medium_slow(n: int) -> int:
+func medium_slow(n: int) -> int:
     return floori(
         (6.0 / 5.0) * (n ** 3.0) - 15.0 * (n ** 2) + 100.0 * n - 140.0
     )
 
-static func erratic(n: int) -> int:
+func erratic(n: int) -> int:
     if n < 50:
         return floori(
             (n ** 3.0) * (100.0 - n) / 50.0
@@ -76,7 +79,7 @@ static func erratic(n: int) -> int:
             (n ** 3.0) * (160.0 - n) / 100.0
         )
 
-static func fluctuating(n: int) -> int:
+func fluctuating(n: int) -> int:
     if n < 15:
         return floori(
             (n ** 3.0) * (floorf((n + 1.0) / 3.0) + 24.0) / 50.0

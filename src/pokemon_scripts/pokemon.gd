@@ -66,7 +66,7 @@ var level: int = 1:
 		return out
 	set(value):
 		var table: Array[int] = Experience.tables[species.growth_rate]
-		value = clampi(value, 0, 100)
+		value = clampi(value, 1, Experience.MAX_LEVEL)
 		if value >= table.size():
 			value = table.size()
 			experience = table[-1]
@@ -207,6 +207,7 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary = {}) -> voi
 
 	calculate_stats()
 	set_sprites()
+	heal()
 
 
 ## Resets the sprites.

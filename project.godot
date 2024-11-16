@@ -19,10 +19,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 DB="*res://src/autoloads/database.gd"
+SignalRouter="*res://src/autoloads/signal_router.gd"
 Experience="*res://src/autoloads/experience.gd"
 Types="*res://src/autoloads/types.gd"
 Battlebacks="*res://src/autoloads/battlebacks.gd"
 Globals="*res://src/autoloads/globals.gd"
+PlayerData="*res://src/autoloads/player_data.gd"
 EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
 
 [display]
@@ -46,6 +48,31 @@ movie_writer/disable_vsync=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/expandable_viewport_container/plugin.cfg", "res://addons/fabimakesgames.embed_game/plugin.cfg")
+
+[importer_defaults]
+
+font_data_dynamic={
+"Compress": null,
+"Fallbacks": null,
+"Rendering": null,
+"allow_system_fallback": true,
+"antialiasing": 0,
+"compress": true,
+"disable_embedded_bitmaps": true,
+"fallbacks": [],
+"force_autohinter": false,
+"generate_mipmaps": false,
+"hinting": 1,
+"language_support": {},
+"msdf_pixel_range": 8,
+"msdf_size": 48,
+"multichannel_signed_distance_field": false,
+"opentype_features": {},
+"oversampling": 0.0,
+"preload": [],
+"script_support": {},
+"subpixel_positioning": 0
+}
 
 [input]
 

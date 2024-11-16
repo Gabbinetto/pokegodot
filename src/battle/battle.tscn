@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqh1fa6ynb5cm"]
+[gd_scene load_steps=11 format=3 uid="uid://bqh1fa6ynb5cm"]
 
 [ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
 [ext_resource type="Script" path="res://src/battle/battle.gd" id="1_lx70w"]
 [ext_resource type="Texture2D" uid="uid://bly3i2pq8csog" path="res://assets/graphics/battlebacks/messages/cave1.png" id="1_n55km"]
 [ext_resource type="Texture2D" uid="uid://dqy8y4f2v3df3" path="res://assets/graphics/battlebacks/bases/cave1.png" id="2_0a26x"]
+[ext_resource type="Texture2D" uid="uid://cs6i33kl3uqjs" path="res://assets/graphics/pokemon_sprites/_default/back_n_m.png" id="4_x2vsu"]
+[ext_resource type="PackedScene" uid="uid://b5l5tiw6t3228" path="res://src/ui/battle/databox_player.tscn" id="5_ryx84"]
+[ext_resource type="Texture2D" uid="uid://bn4s5awi4pfvp" path="res://assets/graphics/pokemon_sprites/_default/front_n_m.png" id="5_xt16e"]
+[ext_resource type="PackedScene" uid="uid://new8ewxbug0r" path="res://src/ui/battle/databox_enemy.tscn" id="6_6e2k4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fj75k"]
 atlas = ExtResource("2_0a26x")
@@ -13,7 +17,7 @@ region = Rect2(0, 0, 512, 64)
 atlas = ExtResource("2_0a26x")
 region = Rect2(0, 64, 256, 128)
 
-[node name="Battle" type="Control"]
+[node name="Battle" type="Control" node_paths=PackedStringArray("background", "ui_message_bg", "player_ground", "enemy_ground", "ally_pokemon_1_sprite", "ally_pokemon_2_sprite", "enemy_pokemon_1_sprite", "enemy_pokemon_2_sprite")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +25,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lx70w")
-metadata/_edit_horizontal_guides_ = [266.0]
+background = NodePath("Background")
+ui_message_bg = NodePath("MessageBackground")
+player_ground = NodePath("PlayerGround")
+enemy_ground = NodePath("EnemyGround")
+ally_pokemon_1_sprite = NodePath("PlayerGround/AllyPokemon1")
+ally_pokemon_2_sprite = NodePath("PlayerGround/AllyPokemon2")
+enemy_pokemon_1_sprite = NodePath("EnemyGround/EnemyPokemon1")
+enemy_pokemon_2_sprite = NodePath("EnemyGround/EnemyPokemon2")
 metadata/_edit_lock_ = true
 
 [node name="Background" type="TextureRect" parent="."]
@@ -32,7 +43,7 @@ anchor_bottom = 0.75
 offset_right = -512.0
 offset_bottom = -288.0
 texture = ExtResource("1_2jehi")
-stretch_mode = 4
+stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
@@ -51,6 +62,16 @@ texture = SubResource("AtlasTexture_fj75k")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
+[node name="AllyPokemon1" type="Sprite2D" parent="PlayerGround"]
+position = Vector2(256, 128)
+texture = ExtResource("4_x2vsu")
+offset = Vector2(0, -144)
+
+[node name="AllyPokemon2" type="Sprite2D" parent="PlayerGround"]
+visible = false
+position = Vector2(0, 128)
+texture = ExtResource("4_x2vsu")
+
 [node name="EnemyGround" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -66,6 +87,36 @@ texture = SubResource("AtlasTexture_i1fi4")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
+[node name="EnemyPokemon1" type="Sprite2D" parent="EnemyGround"]
+position = Vector2(128, 64)
+texture = ExtResource("5_xt16e")
+offset = Vector2(0, -96)
+
+[node name="EnemyPokemon2" type="Sprite2D" parent="EnemyGround"]
+position = Vector2(128, 64)
+texture = ExtResource("5_xt16e")
+offset = Vector2(0, -96)
+
+[node name="DataboxPlayer" parent="." instance=ExtResource("5_ryx84")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.615
+anchor_right = 1.0
+anchor_bottom = 0.615
+offset_left = -260.0
+offset_top = -42.16
+offset_right = 0.0
+offset_bottom = 41.84
+
+[node name="DataboxEnemy" parent="." instance=ExtResource("6_6e2k4")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.174
+anchor_bottom = 0.174
+offset_top = -30.816
+offset_bottom = 31.184
+
 [node name="MessageBackground" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -75,8 +126,7 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -256.0
 offset_top = -96.0
-offset_right = -256.0
-offset_bottom = -96.0
+offset_right = 256.0
 texture = ExtResource("1_n55km")
-stretch_mode = 4
+stretch_mode = 1
 metadata/_edit_lock_ = true

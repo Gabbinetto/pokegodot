@@ -1,0 +1,10 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://ds5fdst7lttds"]
+
+[ext_resource type="FontFile" uid="uid://dcqjr780x3nu6" path="res://assets/fonts/raw/pokemon-ds-font.ttf" id="1_o4td2"]
+
+[resource]
+base_font = ExtResource("1_o4td2")
+variation_embolden = 0.2
+variation_transform = Transform2D(1, 0.4, 0, 1, 0, 0)
+spacing_glyph = 1
+spacing_top = -4

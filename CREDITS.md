@@ -1,6 +1,7 @@
 - The Pokemon Company and GameFreak
 - Pokemon Essentials team
 - [Pokemon Essentials Generation 9 pack](https://www.pokecommunity.com/threads/generation-9-resource-pack-v21-1.527398/)
+- [Pokemon DS font](https://fontstruct.com/fontstructions/show/1182741/pokemon-ds-font)
 
 <details>
 	<summary>Full Generation 9 pack credits</summary>

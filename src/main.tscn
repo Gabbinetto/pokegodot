@@ -1,15 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmh2ortvoisba"]
+[gd_scene load_steps=4 format=3 uid="uid://bmh2ortvoisba"]
 
 [ext_resource type="Script" path="res://addons/expandable_viewport_container/expand_viewport_container.gd" id="1_lt4k4"]
-[ext_resource type="PackedScene" uid="uid://bqh1fa6ynb5cm" path="res://src/battle/battle.tscn" id="2_yvolb"]
+[ext_resource type="Script" path="res://src/main.gd" id="1_y8srd"]
 
-[node name="Main" type="Control"]
+[sub_resource type="GDScript" id="GDScript_flyaw"]
+resource_name = "Test"
+script/source = "extends Node
+
+@export var battleback: Battlebacks.Sets = 0
+
+func _ready() -> void:
+	await owner.ready
+	Battle.start_battle({\"battleback\": battleback})
+"
+
+[node name="Main" type="Control" node_paths=PackedStringArray("viewport")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_y8srd")
+viewport = NodePath("ExpandableViewportContainer/SubViewport")
 metadata/_edit_lock_ = true
 
 [node name="BG" type="ColorRect" parent="."]
@@ -39,4 +52,6 @@ handle_input_locally = false
 size = Vector2i(512, 384)
 render_target_update_mode = 4
 
-[node name="Battle" parent="ExpandableViewportContainer/SubViewport" instance=ExtResource("2_yvolb")]
+[node name="Node" type="Node" parent="ExpandableViewportContainer/SubViewport"]
+script = SubResource("GDScript_flyaw")
+battleback = 35

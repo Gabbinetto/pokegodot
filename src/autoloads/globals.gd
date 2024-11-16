@@ -32,6 +32,7 @@ const CONTEST_STATS: Dictionary = { ## Same as [member STATS], but for contest s
 	"SHEEN": "SHEEN",
 }
 
+var game_root: SubViewport ## When meaning to add a node to the root which gets visualized, it's best to add it as a child to this node as to let it scale with the rest of the game.
 var rng: RandomNumberGenerator = RandomNumberGenerator.new() ## A global random number generator. Useful to be "coherent" with randomness. Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
 ## Dictionary where the key is the nature name in uppercase and the value is another dictionary the multiplier for each stat [member STATS] (10% increase or decrease).
 var natures: Dictionary = {}
