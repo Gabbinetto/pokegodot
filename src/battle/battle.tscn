@@ -93,6 +93,7 @@ texture = ExtResource("5_xt16e")
 offset = Vector2(0, -96)
 
 [node name="EnemyPokemon2" type="Sprite2D" parent="EnemyGround"]
+visible = false
 position = Vector2(128, 64)
 texture = ExtResource("5_xt16e")
 offset = Vector2(0, -96)
@@ -108,6 +109,7 @@ offset_left = -260.0
 offset_top = -42.16
 offset_right = 0.0
 offset_bottom = 41.84
+metadata/_edit_lock_ = true
 
 [node name="DataboxEnemy" parent="." instance=ExtResource("6_6e2k4")]
 layout_mode = 1
@@ -116,6 +118,7 @@ anchor_top = 0.174
 anchor_bottom = 0.174
 offset_top = -30.816
 offset_bottom = 31.184
+metadata/_edit_lock_ = true
 
 [node name="MessageBackground" type="TextureRect" parent="."]
 layout_mode = 1

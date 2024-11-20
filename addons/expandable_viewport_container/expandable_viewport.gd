@@ -3,7 +3,7 @@ extends EditorPlugin
 
 
 func _enter_tree() -> void:
-	add_custom_type("ExpandableViewportContainer", "SubViewportContainer", preload("expand_viewport_container.gd"), ThemeDB.get_default_theme().get_icon("SubViewportContainer", "Normal"))
+	add_custom_type("ExpandableViewportContainer", "SubViewportContainer", preload("expand_viewport_container.gd"), EditorInterface.get_base_control().get_theme_icon("SubViewportContainer", "EditorIcons"))
 
 
 func _exit_tree() -> void:

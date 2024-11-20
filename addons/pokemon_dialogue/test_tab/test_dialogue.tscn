@@ -1,0 +1,217 @@
+[gd_scene load_steps=19 format=3 uid="uid://v5blv4j7oo52"]
+
+[ext_resource type="Texture2D" uid="uid://5j4uovqscijf" path="res://addons/pokemon_dialogue/test_tab/default_textbox.png" id="1_7wmnl"]
+[ext_resource type="Script" path="res://addons/pokemon_dialogue/test_tab/test_dialogue.gd" id="1_42y8v"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="2_1dikh"]
+[ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="2_mfmpk"]
+[ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="3_gitow"]
+[ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="4_ewf02"]
+[ext_resource type="Script" path="res://src/dialogue/dialogue_manager.gd" id="7_e5d0k"]
+[ext_resource type="Texture2D" uid="uid://dl1bmj4lljo4p" path="res://addons/pokemon_dialogue/test_tab/default_arrow.png" id="7_s2jn8"]
+[ext_resource type="Script" path="res://src/dialogue/dialogue_sequence.gd" id="8_yftqy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l6qdn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hylod"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbti2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ei1c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4nvv"]
+atlas = ExtResource("7_s2jn8")
+region = Rect2(0, 0, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8pm2"]
+atlas = ExtResource("7_s2jn8")
+region = Rect2(14, 0, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4q1c"]
+atlas = ExtResource("7_s2jn8")
+region = Rect2(28, 0, 14, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fnmyv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4nvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8pm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4q1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8pm2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.67
+}]
+
+[sub_resource type="Resource" id="Resource_us84g"]
+script = ExtResource("8_yftqy")
+text = "Ciao. Palle"
+set_pauses = {
+5: -1.0
+}
+
+[node name="TestDialogue" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_42y8v")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.136364
+offset_bottom = -1.52588e-05
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="DialogueEdit" type="TextEdit" parent="Control/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Edit dialogue"
+
+[node name="RunButton" type="Button" parent="Control/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Run dialogue"
+
+[node name="SpeedButton" type="MenuButton" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_top = 0.227
+anchor_bottom = 0.227
+offset_top = -23.904
+offset_right = 58.0
+offset_bottom = 7.09601
+text = "Speed"
+flat = false
+item_count = 4
+popup/item_0/text = "Slow"
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Fast"
+popup/item_2/id = 2
+popup/item_3/text = "Instant"
+popup/item_3/id = 3
+
+[node name="DialogueBox" type="NinePatchRect" parent="Control"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(512, 96)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -96.0
+offset_right = 256.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+texture = ExtResource("1_7wmnl")
+region_rect = Rect2(0, 0, 96, 48)
+patch_margin_left = 22
+patch_margin_top = 14
+patch_margin_right = 44
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="DialogueLabel" type="RichTextLabel" parent="Control/DialogueBox"]
+unique_name_in_owner = true
+material = ExtResource("2_mfmpk")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.208333
+anchor_right = 0.894531
+anchor_bottom = 0.875
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("2_1dikh")
+theme_override_fonts/italics_font = ExtResource("3_gitow")
+theme_override_fonts/bold_font = ExtResource("4_ewf02")
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_styles/fill = SubResource("StyleBoxEmpty_l6qdn")
+theme_override_styles/background = SubResource("StyleBoxEmpty_hylod")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vbti2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8ei1c")
+bbcode_enabled = true
+text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz"
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="DialogueArrow" type="AnimatedSprite2D" parent="Control/DialogueBox"]
+unique_name_in_owner = true
+position = Vector2(484, 56)
+sprite_frames = SubResource("SpriteFrames_fnmyv")
+autoplay = "default"
+frame_progress = 0.668106
+centered = false
+
+[node name="PausesText" type="TextEdit" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+anchor_left = 1.0
+anchor_top = 0.159
+anchor_right = 1.0
+anchor_bottom = 0.682
+offset_left = -192.0
+offset_top = 0.0319977
+offset_bottom = -0.0640106
+tooltip_text = "The dialogue pauses, separated by newlines.
+Charcount is the character amount to have shown at that pause.
+Milliseconds is the pause duration in seconds.
+They must be separated only by  a colon. For example:
+43:1.2"
+placeholder_text = "Charcount:Milliseconds"
+
+[node name="PausesButton" type="Button" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.59
+anchor_top = 0.159
+anchor_right = 0.59
+anchor_bottom = 0.159
+offset_left = -91.2
+offset_top = 0.0319977
+offset_right = -0.200012
+offset_bottom = 31.032
+text = "Set pauses"
+
+[node name="DialogueManager" type="Node" parent="." node_paths=PackedStringArray("label")]
+unique_name_in_owner = true
+script = ExtResource("7_e5d0k")
+speed = 1
+label = NodePath("../Control/DialogueBox/DialogueLabel")
+dialogues = Array[ExtResource("8_yftqy")]([SubResource("Resource_us84g")])
