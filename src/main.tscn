@@ -11,7 +11,19 @@ script/source = "extends Node
 
 func _ready() -> void:
 	await owner.ready
-	Battle.start_battle({\"battleback\": battleback})
+	
+	PlayerData.team.add_pokemon(
+		Pokemon.generate(\"CHARMANDER\", 0, {\"level\": 5})
+	)
+	
+	var enemy_team: PokemonTeam = PokemonTeam.new(
+		[Pokemon.generate(\"BULBASAUR\", 0, {\"level\": 5})]
+	)
+	
+	Battle.start_battle({
+		\"battleback\": battleback,
+		\"enemy_trainers\": Battle.TrainerBattleInfo.new(\"Uomo\", enemy_team)
+	})
 "
 
 [node name="Main" type="Control" node_paths=PackedStringArray("viewport")]

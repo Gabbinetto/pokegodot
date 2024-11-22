@@ -172,6 +172,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="DialogueArrow" type="AnimatedSprite2D" parent="Control/DialogueBox"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(484, 56)
 sprite_frames = SubResource("SpriteFrames_fnmyv")
 autoplay = "default"

@@ -1,7 +1,11 @@
 class_name Databox extends Control
 
 
-@export var pokemon: Pokemon
+@export var enabled: bool = true
+@export var pokemon: Pokemon:
+	set(value):
+		pokemon = value
+		_refresh()
 @export var name_label: Label
 @export var hp_bar_texture: Texture2D
 @export var hp_bar: TextureProgressBar
@@ -31,7 +35,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if not pokemon:
+	if not pokemon or not enabled:
 		return
 
 
@@ -68,5 +72,11 @@ func _process(_delta: float) -> void:
 
 
 func _refresh() -> void:
-	hp_bar.max_value = pokemon.max_hp
-	hp_bar.value = pokemon.hp
+	if not pokemon or not enabled:
+		return
+	if is_instance_valid(hp_bar):
+		hp_bar.max_value = pokemon.max_hp
+		hp_bar.value = pokemon.hp
+
+	if is_instance_valid(hp_numbers):
+		hp_numbers.text = "%s/%s" % [pokemon.hp, pokemon.max_hp]

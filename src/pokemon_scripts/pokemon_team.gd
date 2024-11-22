@@ -33,6 +33,7 @@ func _iter_get(_arg) -> Pokemon:
 func get_array() -> Array[Pokemon]:
     return _team
 
+
 ## Returns the size of the team.
 func size() -> int:
     return _team.size()

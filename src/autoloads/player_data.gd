@@ -5,4 +5,4 @@ enum {MALE, FEMALE}
 
 var player_name: String
 var team: PokemonTeam = PokemonTeam.new()
-var gender: int
+var gender: int = MALE

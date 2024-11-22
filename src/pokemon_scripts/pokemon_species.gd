@@ -168,37 +168,37 @@ func _init(_id: String, _form_number: int = 0) -> void:
 
 
 func _set_sprites() -> void:
-	sprite_front_n_m = load(DB.POKEMON_SPRITES_PATH + id + "/front_n_m.png")
+	sprite_front_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
 	if not sprite_front_n_m:
 		sprite_front_n_m = DB.DEFAULT_FRONT_SPRITE
-	sprite_front_n_f = load(DB.POKEMON_SPRITES_PATH + id + "/front_n_f.png")
+	sprite_front_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
 	if not sprite_front_n_f:
 		sprite_front_n_f = sprite_front_n_m
-	sprite_front_s_m = load(DB.POKEMON_SPRITES_PATH + id + "/front_s_m.png")
+	sprite_front_s_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_m.png")
 	if not sprite_front_s_m:
 		sprite_front_s_m = sprite_front_n_m
-	sprite_front_s_f = load(DB.POKEMON_SPRITES_PATH + id + "/front_s_f.png")
+	sprite_front_s_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_f.png")
 	if not sprite_front_s_f:
 		sprite_front_s_f = sprite_front_s_m
 
-	sprite_back_n_m = load(DB.POKEMON_SPRITES_PATH + id + "/back_n_m.png")
+	sprite_back_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
 	if not sprite_back_n_m:
 		sprite_back_n_m = DB.DEFAULT_BACK_SPRITE
-	sprite_back_n_f = load(DB.POKEMON_SPRITES_PATH + id + "/back_n_f.png")
+	sprite_back_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
 	if not sprite_back_n_f:
 		sprite_back_n_f = sprite_back_n_m
-	sprite_back_s_m = load(DB.POKEMON_SPRITES_PATH + id + "/back_s_m.png")
+	sprite_back_s_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_m.png")
 	if not sprite_back_s_m:
 		sprite_back_s_m = sprite_back_n_m
-	sprite_back_s_f = load(DB.POKEMON_SPRITES_PATH + id + "/back_s_f.png")
+	sprite_back_s_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
 	if not sprite_back_s_f:
 		sprite_back_s_f = sprite_back_s_m
 	
-	sprite_icon_n = load(DB.POKEMON_SPRITES_PATH + id + "/icon_n.png")
+	sprite_icon_n = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
 	if not sprite_icon_n:
 		sprite_icon_n = DB.DEFAULT_ICON_SPRITE
-	sprite_icon_s = load(DB.POKEMON_SPRITES_PATH + id + "/icon_s.png")
+	sprite_icon_s = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
 	if not sprite_icon_s:
 		sprite_icon_s = sprite_icon_n
 	
-	sprite_footprint = load(DB.POKEMON_SPRITES_PATH + id + "/footprint.png")
+	sprite_footprint = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")

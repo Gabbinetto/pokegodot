@@ -14,6 +14,9 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var ally_pokemon_2_sprite: Sprite2D
 @export var enemy_pokemon_1_sprite: Sprite2D
 @export var enemy_pokemon_2_sprite: Sprite2D
+@export_group("UI")
+@export var databox_ally_single: Databox
+@export var databox_enemy_single: Databox
 
 
 var battleback: Battlebacks.Set = Battlebacks.loaded_sets[0]
@@ -24,10 +27,10 @@ var trainers: Array[TrainerBattleInfo]:
 var ally_pokemon: Array[PokemonBattleInfo] = []
 var enemy_pokemon: Array[PokemonBattleInfo] = []
 var pokemons: Array[PokemonBattleInfo]:
-	get: return ally_pokemon + enemy_trainers
-
-func _ready() -> void:
-	pass
+	get:
+		var arr: Array[PokemonBattleInfo]
+		arr.assign(ally_pokemon + enemy_trainers)
+		return arr
 
 
 func _setup(attributes: Dictionary = {}) -> void:
@@ -64,6 +67,24 @@ func _setup(attributes: Dictionary = {}) -> void:
 	enemy_pokemon_1_sprite.texture = enemy_pokemon.front().pokemon.sprite_front
 	enemy_pokemon_2_sprite.texture = enemy_pokemon.back().pokemon.sprite_front
 
+	refresh_databoxes()
+
+
+func refresh_databoxes() -> void:
+	if ally_pokemon.size() > 1:
+		pass
+	else:
+		databox_ally_single.show()
+		databox_ally_single.enabled = true
+		databox_ally_single.pokemon = ally_pokemon.front().pokemon
+	
+	if enemy_pokemon.size() > 1:
+		pass
+	else:
+		databox_enemy_single.show()
+		databox_enemy_single.enabled = true
+		databox_enemy_single.pokemon = enemy_pokemon.front().pokemon
+
 
 static func start_battle(attributes: Dictionary = {}) -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
@@ -72,7 +93,6 @@ static func start_battle(attributes: Dictionary = {}) -> void:
 	layer.name = "BattleLayer"
 
 	battle._setup(attributes)
-
 
 	Globals.game_root.add_child(layer)
 
