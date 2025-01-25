@@ -1,9 +1,16 @@
 class_name Battle extends Node
 
+enum Actions {
+	FIGHT,
+	SWITCH,
+	ITEM,
+}
 
 const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn")
 
-
+@export_group("State machine")
+@export var state_machine: StateMachine
+@export var machine_starting_state: State
 @export_group("Setting")
 @export var background: TextureRect
 @export var ui_message_bg: TextureRect
@@ -17,6 +24,18 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export_group("UI")
 @export var databox_ally_single: Databox
 @export var databox_enemy_single: Databox
+@export_subgroup("Base commands")
+@export var base_commands: Control
+@export var fight_button: BaseButton
+@export var pokemon_button: BaseButton
+@export var bag_button: BaseButton
+@export var run_button: BaseButton
+@export var selection_dialogue: DialogueManager
+@export_subgroup("Fight commands")
+@export var fight_commands: Control
+@export var move_buttons: Array[MoveButton]
+@export var fight_cancel_button: BaseButton
+@export var move_info: RichTextLabel
 
 
 var battleback: Battlebacks.Set = Battlebacks.loaded_sets[0]
@@ -29,12 +48,29 @@ var enemy_pokemon: Array[PokemonBattleInfo] = []
 var pokemons: Array[PokemonBattleInfo]:
 	get:
 		var arr: Array[PokemonBattleInfo]
-		arr.assign(ally_pokemon + enemy_trainers)
+		arr.append_array(ally_pokemon)
+		arr.append_array(enemy_pokemon)
 		return arr
+var current_pokemon_index: int = 0
+var current_pokemon: PokemonBattleInfo:
+	get:
+		if current_pokemon_index >= ally_pokemon.size(): return null
+		else: return ally_pokemon[current_pokemon_index]
+var turn_order: Array[int]
+var turn_selections: Dictionary = {}
+
+var last_move_button_pressed: MoveButton
 
 
-func _setup(attributes: Dictionary = {}) -> void:
-	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback_set"), Battlebacks.loaded_sets[0])
+func _ready() -> void:
+	fight_button.grab_focus()
+
+	state_machine.initial_state = machine_starting_state
+	state_machine.start()
+
+	
+func setup(attributes: Dictionary = {}) -> void:
+	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback"), Battlebacks.loaded_sets[0])
 
 	# Set battleback graphics
 	background.texture = battleback.background
@@ -57,10 +93,10 @@ func _setup(attributes: Dictionary = {}) -> void:
 		enemy_trainers.assign(enemies)
 	
 	for trainer: TrainerBattleInfo in ally_trainers:
-		ally_pokemon.append(PokemonBattleInfo.new(trainer.team.first_healthy()))
+		ally_pokemon.append(PokemonBattleInfo.new(trainer.team.first_healthy(), trainer))
 
 	for trainer: TrainerBattleInfo in enemy_trainers:
-		enemy_pokemon.append(PokemonBattleInfo.new(trainer.team.first_healthy()))
+		enemy_pokemon.append(PokemonBattleInfo.new(trainer.team.first_healthy(), trainer))
 	
 	ally_pokemon_1_sprite.texture = ally_pokemon.front().pokemon.sprite_back
 	ally_pokemon_2_sprite.texture = ally_pokemon.back().pokemon.sprite_back
@@ -68,7 +104,45 @@ func _setup(attributes: Dictionary = {}) -> void:
 	enemy_pokemon_2_sprite.texture = enemy_pokemon.back().pokemon.sprite_front
 
 	refresh_databoxes()
+	refresh_move_buttons()
 
+	# Connect UI signals
+	fight_button.pressed.connect(func():
+		base_commands.hide()
+		fight_commands.show()
+		if last_move_button_pressed and last_move_button_pressed.visible:
+			last_move_button_pressed.grab_focus()
+		else:
+			move_buttons.front().grab_focus()
+	)
+
+	fight_cancel_button.pressed.connect(func():
+		if current_pokemon_index > 0:
+			current_pokemon_index -= 1
+			refresh_move_buttons()
+			return
+
+		base_commands.show()
+		fight_commands.hide()
+		fight_button.grab_focus()
+	)
+
+	fight_cancel_button.focus_entered.connect(func():
+		move_info.text = ""
+	)
+
+	for button: MoveButton in move_buttons:
+		button.focus_entered.connect(func():
+			var text: String = "PP: "
+			text += str(button.move.pp) + "/" + str(button.move.total_pp) + "\n"
+			text += str(button.move.power) + " - " + str(button.move.accuracy) + "%"
+			move_info.text = text
+			fight_cancel_button.focus_neighbor_left = button.get_path()
+		)
+		button.pressed.connect(func():
+			last_move_button_pressed = button
+		)
+	
 
 func refresh_databoxes() -> void:
 	if ally_pokemon.size() > 1:
@@ -86,15 +160,50 @@ func refresh_databoxes() -> void:
 		databox_enemy_single.pokemon = enemy_pokemon.front().pokemon
 
 
+func refresh_move_buttons() -> void:
+	for i: int in 4:
+		if i + 1 > ally_pokemon[current_pokemon_index].pokemon.moves.size():
+			move_buttons[i].hide()
+		else:
+			move_buttons[i].show()
+			move_buttons[i].move = ally_pokemon[current_pokemon_index].pokemon.moves[i]
+		
+		move_buttons[i].pressed.connect(
+			func():
+				print("Move ", i + 1, " selected")
+		)
+
+
+func refresh_turn_order() -> void:
+	pass
+
+
 static func start_battle(attributes: Dictionary = {}) -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
 	var battle: Battle = attributes.get("battle_scene", DEFAULT_BATTLE_SCENE).instantiate()
 	layer.add_child(battle)
 	layer.name = "BattleLayer"
 
-	battle._setup(attributes)
+	battle.setup(attributes)
 
 	Globals.game_root.add_child(layer)
+
+
+static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> DamageCalculation:
+	var calculation: DamageCalculation = DamageCalculation.new()
+	calculation.battle = battle
+	calculation.move = move
+	calculation.attacker = attacker
+	calculation.targets = targets
+
+	if move.category == PokemonMove.Categories.PHYSICAL:
+		calculation.attack = attacker.attack
+	elif move.category == PokemonMove.Categories.SPECIAL:
+		calculation.attack = attacker.attack
+	else:
+		calculation.attack = 0
+
+	return calculation
 
 
 class TrainerBattleInfo:
@@ -110,9 +219,48 @@ class TrainerBattleInfo:
 
 class PokemonBattleInfo:
 	var pokemon: Pokemon
+	var trainer: TrainerBattleInfo
 	var hp: int:
 		get: return pokemon.hp
 		set(value): pokemon.hp = value
+	var max_hp: int:
+		get: return pokemon.max_hp
+		set(value): pokemon.max_hp = value
+	var attack: int:
+		get: return pokemon.attack
+		set(value): pokemon.attack = value
+	var defense: int:
+		get: return pokemon.defense
+		set(value): pokemon.defense = value
+	var spattack: int:
+		get: return pokemon.spattack
+		set(value): pokemon.spattack = value
+	var spdefense: int:
+		get: return pokemon.spdefense
+		set(value): pokemon.spdefense = value
+	var speed: int:
+		get: return pokemon.speed
+		set(value): pokemon.speed = value
 
-	func _init(_pokemon: Pokemon) -> void:
+
+	func _init(_pokemon: Pokemon, _trainer: TrainerBattleInfo) -> void:
 		pokemon = _pokemon
+		trainer = _trainer
+
+
+class TurnAction:
+	var type: Actions
+	var properties: Dictionary
+
+	func _init(_type: Actions, _properties: Dictionary) -> void:
+		type = _type
+		properties = _properties
+
+
+class DamageCalculation:
+	var damage: int = 0
+	var attack: int = 0
+	var battle: Battle
+	var move: PokemonMove
+	var attacker: PokemonBattleInfo
+	var targets: Array[PokemonBattleInfo]

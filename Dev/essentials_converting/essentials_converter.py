@@ -4,8 +4,7 @@ import os
 import shutil
 from enum import IntEnum, StrEnum
 from typing import Self
-
-from PIL import Image
+from PIL import Image, ImageOps
 
 BASE_PATH: str = os.path.join("essentials", "PBS")
 GEN_9_CONTENT: str = os.path.join(BASE_PATH, "Gen 9 backup")
@@ -13,6 +12,7 @@ VANILLA_PBS_CONTENT: str = os.path.join(BASE_PATH, "Gen 8 backup")
 GRAPHICS_PATH: str = os.path.join("essentials", "Graphics")
 POKEMON_SPRITES_PATH: str = os.path.join(GRAPHICS_PATH, "Pokemon")
 BATTLEBACKS_PATH: str = os.path.join(GRAPHICS_PATH, "Battlebacks")
+SPEECH_BOXES_PATH: str = os.path.join(GRAPHICS_PATH, "Windowskins")
 OUTPUT_PATH: str = "output"
 
 
@@ -67,6 +67,12 @@ class MoveTargets(IntEnum):
     USER_OR_ALLY = 7
     ALL = 8
     ALL_OTHER = 9
+
+
+class MoveCategories(IntEnum):
+    PHYSICAL = 0
+    SPECIAL = 1
+    STATUS = 2
 
 
 class PokemonProperties(StrEnum):
@@ -184,6 +190,7 @@ MOVE_TEMPLATE: dict[str] = {
     "type": 0,
     "power": 0,
     "accuracy": 100,
+    "category": MoveCategories.PHYSICAL,
     "total_pp": 5,
     "target": 0,
     "priority": 0,
@@ -435,11 +442,7 @@ class EssentialsConverter:
                     case MoveProperties.TYPE:
                         move["type"] = Types[value]
                     case MoveProperties.CATEGORY:
-                        move["category"] = {
-                            "Physical": 0,
-                            "Special": 1,
-                            "Status": 2,
-                        }.get(value, 0)
+                        move["category"] = MoveCategories[value.upper()]
                     case MoveProperties.POWER:
                         move["power"] = int(value)
                     case MoveProperties.ACCURACY:
@@ -617,8 +620,6 @@ class EssentialsConverter:
             )
 
     def extract_battlebacks(self) -> Self:
-        output: str = os.path.join(OUTPUT_PATH, "battlebacks")
-
         bases: list[str] | set[str] = []
         backgrounds: list[str] | set[str] = []
         messages: list[str] | set[str] = []
@@ -644,9 +645,9 @@ class EssentialsConverter:
         backgrounds = set(backgrounds)
         messages = set(messages)
 
+        os.makedirs(os.path.join(OUTPUT_PATH, "battlebacks", "bases"), exist_ok=True)
         # Bases
         # Merge bases into one image
-        os.makedirs(os.path.join(OUTPUT_PATH, "battlebacks", "bases"), exist_ok=True)
         for base in bases:
             image: Image = merge_images_vertically(
                 os.path.join(BATTLEBACKS_PATH, base + "_base0.png"),
@@ -675,6 +676,46 @@ class EssentialsConverter:
 
         return self
 
+    def extract_speech_boxes(
+        self,
+        file_prefix: str = "speech hgss",
+        mirror_part_size: tuple[int, int] = (40, 48),
+        folder_name: str = "hgss",
+    ) -> Self:
+        OUTPUT: str = os.path.join(OUTPUT_PATH, "speech_boxes", folder_name)
+        os.makedirs(OUTPUT, exist_ok=True)
+
+        file_counter: int = 0
+        with os.scandir(SPEECH_BOXES_PATH) as dir:
+            for i, entry in enumerate(dir):
+                if not entry.is_file():
+                    continue
+                filename: str = entry.name
+                if not filename.startswith(file_prefix):
+                    continue
+
+                shutil.copy2(
+                    os.path.join(SPEECH_BOXES_PATH, filename),
+                    os.path.join(OUTPUT, f"box{file_counter}.png"),
+                )
+
+                # Make the full box
+                image: Image = Image.new(
+                    "RGBA", (mirror_part_size[0] * 2, mirror_part_size[1])
+                )
+                box_image: Image = Image.open(os.path.join(SPEECH_BOXES_PATH, filename))
+                cropped: Image = box_image.crop(
+                    (0, 0, mirror_part_size[0], mirror_part_size[1])
+                )
+                image.paste(cropped, (0, 0))
+                mirrored: Image = ImageOps.mirror(cropped)
+                image.paste(mirrored, (mirror_part_size[0], 0))
+                image.save(os.path.join(OUTPUT, f"box_full{file_counter}.png"))
+
+                file_counter += 1
+
+        return self
+
 
 def merge_images_vertically(image1_path, image2_path) -> Image:
     # Open the two images
@@ -698,11 +739,12 @@ def merge_images_vertically(image1_path, image2_path) -> Image:
 
 
 if __name__ == "__main__":
-    EssentialsConverter.merge_pbs()
+    # EssentialsConverter.merge_pbs()
     converter: EssentialsConverter = EssentialsConverter()
-    converter.open(Files.POKEMON).fetch_pokemon()
-    converter.open(Files.FORMS).fetch_pokemon()
+    # converter.open(Files.POKEMON).fetch_pokemon()
+    # converter.open(Files.FORMS).fetch_pokemon()
     # converter.save(pokemon=True)
     # converter.open(Files.MOVES).fetch_moves()
     # converter.save(moves=True)
-    converter.generate_sprites_folder()
+    # converter.generate_sprites_folder()
+    converter.extract_speech_boxes()

@@ -1,9 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://v5blv4j7oo52"]
+[gd_scene load_steps=18 format=3 uid="uid://v5blv4j7oo52"]
 
-[ext_resource type="Texture2D" uid="uid://5j4uovqscijf" path="res://addons/pokemon_dialogue/test_tab/default_textbox.png" id="1_7wmnl"]
 [ext_resource type="Script" path="res://addons/pokemon_dialogue/test_tab/test_dialogue.gd" id="1_42y8v"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="2_1dikh"]
 [ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="2_mfmpk"]
+[ext_resource type="Texture2D" uid="uid://bnyfvswrmxrnf" path="res://assets/graphics/speech_boxes/hgss/box0.png" id="2_nqq8a"]
 [ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="3_gitow"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="4_ewf02"]
 [ext_resource type="Script" path="res://src/dialogue/dialogue_manager.gd" id="7_e5d0k"]
@@ -49,13 +49,6 @@ animations = [{
 "name": &"default",
 "speed": 6.67
 }]
-
-[sub_resource type="Resource" id="Resource_us84g"]
-script = ExtResource("8_yftqy")
-text = "Ciao. Palle"
-set_pauses = {
-5: -1.0
-}
 
 [node name="TestDialogue" type="MarginContainer"]
 anchors_preset = 15
@@ -128,7 +121,7 @@ offset_right = 256.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 1
-texture = ExtResource("1_7wmnl")
+texture = ExtResource("2_nqq8a")
 region_rect = Rect2(0, 0, 96, 48)
 patch_margin_left = 22
 patch_margin_top = 14
@@ -213,6 +206,7 @@ text = "Set pauses"
 [node name="DialogueManager" type="Node" parent="." node_paths=PackedStringArray("label")]
 unique_name_in_owner = true
 script = ExtResource("7_e5d0k")
-speed = 1
 label = NodePath("../Control/DialogueBox/DialogueLabel")
-dialogues = Array[ExtResource("8_yftqy")]([SubResource("Resource_us84g")])
+
+[node name="DialogueSequence" type="Node" parent="DialogueManager"]
+script = ExtResource("8_yftqy")

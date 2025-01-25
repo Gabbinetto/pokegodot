@@ -8,5 +8,5 @@ func _init(_attributes: Dictionary = {}) -> void:
     pass
 
 
-static func get_effect(id: String) -> BattleEffect:
+static func get_effect(id: String) -> GDScript:
     return load(BATTLE_EFFECTS_PATH + id + ".gd")

@@ -7,17 +7,17 @@
 resource_name = "Test"
 script/source = "extends Node
 
-@export var battleback: Battlebacks.Sets = 0
+@export var battleback: Battlebacks.Sets = 0 as Battlebacks.Sets
 
 func _ready() -> void:
 	await owner.ready
 	
 	PlayerData.team.add_pokemon(
-		Pokemon.generate(\"CHARMANDER\", 0, {\"level\": 5})
+		Pokemon.generate(\"BULBASAUR\", 0, {\"level\": 5})
 	)
 	
 	var enemy_team: PokemonTeam = PokemonTeam.new(
-		[Pokemon.generate(\"BULBASAUR\", 0, {\"level\": 5})]
+		[Pokemon.generate(\"CHARMANDER\", 0, {\"level\": 5})]
 	)
 	
 	Battle.start_battle({
@@ -58,6 +58,7 @@ offset_bottom = 384.0
 grow_horizontal = 2
 pivot_offset = Vector2(256, 192)
 script = ExtResource("1_lt4k4")
+metadata/_edit_lock_ = true
 
 [node name="SubViewport" type="SubViewport" parent="ExpandableViewportContainer"]
 handle_input_locally = false
@@ -66,4 +67,4 @@ render_target_update_mode = 4
 
 [node name="Node" type="Node" parent="ExpandableViewportContainer/SubViewport"]
 script = SubResource("GDScript_flyaw")
-battleback = 35
+battleback = 26

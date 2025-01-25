@@ -27,7 +27,13 @@ const SECONDS_PER_CHARACTER: Dictionary = {
 
 @export var speed: Speeds = Speeds.FAST ## The currently set speed.
 @export var label: RichTextLabel ## The label where the dialogue is show.
-@export var dialogues: Array[DialogueSequence] ## The [DialogueSequence]s of the dialogue.
+var dialogues: Array[DialogueSequence]: ## The [DialogueSequence]s of the dialogue.
+    get:
+        var arr: Array[DialogueSequence] = []
+        for child: Node in get_children():
+            if child is DialogueSequence:
+                arr.append(child)
+        return arr
 
 
 var current_index: int = -1 ## The index of the current [DialogueSequence] shown.

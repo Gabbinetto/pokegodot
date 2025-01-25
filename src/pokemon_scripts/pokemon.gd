@@ -10,11 +10,13 @@ signal hp_changed(old_hp: int, current_hp: int) ## Emitted when [member hp] chan
 enum Genders {MALE, FEMALE, GENDERLESS} ## Possible pokemon genders.
 enum Markings {NONE, BLACK, BLUE, PINK} ## Possible markings states.
 
+const MAX_NICKNAME_SIZE: int = 12
 
 # Core properties
 var species: PokemonSpecies ## This pokemon's species.
 var name: String = "": ## This pokemon's nickname. If set to empty, it will return the [member species] [member PokemonSpecies.name].
 	get: return species.name if not name else name
+	set(value): name = value.left(MAX_NICKNAME_SIZE)
 var happiness: int = 70 ## This pokemon's happiness.
 var gender: Genders = Genders.MALE ## This pokemon's gender.
 var nature: String = "" ## This pokemon's nature. Must be one of [member Globals.natures] keys.
@@ -209,6 +211,9 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary = {}) -> voi
 	set_sprites()
 	heal()
 
+	if moves.size() == 0:
+		set_moves(level)
+
 
 ## Resets the sprites.
 func set_sprites() -> void:
@@ -232,6 +237,22 @@ func calculate_stats() -> void:
 func heal() -> void:
 	hp = max_hp
 	status = null
+
+
+## Set this pokemon's moves to the last four moves learnt at [param level]
+func set_moves(_level : int) -> void:
+	for i: int in range(_level, 0, -1):
+		if moves.size() >= 4:
+			break
+		var moves_at_level: Array[String]
+		moves_at_level.assign(species.moves.filter(
+			func(item: Dictionary): return item.level == i
+		).map(func(item: Dictionary): return item.id))
+		for move_id: String in moves_at_level:
+			if moves.size() >= 4:
+				break
+			moves.append(PokemonMove.new(move_id))
+
 
 ## Generate a random pokemon. [param fixed_attributes] is a dictionary of attributes you don't want to be randomly generated, rather be set to the value held in the dictionary.
 static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary = {}) -> Pokemon:
@@ -275,7 +296,7 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 		for stat: String in Globals.STATS.values():
 			_ivs[stat] = randi_range(0, 31)
 		fixed_attributes["ivs"] = _ivs
-
+	
 	var pokemon: Pokemon = Pokemon.new(_species, 0, fixed_attributes)
 
 	return pokemon

@@ -170,7 +170,7 @@ func _init(_id: String, _form_number: int = 0) -> void:
 func _set_sprites() -> void:
 	sprite_front_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
 	if not sprite_front_n_m:
-		sprite_front_n_m = DB.DEFAULT_FRONT_SPRITE
+		sprite_front_n_m = DB.default_front_sprite
 	sprite_front_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
 	if not sprite_front_n_f:
 		sprite_front_n_f = sprite_front_n_m
@@ -183,7 +183,7 @@ func _set_sprites() -> void:
 
 	sprite_back_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
 	if not sprite_back_n_m:
-		sprite_back_n_m = DB.DEFAULT_BACK_SPRITE
+		sprite_back_n_m = DB.default_back_sprite
 	sprite_back_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
 	if not sprite_back_n_f:
 		sprite_back_n_f = sprite_back_n_m
@@ -196,7 +196,7 @@ func _set_sprites() -> void:
 	
 	sprite_icon_n = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
 	if not sprite_icon_n:
-		sprite_icon_n = DB.DEFAULT_ICON_SPRITE
+		sprite_icon_n = DB.default_icon_sprite
 	sprite_icon_s = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
 	if not sprite_icon_s:
 		sprite_icon_s = sprite_icon_n

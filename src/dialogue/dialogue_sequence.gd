@@ -1,5 +1,5 @@
 @tool
-class_name DialogueSequence extends Resource
+class_name DialogueSequence extends Node
 
 ## Pokegodot's dialogue sequence resource
 ##

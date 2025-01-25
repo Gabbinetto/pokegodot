@@ -35,6 +35,7 @@ window/size/window_width_override=1024
 window/size/window_height_override=768
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/handheld/orientation=6
 
 [dotnet]
 
@@ -153,4 +154,5 @@ pointing/emulate_touch_from_mouse=true
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
 vulkan/rendering/back_end=1
