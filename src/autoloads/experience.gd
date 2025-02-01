@@ -11,7 +11,7 @@ enum GrowthRates {
 
 const MAX_LEVEL: int = 100
 
-var tables: Dictionary = {
+var tables: Dictionary[GrowthRates, Array] = {
     GrowthRates.FAST: [] as Array[int],
     GrowthRates.MEDIUM_FAST: [] as Array[int],
     GrowthRates.SLOW: [] as Array[int],

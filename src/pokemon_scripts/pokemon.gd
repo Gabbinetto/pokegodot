@@ -78,7 +78,7 @@ var level: int = 1:
 		elif experience >= table[value]:
 			experience = table[value] - 1
 ## This pokemon's stats, calculated through [method calculate_stats]. Keys should match [member Globals.STATS] values.
-var stats: Dictionary = {
+var stats: Dictionary[String, int] = {
 	Globals.STATS.HP: 1,
 	Globals.STATS.ATTACK: 1,
 	Globals.STATS.DEFENSE: 1,
@@ -87,7 +87,7 @@ var stats: Dictionary = {
 	Globals.STATS.SPEED: 1,
 }
 ## This pokemon's EVs. Keys should match [member Globals.STATS] values.
-var evs: Dictionary = {
+var evs: Dictionary[String, int] = {
 	Globals.STATS.HP: 0,
 	Globals.STATS.ATTACK: 0,
 	Globals.STATS.DEFENSE: 0,
@@ -96,7 +96,7 @@ var evs: Dictionary = {
 	Globals.STATS.SPEED: 0,
 }
 ## This pokemon's IVs. Keys should match [member Globals.STATS] values.
-var ivs: Dictionary = {
+var ivs: Dictionary[String, int] = {
 	Globals.STATS.HP: 0,
 	Globals.STATS.ATTACK: 0,
 	Globals.STATS.DEFENSE: 0,
@@ -144,7 +144,7 @@ var moves: Array[PokemonMove] ## This pokemon's 4 or less learnt moves.
 # Miscellaneous
 var pokeball: String ## The pokeball id this pokemon was caught in.
 ## This pokemon contest stats. Keys should match [member Globals.CONTEST_STATS] values. 
-var constest_stats: Dictionary = {
+var constest_stats: Dictionary[String, int] = {
 	Globals.CONTEST_STATS.BEAUTY: 0,
 	Globals.CONTEST_STATS.COOL: 0,
 	Globals.CONTEST_STATS.CUTE: 0,
@@ -187,7 +187,7 @@ var speed: int: ## Shorthand for [member stats] SPEED key
 	set(value): stats.SPEED = value
 
 
-func _init(_species: Variant, form: int = 0, attributes: Dictionary = {}) -> void:
+func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Variant] = {}) -> void:
 
 	if _species is PokemonSpecies:
 		species = _species
@@ -240,14 +240,14 @@ func heal() -> void:
 
 
 ## Set this pokemon's moves to the last four moves learnt at [param level]
-func set_moves(_level : int) -> void:
+func set_moves(_level: int) -> void:
 	for i: int in range(_level, 0, -1):
 		if moves.size() >= 4:
 			break
 		var moves_at_level: Array[String]
-		moves_at_level.assign(species.moves.filter(
-			func(item: Dictionary): return item.level == i
-		).map(func(item: Dictionary): return item.id))
+		for move: Dictionary in species.moves.filter(func(item: Dictionary): return item.level == i):
+			moves_at_level.append(move.id)
+
 		for move_id: String in moves_at_level:
 			if moves.size() >= 4:
 				break
@@ -255,7 +255,7 @@ func set_moves(_level : int) -> void:
 
 
 ## Generate a random pokemon. [param fixed_attributes] is a dictionary of attributes you don't want to be randomly generated, rather be set to the value held in the dictionary.
-static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary = {}) -> Pokemon:
+static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary[String, Variant] = {}) -> Pokemon:
 
 	var _species: PokemonSpecies = PokemonSpecies.new(species_id, form)
 
@@ -292,7 +292,7 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 		fixed_attributes["ability"] = _species.abilities.pick_random()
 
 	if not fixed_attributes.has("ivs"):
-		var _ivs: Dictionary = {}
+		var _ivs: Dictionary[String, int] = {}
 		for stat: String in Globals.STATS.values():
 			_ivs[stat] = randi_range(0, 31)
 		fixed_attributes["ivs"] = _ivs

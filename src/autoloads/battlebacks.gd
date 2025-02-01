@@ -54,7 +54,7 @@ const BASES_PATH: String = "res://assets/graphics/battlebacks/bases/"
 const BACKGROUNDS_PATH: String = "res://assets/graphics/battlebacks/backgrounds/"
 const MESSAGES_PATH: String = "res://assets/graphics/battlebacks/messages/"
 
-var loaded_sets: Dictionary = {
+var loaded_sets: Dictionary[Sets, Set] = {
     Sets.CAVE_1: Set.new("cave1", "cave1", "cave1"),
     Sets.CAVE_1_ICE: Set.new("cave1_ice", "cave1", "cave1"),
     Sets.CAVE_1_WATER: Set.new("cave1_water", "cave1", "cave1"),

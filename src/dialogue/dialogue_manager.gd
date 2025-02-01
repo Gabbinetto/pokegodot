@@ -18,7 +18,7 @@ enum Speeds {
 }
 
 ## The time needed to show a single character, in seconds. Keys are [enum Speeds] values.
-const SECONDS_PER_CHARACTER: Dictionary = {
+const SECONDS_PER_CHARACTER: Dictionary[Speeds, float] = {
     Speeds.SLOW: 1.0 / 7.5,
     Speeds.MEDIUM: 1.0 / 15.0,
     Speeds.FAST: 1.0 / 30.0,

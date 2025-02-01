@@ -1,25 +1,25 @@
 [gd_scene load_steps=41 format=3 uid="uid://bqh1fa6ynb5cm"]
 
 [ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
-[ext_resource type="Script" path="res://src/battle/battle.gd" id="1_lx70w"]
+[ext_resource type="Script" uid="uid://dlykwa3kus8p6" path="res://src/battle/battle.gd" id="1_lx70w"]
 [ext_resource type="Texture2D" uid="uid://bly3i2pq8csog" path="res://assets/graphics/battlebacks/messages/cave1.png" id="1_n55km"]
 [ext_resource type="Texture2D" uid="uid://dqy8y4f2v3df3" path="res://assets/graphics/battlebacks/bases/cave1.png" id="2_0a26x"]
-[ext_resource type="Script" path="res://src/state_machine/state_machine.gd" id="2_ody6j"]
-[ext_resource type="Script" path="res://src/battle/states/action_selection.gd" id="3_ekmyp"]
-[ext_resource type="Script" path="res://src/battle/states/npc_action_selection.gd" id="4_7dsqg"]
-[ext_resource type="Script" path="res://src/battle/states/action_execution.gd" id="5_deknt"]
+[ext_resource type="Script" uid="uid://dmmsho54qkrac" path="res://src/state_machine/state_machine.gd" id="2_ody6j"]
+[ext_resource type="Script" uid="uid://djv86kb5oktdd" path="res://src/battle/states/action_selection.gd" id="3_ekmyp"]
+[ext_resource type="Script" uid="uid://dlqsheilwlr0v" path="res://src/battle/states/npc_action_selection.gd" id="4_7dsqg"]
+[ext_resource type="Script" uid="uid://c8wa6amducgum" path="res://src/battle/states/action_execution.gd" id="5_deknt"]
 [ext_resource type="PackedScene" uid="uid://b5l5tiw6t3228" path="res://src/ui/battle/databox_player.tscn" id="5_ryx84"]
 [ext_resource type="PackedScene" uid="uid://new8ewxbug0r" path="res://src/ui/battle/databox_enemy.tscn" id="6_6e2k4"]
 [ext_resource type="Texture2D" uid="uid://c6vwom3yu3uxu" path="res://assets/graphics/ui/battle/command_buttons.png" id="9_ye118"]
 [ext_resource type="PackedScene" uid="uid://blsfywo74uggc" path="res://src/ui/battle/move_button.tscn" id="10_avmmn"]
-[ext_resource type="Script" path="res://src/ui/battle/z_index_focus.gd" id="10_echil"]
+[ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/battle/z_index_focus.gd" id="10_echil"]
 [ext_resource type="Texture2D" uid="uid://cuw1ql6wgmr0d" path="res://assets/graphics/speech_boxes/hgss/box_full0.png" id="10_mf4fu"]
 [ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="11_w1q27"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="12_qc4k4"]
 [ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="13_3cv6g"]
-[ext_resource type="Script" path="res://src/dialogue/dialogue_manager.gd" id="14_1mk23"]
+[ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="14_1mk23"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="14_ckxlc"]
-[ext_resource type="Script" path="res://src/dialogue/dialogue_sequence.gd" id="15_d7rla"]
+[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_sequence.gd" id="15_d7rla"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1fi4"]
 atlas = ExtResource("2_0a26x")
@@ -89,7 +89,7 @@ region = Rect2(0, 414, 130, 46)
 atlas = ExtResource("9_ye118")
 region = Rect2(130, 414, 130, 46)
 
-[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "ui_message_bg", "player_ground", "enemy_ground", "ally_pokemon_1_sprite", "ally_pokemon_2_sprite", "enemy_pokemon_1_sprite", "enemy_pokemon_2_sprite", "databox_ally_single", "databox_enemy_single", "base_commands", "fight_button", "pokemon_button", "bag_button", "run_button", "selection_dialogue", "fight_commands", "fight_cancel_button", "move_info")]
+[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "ui_message_bg", "player_ground", "enemy_ground", "ally_pokemon_1_sprite", "ally_pokemon_2_sprite", "enemy_pokemon_1_sprite", "enemy_pokemon_2_sprite", "databox_ally_single", "databox_enemy_single", "base_commands", "fight_button", "pokemon_button", "bag_button", "run_button", "selection_dialogue", "fight_commands", "move_buttons", "fight_cancel_button", "move_info")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -116,6 +116,7 @@ bag_button = NodePath("BaseCommands/CommandButtons/BagButton")
 run_button = NodePath("BaseCommands/CommandButtons/RunButton")
 selection_dialogue = NodePath("BaseCommands/DialogueBox/DialogueLabel/SelectionDialogue")
 fight_commands = NodePath("FightCommands")
+move_buttons = [NodePath("FightCommands/MoveButtonsContainer/VBoxContainer/MoveButton1"), NodePath("FightCommands/MoveButtonsContainer/VBoxContainer/MoveButton2"), NodePath("FightCommands/MoveButtonsContainer/VBoxContainer/MoveButton3"), NodePath("FightCommands/MoveButtonsContainer/VBoxContainer/MoveButton4")]
 fight_cancel_button = NodePath("FightCommands/CancelButton")
 move_info = NodePath("FightCommands/MoveInfoBox/MoveInfoBox")
 metadata/_edit_lock_ = true

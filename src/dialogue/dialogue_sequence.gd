@@ -11,8 +11,8 @@ signal finished ## Emitted when the textbox is finished.
 
 @export_multiline var text: String ## The text in the textbox.
 ## The moments in which the textbox pauses.
-@export var set_pauses: Dictionary = {}
-var pauses: Dictionary = {}
+@export var set_pauses: Dictionary[int, float] = {}
+var pauses: Dictionary[int, float] = {}
 var parsed_text: String
 var target_characters: int = 0
 var done: bool = false

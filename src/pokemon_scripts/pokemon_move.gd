@@ -42,10 +42,13 @@ var pp: int ## The number of PPs this move has right now.
 func _init(_id: String) -> void:
 	id = _id
 
-	var data: Dictionary = DB.moves[id].duplicate(true)
+	var data: Dictionary[String, Variant]
+	data.assign(DB.moves[id].duplicate(true))
 
-	for effect: Dictionary in data.effects:
-		effects.append(BattleEffect.get_effect(effect.id).new(effect.attributes))
+	for effect: Dictionary[String, String] in data.effects:
+		var effect_script: GDScript = BattleEffect.get_effect(effect.id)
+		if effect_script:
+			effects.append(effect_script.new(effect.attributes))
 	data.erase("effects")
 	flags.assign(data.flags)
 	data.erase("flags")

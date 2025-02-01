@@ -13,7 +13,7 @@ config_version=5
 config/name="Pokegodot"
 config/description="A Pokemon Essentials-like template for Godot 4"
 run/main_scene="res://src/main.tscn"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.4")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -25,7 +25,6 @@ Types="*res://src/autoloads/types.gd"
 Battlebacks="*res://src/autoloads/battlebacks.gd"
 Globals="*res://src/autoloads/globals.gd"
 PlayerData="*res://src/autoloads/player_data.gd"
-EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
 
 [display]
 
@@ -48,7 +47,7 @@ movie_writer/disable_vsync=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/expandable_viewport_container/plugin.cfg", "res://addons/fabimakesgames.embed_game/plugin.cfg")
+enabled=PackedStringArray("res://addons/expandable_viewport_container/plugin.cfg")
 
 [importer_defaults]
 

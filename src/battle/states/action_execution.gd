@@ -5,6 +5,6 @@ extends State
 
 
 func enter() -> void:
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.1).timeout
 
 	transition.emit(self, "ActionSelection")

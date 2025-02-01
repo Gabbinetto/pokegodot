@@ -15,10 +15,11 @@ func enter() -> void:
 	_show_text()
 
 
+
+
 func exit() -> void:
 	for button: MoveButton in battle.move_buttons:
 		button.pressed.disconnect(_on_move_selected)
-		print(button.pressed.is_connected(_on_move_selected))
 
 	battle.base_commands.hide()
 	battle.fight_commands.hide()

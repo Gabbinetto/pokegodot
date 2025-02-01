@@ -12,9 +12,9 @@ var default_front_sprite: Texture2D
 var default_back_sprite: Texture2D
 var default_icon_sprite: Texture2D
 
-var pokemon: Dictionary
-var natures: Dictionary
-var moves: Dictionary
+var pokemon: Dictionary[String, Dictionary]
+var natures: Dictionary[String, Array]
+var moves: Dictionary[String, Dictionary]
 
 
 func _init() -> void:
@@ -29,6 +29,6 @@ func _init() -> void:
 	default_icon_sprite = load(GRAPHICS_PATH + "_default/icon_n.png")
 
 	# Load JSON files
-	pokemon = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "pokemon.json"))
-	natures = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "natures.json"))
-	moves = JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "moves.json"))
+	pokemon.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "pokemon.json")))
+	natures.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "natures.json")))
+	moves.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "moves.json")))

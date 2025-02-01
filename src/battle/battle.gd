@@ -6,6 +6,11 @@ enum Actions {
 	ITEM,
 }
 
+enum BattleSteps {
+	BEFORE_DAMAGE_CALC,
+	AFTER_DAMAGE_CALC,
+}
+
 const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn")
 
 @export_group("State machine")
@@ -69,7 +74,7 @@ func _ready() -> void:
 	state_machine.start()
 
 	
-func setup(attributes: Dictionary = {}) -> void:
+func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback"), Battlebacks.loaded_sets[0])
 
 	# Set battleback graphics
@@ -106,7 +111,7 @@ func setup(attributes: Dictionary = {}) -> void:
 	refresh_databoxes()
 	refresh_move_buttons()
 
-	# Connect UI signals
+	#region Connect UI signals
 	fight_button.pressed.connect(func():
 		base_commands.hide()
 		fight_commands.show()
@@ -142,6 +147,7 @@ func setup(attributes: Dictionary = {}) -> void:
 		button.pressed.connect(func():
 			last_move_button_pressed = button
 		)
+	#endregion
 	
 
 func refresh_databoxes() -> void:
@@ -170,7 +176,7 @@ func refresh_move_buttons() -> void:
 		
 		move_buttons[i].pressed.connect(
 			func():
-				print("Move ", i + 1, " selected")
+				print_debug("Move ", i + 1, " selected")
 		)
 
 
@@ -178,7 +184,7 @@ func refresh_turn_order() -> void:
 	pass
 
 
-static func start_battle(attributes: Dictionary = {}) -> void:
+static func start_battle(attributes: Dictionary[String, Variant] = {}) -> void:
 	var layer: CanvasLayer = CanvasLayer.new()
 	var battle: Battle = attributes.get("battle_scene", DEFAULT_BATTLE_SCENE).instantiate()
 	layer.add_child(battle)
@@ -189,23 +195,39 @@ static func start_battle(attributes: Dictionary = {}) -> void:
 	Globals.game_root.add_child(layer)
 
 
-static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> DamageCalculation:
-	var calculation: DamageCalculation = DamageCalculation.new()
-	calculation.battle = battle
-	calculation.move = move
-	calculation.attacker = attacker
-	calculation.targets = targets
+static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> Array[int]:
+	var values: Array[int]
 
-	if move.category == PokemonMove.Categories.PHYSICAL:
-		calculation.attack = attacker.attack
-	elif move.category == PokemonMove.Categories.SPECIAL:
-		calculation.attack = attacker.attack
-	else:
-		calculation.attack = 0
+	for target: PokemonBattleInfo in targets:
+		var calculation: DamageCalculation = DamageCalculation.new()
+		calculation.battle = battle
+		calculation.move = move
+		calculation.attacker = attacker
+		calculation.target = target
 
-	return calculation
+		if move.category == PokemonMove.Categories.PHYSICAL:
+			calculation.attack = attacker.attack
+			calculation.defense = target.defense
+		elif move.category == PokemonMove.Categories.SPECIAL:
+			calculation.attack = attacker.spattack
+			calculation.defense = target.spdefense
+		else:
+			calculation.attack = 0
+
+		SignalRouter.battle_step.emit(battle, BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
+
+		calculation.random = randf_range(0.85, 1.0)
+		calculation.critical_multiplier = Globals.CRITICAL_MULTIPLIER if randf_range(0.0, 1.0) <= (1.0 / 24.0) else 1.0
+		calculation.targets_multiplier = 1.0 if targets.size() <= 1 else Globals.MULTIPLE_TARGETS_MULTIPLIER
+
+		SignalRouter.battle_step.emit(battle, BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
+
+		values.append(calculation.value())
+
+	return values
 
 
+#region Utility subclasses
 class TrainerBattleInfo:
 	var name: String = "Trainer"
 	var team: PokemonTeam
@@ -241,6 +263,9 @@ class PokemonBattleInfo:
 	var speed: int:
 		get: return pokemon.speed
 		set(value): pokemon.speed = value
+	var level: int:
+		get: return pokemon.level
+		set(value): pokemon.level = value
 
 
 	func _init(_pokemon: Pokemon, _trainer: TrainerBattleInfo) -> void:
@@ -250,17 +275,36 @@ class PokemonBattleInfo:
 
 class TurnAction:
 	var type: Actions
-	var properties: Dictionary
+	var properties: Dictionary[String, Variant]
 
-	func _init(_type: Actions, _properties: Dictionary) -> void:
+	func _init(_type: Actions, _properties: Dictionary[String, Variant]) -> void:
 		type = _type
 		properties = _properties
 
 
+## Subclass used to hold values for damage calculations and avoid too much dependency on dictionaries.
 class DamageCalculation:
-	var damage: int = 0
 	var attack: int = 0
+	var defense: int = 0
 	var battle: Battle
 	var move: PokemonMove
 	var attacker: PokemonBattleInfo
-	var targets: Array[PokemonBattleInfo]
+	var target: PokemonBattleInfo
+	var random: float = 1.0
+	var critical_multiplier: float = 1.0
+	var targets_multiplier: float = 1.0
+	var weather_multiplier: float = 1.0
+	var type_multiplier: float = 1.0
+	var stab_multiplier: float = 1.0
+	var other_multipliers: float = 1.0
+
+	func value() -> int:
+		var a: float = float(attack)
+		var d: float = float(defense)
+		if critical_multiplier > 1.0:
+			pass # Ignore positive stat changes
+		var damage: float = roundf((roundf(2.0 * attacker.level / 5.0) + 2.0) * move.power * roundf(a / d) / 50.0) + 2
+		damage = damage * random * critical_multiplier * targets_multiplier * weather_multiplier * type_multiplier * stab_multiplier * other_multipliers
+		return max(floori(damage), 1 if type_multiplier > 0.0 and move.category != PokemonMove.Categories.STATUS else 0)
+
+#endregion

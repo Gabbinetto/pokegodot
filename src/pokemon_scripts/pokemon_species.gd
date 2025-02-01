@@ -13,7 +13,7 @@ var name: String = "Unnamed" ## The species name.
 var form_number: int = 0 ## The form number. 0 if is default form.
 var form_name: String = "" ## The form name, describes the form. For example, Alolan Vulpix form name is "Alolan".
 var types: Array[Types.List] = [] ## This species types.
-var base_stats: Dictionary = { ## This species base stats. The keys match [member Globals.STATS] and the values are [int].
+var base_stats: Dictionary[String, int] = { ## This species base stats. The keys match [member Globals.STATS] and the values are [int].
 	Globals.STATS.HP: 1,
 	Globals.STATS.ATTACK: 1,
 	Globals.STATS.DEFENSE: 1,
@@ -26,7 +26,7 @@ var female_chance: float: ## Returns the actual chance of being female, that bei
 	get: return gender_ratio / 8.0
 var growth_rate: Experience.GrowthRates ## The species growth rate.
 var base_exp: int = 0 ## The base value needed to calculate a species exp reward.
-var evs: Dictionary = { ## The evs given by this species. The keys match [member Globals.STATS] and the values are [int].
+var evs: Dictionary[String, int] = { ## The evs given by this species. The keys match [member Globals.STATS] and the values are [int].
 	Globals.STATS.HP: 0,
 	Globals.STATS.ATTACK: 0,
 	Globals.STATS.DEFENSE: 0,
@@ -73,7 +73,7 @@ var offspring: Array[Dictionary] = []
 ## - [code]category[/code]: [String][br]
 ## - [code]description[/code]: [String][br]
 ## - [code]generation[/code]: [int]
-var info: Dictionary = {
+var info: Dictionary[String, Variant] = {
 	"height": 0.0,
 	"weight": 0.0,
 	"color": "Red",
@@ -128,15 +128,13 @@ func _init(_id: String, _form_number: int = 0) -> void:
 	id = _id
 	form_number = form_number
 
-	var data: Dictionary
+	var data: Dictionary[String, Variant]
 	for form: Dictionary in DB.pokemon.get(id).forms:
 		if form.form_number == form_number:
-			data = form.duplicate(true)
+			data.assign(form.duplicate(true))
 			break
 	
-	# Array properties have to be assigned manually because Godot is silly
-	for type: int in data.types:
-		types.append(type as Types.List)
+	types.assign(data.types)
 	data.erase("types")
 	abilities.assign(data.abilities)
 	data.erase("abilities")

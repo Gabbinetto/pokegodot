@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmh2ortvoisba"]
 
-[ext_resource type="Script" path="res://addons/expandable_viewport_container/expand_viewport_container.gd" id="1_lt4k4"]
-[ext_resource type="Script" path="res://src/main.gd" id="1_y8srd"]
+[ext_resource type="Script" uid="uid://ih02l0yjc16m" path="res://addons/expandable_viewport_container/expand_viewport_container.gd" id="1_lt4k4"]
+[ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
 
 [sub_resource type="GDScript" id="GDScript_flyaw"]
 resource_name = "Test"
