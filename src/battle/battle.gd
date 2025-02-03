@@ -2,8 +2,8 @@ class_name Battle extends Node
 
 enum Actions {
 	FIGHT,
-	SWITCH,
 	ITEM,
+	SWITCH,
 }
 
 enum BattleSteps {
@@ -26,7 +26,10 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var ally_pokemon_2_sprite: Sprite2D
 @export var enemy_pokemon_1_sprite: Sprite2D
 @export var enemy_pokemon_2_sprite: Sprite2D
+@export_group("Animation")
+@export var animation_player: AnimationPlayer
 @export_group("UI")
+@export var all_commands: Array[CanvasItem]
 @export var databox_ally_single: Databox
 @export var databox_enemy_single: Databox
 @export_subgroup("Base commands")
@@ -41,28 +44,32 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var move_buttons: Array[MoveButton]
 @export var fight_cancel_button: BaseButton
 @export var move_info: RichTextLabel
+@export_group("Target selection")
+@export var target_commands: Control
+@export var target_buttons: Array[Button] ## Target buttons when choosing a target in double battles. Should select the allies first, then the foes.
+@export var target_cancel_button: BaseButton
+@export_group("Battle text")
+@export var battle_dialogue_box: Control
+@export var battle_dialogue: DialogueManager
 
 
+var double_battle: bool = false
+var trainer_battle: bool = false
 var battleback: Battlebacks.Set = Battlebacks.loaded_sets[0]
 var ally_trainers: Array[TrainerBattleInfo] = []
 var enemy_trainers: Array[TrainerBattleInfo] = []
 var trainers: Array[TrainerBattleInfo]:
 	get: return ally_trainers + enemy_trainers
-var ally_pokemon: Array[PokemonBattleInfo] = []
-var enemy_pokemon: Array[PokemonBattleInfo] = []
-var pokemons: Array[PokemonBattleInfo]:
-	get:
-		var arr: Array[PokemonBattleInfo]
-		arr.append_array(ally_pokemon)
-		arr.append_array(enemy_pokemon)
-		return arr
+var pokemons: Array[PokemonBattleInfo] = [null, null, null, null]
+var ally_pokemon: Array[PokemonBattleInfo]:
+	get: return pokemons.slice(0, 2)
+var enemy_pokemon: Array[PokemonBattleInfo]:
+	get: return pokemons.slice(2, -1)
 var current_pokemon_index: int = 0
 var current_pokemon: PokemonBattleInfo:
-	get:
-		if current_pokemon_index >= ally_pokemon.size(): return null
-		else: return ally_pokemon[current_pokemon_index]
+	get: return ally_pokemon[current_pokemon_index]
 var turn_order: Array[int]
-var turn_selections: Dictionary = {}
+var turn_selections: Dictionary[PokemonBattleInfo, TurnAction] = {}
 
 var last_move_button_pressed: MoveButton
 
@@ -73,7 +80,20 @@ func _ready() -> void:
 	state_machine.initial_state = machine_starting_state
 	state_machine.start()
 
-	
+
+func show_commands(command: CanvasItem) -> void:
+	for child: CanvasItem in all_commands:
+		if child == command:
+			child.show()
+		else:
+			child.hide()
+
+
+func show_text(dialogue: DialogueManager, text: String) -> void:
+	dialogue.dialogues.front().text = (text)
+	dialogue.start()
+
+
 func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback"), Battlebacks.loaded_sets[0])
 
@@ -97,24 +117,39 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	else:
 		enemy_trainers.assign(enemies)
 	
-	for trainer: TrainerBattleInfo in ally_trainers:
-		ally_pokemon.append(PokemonBattleInfo.new(trainer.team.first_healthy(), trainer))
 
-	for trainer: TrainerBattleInfo in enemy_trainers:
-		enemy_pokemon.append(PokemonBattleInfo.new(trainer.team.first_healthy(), trainer))
-	
-	ally_pokemon_1_sprite.texture = ally_pokemon.front().pokemon.sprite_back
-	ally_pokemon_2_sprite.texture = ally_pokemon.back().pokemon.sprite_back
-	enemy_pokemon_1_sprite.texture = enemy_pokemon.front().pokemon.sprite_front
-	enemy_pokemon_2_sprite.texture = enemy_pokemon.back().pokemon.sprite_front
+	pokemons[0] = PokemonBattleInfo.new(ally_trainers[0].team.first_healthy(), ally_trainers[0])
+	pokemons[2] = PokemonBattleInfo.new(enemy_trainers[0].team.first_healthy(), enemy_trainers[0])
+	# Set double battle
+	double_battle = attributes.get("double_battle", false)
+	if double_battle:
+		if ally_trainers.size() > 1:
+			pokemons[1] = PokemonBattleInfo.new(ally_trainers[1].team.first_healthy(), ally_trainers[1])
+		else:
+			pokemons[1] = PokemonBattleInfo.new(ally_trainers[0].team.second_healthy(), ally_trainers[0])
+		if enemy_trainers.size() > 1:
+			pokemons[1] = PokemonBattleInfo.new(enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
+		else:
+			pokemons[1] = PokemonBattleInfo.new(enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
 
+	refresh_pokemon_sprites()
 	refresh_databoxes()
 	refresh_move_buttons()
 
 	#region Connect UI signals
+	base_commands.visibility_changed.connect(func():
+		if not base_commands.visible:
+			return
+		fight_button.grab_focus()
+	)
+	
+	#region Fight command signals
 	fight_button.pressed.connect(func():
-		base_commands.hide()
-		fight_commands.show()
+		show_commands(fight_commands)
+	)
+	fight_commands.visibility_changed.connect(func():
+		if not fight_commands.visible:
+			return
 		if last_move_button_pressed and last_move_button_pressed.visible:
 			last_move_button_pressed.grab_focus()
 		else:
@@ -126,10 +161,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 			current_pokemon_index -= 1
 			refresh_move_buttons()
 			return
-
-		base_commands.show()
-		fight_commands.hide()
-		fight_button.grab_focus()
+		show_commands(base_commands)
 	)
 
 	fight_cancel_button.focus_entered.connect(func():
@@ -149,16 +181,44 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		)
 	#endregion
 	
+	#region Target select signals
+	target_commands.visibility_changed.connect(func():
+		if not target_commands.visible:
+			return
+		for button: Button in target_buttons:
+			if not button.disabled:
+				button.grab_focus()
+				break
+	)
+	target_cancel_button.pressed.connect(func():
+		show_commands(fight_commands)
+	)
+	#endregion
+	#endregion
+
+
+func end_battle() -> void:
+	SignalRouter.battle_ended.emit(self)
+	queue_free()
+
+
+func refresh_pokemon_sprites() -> void:
+	ally_pokemon_1_sprite.texture = ally_pokemon.front().pokemon.sprite_back if ally_pokemon.front() else null
+	ally_pokemon_2_sprite.texture = ally_pokemon.back().pokemon.sprite_back if ally_pokemon.back() else null
+	enemy_pokemon_1_sprite.texture = enemy_pokemon.front().pokemon.sprite_front if enemy_pokemon.front() else null
+	enemy_pokemon_2_sprite.texture = enemy_pokemon.back().pokemon.sprite_front if enemy_pokemon.back() else null
+
+
 
 func refresh_databoxes() -> void:
-	if ally_pokemon.size() > 1:
+	if ally_pokemon.filter(func(item: PokemonBattleInfo): return item != null).size() > 1:
 		pass
 	else:
 		databox_ally_single.show()
 		databox_ally_single.enabled = true
 		databox_ally_single.pokemon = ally_pokemon.front().pokemon
 	
-	if enemy_pokemon.size() > 1:
+	if enemy_pokemon.filter(func(item: PokemonBattleInfo): return item != null).size() > 1:
 		pass
 	else:
 		databox_enemy_single.show()
@@ -180,8 +240,25 @@ func refresh_move_buttons() -> void:
 		)
 
 
-func refresh_turn_order() -> void:
-	pass
+func refresh_target_buttons() -> void:
+	for i: int in pokemons.size():
+		target_buttons[i].text = pokemons[i].pokemon.name if pokemons[i] else ""
+
+
+func refresh_turn_order(acted: Array[PokemonBattleInfo] = []) -> void:
+	turn_order.clear()
+	for i: int in pokemons.size():
+		if pokemons[i] and not acted.has(pokemons[i]):
+			turn_order.append(i)
+
+	turn_order.sort_custom(
+		func(a: int, b: int):
+			if turn_selections.get(pokemons[a]).type > turn_selections.get(pokemons[b]).type:
+				return true
+			if pokemons[a].speed == pokemons[b].speed:
+				return randf() <= 0.5
+			return pokemons[a].speed > pokemons[b].speed
+	)
 
 
 static func start_battle(attributes: Dictionary[String, Variant] = {}) -> void:
@@ -193,12 +270,24 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> void:
 	battle.setup(attributes)
 
 	Globals.game_root.add_child(layer)
+	
+	var on_finish: Callable = func(finished_battle: Battle):
+		if finished_battle == battle:
+			layer.queue_free()
+	
+	SignalRouter.battle_ended.connect(on_finish, CONNECT_ONE_SHOT)
 
 
 static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> Array[int]:
 	var values: Array[int]
+	values.resize(battle.pokemons.size())
+	values.fill(-1)
 
 	for target: PokemonBattleInfo in targets:
+		var index: int = battle.pokemons.find(target)
+		if index == -1:
+			continue
+			
 		var calculation: DamageCalculation = DamageCalculation.new()
 		calculation.battle = battle
 		calculation.move = move
@@ -222,7 +311,7 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBatt
 
 		SignalRouter.battle_step.emit(battle, BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
-		values.append(calculation.value())
+		values[index] = calculation.value()
 
 	return values
 
@@ -302,7 +391,7 @@ class DamageCalculation:
 		var a: float = float(attack)
 		var d: float = float(defense)
 		if critical_multiplier > 1.0:
-			pass # Ignore positive stat changes
+			pass # TODO: Ignore positive stat changes
 		var damage: float = roundf((roundf(2.0 * attacker.level / 5.0) + 2.0) * move.power * roundf(a / d) / 50.0) + 2
 		damage = damage * random * critical_multiplier * targets_multiplier * weather_multiplier * type_multiplier * stab_multiplier * other_multipliers
 		return max(floori(damage), 1 if type_multiplier > 0.0 and move.category != PokemonMove.Categories.STATUS else 0)

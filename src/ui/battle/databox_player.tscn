@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://b5l5tiw6t3228"]
 
 [ext_resource type="Texture2D" uid="uid://cxd32dboj1rty" path="res://assets/graphics/ui/battle/databox_normal.png" id="1_g8f86"]
-[ext_resource type="Script" path="res://src/ui/battle/databox.gd" id="2_ernat"]
+[ext_resource type="Script" uid="uid://gihojunguedm" path="res://src/ui/battle/databox.gd" id="2_ernat"]
 [ext_resource type="Texture2D" uid="uid://sii0yoe3vv85" path="res://assets/graphics/ui/battle/hp_bar.png" id="2_wbc68"]
 [ext_resource type="Texture2D" uid="uid://bjadkarcho827" path="res://assets/graphics/ui/battle/exp_bar.png" id="3_yltsv"]
 [ext_resource type="Texture2D" uid="uid://ddg3xn2ws8l7p" path="res://assets/graphics/ui/battle/databox_numbers.png" id="5_52u2r"]
-[ext_resource type="Script" path="res://src/ui/battle/databox_numbers.gd" id="5_ma2e2"]
+[ext_resource type="Script" uid="uid://bqaveeisg5p8p" path="res://src/ui/battle/databox_numbers.gd" id="5_ma2e2"]
 [ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="7_5dggb"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="7_em8yo"]
 

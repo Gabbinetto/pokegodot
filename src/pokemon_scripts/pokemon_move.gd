@@ -63,3 +63,25 @@ func _init(_id: String) -> void:
 ## Refreshes this move's PPs, setting [member pp] to [member total_pp] + 20% for every [member pp_upgrades].
 func refresh_pp() -> void:
 	pp = total_pp + floor(total_pp * 0.2 * pp_upgrades)
+
+
+## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [Battle.PokemonBattleInfo] in [member Battle.pokemons]
+func get_possible_targets(battle: Battle, user: Battle.PokemonBattleInfo) -> Array[bool]:
+	var targets: Array[bool]
+	targets.resize(battle.pokemons.size())
+	for i: int in targets.size(): 
+		var current: Battle.PokemonBattleInfo = battle.pokemons[i]
+		match target:
+			Targets.USER:
+				targets[i] = user == current
+			Targets.OTHER, Targets.ALL_OTHER:
+				targets[i] = user != current
+			Targets.FOE, Targets.FOE_SIDE, Targets.RANDOM_FOE:
+				targets[i] = battle.enemy_pokemon.has(current)
+			Targets.ALLY:
+				targets[i] = battle.ally_pokemon.has(current) and current != user
+			Targets.ALLY_SIDE, Targets.USER_OR_ALLY:
+				targets[i] = battle.ally_pokemon.has(current)
+			Targets.ALL:
+				targets[i] = true
+	return targets
