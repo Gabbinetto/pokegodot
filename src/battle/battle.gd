@@ -308,6 +308,7 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBatt
 		calculation.random = randf_range(0.85, 1.0)
 		calculation.critical_multiplier = Globals.CRITICAL_MULTIPLIER if randf_range(0.0, 1.0) <= (1.0 / 24.0) else 1.0
 		calculation.targets_multiplier = 1.0 if targets.size() <= 1 else Globals.MULTIPLE_TARGETS_MULTIPLIER
+		calculation.type_multiplier = Types.get_interaction(move.type, target.pokemon.species.types)
 
 		SignalRouter.battle_step.emit(battle, BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 

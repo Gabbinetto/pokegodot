@@ -136,6 +136,19 @@ class MoveProperties(StrEnum):
     DESCRIPTION = "Description"
 
 
+class TypeProperties(StrEnum):
+    """Based on https://essentialsdocs.fandom.com/wiki/Defining_a_type"""
+
+    NAME = "Name"
+    ICON_POSIION = "IconPosition"
+    IS_SPECIAL_TYPE = "IsSpecialType"
+    IS_PSEUDO_TYPE = "IsPseudoType"
+    FLAGS = "Flags"
+    WEAKNESSES = "Weaknesses"
+    RESISTANCES = "Resistances"
+    IMMUNITIES = "Immunities"
+
+
 STATS = ["HP", "ATTACK", "DEFENSE", "SPECIAL_ATTACK", "SPECIAL_DEFENSE", "SPEED"]
 GENDER_RATIOS: dict[str, float] = {
     # Numerator for the fraction that calculates the probability of being female out of 8, so for example Always female is 8/8
@@ -199,6 +212,15 @@ MOVE_TEMPLATE: dict[str] = {
     "description": "???",
 }
 
+TYPE_TEMPLATE: dict[str] = {
+    "name": "???",
+    "number": -1,
+    "weaknesses": [],
+    "resistances": [],
+    "immunities": [],
+    "is_special": False,
+}
+
 
 class EssentialsConverter:
     @staticmethod
@@ -239,6 +261,7 @@ class EssentialsConverter:
 
         self.pokemon: dict[str, dict[str]] = {}
         self.moves: dict[str, dict[str]] = {}
+        self.types: dict[str, dict[str]] = {}
 
         # Create an output path
         os.makedirs(OUTPUT_PATH, exist_ok=True)
@@ -483,6 +506,35 @@ class EssentialsConverter:
                         move["description"] = value
                 # endregion
             self.moves[id] = move
+    
+    def fetch_types(self) -> None:
+        for type_data in self.buffer:
+            type: dict[str] = copy.deepcopy(TYPE_TEMPLATE)
+            id: str = ""
+
+            for item in type_data:
+                if item.startswith("["):
+                    id = item.strip("[]")
+                    continue
+                key, value = self.__get_pair(item)
+                # region Properties
+                match key:
+                    case TypeProperties.NAME:
+                        type["name"] = value
+                    case TypeProperties.IS_SPECIAL_TYPE:
+                        type["is_special"] = value == "true"
+                    case TypeProperties.WEAKNESSES:
+                        for type_id in value.split(","):
+                            type["weaknesses"].append(Types[type_id])
+                    case TypeProperties.RESISTANCES:
+                        for type_id in value.split(","):
+                            type["resistances"].append(Types[type_id])
+                    case TypeProperties.IMMUNITIES:
+                        for type_id in value.split(","):
+                            type["immunities"].append(Types[type_id])
+                #endregion
+            type["number"] = Types[id]
+            self.types[id] = type
 
     def save(self, **kwargs) -> Self:
         if kwargs.get("pokemon"):
@@ -495,6 +547,11 @@ class EssentialsConverter:
                 os.path.join(OUTPUT_PATH, "moves.json"), "w", encoding="utf-8"
             ) as f:
                 json.dump(self.moves, f, indent=2)
+        if kwargs.get("types"):
+            with open(
+                os.path.join(OUTPUT_PATH, "types.json"), "w", encoding="utf-8"
+            ) as f:
+                json.dump(self.types, f, indent=2)
 
         return self
 
@@ -507,6 +564,11 @@ class EssentialsConverter:
         if kwargs.get("moves"):
             with open(
                 os.path.join(OUTPUT_PATH, "moves.json"), "r", encoding="utf-8"
+            ) as f:
+                self.moves = json.load(f)
+        if kwargs.get("types"):
+            with open(
+                os.path.join(OUTPUT_PATH, "types.json"), "r", encoding="utf-8"
             ) as f:
                 self.moves = json.load(f)
 
@@ -747,4 +809,6 @@ if __name__ == "__main__":
     # converter.open(Files.MOVES).fetch_moves()
     # converter.save(moves=True)
     # converter.generate_sprites_folder()
-    converter.extract_speech_boxes()
+    # converter.extract_speech_boxes()
+    converter.open(Files.TYPES).fetch_types()
+    converter.save(types=True)

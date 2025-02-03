@@ -1,0 +1,316 @@
+{
+  "NORMAL": {
+	"name": "Normal",
+	"number": 0,
+	"weaknesses": [
+	  1
+	],
+	"resistances": [],
+	"immunities": [
+	  7
+	],
+	"is_special": false
+  },
+  "FIGHTING": {
+	"name": "Fighting",
+	"number": 1,
+	"weaknesses": [
+	  2,
+	  14,
+	  18
+	],
+	"resistances": [
+	  5,
+	  6,
+	  17
+	],
+	"immunities": [],
+	"is_special": false
+  },
+  "FLYING": {
+	"name": "Flying",
+	"number": 2,
+	"weaknesses": [
+	  5,
+	  13,
+	  15
+	],
+	"resistances": [
+	  1,
+	  6,
+	  12
+	],
+	"immunities": [
+	  4
+	],
+	"is_special": false
+  },
+  "POISON": {
+	"name": "Poison",
+	"number": 3,
+	"weaknesses": [
+	  4,
+	  14
+	],
+	"resistances": [
+	  1,
+	  3,
+	  6,
+	  12,
+	  18
+	],
+	"immunities": [],
+	"is_special": false
+  },
+  "GROUND": {
+	"name": "Ground",
+	"number": 4,
+	"weaknesses": [
+	  11,
+	  12,
+	  15
+	],
+	"resistances": [
+	  3,
+	  5
+	],
+	"immunities": [
+	  13
+	],
+	"is_special": false
+  },
+  "ROCK": {
+	"name": "Rock",
+	"number": 5,
+	"weaknesses": [
+	  1,
+	  4,
+	  8,
+	  11,
+	  12
+	],
+	"resistances": [
+	  0,
+	  2,
+	  3,
+	  10
+	],
+	"immunities": [],
+	"is_special": false
+  },
+  "BUG": {
+	"name": "Bug",
+	"number": 6,
+	"weaknesses": [
+	  2,
+	  5,
+	  10
+	],
+	"resistances": [
+	  1,
+	  4,
+	  12
+	],
+	"immunities": [],
+	"is_special": false
+  },
+  "GHOST": {
+	"name": "Ghost",
+	"number": 7,
+	"weaknesses": [
+	  7,
+	  17
+	],
+	"resistances": [
+	  3,
+	  6
+	],
+	"immunities": [
+	  0,
+	  1
+	],
+	"is_special": false
+  },
+  "STEEL": {
+	"name": "Steel",
+	"number": 8,
+	"weaknesses": [
+	  1,
+	  4,
+	  10
+	],
+	"resistances": [
+	  0,
+	  2,
+	  5,
+	  6,
+	  8,
+	  12,
+	  14,
+	  15,
+	  16,
+	  18
+	],
+	"immunities": [
+	  3
+	],
+	"is_special": false
+  },
+  "QMARKS": {
+	"name": "???",
+	"number": 9,
+	"weaknesses": [],
+	"resistances": [],
+	"immunities": [],
+	"is_special": false
+  },
+  "FIRE": {
+	"name": "Fire",
+	"number": 10,
+	"weaknesses": [
+	  4,
+	  5,
+	  11
+	],
+	"resistances": [
+	  6,
+	  8,
+	  10,
+	  12,
+	  15,
+	  18
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "WATER": {
+	"name": "Water",
+	"number": 11,
+	"weaknesses": [
+	  12,
+	  13
+	],
+	"resistances": [
+	  8,
+	  10,
+	  11,
+	  15
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "GRASS": {
+	"name": "Grass",
+	"number": 12,
+	"weaknesses": [
+	  2,
+	  3,
+	  6,
+	  10,
+	  15
+	],
+	"resistances": [
+	  4,
+	  11,
+	  12,
+	  13
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "ELECTRIC": {
+	"name": "Electric",
+	"number": 13,
+	"weaknesses": [
+	  4
+	],
+	"resistances": [
+	  2,
+	  8,
+	  13
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "PSYCHIC": {
+	"name": "Psychic",
+	"number": 14,
+	"weaknesses": [
+	  6,
+	  7,
+	  17
+	],
+	"resistances": [
+	  1,
+	  14
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "ICE": {
+	"name": "Ice",
+	"number": 15,
+	"weaknesses": [
+	  1,
+	  5,
+	  8,
+	  10
+	],
+	"resistances": [
+	  15
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "DRAGON": {
+	"name": "Dragon",
+	"number": 16,
+	"weaknesses": [
+	  15,
+	  16,
+	  18
+	],
+	"resistances": [
+	  10,
+	  11,
+	  12,
+	  13
+	],
+	"immunities": [],
+	"is_special": true
+  },
+  "DARK": {
+	"name": "Dark",
+	"number": 17,
+	"weaknesses": [
+	  1,
+	  6,
+	  18
+	],
+	"resistances": [
+	  7,
+	  17
+	],
+	"immunities": [
+	  14
+	],
+	"is_special": true
+  },
+  "FAIRY": {
+	"name": "Fairy",
+	"number": 18,
+	"weaknesses": [
+	  3,
+	  8
+	],
+	"resistances": [
+	  1,
+	  6,
+	  17
+	],
+	"immunities": [
+	  16
+	],
+	"is_special": true
+  }
+}
