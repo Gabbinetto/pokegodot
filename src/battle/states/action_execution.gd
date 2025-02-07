@@ -47,7 +47,7 @@ func update(_delta: float) -> void:
 				if target_pokemon:
 					targets.append(target_pokemon)
 
-			var damage_list: Array[int] = battle.damage_calc(battle, action.properties.move, current_pokemon, targets)
+			var damage_list: Array[int] = Battle.damage_calc(battle, action.properties.move, current_pokemon, targets)
 			_start_damage_animation(damage_list, action.properties.move)
 
 

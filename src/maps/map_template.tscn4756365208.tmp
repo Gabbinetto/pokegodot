@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbl03yj3owea"]
+
+[ext_resource type="PackedScene" uid="uid://btbgwcje6iv0b" path="res://src/actors/player/player.tscn" id="1_oc068"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_oc068"]
+normal = Vector2(0, 1)
+
+[node name="MapTemplate" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_oc068")]
+position = Vector2(256, 192)
+walk_speed = null
+run_speed = null
+bike_speed = null
+speed = null
+no_turning = null
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_oc068")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+color = Color(0.144063, 0.144063, 0.144062, 1)
+antialiased = true
+polygon = PackedVector2Array(-512, 0, 32, 0, 32, 64, 96, 64, 96, 0, 1024, 0, 1024, -160, -512, -160)
+uv = PackedVector2Array(-512, 0, 32, 0, 32, 64, 96, 64, 96, 0, 1024, 0, 1024, -160, -512, -160)

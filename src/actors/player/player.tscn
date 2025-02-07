@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://btbgwcje6iv0b"]
+
+[ext_resource type="Script" uid="uid://dri2nter7ro1t" path="res://src/actors/player/player.gd" id="1_1x8di"]
+[ext_resource type="SpriteFrames" uid="uid://dddx0j0wtnmnj" path="res://src/actors/player/boy_frames.tres" id="2_1x8di"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tps1c"]
+size = Vector2(16, 16)
+
+[node name="Player" type="Area2D" node_paths=PackedStringArray("sprite", "collision_ray")]
+script = ExtResource("1_1x8di")
+sprite = NodePath("Sprite")
+collision_ray = NodePath("CollisionRay")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(16, 8)
+sprite_frames = ExtResource("2_1x8di")
+animation = &"BIKE_IDLE_UP"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_tps1c")
+
+[node name="CollisionRay" type="RayCast2D" parent="."]
+position = Vector2(16, 16)
+target_position = Vector2(0, 16)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(16, 16)
