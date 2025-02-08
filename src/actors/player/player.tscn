@@ -14,7 +14,7 @@ collision_ray = NodePath("CollisionRay")
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(16, 8)
 sprite_frames = ExtResource("2_1x8di")
-animation = &"BIKE_IDLE_UP"
+animation = &"IDLE_DOWN"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(16, 16)

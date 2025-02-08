@@ -1,0 +1,265 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxrwi0x3lg571"]
+
+[ext_resource type="Script" uid="uid://det3fitsqxq57" path="res://addons/essentials_autotiles_converter/extractor.gd" id="1_27kup"]
+[ext_resource type="Script" uid="uid://cn2efl7dbptbe" path="res://addons/essentials_autotiles_converter/drop_data.gd" id="2_3adqi"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tpivr"]
+size = Vector2(96, 128)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_27kup"]
+size = Vector2(384, 128)
+
+[node name="Extractor" type="Control" node_paths=PackedStringArray("tiles_texture", "preview", "source_input", "source_button", "source_file_dialogue", "image_output_input", "image_output_button", "image_output_file_dialogue", "tileset_input", "tileset_button", "tileset_load_button", "tileset_file_dialogue", "generate_image_button", "image_only_button", "save_button")]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_27kup")
+tiles_texture = NodePath("HBoxContainer/TilesTexture")
+preview = NodePath("HBoxContainer/Preview")
+source_input = NodePath("VBoxContainer/HBoxContainer/SourceImage")
+source_button = NodePath("VBoxContainer/HBoxContainer/SourceButton")
+source_file_dialogue = NodePath("VBoxContainer/HBoxContainer/SourceButton/FileDialog")
+image_output_input = NodePath("VBoxContainer/HBoxContainer2/ImageOutput")
+image_output_button = NodePath("VBoxContainer/HBoxContainer2/ImageOutputButton")
+image_output_file_dialogue = NodePath("VBoxContainer/HBoxContainer2/ImageOutputButton/FileDialog")
+tileset_input = NodePath("VBoxContainer/HBoxContainer3/Tileset")
+tileset_button = NodePath("VBoxContainer/HBoxContainer3/TilesetButton")
+tileset_load_button = NodePath("VBoxContainer/HBoxContainer3/LoadTilesetButton")
+tileset_file_dialogue = NodePath("VBoxContainer/HBoxContainer3/TilesetButton/FileDialog")
+generate_image_button = NodePath("VBoxContainer2/GenerateImage")
+image_only_button = NodePath("VBoxContainer2/ImageOnly")
+save_button = NodePath("VBoxContainer2/Save")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_vertical_guides_ = [1536.0]
+metadata/_edit_horizontal_guides_ = [1024.0]
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.021
+anchor_right = 0.5
+anchor_bottom = 0.437
+offset_left = -248.0
+offset_top = -0.0640011
+offset_right = 248.0
+offset_bottom = 0.192001
+grow_horizontal = 2
+metadata/_edit_group_ = true
+
+[node name="TilesTexture" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(96, 128)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture = SubResource("PlaceholderTexture2D_tpivr")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Preview" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(192, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture = SubResource("PlaceholderTexture2D_27kup")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03125
+anchor_top = 0.625
+anchor_right = 0.6875
+anchor_bottom = 0.888021
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SourceImage" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The autotile image to convert"
+placeholder_text = "Source image"
+editable = false
+script = ExtResource("2_3adqi")
+extensions = PackedStringArray("png", "jpg", "jpeg")
+metadata/_edit_use_anchors_ = true
+
+[node name="SourceButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Select file"
+metadata/_edit_use_anchors_ = true
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBoxContainer/SourceButton"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg")
+use_native_dialog = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ImageOutput" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The output image path"
+placeholder_text = "Output Image"
+script = ExtResource("2_3adqi")
+extensions = PackedStringArray("png", "jpg", "jpeg")
+metadata/_edit_use_anchors_ = true
+
+[node name="ImageOutputButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Select file"
+metadata/_edit_use_anchors_ = true
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBoxContainer2/ImageOutputButton"]
+auto_translate_mode = 1
+access = 2
+filters = PackedStringArray("*.png", "*.jpg", "*.jpeg")
+use_native_dialog = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Tileset" type="LineEdit" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+tooltip_text = "The tileset where the new autotile terrain will be inserted"
+placeholder_text = "Tileset"
+editable = false
+script = ExtResource("2_3adqi")
+extensions = PackedStringArray("tres")
+metadata/_edit_use_anchors_ = true
+
+[node name="TilesetButton" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Select"
+metadata/_edit_use_anchors_ = true
+
+[node name="FileDialog" type="FileDialog" parent="VBoxContainer/HBoxContainer3/TilesetButton"]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres")
+use_native_dialog = true
+
+[node name="LoadTilesetButton" type="Button" parent="VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Load"
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.843375
+anchor_top = 0.617
+anchor_right = 0.984
+anchor_bottom = 0.617188
+offset_left = -151.808
+offset_top = -100.928
+offset_right = 0.191986
+metadata/_edit_use_anchors_ = true
+
+[node name="TileSize" type="SpinBox" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 128.0
+step = 2.0
+value = 32.0
+allow_greater = true
+prefix = "Tile size:"
+suffix = "px"
+select_all_on_focus = true
+
+[node name="Frames" type="SpinBox" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+value = 1.0
+prefix = "Frames: "
+select_all_on_focus = true
+
+[node name="FrameDuration" type="SpinBox" parent="HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.001
+step = 0.001
+value = 0.2
+prefix = "Frame duration: "
+suffix = "s"
+select_all_on_focus = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.703125
+anchor_top = 0.625
+anchor_right = 0.984375
+anchor_bottom = 0.895833
+metadata/_edit_use_anchors_ = true
+
+[node name="GenerateImage" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Only save the image"
+text = "Generate image"
+metadata/_edit_use_anchors_ = true
+
+[node name="ImageOnly" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Only save the image"
+text = "Save image"
+metadata/_edit_use_anchors_ = true
+
+[node name="Save" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+text = "Save to tileset"
+metadata/_edit_use_anchors_ = true
+
+[node name="Overwrite" type="CheckBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.031
+anchor_top = 0.599
+anchor_right = 0.031
+anchor_bottom = 0.599
+offset_left = 0.127999
+offset_top = -54.016
+offset_right = 112.128
+offset_bottom = -0.0160217
+text = "Overwrite
+last source"
+metadata/_edit_use_anchors_ = true
+
+[node name="TilesetLoadedLabel" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -108.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Tileset loaded"

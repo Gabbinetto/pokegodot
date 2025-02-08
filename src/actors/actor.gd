@@ -15,9 +15,10 @@ const DIRECTIONS: Dictionary[String, Vector2] = {
 @export var collision_ray: RayCast2D
 @export var speed: float = 4.0
 @export var no_turning: bool = false
+@export_enum("Down", "Left", "Right", "Up") var initial_direction: int = 0
 
 @onready var initial_position: Vector2 = position
-var facing_direction: Vector2 = Vector2.DOWN
+@onready var facing_direction: Vector2 = DIRECTIONS.values()[initial_direction]
 var input_direction: Vector2 = Vector2.ZERO
 var is_turning: bool = false
 var is_moving: bool = false

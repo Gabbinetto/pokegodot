@@ -2,29 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ih02l0yjc16m" path="res://addons/expandable_viewport_container/expand_viewport_container.gd" id="1_lt4k4"]
 [ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
-
-[sub_resource type="GDScript" id="GDScript_flyaw"]
-resource_name = "Test"
-script/source = "extends Node
-
-@export var battleback: Battlebacks.Sets = 0 as Battlebacks.Sets
-
-func _ready() -> void:
-	await owner.ready
-	
-	PlayerData.team.add_pokemon(
-		Pokemon.generate(\"BULBASAUR\", 0, {\"level\": 5})
-	)
-	
-	var enemy_team: PokemonTeam = PokemonTeam.new(
-		[Pokemon.generate(\"CHARMANDER\", 0, {\"level\": 5})]
-	)
-	
-	Battle.start_battle({
-		\"battleback\": battleback,
-		\"enemy_trainers\": Battle.TrainerBattleInfo.new(\"Uomo\", enemy_team)
-	})
-"
+[ext_resource type="PackedScene" uid="uid://dbl03yj3owea" path="res://src/maps/map_template.tscn" id="3_5q4o7"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("viewport")]
 layout_mode = 3
@@ -65,6 +43,4 @@ handle_input_locally = false
 size = Vector2i(512, 384)
 render_target_update_mode = 4
 
-[node name="Node" type="Node" parent="ExpandableViewportContainer/SubViewport"]
-script = SubResource("GDScript_flyaw")
-battleback = 26
+[node name="MapTemplate" parent="ExpandableViewportContainer/SubViewport" instance=ExtResource("3_5q4o7")]

@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://1d0mc47o4ht5"
+path="res://.godot/imported/terrain_bits.png-9bf80fa7f0e072b11831cd845f18db77.image"
+
+[deps]
+
+source_file="res://addons/essentials_autotiles_converter/terrain_bits.png"
+dest_files=["res://.godot/imported/terrain_bits.png-9bf80fa7f0e072b11831cd845f18db77.image"]
+
+[params]
+

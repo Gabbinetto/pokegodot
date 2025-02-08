@@ -1,0 +1,14 @@
+[remap]
+
+importer="image"
+type="Image"
+uid="uid://3wbgvfj005ci"
+path="res://.godot/imported/terrain_uv.png-f10db6ee193a8125c860fd6eb0025965.image"
+
+[deps]
+
+source_file="res://addons/essentials_autotiles_converter/terrain_uv.png"
+dest_files=["res://.godot/imported/terrain_uv.png-f10db6ee193a8125c860fd6eb0025965.image"]
+
+[params]
+
