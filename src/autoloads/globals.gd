@@ -34,9 +34,18 @@ const CONTEST_STATS: Dictionary[String, String] = { ## Same as [member STATS], b
 const CRITICAL_MULTIPLIER: float = 1.5 ## Critical hit multiplier
 const MULTIPLE_TARGETS_MULTIPLIER: float = 0.75 ## Multiplier for multiple targets
 
-var game_root: SubViewport ## When meaning to add a node to the root which gets visualized, it's best to add it as a child to this node as to let it scale with the rest of the game.
-var rng: RandomNumberGenerator = RandomNumberGenerator.new() ## A global random number generator. Useful to be "coherent" with randomness. Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
+## The viewport used by the game which mantains the aspect ratio while allowing to have nodes in the empty
+## space around. When in need for the viewport outside of the viewport itself, use this instead of [method @GDScript.get_viewport]
+var game_root: SubViewport
+var dialogue: Dialogue ## The main dialogue of the game. Has functionality to start [DialogueManager].
+var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
+var movement_enabled: bool = true ## Enable or disable the player's movement.
+var event_input_enabled: bool = true ## Enable or disable the player's ability to interact with events.
+## A global random number generator. Useful to be "coherent" with randomness. 
+## Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 ## Dictionary where the key is the nature name in uppercase and the value is another dictionary the multiplier for each stat [member STATS] (10% increase or decrease).
+## Different from [member DB.natures] and should actually be used for nature related calculations.
 var natures: Dictionary[String, Dictionary] = {}
 
 
@@ -56,3 +65,7 @@ func _init() -> void:
 		stats_multipliers[down_nature] = 0.9 if up_nature != down_nature else 1.0
 
 		natures[nature] = stats_multipliers
+
+
+func _ready() -> void:
+	set_deferred("dialogue", get_tree().get_first_node_in_group("main_dialogue"))

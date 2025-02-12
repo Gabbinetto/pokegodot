@@ -1,4 +1,7 @@
-class_name Actor extends Area2D
+class_name Actor extends Node2D
+
+signal started_moving
+signal stopped_moving
 
 const ANIMATION_IDLE_PREFIX: String = "IDLE_"
 const ANIMATION_WALK_PREFIX: String = "WALK_"
@@ -45,22 +48,26 @@ func _physics_process(delta: float) -> void:
 
 
 func move(delta: float) -> void:
-	var target_position: Vector2 = initial_position + (TILE_SIZE * input_direction)
+	var target_position: Vector2 = (initial_position + (TILE_SIZE * input_direction)).snapped(TILE_SIZE * Vector2.ONE)
 	collision_ray.target_position = input_direction * floori(TILE_SIZE / 2.0)
 	collision_ray.force_raycast_update()
 	if not collision_ray.is_colliding():
+		if percent_moved == 0.0:
+			started_moving.emit()
 		percent_moved += speed * delta
 		if percent_moved >= 1.0:
 			position = initial_position + (input_direction * TILE_SIZE)
 			initial_position = position
 			percent_moved = 0.0
 			is_moving = false
+			stopped_moving.emit()
 		else:
 			position = initial_position + (input_direction * TILE_SIZE * percent_moved)
 	else:
 		initial_position = position.snapped(TILE_SIZE * Vector2.ONE)
 		percent_moved = 0.0
 		is_moving = false
+		stopped_moving.emit()
 
 
 func _animate() -> void:

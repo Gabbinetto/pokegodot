@@ -22,7 +22,7 @@
 [ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="13_3cv6g"]
 [ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="14_1mk23"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="14_ckxlc"]
-[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_sequence.gd" id="15_d7rla"]
+[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="15_d7rla"]
 [ext_resource type="Theme" uid="uid://crr2mnxmq6k88" path="res://src/battle/target_selection_theme.tres" id="22_m5n8x"]
 
 [sub_resource type="Animation" id="Animation_wtjwh"]

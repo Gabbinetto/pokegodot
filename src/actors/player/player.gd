@@ -1,4 +1,4 @@
-extends Actor
+class_name Player extends Actor
 
 const MALE_FRAMES: SpriteFrames = preload("res://src/actors/player/boy_frames.tres")
 const FEMALE_FRAMES: SpriteFrames = preload("res://src/actors/player/girl_frames.tres")
@@ -7,6 +7,7 @@ const ANIMATION_RUN_PREFIX: String = "RUN_"
 const ANIMATION_BIKE_PREFIX: String = "BIKE_"
 const ANIMATION_BIKE_IDLE_PREFIX: String = "BIKE_IDLE_"
 
+@export var event_ray: RayCast2D
 @export var walk_speed: float = 4.0
 @export var run_speed: float = 8.0
 @export var bike_speed: float = 12.0
@@ -20,6 +21,8 @@ func _ready() -> void:
 		sprite.sprite_frames = MALE_FRAMES
 	else:
 		sprite.sprite_frames = FEMALE_FRAMES
+		
+	Globals.player = self
 
 
 func _physics_process(delta: float) -> void:	
@@ -37,10 +40,15 @@ func _physics_process(delta: float) -> void:
 			input_direction.x = Input.get_axis("Left", "Right")
 			input_direction.y = 0.0
 		input_direction = input_direction.abs().ceil() * input_direction.sign()
+
+	if not Globals.movement_enabled:
+		input_direction = Vector2.ZERO
+	
+	if input_direction:
+		event_ray.target_position = input_direction * floori(TILE_SIZE / 2.0)
+		event_ray.force_raycast_update()
 	
 	super(delta)
-	
-	
 
 
 func _animate() -> void:
@@ -64,4 +72,19 @@ func _animate() -> void:
 	
 	if not sprite.is_playing():
 		sprite.play()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("A"):
+		_on_event_input()
+
+
+func _on_event_input() -> void:
+	if not Globals.event_input_enabled:
+		return
 	
+	var event: Event = event_ray.get_collider()
+	if not event or not is_instance_valid(event):
+		return
+	
+	event.interact()

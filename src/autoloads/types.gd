@@ -1,6 +1,8 @@
 extends Node
 
+## Pokegodot's singleton for pokemon types.
 
+## Enum with all the types. Must match type names in [member DB.types]. 
 enum List {
 	NORMAL,
 	FIGHTING,
@@ -23,12 +25,12 @@ enum List {
 	FAIRY,
 }
 
-const WEAKNESS_MULTIPLIER: float = 2.0
-const RESISTANCE_MULTIPLIER: float = 0.5
-const IMMUNITY_MULTIPLIER: float = 0.0
+const WEAKNESS_MULTIPLIER: float = 2.0 ## Multiplier for weaknesses.
+const RESISTANCE_MULTIPLIER: float = 0.5 ## Multiplier for resistances.
+const IMMUNITY_MULTIPLIER: float = 0.0 ## Multiplier for immunities.
 
 
-var names: Dictionary[List, String] = {}
+var names: Dictionary[List, String] = {} ## Type names.
 var _chart: Dictionary[List, Dictionary] = {}
 
 func _ready() -> void:
@@ -52,6 +54,7 @@ func _ready() -> void:
 			_chart[type_enum][id] = IMMUNITY_MULTIPLIER
 
 
+## Gets the type effectiveness between two types as a multiplier (E.g. Fire is 1/4x effective on Water/rock, so 0.25).
 func get_interaction(attacking: List, defending: Variant) -> float:
 	var interaction: = 1.0
 	if defending is List:

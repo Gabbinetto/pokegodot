@@ -1,8 +1,15 @@
 extends Node
 
-enum {MALE, FEMALE}
+## Pokegodot's player data
+##
+## Singleton that holds all the player data.
 
+enum {MALE, FEMALE} ## Player genders.
 
-var player_name: String
-var team: PokemonTeam = PokemonTeam.new()
-var gender: int = MALE
+const MAX_PLAYER_NAME: int = 12 ## The max length of a player's name.
+
+var player_name: String: ## The player's name.
+	set(value):
+		player_name = value.substr(0, MAX_PLAYER_NAME)
+var team: PokemonTeam = PokemonTeam.new() ## The player's team.
+var gender: int = MALE ## The player's selected gender. 0 is MALE, 1 is FEMALE.

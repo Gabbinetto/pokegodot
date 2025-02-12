@@ -1,0 +1,145 @@
+[gd_scene load_steps=20 format=3 uid="uid://cis6b23nmbwqm"]
+
+[ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="1_5m8cj"]
+[ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="2_4gkn1"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="3_5m8cj"]
+[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/dialogue/dialogue_choices.tres" id="3_w4qgl"]
+[ext_resource type="Script" uid="uid://cckqeo88bqtbx" path="res://src/ui/dialogue/choice_container.gd" id="4_l07e8"]
+[ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="4_s5vpw"]
+[ext_resource type="StyleBox" uid="uid://dnxadgspegmfr" path="res://src/ui/dialogue/dialogue_box_texture.tres" id="5_owvc8"]
+[ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/dialogue/choice_button.tscn" id="5_py1ry"]
+[ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="5_qgv4t"]
+[ext_resource type="Texture2D" uid="uid://dl1bmj4lljo4p" path="res://addons/pokemon_dialogue/test_tab/default_arrow.png" id="7_s5vpw"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/dialogue/dialogue_box_full_texture.tres" id="9_0waje"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_owvc8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0waje"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x0sj7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjghb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4nvv"]
+atlas = ExtResource("7_s5vpw")
+region = Rect2(0, 0, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8pm2"]
+atlas = ExtResource("7_s5vpw")
+region = Rect2(14, 0, 14, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4q1c"]
+atlas = ExtResource("7_s5vpw")
+region = Rect2(28, 0, 14, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qgv4t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4nvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8pm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4q1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k8pm2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.67
+}]
+
+[node name="Dialogue" type="Control" node_paths=PackedStringArray("box", "label", "input_arrow", "choice_box", "choice_container")]
+z_index = 4096
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_5m8cj")
+box = NodePath("DialogueBox")
+label = NodePath("DialogueBox/Control/DialogueLabel")
+input_arrow = NodePath("DialogueBox/Control/DialogueArrow")
+choice_box = NodePath("ChoiceBox")
+choice_container = NodePath("ChoiceBox/ChoiceContainer")
+metadata/_edit_lock_ = true
+
+[node name="ChoiceBox" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.00781
+anchor_top = 0.744792
+anchor_right = 1.00781
+anchor_bottom = 0.744792
+offset_left = -59.9987
+offset_top = -30.0001
+offset_right = -3.99872
+offset_bottom = -0.00012207
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("9_0waje")
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="ChoiceBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = ExtResource("3_w4qgl")
+alignment = 2
+script = ExtResource("4_l07e8")
+choice_button = ExtResource("5_py1ry")
+
+[node name="DialogueBox" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_top = 288.0
+offset_right = 512.0
+offset_bottom = 384.0
+theme_override_styles/panel = ExtResource("5_owvc8")
+
+[node name="Control" type="Control" parent="DialogueBox"]
+layout_mode = 2
+mouse_filter = 1
+metadata/_edit_group_ = true
+
+[node name="DialogueLabel" type="RichTextLabel" parent="DialogueBox/Control"]
+material = ExtResource("2_4gkn1")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00921659
+anchor_top = 0.0909091
+anchor_right = 0.990783
+anchor_bottom = 1.06061
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("3_5m8cj")
+theme_override_fonts/italics_font = ExtResource("4_s5vpw")
+theme_override_fonts/bold_font = ExtResource("5_qgv4t")
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_styles/fill = SubResource("StyleBoxEmpty_owvc8")
+theme_override_styles/background = SubResource("StyleBoxEmpty_0waje")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_x0sj7")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xjghb")
+bbcode_enabled = true
+text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz0123456789"
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="DialogueArrow" type="AnimatedSprite2D" parent="DialogueBox/Control"]
+position = Vector2(456, 42)
+sprite_frames = SubResource("SpriteFrames_qgv4t")
+autoplay = "default"
+centered = false

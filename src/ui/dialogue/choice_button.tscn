@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://becpqudgln3rp"]
+
+[ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="1_s7nf6"]
+
+[node name="Choice" type="Button"]
+material = ExtResource("1_s7nf6")
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 32
+flat = true
+alignment = 2

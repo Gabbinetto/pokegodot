@@ -4,10 +4,11 @@
 [ext_resource type="SpriteFrames" uid="uid://dddx0j0wtnmnj" path="res://src/actors/player/boy_frames.tres" id="2_1x8di"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tps1c"]
-size = Vector2(16, 16)
+size = Vector2(1, 1)
 
-[node name="Player" type="Area2D" node_paths=PackedStringArray("sprite", "collision_ray")]
+[node name="Player" type="Area2D" node_paths=PackedStringArray("event_ray", "sprite", "collision_ray")]
 script = ExtResource("1_1x8di")
+event_ray = NodePath("EventRay")
 sprite = NodePath("Sprite")
 collision_ray = NodePath("CollisionRay")
 
@@ -23,6 +24,12 @@ shape = SubResource("RectangleShape2D_tps1c")
 [node name="CollisionRay" type="RayCast2D" parent="."]
 position = Vector2(16, 16)
 target_position = Vector2(0, 16)
+
+[node name="EventRay" type="RayCast2D" parent="."]
+position = Vector2(16, 16)
+target_position = Vector2(0, 16)
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(16, 16)

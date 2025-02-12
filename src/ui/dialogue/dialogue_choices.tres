@@ -1,0 +1,10 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d1mfc61pyhic0"]
+
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="1_qx4mk"]
+
+[resource]
+default_font = ExtResource("1_qx4mk")
+Button/colors/font_color = Color(0.317647, 0.317647, 0.34902, 1)
+Button/colors/font_focus_color = Color(0.317647, 0.317647, 0.34902, 1)
+Button/colors/font_hover_color = Color(0.317647, 0.317647, 0.34902, 1)
+Button/font_sizes/font_size = 32
