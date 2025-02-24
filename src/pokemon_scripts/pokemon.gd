@@ -194,6 +194,8 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Vari
 	elif _species is String:
 		species = PokemonSpecies.new(_species, form)
 
+	original_trainer_id = PlayerData.player_id
+	original_trainer_secret_id = PlayerData.secret_id
 	secret_id = Globals.rng.randi_range(0, 9999)
 
 	for attribute: String in attributes:
@@ -281,12 +283,16 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 	if not fixed_attributes.has("nature"):
 		fixed_attributes["nature"] = Globals.natures.keys().pick_random()
 	
-	# TODO: Implement once trainer ids and secret ids are implemented
 	# https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess
-	# if not fixed_attributes.has("shiny") or not fixed_attributes.has("super_shiny"):
-	# 	var p1: int = _personality_value / 0x10000
-	# 	var p2: int = _personality_value % 0x10000
-	# 	var s: int = 
+	if not fixed_attributes.has("shiny") or not fixed_attributes.has("super_shiny"):
+		# TODO: Account for modifiers like the Masuda method
+		var p1: int = _personality_value / 0x10000
+		var p2: int = _personality_value % 0x10000
+		var s: int = (p1 ^ p2 ^ PlayerData.player_id ^ PlayerData.secret_id) & 0xFFFF
+		if s < Globals.SHINY_THRESHOLD:
+			fixed_attributes["shiny"] = true
+			if s == 0:
+				fixed_attributes["super_shiny"] = true
 
 	if not fixed_attributes.has("ability"):
 		fixed_attributes["ability"] = _species.abilities.pick_random()

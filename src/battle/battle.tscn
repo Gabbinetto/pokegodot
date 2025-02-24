@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://bqh1fa6ynb5cm"]
+[gd_scene load_steps=45 format=3 uid="uid://bqh1fa6ynb5cm"]
 
 [ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
 [ext_resource type="Script" uid="uid://dlykwa3kus8p6" path="res://src/battle/battle.gd" id="1_lx70w"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://c8wa6amducgum" path="res://src/battle/states/action_execution.gd" id="5_deknt"]
 [ext_resource type="PackedScene" uid="uid://b5l5tiw6t3228" path="res://src/ui/battle/databox_player.tscn" id="5_ryx84"]
 [ext_resource type="PackedScene" uid="uid://new8ewxbug0r" path="res://src/ui/battle/databox_enemy.tscn" id="6_6e2k4"]
-[ext_resource type="Script" uid="uid://cbm2x8wea3k64" path="res://src/state_machine/state.gd" id="7_bu0ik"]
 [ext_resource type="Script" uid="uid://bvtwrwapru5pt" path="res://src/battle/states/battle_finish.gd" id="7_libal"]
 [ext_resource type="Texture2D" uid="uid://c6vwom3yu3uxu" path="res://assets/graphics/ui/battle/command_buttons.png" id="9_ye118"]
 [ext_resource type="PackedScene" uid="uid://blsfywo74uggc" path="res://src/ui/battle/move_button.tscn" id="10_avmmn"]
@@ -177,7 +176,7 @@ sprite_list = [NodePath("../../PlayerGround/AllyPokemon1"), NodePath("../../Play
 [node name="BattleFinish" type="Node" parent="StateMachine" node_paths=PackedStringArray("battle")]
 script = ExtResource("7_libal")
 battle = NodePath("../..")
-metadata/_custom_type_script = ExtResource("7_bu0ik")
+metadata/_custom_type_script = "uid://cbm2x8wea3k64"
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -411,10 +410,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SelectionDialogue" type="Node" parent="BaseCommands/DialogueBox/DialogueLabel" node_paths=PackedStringArray("label")]
 script = ExtResource("14_1mk23")
+clear_label = false
 label = NodePath("..")
 
 [node name="SelectionDialogueSequence" type="Node" parent="BaseCommands/DialogueBox/DialogueLabel/SelectionDialogue"]
 script = ExtResource("15_d7rla")
+needs_input_on_finish = false
 
 [node name="FightCommands" type="Control" parent="."]
 visible = false
@@ -696,3 +697,4 @@ label = NodePath("..")
 
 [node name="BattleDialogueSequence" type="Node" parent="BattleDialogueBox/BattleDialogueLabel/BattleDialogue"]
 script = ExtResource("15_d7rla")
+needs_input_on_finish = false

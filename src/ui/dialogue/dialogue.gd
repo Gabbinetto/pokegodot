@@ -6,6 +6,8 @@ class_name Dialogue extends Control
 ## This class is not necessary to use dialogues, but an instance where anything other than the main Dialogue
 ## is used should be rare. Most of the time, [member Globals.dialogue] should be used.
 
+signal finished
+
 @export var box: Control ## The dialogue box control
 @export var label: RichTextLabel ## The dialogue label.
 @export var input_arrow: CanvasItem ## Arrows which shows up when input is needed.
@@ -43,6 +45,7 @@ func _on_manager_ran() -> void:
 	if running.hide_box:
 		hide()
 	running = null
+	finished.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:

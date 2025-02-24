@@ -33,10 +33,16 @@ const CONTEST_STATS: Dictionary[String, String] = { ## Same as [member STATS], b
 }
 const CRITICAL_MULTIPLIER: float = 1.5 ## Critical hit multiplier
 const MULTIPLE_TARGETS_MULTIPLIER: float = 0.75 ## Multiplier for multiple targets
+## Defines how rare a shiny is. When defining the shininess, a number between 0 and 65535.
+## If this number is less than the threshold, then the pokemon is shiny.[br]
+## See: [url]https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess[/url] and
+## [url]https://bulbapedia.bulbagarden.net/wiki/Shiny_Pok%C3%A9mon#Generation_III_onwards[/url]
+const SHINY_THRESHOLD: int = 16
 
 ## The viewport used by the game which mantains the aspect ratio while allowing to have nodes in the empty
 ## space around. When in need for the viewport outside of the viewport itself, use this instead of [method @GDScript.get_viewport]
 var game_root: SubViewport
+var game_world: World ## The game world which holds maps, the player and similar stuff.
 var dialogue: Dialogue ## The main dialogue of the game. Has functionality to start [DialogueManager].
 var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
 var movement_enabled: bool = true ## Enable or disable the player's movement.

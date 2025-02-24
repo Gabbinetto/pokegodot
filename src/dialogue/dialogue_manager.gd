@@ -31,6 +31,7 @@ const SECONDS_PER_CHARACTER: Dictionary[Speeds, float] = {
 ## the dialogue. This is only useful to tell the running script whether to do it or not.
 @export var hide_box: bool = true
 @export var disable_movement: bool = true ## Disables player movement while the dialogue is running.
+@export var clear_label: bool = true ## Clear label on finish
 @export var label: RichTextLabel ## The label where the dialogue is shown.
 @export var choices: DialogueChoiceContainer ## The container for choice dialogues like `Yes/No`
 var dialogues: Array[DialogueSequence] ## The [DialogueSequence]s of the dialogue.
@@ -63,14 +64,15 @@ func _update_dialogues() -> void:
 func _on_finished() -> void:
 	running = false
 	label.visible_characters = -1
-	label.text = ""
+	if clear_label:
+		label.text = ""
 
 
 ## Start the dialogue.
 func start() -> void:
 	current_index = -1
 	label.text = ""
-	if Globals.player.is_moving:
+	if Globals.player.is_moving and Globals.player.is_processing():
 		await Globals.player.stopped_moving
 	if disable_movement:
 		Globals.movement_enabled = false
@@ -91,7 +93,7 @@ func next() -> void:
 	current_dialogue.done = false
 	current_dialogue.start()
 	if not current_dialogue.finished.is_connected(next):
-		current_dialogue.finished.connect(next)
+		current_dialogue.finished.connect(next, CONNECT_ONE_SHOT)
 	running = true
 
 

@@ -13,3 +13,9 @@ var player_name: String: ## The player's name.
 		player_name = value.substr(0, MAX_PLAYER_NAME)
 var team: PokemonTeam = PokemonTeam.new() ## The player's team.
 var gender: int = MALE ## The player's selected gender. 0 is MALE, 1 is FEMALE.
+var player_id: int
+var secret_id: int
+
+func _ready() -> void:
+	player_id = Globals.rng.randi_range(0, 999999)
+	secret_id = Globals.rng.randi_range(0, 9999)

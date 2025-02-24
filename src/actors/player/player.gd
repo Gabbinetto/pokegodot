@@ -8,6 +8,7 @@ const ANIMATION_BIKE_PREFIX: String = "BIKE_"
 const ANIMATION_BIKE_IDLE_PREFIX: String = "BIKE_IDLE_"
 
 @export var event_ray: RayCast2D
+@export var area: Area2D
 @export var walk_speed: float = 4.0
 @export var run_speed: float = 8.0
 @export var bike_speed: float = 12.0
@@ -25,7 +26,7 @@ func _ready() -> void:
 	Globals.player = self
 
 
-func _physics_process(delta: float) -> void:	
+func _physics_process(delta: float) -> void:
 	is_running = Input.is_action_pressed("B")
 	if on_bike:
 		speed = bike_speed
@@ -45,7 +46,7 @@ func _physics_process(delta: float) -> void:
 		input_direction = Vector2.ZERO
 	
 	if input_direction:
-		event_ray.target_position = input_direction * floori(TILE_SIZE / 2.0)
+		event_ray.target_position = input_direction * TILE_SIZE
 		event_ray.force_raycast_update()
 	
 	super(delta)
@@ -83,8 +84,11 @@ func _on_event_input() -> void:
 	if not Globals.event_input_enabled:
 		return
 	
-	var event: Event = event_ray.get_collider()
-	if not event or not is_instance_valid(event):
+	var event: Area2D = event_ray.get_collider()
+	if not event or not is_instance_valid(event) or not (event is Event):
 		return
+	
+	if is_moving:
+		await stopped_moving
 	
 	event.interact()

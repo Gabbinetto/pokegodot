@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://btbgwcje6iv0b"]
+[gd_scene load_steps=5 format=3 uid="uid://btbgwcje6iv0b"]
 
 [ext_resource type="Script" uid="uid://dri2nter7ro1t" path="res://src/actors/player/player.gd" id="1_1x8di"]
 [ext_resource type="SpriteFrames" uid="uid://dddx0j0wtnmnj" path="res://src/actors/player/boy_frames.tres" id="2_1x8di"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1x8di"]
+size = Vector2(32, 32)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tps1c"]
 size = Vector2(1, 1)
 
-[node name="Player" type="Area2D" node_paths=PackedStringArray("event_ray", "sprite", "collision_ray")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("event_ray", "area", "sprite", "collision_ray")]
 script = ExtResource("1_1x8di")
 event_ray = NodePath("EventRay")
+area = NodePath("PlayerArea")
 sprite = NodePath("Sprite")
 collision_ray = NodePath("CollisionRay")
 
@@ -19,7 +23,7 @@ animation = &"IDLE_DOWN"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(16, 16)
-shape = SubResource("RectangleShape2D_tps1c")
+shape = SubResource("RectangleShape2D_1x8di")
 
 [node name="CollisionRay" type="RayCast2D" parent="."]
 position = Vector2(16, 16)
@@ -33,3 +37,9 @@ collide_with_bodies = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(16, 16)
+
+[node name="PlayerArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_tps1c")

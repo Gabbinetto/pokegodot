@@ -7,6 +7,7 @@ extends Node
 const DATA_PATH: String = "res://assets/data/"
 const GRAPHICS_PATH: String = "res://assets/graphics/"
 const POKEMON_SPRITES_PATH: String = GRAPHICS_PATH + "pokemon_sprites/"
+const POKEMON_FOLLOWERS_PATH: String = GRAPHICS_PATH + "actors/pokemon/"
 
 var default_front_sprite: Texture2D ## Fallback front sprite.
 var default_back_sprite: Texture2D ## Fallback back sprite.
@@ -19,11 +20,11 @@ var types: Dictionary[String, Dictionary] ## Holds the data in [code]types.json[
 
 
 func _init() -> void:
-	# Load the pokemon sprites asset
-	if ProjectSettings.load_resource_pack(GRAPHICS_PATH + "pokemon_sprites.pck"):
-		print_debug("Pokemon sprites asset pack loaded.")
+	# Load the pokemon graphics asset as the files slow down the editor
+	if ProjectSettings.load_resource_pack(GRAPHICS_PATH + "pokemon_graphics.pck"):
+		print_debug("Pokemon graphics asset pack loaded.")
 	else:
-		push_error("Failed loading pokemon sprites asset pack.")
+		push_error("Failed loading pokemon graphics asset pack.")
 	
 	default_front_sprite = load(POKEMON_SPRITES_PATH + "_default/front_n_m.png")
 	default_back_sprite = load(POKEMON_SPRITES_PATH + "_default/back_n_m.png")

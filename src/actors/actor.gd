@@ -6,7 +6,6 @@ signal stopped_moving
 const ANIMATION_IDLE_PREFIX: String = "IDLE_"
 const ANIMATION_WALK_PREFIX: String = "WALK_"
 const TILE_SIZE: int = 32
-const TURNING_FRAMES: int = 4
 const DIRECTIONS: Dictionary[String, Vector2] = {
 	"DOWN": Vector2.DOWN,
 	"LEFT": Vector2.LEFT,
@@ -22,9 +21,18 @@ const DIRECTIONS: Dictionary[String, Vector2] = {
 
 @onready var initial_position: Vector2 = position
 @onready var facing_direction: Vector2 = DIRECTIONS.values()[initial_direction]
+var turn_frames: int = 4
 var input_direction: Vector2 = Vector2.ZERO
 var is_turning: bool = false
 var is_moving: bool = false
+var can_move: bool = true:
+	set(value):
+		if position != position.snappedf(TILE_SIZE):
+			await stopped_moving
+		can_move = value
+		if not can_move and is_moving:
+			is_moving = false
+			stopped_moving.emit()
 var turning_frames: int = 0
 var percent_moved: float = 0.0
 
@@ -32,14 +40,14 @@ var percent_moved: float = 0.0
 func _physics_process(delta: float) -> void:
 
 	if facing_direction != input_direction and not no_turning and input_direction:
-		turning_frames = TURNING_FRAMES
+		turning_frames = turn_frames
 	is_turning = turning_frames > 0
 	is_moving = input_direction != Vector2.ZERO and not is_turning
 
 	if input_direction:
 		if is_turning:
 			facing_direction = input_direction
-		elif is_moving:
+		elif is_moving and can_move:
 			move(delta)
 
 	_animate()
@@ -71,4 +79,11 @@ func move(delta: float) -> void:
 
 
 func _animate() -> void:
-	pass
+	var dir: String = DIRECTIONS.find_key(facing_direction)
+	if not is_moving and not input_direction:
+		sprite.animation = ANIMATION_IDLE_PREFIX + dir
+	else:
+		sprite.animation = ANIMATION_WALK_PREFIX + dir
+	
+	if not sprite.is_playing():
+		sprite.play()

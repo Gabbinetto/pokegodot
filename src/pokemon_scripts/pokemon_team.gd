@@ -29,7 +29,8 @@ func _iter_get(_arg) -> Pokemon:
 
 ## Returns the internal array of the team holding the pokemon data. 
 ## Basically meant only to be used for methods like [method Array.filter] and [method Array.map]. [br][br]
-## [b]NOTE[/b]: Be careful, as this returns not a copy of the internal array, but a direct reference to it. 
+## [b]NOTE[/b]: Be careful, as this returns not a copy of the internal array, but a direct reference to it.
+## Modifying it means modifying the team.
 func get_array() -> Array[Pokemon]:
 	return _team
 

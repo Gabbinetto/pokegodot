@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmh2ortvoisba"]
 
 [ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
-[ext_resource type="PackedScene" uid="uid://dbl03yj3owea" path="res://src/maps/map_template.tscn" id="3_5q4o7"]
+[ext_resource type="PackedScene" uid="uid://rjgxmbh4lr6f" path="res://src/maps/world.tscn" id="3_5q4o7"]
 [ext_resource type="PackedScene" uid="uid://cis6b23nmbwqm" path="res://src/ui/dialogue/dialogue.tscn" id="4_3cfgd"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("viewport")]
@@ -41,10 +41,10 @@ handle_input_locally = false
 size = Vector2i(512, 384)
 render_target_update_mode = 4
 
-[node name="MapTemplate" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_5q4o7")]
-metadata/_edit_lock_ = true
+[node name="World" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_5q4o7")]
 
 [node name="DialogueLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
 
 [node name="Dialogue" parent="SubViewportContainer/SubViewport/DialogueLayer" groups=["main_dialogue"] instance=ExtResource("4_3cfgd")]
+process_mode = 3
 visible = false

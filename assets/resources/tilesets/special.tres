@@ -7,8 +7,12 @@ texture = ExtResource("1_21omw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/custom_data_0 = true
 
 [resource]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = "grass"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_j4hcb")

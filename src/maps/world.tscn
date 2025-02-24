@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://rjgxmbh4lr6f"]
+
+[ext_resource type="Script" uid="uid://bmjrada3vaj84" path="res://src/maps/world.gd" id="1_s45pl"]
+[ext_resource type="PackedScene" uid="uid://dbl03yj3owea" path="res://src/maps/map_template.tscn" id="2_bne4y"]
+[ext_resource type="PackedScene" uid="uid://btbgwcje6iv0b" path="res://src/actors/player/player.tscn" id="3_xprsa"]
+
+[node name="World" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_s45pl")
+
+[node name="MapTemplate" parent="." instance=ExtResource("2_bne4y")]
+
+[node name="Player" parent="." instance=ExtResource("3_xprsa")]
+position = Vector2(224, 160)

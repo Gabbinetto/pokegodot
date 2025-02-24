@@ -194,6 +194,17 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		show_commands(fight_commands)
 	)
 	#endregion
+	
+	#region Run command
+	run_button.pressed.connect(func():
+		show_text(battle_dialogue, "Ran away!")
+		print(Engine.get_process_frames())
+		await battle_dialogue.finished
+		print(Engine.get_process_frames())
+		end_battle()
+	)
+	
+	#endregion
 	#endregion
 
 
@@ -261,7 +272,10 @@ func refresh_turn_order(acted: Array[PokemonBattleInfo] = []) -> void:
 	)
 
 
-static func start_battle(attributes: Dictionary[String, Variant] = {}) -> void:
+static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle:
+	if PlayerData.team.get_array().is_empty():
+		push_error("Can't start battle without a pokemon team.")
+		return
 	var layer: CanvasLayer = CanvasLayer.new()
 	var battle: Battle = attributes.get("battle_scene", DEFAULT_BATTLE_SCENE).instantiate()
 	layer.add_child(battle)
@@ -270,12 +284,16 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> void:
 	battle.setup(attributes)
 
 	Globals.game_root.add_child(layer)
+	# Stop running the game world while the battle is happening
+	Globals.game_world.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	var on_finish: Callable = func(finished_battle: Battle):
 		if finished_battle == battle:
+			Globals.game_world.process_mode = Node.PROCESS_MODE_PAUSABLE
 			layer.queue_free()
 	
 	SignalRouter.battle_ended.connect(on_finish, CONNECT_ONE_SHOT)
+	return battle
 
 
 static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> Array[int]:
@@ -327,6 +345,11 @@ class TrainerBattleInfo:
 		name = trainer_name
 		team = trainer_team
 		is_player = trainer_is_player
+	
+	static func make_wild(pokemon: Pokemon) -> TrainerBattleInfo:
+		var team: PokemonTeam = PokemonTeam.new([pokemon])
+		var info: TrainerBattleInfo = TrainerBattleInfo.new("Wild %s" % pokemon.name, team)
+		return info
 
 
 class PokemonBattleInfo:
