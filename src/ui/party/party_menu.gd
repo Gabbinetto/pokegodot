@@ -1,0 +1,182 @@
+class_name PartyMenu extends Control
+
+signal closed
+
+const MENU_SCENE: PackedScene = preload("res://src/ui/party/party_menu.tscn")
+const SWAP_ANIMATION_DURATION: float = 1.0
+const SWAP_OFFSET: float = 10.0
+
+@export var panels_container: Control
+@export var cancel_button: BaseButton
+@export var menu: Control
+@export var menu_buttons_container: Control
+@export_group("Menu buttons", "button_")
+@export var button_summary: BaseButton
+@export var button_switch: BaseButton
+@export var button_menu_cancel: BaseButton
+
+
+var team: PokemonTeam
+var panels: Array[PartyPanel]
+var current_panel: PartyPanel
+var swapping_from: PartyPanel:
+	set(value):
+		if swapping_from:
+			swapping_from.swapping_from = false
+		swapping_from = value
+		if value:
+			value.swapping_from = true
+		_disable_cancel_on_swap()
+var swapping_to: PartyPanel:
+	set(value):
+		if swapping_to:
+			swapping_to.swapping_to = false
+		swapping_to = value
+		if value:
+			value.swapping_to = true
+		_disable_cancel_on_swap()
+var swapping: bool = false
+
+
+func _ready() -> void:
+	panels.assign(panels_container.get_children())
+	if not team:
+		team = PlayerData.team
+	if team.size() < 2:
+		button_switch.hide()
+	
+	for i: int in panels.size():
+		if i < team.size():
+			panels[i].pokemon = team.slot(i)
+		else:
+			panels[i].pokemon = null
+		
+		panels[i].focus_entered.connect(_on_panel_focus.bind(panels[i]))
+		panels[i].focus_exited.connect(_on_panel_unfocus.bind(panels[i]))
+		panels[i].pressed.connect(_on_panel_pressed.bind(panels[i]))
+
+
+	if team.size() != 0:
+		panels[0].grab_focus.call_deferred()
+	else:
+		cancel_button.grab_focus.call_deferred()
+	
+	button_switch.pressed.connect(_on_switch_pressed)
+	button_menu_cancel.pressed.connect(_menu_cancel)
+	cancel_button.pressed.connect(closed.emit)
+	
+	menu.visibility_changed.connect(_set_menu_neighbors)
+
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("B"):
+		if swapping_from != null or swapping_to != null:
+			swapping_from = null
+			swapping_to = null
+			_refresh_panels()
+		elif menu.visible:
+			_menu_cancel()
+		else:
+			closed.emit()
+
+
+func _on_panel_focus(panel: PartyPanel) -> void:
+	current_panel = panel
+	if swapping_from != null:
+		swapping_to = panel
+
+
+
+func _on_panel_unfocus(_panel: PartyPanel) -> void:
+	pass
+
+
+func _on_panel_pressed(_panel: PartyPanel) -> void:
+	if swapping:
+		return
+	if swapping_from == null:
+		menu.show()
+		menu_buttons_container.get_child(0).grab_focus.call_deferred()
+	else:
+		swap_slots()
+
+#region Menu functions
+func _menu_cancel() -> void:
+	menu.hide()
+	current_panel.grab_focus.call_deferred()
+
+
+func _set_menu_neighbors() -> void:
+	for node: Control in menu_buttons_container.get_children():
+		node.focus_neighbor_left = node.get_path()
+		node.focus_neighbor_right = node.get_path()
+		node.focus_neighbor_top = menu_buttons_container.get_child(min(node.get_index() - 1, 0)).get_path()
+		node.focus_neighbor_bottom = menu_buttons_container.get_child(min(node.get_index() + 1, menu_buttons_container.get_child_count() - 1)).get_path()
+
+
+#region Swap only functions
+func _on_switch_pressed() -> void:
+	if team.size() <= 1:
+		return
+	swapping_from = current_panel
+	swapping_to = current_panel
+	menu.hide()
+	current_panel.grab_focus.call_deferred()
+
+
+func _disable_cancel_on_swap() -> void:
+	if swapping_from or swapping_to:
+		cancel_button.disabled = true
+		cancel_button.focus_mode = Control.FOCUS_NONE
+	else:
+		cancel_button.disabled = false
+		cancel_button.focus_mode = Control.FOCUS_ALL
+
+
+func swap_slots() -> void:
+	if swapping_from == swapping_to:
+		return
+	
+	swapping = true
+	var _swap: Callable = func():
+		team.swap(swapping_from.get_index(), swapping_to.get_index())
+		var tmp: Pokemon = swapping_from.pokemon
+		swapping_from.pokemon = swapping_to.pokemon
+		swapping_to.pokemon = tmp
+	
+	for panel: PartyPanel in [swapping_from, swapping_to]:
+		panel.set_meta("original_position", panel.position)
+		var target_position: Vector2 = Vector2(0, panel.position.y)
+		if panel.get_index() % 2 == 0:
+			target_position.x = -panel.size.x - SWAP_OFFSET
+		else:
+			target_position.x = size.x + SWAP_OFFSET
+		panel.set_meta("target_position", target_position)
+	
+	var tween: Tween = create_tween()
+	tween.tween_property(swapping_from, "position", swapping_from.get_meta("target_position"), SWAP_ANIMATION_DURATION / 2.0)
+	tween.parallel().tween_property(swapping_to, "position", swapping_to.get_meta("target_position"), SWAP_ANIMATION_DURATION / 2.0)
+	tween.tween_callback(_swap)
+	tween.tween_property(swapping_from, "position", swapping_from.get_meta("original_position"), SWAP_ANIMATION_DURATION / 2.0)
+	tween.parallel().tween_property(swapping_to, "position", swapping_to.get_meta("original_position"), SWAP_ANIMATION_DURATION / 2.0)
+	
+	await tween.finished
+	
+	swapping_from = null
+	swapping_to = null
+	swapping = false
+	
+	_refresh_panels()
+#endregion
+#endregion
+
+func _refresh_panels():
+	for panel: PartyPanel in panels:
+		panel.refresh()
+
+
+static func create(pokemon_team: PokemonTeam = null) -> PartyMenu:
+	var party_menu: PartyMenu = MENU_SCENE.instantiate()
+	party_menu.team = pokemon_team
+	return party_menu

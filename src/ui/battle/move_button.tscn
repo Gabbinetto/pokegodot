@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://blsfywo74uggc"]
 
 [ext_resource type="Texture2D" uid="uid://bcjf5ib54kqeg" path="res://assets/graphics/ui/battle/move_buttons.png" id="1_x7oau"]
-[ext_resource type="Script" path="res://src/ui/battle/move_button.gd" id="2_m01y6"]
+[ext_resource type="Script" uid="uid://bumbcs7ho2d4x" path="res://src/ui/battle/move_button.gd" id="2_m01y6"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="2_qlnnl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vy6r7"]

@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://becpqudgln3rp"]
+
+[ext_resource type="Texture2D" uid="uid://cpvo4ct57q2rv" path="res://assets/graphics/ui/select_arrow.png" id="2_6easr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1i2a7"]
+
+[sub_resource type="GDScript" id="GDScript_1i2a7"]
+resource_name = "Show selection arrow on focus"
+script/source = "extends Button
+
+var original_texture: Texture2D
+var empty_texture: Texture2D
+
+func _ready() -> void:
+	original_texture = icon
+	empty_texture = ImageTexture.create_from_image(
+		Image.create_empty(icon.get_width(), icon.get_height(), false, Image.FORMAT_RGBA8)
+	)
+	
+	focus_entered.connect(_refresh)
+	focus_exited.connect(_refresh)
+	_refresh()
+
+
+func _refresh() -> void:
+	icon = original_texture if has_focus() else empty_texture
+"
+
+[node name="MenuButton" type="Button"]
+offset_right = 20.0
+offset_bottom = 36.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1i2a7")
+icon = ExtResource("2_6easr")
+flat = true
+alignment = 0
+script = SubResource("GDScript_1i2a7")

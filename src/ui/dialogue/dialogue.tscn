@@ -1,16 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://cis6b23nmbwqm"]
+[gd_scene load_steps=19 format=3 uid="uid://cis6b23nmbwqm"]
 
 [ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="1_5m8cj"]
-[ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="2_4gkn1"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="3_5m8cj"]
-[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/dialogue/dialogue_choices.tres" id="3_w4qgl"]
+[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/misc/menu_list.tres" id="3_w4qgl"]
 [ext_resource type="Script" uid="uid://cckqeo88bqtbx" path="res://src/ui/dialogue/choice_container.gd" id="4_l07e8"]
 [ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="4_s5vpw"]
-[ext_resource type="StyleBox" uid="uid://dnxadgspegmfr" path="res://src/ui/dialogue/dialogue_box_texture.tres" id="5_owvc8"]
-[ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/dialogue/choice_button.tscn" id="5_py1ry"]
+[ext_resource type="StyleBox" uid="uid://dnxadgspegmfr" path="res://src/ui/misc/box_texture.tres" id="5_owvc8"]
+[ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="5_py1ry"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="5_qgv4t"]
 [ext_resource type="Texture2D" uid="uid://dl1bmj4lljo4p" path="res://addons/pokemon_dialogue/test_tab/default_arrow.png" id="7_s5vpw"]
-[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/dialogue/dialogue_box_full_texture.tres" id="9_0waje"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="9_0waje"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_owvc8"]
 
@@ -90,6 +89,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme = ExtResource("3_w4qgl")
+theme_override_constants/separation = 0
 alignment = 2
 script = ExtResource("4_l07e8")
 choice_button = ExtResource("5_py1ry")
@@ -107,7 +107,6 @@ mouse_filter = 1
 metadata/_edit_group_ = true
 
 [node name="DialogueLabel" type="RichTextLabel" parent="DialogueBox/Control"]
-material = ExtResource("2_4gkn1")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00921659
@@ -118,6 +117,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
+theme_override_colors/font_shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
+theme_override_constants/shadow_outline_size = 4
 theme_override_constants/line_separation = 8
 theme_override_fonts/normal_font = ExtResource("3_5m8cj")
 theme_override_fonts/italics_font = ExtResource("4_s5vpw")

@@ -103,6 +103,7 @@ var loaded_sets: Dictionary[Sets, Set] = {
 	Sets.WATER: Set.new("water", "water", "water"),
 }
 
+
 class Set:
 	var background: Texture
 	var message: Texture

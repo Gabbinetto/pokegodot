@@ -47,6 +47,7 @@ var dialogue: Dialogue ## The main dialogue of the game. Has functionality to st
 var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
 var movement_enabled: bool = true ## Enable or disable the player's movement.
 var event_input_enabled: bool = true ## Enable or disable the player's ability to interact with events.
+var in_battle: bool = false ## True if a battle is happening.
 ## A global random number generator. Useful to be "coherent" with randomness. 
 ## Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -71,7 +72,3 @@ func _init() -> void:
 		stats_multipliers[down_nature] = 0.9 if up_nature != down_nature else 1.0
 
 		natures[nature] = stats_multipliers
-
-
-func _ready() -> void:
-	set_deferred("dialogue", get_tree().get_first_node_in_group("main_dialogue"))

@@ -1,0 +1,255 @@
+[gd_scene load_steps=20 format=3 uid="uid://gxdupyfmp02s"]
+
+[ext_resource type="Texture2D" uid="uid://0qtvnknqc8vi" path="res://assets/graphics/ui/party/bg.png" id="1_omhq7"]
+[ext_resource type="Script" uid="uid://bp0nrbtxmjqnx" path="res://src/ui/party/party_menu.gd" id="1_sble2"]
+[ext_resource type="PackedScene" uid="uid://bgtviaivfmvlf" path="res://src/ui/party/party_panel.tscn" id="2_6vuxv"]
+[ext_resource type="Texture2D" uid="uid://n8343nrhwfwr" path="res://assets/graphics/ui/party/panel_textures/panel_round.png" id="3_exun0"]
+[ext_resource type="Texture2D" uid="uid://im0lwipyv4ol" path="res://assets/graphics/ui/party/panel_textures/panel_round_sel.png" id="4_d8het"]
+[ext_resource type="Texture2D" uid="uid://bms1a34f7y78n" path="res://assets/graphics/ui/party/panel_textures/panel_round_faint.png" id="5_kp4b3"]
+[ext_resource type="Texture2D" uid="uid://br7ubiiarkk1y" path="res://assets/graphics/ui/party/panel_textures/panel_round_faint_sel.png" id="6_sble2"]
+[ext_resource type="Texture2D" uid="uid://banueyc1ka7as" path="res://assets/graphics/ui/party/panel_textures/panel_round_swap.png" id="7_vk85n"]
+[ext_resource type="Texture2D" uid="uid://s7qeg6pil715" path="res://assets/graphics/ui/party/panel_textures/panel_round_swap_sel.png" id="8_np6a4"]
+[ext_resource type="Texture2D" uid="uid://bg2167vq8sb0v" path="res://assets/graphics/ui/party/panel_textures/panel_round_swap_sel2.png" id="9_v3b2l"]
+[ext_resource type="Texture2D" uid="uid://bmi3hc6k483u7" path="res://assets/graphics/ui/party/cancel_button_selected.png" id="11_np6a4"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="11_v3b2l"]
+[ext_resource type="Texture2D" uid="uid://bon30hcc7tvd3" path="res://assets/graphics/ui/party/cancel_button.png" id="11_vk85n"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="14_0cmm0"]
+[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/misc/menu_list.tres" id="15_wqgli"]
+[ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="16_71sut"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vk85n"]
+texture = ExtResource("11_vk85n")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sble2"]
+texture = ExtResource("11_np6a4")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 1
+
+[sub_resource type="Theme" id="Theme_sble2"]
+default_font = ExtResource("11_v3b2l")
+default_font_size = 32
+Button/colors/font_color = Color(0.972549, 0.972549, 0.972549, 1)
+Button/colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 1)
+Button/constants/outline_size = 9
+Button/fonts/font = ExtResource("11_v3b2l")
+Button/styles/disabled = SubResource("StyleBoxTexture_vk85n")
+Button/styles/focus = SubResource("StyleBoxTexture_sble2")
+Button/styles/hover = SubResource("StyleBoxTexture_vk85n")
+Button/styles/normal = SubResource("StyleBoxTexture_vk85n")
+Button/styles/pressed = SubResource("StyleBoxTexture_sble2")
+
+[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_summary", "button_switch", "button_menu_cancel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_sble2")
+panels_container = NodePath("Panels")
+cancel_button = NodePath("CancelButton")
+menu = NodePath("Menu")
+menu_buttons_container = NodePath("Menu/VBoxContainer")
+button_summary = NodePath("Menu/VBoxContainer/Summary")
+button_switch = NodePath("Menu/VBoxContainer/Switch")
+button_menu_cancel = NodePath("Menu/VBoxContainer/Cancel")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_omhq7")
+stretch_mode = 4
+metadata/_edit_lock_ = true
+
+[node name="Panels" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="PartyPanel" parent="Panels" instance=ExtResource("2_6vuxv")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.128
+anchor_right = 0.25
+anchor_bottom = 0.128
+offset_left = -128.0
+offset_top = -49.152
+offset_right = 128.0
+offset_bottom = 48.848
+focus_neighbor_right = NodePath("../PartyPanel2")
+focus_neighbor_bottom = NodePath("../PartyPanel3")
+focus_next = NodePath("../PartyPanel2")
+texture_normal = ExtResource("3_exun0")
+texture_pressed = ExtResource("4_d8het")
+texture_hover = ExtResource("3_exun0")
+texture_focused = ExtResource("4_d8het")
+texture_default = ExtResource("3_exun0")
+texture_default_selected = ExtResource("4_d8het")
+texture_fainted = ExtResource("5_kp4b3")
+texture_fainted_selected = ExtResource("6_sble2")
+texture_swap_from = ExtResource("7_vk85n")
+texture_swap_to = ExtResource("8_np6a4")
+texture_swap_both = ExtResource("9_v3b2l")
+
+[node name="PartyPanel2" parent="Panels" instance=ExtResource("2_6vuxv")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.169
+anchor_right = 0.75
+anchor_bottom = 0.169
+offset_left = -128.0
+offset_top = -48.896
+offset_right = 128.0
+offset_bottom = 49.104
+focus_neighbor_left = NodePath("../PartyPanel")
+focus_neighbor_right = NodePath("../PartyPanel3")
+focus_neighbor_bottom = NodePath("../PartyPanel4")
+focus_next = NodePath("../PartyPanel3")
+focus_previous = NodePath("../PartyPanel")
+
+[node name="PartyPanel3" parent="Panels" instance=ExtResource("2_6vuxv")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.378
+anchor_right = 0.25
+anchor_bottom = 0.378
+offset_left = -128.0
+offset_top = -49.152
+offset_right = 128.0
+offset_bottom = 48.848
+focus_neighbor_left = NodePath("../PartyPanel2")
+focus_neighbor_top = NodePath("../PartyPanel")
+focus_neighbor_right = NodePath("../PartyPanel4")
+focus_neighbor_bottom = NodePath("../PartyPanel5")
+focus_next = NodePath("../PartyPanel4")
+focus_previous = NodePath("../PartyPanel2")
+
+[node name="PartyPanel4" parent="Panels" instance=ExtResource("2_6vuxv")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.419
+anchor_right = 0.75
+anchor_bottom = 0.419
+offset_left = -128.0
+offset_top = -48.896
+offset_right = 128.0
+offset_bottom = 49.104
+focus_neighbor_left = NodePath("../PartyPanel3")
+focus_neighbor_top = NodePath("../PartyPanel2")
+focus_neighbor_right = NodePath("../PartyPanel5")
+focus_neighbor_bottom = NodePath("../PartyPanel6")
+focus_next = NodePath("../PartyPanel5")
+focus_previous = NodePath("../PartyPanel3")
+
+[node name="PartyPanel5" parent="Panels" instance=ExtResource("2_6vuxv")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.628
+anchor_right = 0.25
+anchor_bottom = 0.628
+offset_left = -128.0
+offset_top = -49.152
+offset_right = 128.0
+offset_bottom = 48.848
+focus_neighbor_left = NodePath("../PartyPanel4")
+focus_neighbor_top = NodePath("../PartyPanel3")
+focus_neighbor_right = NodePath("../PartyPanel6")
+focus_next = NodePath("../PartyPanel6")
+focus_previous = NodePath("../PartyPanel4")
+
+[node name="PartyPanel6" parent="Panels" instance=ExtResource("2_6vuxv")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.669
+anchor_right = 0.75
+anchor_bottom = 0.669
+offset_left = -128.0
+offset_top = -48.896
+offset_right = 128.0
+offset_bottom = 49.104
+focus_neighbor_left = NodePath("../PartyPanel5")
+focus_neighbor_top = NodePath("../PartyPanel4")
+focus_neighbor_bottom = NodePath("../../CancelButton")
+focus_next = NodePath("../../CancelButton")
+focus_previous = NodePath("../PartyPanel5")
+
+[node name="CancelButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -42.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+focus_neighbor_left = NodePath("../Panels/PartyPanel6")
+focus_neighbor_top = NodePath("../Panels/PartyPanel6")
+focus_previous = NodePath("../Panels/PartyPanel6")
+theme = SubResource("Theme_sble2")
+text = "CANCEL"
+
+[node name="Menu" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = ExtResource("14_0cmm0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("15_wqgli")
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="Summary" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+text = "Summary"
+
+[node name="Switch" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+layout_mode = 2
+text = "Switch"
+
+[node name="Item" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+layout_mode = 2
+text = "Item"
+
+[node name="Cancel" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+layout_mode = 2
+text = "Cancel"

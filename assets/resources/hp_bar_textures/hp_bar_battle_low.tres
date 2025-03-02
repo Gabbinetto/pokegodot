@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://cd5dl6y687btc"]
+
+[ext_resource type="Texture2D" uid="uid://sii0yoe3vv85" path="res://assets/graphics/ui/battle/hp_bar.png" id="1_kq7j1"]
+
+[resource]
+atlas = ExtResource("1_kq7j1")
+region = Rect2(0, 12, 96, 6)

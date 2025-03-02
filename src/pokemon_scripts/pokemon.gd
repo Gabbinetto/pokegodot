@@ -5,7 +5,7 @@ class_name Pokemon extends Resource
 ## Pokegodot's Pokemon class. It defines a single Pokemon and all it's properties.
 ## Not to be confused with [PokemonSpecies].
 
-signal hp_changed(old_hp: int, current_hp: int) ## Emitted when [member hp] changes.
+signal hp_changed(old_hp: int) ## Emitted when [member hp] changes.
 
 enum Genders {MALE, FEMALE, GENDERLESS} ## Possible pokemon genders.
 enum Markings {NONE, BLACK, BLUE, PINK} ## Possible markings states.
@@ -116,7 +116,7 @@ var hp: int = 1:
 	set(value):
 		var old: int = hp
 		hp = clamp(value, 0, max_hp)
-		hp_changed.emit(old, hp)
+		hp_changed.emit(old)
 var status: PokemonStatus ## This pokemon's current status.
 var held_item: Item ## The [Item] this pokemon holds currently.
 # Breeding and obtainement
@@ -296,6 +296,7 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 
 	if not fixed_attributes.has("ability"):
 		fixed_attributes["ability"] = _species.abilities.pick_random()
+
 
 	if not fixed_attributes.has("ivs"):
 		var _ivs: Dictionary[String, int] = {}

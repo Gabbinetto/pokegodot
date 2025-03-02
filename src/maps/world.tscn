@@ -4,11 +4,33 @@
 [ext_resource type="PackedScene" uid="uid://dbl03yj3owea" path="res://src/maps/map_template.tscn" id="2_bne4y"]
 [ext_resource type="PackedScene" uid="uid://btbgwcje6iv0b" path="res://src/actors/player/player.tscn" id="3_xprsa"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" node_paths=PackedStringArray("map_container", "starting_map")]
 y_sort_enabled = true
 script = ExtResource("1_s45pl")
+map_container = NodePath("Maps")
+starting_map = NodePath("Maps/MapTemplate")
 
-[node name="MapTemplate" parent="." instance=ExtResource("2_bne4y")]
+[node name="Maps" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="MapTemplate" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
+connections = [NodePath("../MapTemplate2")]
+
+[node name="MapTemplate2" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
+position = Vector2(0, 2176)
+connections = [NodePath("../MapTemplate"), NodePath("../MapTemplate3")]
+
+[node name="MapTemplate3" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
+position = Vector2(0, 4352)
+connections = [NodePath("../MapTemplate2"), NodePath("../MapTemplate4")]
+
+[node name="MapTemplate4" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
+position = Vector2(0, 6528)
+connections = [NodePath("../MapTemplate3"), NodePath("../MapTemplate5")]
+
+[node name="MapTemplate5" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
+position = Vector2(0, 8704)
+connections = [NodePath("../MapTemplate4")]
 
 [node name="Player" parent="." instance=ExtResource("3_xprsa")]
 position = Vector2(224, 160)

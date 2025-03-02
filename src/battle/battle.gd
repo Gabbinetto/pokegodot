@@ -75,10 +75,12 @@ var last_move_button_pressed: MoveButton
 
 
 func _ready() -> void:
-	fight_button.grab_focus()
+	fight_button.grab_focus.call_deferred()
 
 	state_machine.initial_state = machine_starting_state
 	state_machine.start()
+	
+	Globals.in_battle = true
 
 
 func show_commands(command: CanvasItem) -> void:
@@ -140,7 +142,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	base_commands.visibility_changed.connect(func():
 		if not base_commands.visible:
 			return
-		fight_button.grab_focus()
+		fight_button.grab_focus.call_deferred()
 	)
 	
 	#region Fight command signals
@@ -151,9 +153,9 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		if not fight_commands.visible:
 			return
 		if last_move_button_pressed and last_move_button_pressed.visible:
-			last_move_button_pressed.grab_focus()
+			last_move_button_pressed.grab_focus.call_deferred()
 		else:
-			move_buttons.front().grab_focus()
+			move_buttons.front().grab_focus.call_deferred()
 	)
 
 	fight_cancel_button.pressed.connect(func():
@@ -187,7 +189,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 			return
 		for button: Button in target_buttons:
 			if not button.disabled:
-				button.grab_focus()
+				button.grab_focus.call_deferred()
 				break
 	)
 	target_cancel_button.pressed.connect(func():
@@ -198,9 +200,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	#region Run command
 	run_button.pressed.connect(func():
 		show_text(battle_dialogue, "Ran away!")
-		print(Engine.get_process_frames())
 		await battle_dialogue.finished
-		print(Engine.get_process_frames())
 		end_battle()
 	)
 	
@@ -209,6 +209,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 
 
 func end_battle() -> void:
+	Globals.in_battle = false
 	SignalRouter.battle_ended.emit(self)
 	queue_free()
 

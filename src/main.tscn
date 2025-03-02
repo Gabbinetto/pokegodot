@@ -1,19 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmh2ortvoisba"]
+[gd_scene load_steps=10 format=3 uid="uid://bmh2ortvoisba"]
 
 [ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
 [ext_resource type="PackedScene" uid="uid://rjgxmbh4lr6f" path="res://src/maps/world.tscn" id="3_5q4o7"]
 [ext_resource type="PackedScene" uid="uid://cis6b23nmbwqm" path="res://src/ui/dialogue/dialogue.tscn" id="4_3cfgd"]
+[ext_resource type="PackedScene" uid="uid://dg8ujnrh80qfn" path="res://src/ui/hud/hud.tscn" id="4_fyndt"]
+[ext_resource type="Script" uid="uid://gb4ibe018bn1" path="res://src/ui/touch_controls/extra_action_button.gd" id="5_fyndt"]
+[ext_resource type="Texture2D" uid="uid://dmrlhwic3b670" path="res://assets/graphics/ui/party/icon_ball.png" id="5_rlaii"]
+[ext_resource type="Texture2D" uid="uid://bmn8k311dwbyl" path="res://assets/graphics/ui/party/icon_ball_sel.png" id="6_5mrjc"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("viewport")]
+[sub_resource type="GDScript" id="GDScript_rlaii"]
+script/source = "extends CanvasItem
+
+
+func _ready() -> void:
+	if [\"Android\", \"iOS\"].has(OS.get_name()):
+		show()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rlaii"]
+radius = 24.0
+
+[node name="Main" type="Control" node_paths=PackedStringArray("viewport", "main_dialogue", "touchscreen_controls", "controls_visibility_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_y8srd")
 viewport = NodePath("SubViewportContainer/SubViewport")
+main_dialogue = NodePath("SubViewportContainer/SubViewport/DialogueLayer/Dialogue")
+touchscreen_controls = NodePath("TouchScreenControls")
+controls_visibility_button = NodePath("ControlsVisibilityButton")
 metadata/_edit_lock_ = true
+metadata/_edit_vertical_guides_ = [256.0]
 
 [node name="BG" type="ColorRect" parent="."]
 layout_mode = 1
@@ -45,6 +66,201 @@ render_target_update_mode = 4
 
 [node name="DialogueLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
 
-[node name="Dialogue" parent="SubViewportContainer/SubViewport/DialogueLayer" groups=["main_dialogue"] instance=ExtResource("4_3cfgd")]
+[node name="Dialogue" parent="SubViewportContainer/SubViewport/DialogueLayer" instance=ExtResource("4_3cfgd")]
 process_mode = 3
 visible = false
+
+[node name="HUDLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
+
+[node name="HUD" parent="SubViewportContainer/SubViewport/HUDLayer" instance=ExtResource("4_fyndt")]
+visible = false
+
+[node name="TouchScreenControls" type="Node2D" parent="."]
+editor_description = "The controls in the buttons stop them from stealing focus, thus making possible interacting with GUI through buttons."
+visible = false
+script = SubResource("GDScript_rlaii")
+
+[node name="Left" type="Node2D" parent="TouchScreenControls"]
+
+[node name="Start" type="TouchScreenButton" parent="TouchScreenControls/Left"]
+position = Vector2(18, 63)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+action = "Start"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/Start"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DPad" type="Marker2D" parent="TouchScreenControls/Left"]
+position = Vector2(96, 315)
+gizmo_extents = 50.0
+metadata/_edit_group_ = true
+
+[node name="Up" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
+position = Vector2(-22, -72)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+passby_press = true
+action = "ui_up"
+script = ExtResource("5_fyndt")
+extra_action = "Up"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Up"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Down" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
+position = Vector2(-22, 16)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+passby_press = true
+action = "ui_down"
+script = ExtResource("5_fyndt")
+extra_action = "Down"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Down"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
+position = Vector2(-66, -28)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+passby_press = true
+action = "ui_left"
+script = ExtResource("5_fyndt")
+extra_action = "Left"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Left"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Right" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
+position = Vector2(23, -28)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+passby_press = true
+action = "ui_right"
+script = ExtResource("5_fyndt")
+extra_action = "Right"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Right"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Right" type="Node2D" parent="TouchScreenControls"]
+position = Vector2(256, 0)
+
+[node name="Buttons" type="Marker2D" parent="TouchScreenControls/Right"]
+position = Vector2(166, 315)
+gizmo_extents = 50.0
+metadata/_edit_group_ = true
+
+[node name="X" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
+position = Vector2(-22, -72)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+script = ExtResource("5_fyndt")
+extra_action = "Start"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/X"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="B" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
+position = Vector2(-22, 16)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+action = "ui_cancel"
+script = ExtResource("5_fyndt")
+extra_action = "B"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/B"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Y" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
+position = Vector2(-66, -28)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/Y"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="A" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
+position = Vector2(23, -28)
+texture_normal = ExtResource("5_rlaii")
+texture_pressed = ExtResource("6_5mrjc")
+shape = SubResource("CircleShape2D_rlaii")
+action = "ui_accept"
+script = ExtResource("5_fyndt")
+extra_action = "A"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/A"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ControlsVisibilityButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+focus_mode = 0
+text = "VIS"
+flat = true

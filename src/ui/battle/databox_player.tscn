@@ -1,22 +1,28 @@
-[gd_scene load_steps=11 format=3 uid="uid://b5l5tiw6t3228"]
+[gd_scene load_steps=12 format=3 uid="uid://b5l5tiw6t3228"]
 
 [ext_resource type="Texture2D" uid="uid://cxd32dboj1rty" path="res://assets/graphics/ui/battle/databox_normal.png" id="1_g8f86"]
 [ext_resource type="Script" uid="uid://gihojunguedm" path="res://src/ui/battle/databox.gd" id="2_ernat"]
-[ext_resource type="Texture2D" uid="uid://sii0yoe3vv85" path="res://assets/graphics/ui/battle/hp_bar.png" id="2_wbc68"]
 [ext_resource type="Texture2D" uid="uid://bjadkarcho827" path="res://assets/graphics/ui/battle/exp_bar.png" id="3_yltsv"]
-[ext_resource type="Texture2D" uid="uid://ddg3xn2ws8l7p" path="res://assets/graphics/ui/battle/databox_numbers.png" id="5_52u2r"]
-[ext_resource type="Script" uid="uid://bqaveeisg5p8p" path="res://src/ui/battle/databox_numbers.gd" id="5_ma2e2"]
-[ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="7_5dggb"]
+[ext_resource type="Texture2D" uid="uid://db7wwvkp6e32m" path="res://assets/resources/hp_bar_textures/hp_bar_battle_high.tres" id="5_lhvjg"]
+[ext_resource type="Script" uid="uid://ciis2yphy0kq4" path="res://src/ui/misc/hp_bar.gd" id="5_m18us"]
+[ext_resource type="Texture2D" uid="uid://ciylakjyru70a" path="res://assets/resources/hp_bar_textures/hp_bar_battle_middle.tres" id="6_3gi0n"]
+[ext_resource type="Texture2D" uid="uid://cd5dl6y687btc" path="res://assets/resources/hp_bar_textures/hp_bar_battle_low.tres" id="7_d8m60"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="7_em8yo"]
+[ext_resource type="FontFile" uid="uid://de1fxnae5kucj" path="res://assets/fonts/raw/hgss-databox-numbers.ttf" id="8_t3ydq"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y2fre"]
-atlas = ExtResource("2_wbc68")
-region = Rect2(0, 0, 96, 6)
+[sub_resource type="LabelSettings" id="LabelSettings_3gi0n"]
+font = ExtResource("8_t3ydq")
+font_size = 8
+font_color = Color(0.282353, 0.282353, 0.282353, 1)
+shadow_size = 4
+shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_6tbnn"]
 font = ExtResource("7_em8yo")
 font_size = 32
 font_color = Color(0.282353, 0.282353, 0.282353, 1)
+shadow_size = 4
+shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
 
 [node name="DataboxPlayer" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "hp_numbers", "exp_bar", "level_text")]
 offset_right = 260.0
@@ -25,7 +31,6 @@ texture = ExtResource("1_g8f86")
 stretch_mode = 2
 script = ExtResource("2_ernat")
 name_label = NodePath("PokemonName")
-hp_bar_texture = ExtResource("2_wbc68")
 hp_bar = NodePath("HPBar")
 hp_numbers = NodePath("HPNumbers")
 exp_bar = NodePath("EXPBar")
@@ -43,7 +48,12 @@ offset_top = 0.0159988
 offset_right = 96.02
 offset_bottom = 6.016
 value = 50.0
-texture_progress = SubResource("AtlasTexture_y2fre")
+texture_progress = ExtResource("5_lhvjg")
+script = ExtResource("5_m18us")
+high_texture = ExtResource("5_lhvjg")
+middle_texture = ExtResource("6_3gi0n")
+low_texture = ExtResource("7_d8m60")
+metadata/_custom_type_script = "uid://ciis2yphy0kq4"
 metadata/_edit_lock_ = true
 
 [node name="EXPBar" type="TextureProgressBar" parent="."]
@@ -63,7 +73,7 @@ value = 0.5
 texture_progress = ExtResource("3_yltsv")
 metadata/_edit_lock_ = true
 
-[node name="HPNumbers" type="HBoxContainer" parent="."]
+[node name="HPNumbers" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.677
@@ -71,36 +81,30 @@ anchor_top = 0.81
 anchor_right = 0.677
 anchor_bottom = 0.81
 offset_left = -60.02
-offset_top = -14.04
+offset_top = -11.04
 offset_right = 59.98
-offset_bottom = -0.0400085
-theme_override_constants/separation = 0
-alignment = 1
-script = ExtResource("5_ma2e2")
-numbers_texture = ExtResource("5_52u2r")
-text = "999/999"
+offset_bottom = -0.0400009
+text = "000/000"
+label_settings = SubResource("LabelSettings_3gi0n")
+horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Level" type="HBoxContainer" parent="."]
+[node name="Level" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.815
-anchor_top = 0.357
-anchor_right = 0.815
-anchor_bottom = 0.357
-offset_left = 0.0999908
-offset_top = -13.988
-offset_right = 48.1
-offset_bottom = 0.0119972
-theme_override_constants/separation = 0
-script = ExtResource("5_ma2e2")
-numbers_texture = ExtResource("5_52u2r")
-max_length = 3
+anchor_left = 0.677
+anchor_top = 0.81
+anchor_right = 0.677
+anchor_bottom = 0.81
+offset_left = 35.98
+offset_top = -49.04
+offset_right = 83.98
+offset_bottom = -38.04
 text = "100"
+label_settings = SubResource("LabelSettings_3gi0n")
 metadata/_edit_lock_ = true
 
 [node name="PokemonName" type="Label" parent="."]
-material = ExtResource("7_5dggb")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.162

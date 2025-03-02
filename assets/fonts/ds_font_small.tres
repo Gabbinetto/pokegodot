@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://8n7fipmjxjqh"]
+
+[ext_resource type="FontFile" uid="uid://c0nfx74omun28" path="res://assets/fonts/raw/pokemon-ds-small.ttf" id="1_8ibcx"]
+
+[resource]
+base_font = ExtResource("1_8ibcx")

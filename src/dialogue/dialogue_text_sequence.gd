@@ -13,8 +13,10 @@ signal pause_done ## Emitted when a pause is done.
 ## The moments in which the textbox pauses. Keys represent the amount of characters shown 
 ## when the text pauses. Negative pause times mean that an input is needed.
 @export var set_pauses: Dictionary[int, float] = {}
-@export_tool_button("Show text length") var show_text_length: Callable = func():
-	EditorInterface.get_editor_toaster().push_toast(str(text.length()))
+# TODO: Fix it EditorInterface not being defined in builds
+#@export_tool_button("Show text length") var show_text_length: Callable = func():
+	#if OS.has_feature("editor"):
+		#EditorInterface.get_editor_toaster().push_toast(str(text.length()))
 var pauses: Dictionary[int, float] = {}
 var parsed_text: String
 var target_characters: int = 0

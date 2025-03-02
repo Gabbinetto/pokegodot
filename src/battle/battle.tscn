@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://bvtwrwapru5pt" path="res://src/battle/states/battle_finish.gd" id="7_libal"]
 [ext_resource type="Texture2D" uid="uid://c6vwom3yu3uxu" path="res://assets/graphics/ui/battle/command_buttons.png" id="9_ye118"]
 [ext_resource type="PackedScene" uid="uid://blsfywo74uggc" path="res://src/ui/battle/move_button.tscn" id="10_avmmn"]
-[ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/battle/z_index_focus.gd" id="10_echil"]
-[ext_resource type="Texture2D" uid="uid://cuw1ql6wgmr0d" path="res://assets/graphics/speech_boxes/hgss/box_full0.png" id="10_mf4fu"]
+[ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/misc/z_index_focus.gd" id="10_echil"]
+[ext_resource type="Texture2D" uid="uid://cuw1ql6wgmr0d" path="res://assets/graphics/ui/speech_boxes/hgss/box_full0.png" id="10_mf4fu"]
 [ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="11_w1q27"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="12_qc4k4"]
 [ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="13_3cv6g"]
@@ -116,6 +116,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_lx70w")
 state_machine = NodePath("StateMachine")
 machine_starting_state = NodePath("StateMachine/ActionSelection")
@@ -211,7 +212,6 @@ texture = SubResource("PlaceholderTexture2D_obt0m")
 offset = Vector2(0, -96)
 
 [node name="EnemyPokemon2" type="Sprite2D" parent="EnemyGround"]
-visible = false
 position = Vector2(128, 64)
 texture = SubResource("PlaceholderTexture2D_obt0m")
 offset = Vector2(0, -96)
@@ -374,7 +374,6 @@ axis_stretch_vertical = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="DialogueLabel" type="RichTextLabel" parent="BaseCommands/DialogueBox"]
-material = ExtResource("11_w1q27")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00124494
@@ -388,6 +387,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
+theme_override_colors/font_shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
+theme_override_constants/shadow_outline_size = 4
 theme_override_constants/line_separation = 8
 theme_override_fonts/normal_font = ExtResource("12_qc4k4")
 theme_override_fonts/italics_font = ExtResource("13_3cv6g")
@@ -403,7 +404,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_18qcr")
 bbcode_enabled = true
 text = "What will
-Crabominable do?"
+{POKèMON} do?"
 scroll_active = false
 autowrap_mode = 0
 metadata/_edit_use_anchors_ = true
@@ -659,7 +660,6 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true
 
 [node name="BattleDialogueLabel" type="RichTextLabel" parent="BattleDialogueBox"]
-material = ExtResource("11_w1q27")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00124494
@@ -673,6 +673,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
+theme_override_colors/font_shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
+theme_override_constants/shadow_outline_size = 4
 theme_override_constants/line_separation = 8
 theme_override_fonts/normal_font = ExtResource("12_qc4k4")
 theme_override_fonts/italics_font = ExtResource("13_3cv6g")
@@ -687,6 +689,7 @@ theme_override_styles/background = SubResource("StyleBoxEmpty_ljkqi")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_18qcr")
 bbcode_enabled = true
+text = "dsadsa"
 scroll_active = false
 autowrap_mode = 0
 metadata/_edit_use_anchors_ = true

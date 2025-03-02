@@ -30,7 +30,7 @@ func _run() -> void:
 	main_screen.add_child(popup)
 	popup.set_meta("_created_by", self)
 	popup.popup_centered(Vector2(400, 0))
-	popup.grab_focus()
+	popup.grab_focus.call_deferred()
 	popup.confirmed.connect(
 		func():
 			tile_size = tile_size_input.value

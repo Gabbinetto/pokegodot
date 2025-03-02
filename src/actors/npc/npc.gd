@@ -41,7 +41,8 @@ func next_step() -> void:
 			await stopped_moving
 		input_direction = Vector2.ZERO
 	if step.end_time_range[0] + step.end_time_range[-1] > 0:
-		await get_tree().create_timer(
+		# Use Globals as NPCs won't be in the tree when the map isn't loaded
+		await Globals.get_tree().create_timer(
 			Globals.rng.randf_range(step.end_time_range[0], step.end_time_range[-1])
 		).timeout
 	

@@ -10,7 +10,7 @@ func enter() -> void:
 		button.pressed.connect(_on_move_selected.bind(button.move))
 
 	battle.show_commands(battle.base_commands)
-	battle.fight_button.grab_focus()
+	battle.fight_button.grab_focus.call_deferred()
 
 	_show_text()
 

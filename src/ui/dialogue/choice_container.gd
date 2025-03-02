@@ -33,6 +33,7 @@ func add_choice(text: String) -> Button:
 ## Sets multiple choices. Removes old choices.
 func set_choices(choices: Array[String]) -> void:
 	for child: Node in get_children():
+		remove_child(child)
 		child.queue_free()
 	for choice: String in choices:
 		add_choice(choice)

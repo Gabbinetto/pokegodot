@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cs6kk73asaqh"]
 
-[ext_resource type="Script" path="res://dev/pokemon_visualizer/pokemon_visualizer.gd" id="1_quspj"]
+[ext_resource type="Script" uid="uid://damrii6gxsdps" path="res://dev/pokemon_visualizer/pokemon_visualizer.gd" id="1_quspj"]
 
 [node name="PokemonVisualizer" type="Control"]
 layout_mode = 3

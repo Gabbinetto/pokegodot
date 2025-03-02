@@ -7,29 +7,13 @@ class_name Databox extends Control
 		pokemon = value
 		_refresh()
 @export var name_label: Label
-@export var hp_bar_texture: Texture2D
-@export var hp_bar: TextureProgressBar
-@export var hp_numbers: DataboxNumbers
+@export var hp_bar: HPBar
+@export var hp_numbers: Label
 @export var exp_bar: TextureProgressBar
-@export var level_text: DataboxNumbers
-
-var hp_texture_high: AtlasTexture
-var hp_texture_medium: AtlasTexture
-var hp_texture_low: AtlasTexture
+@export var level_text: Label
 
 
 func _ready() -> void:
-	hp_texture_high = AtlasTexture.new()
-	hp_texture_high.atlas = hp_bar_texture
-	hp_texture_high.region = Rect2(Vector2(0, hp_bar_texture.get_height() / 3.0 * 0), hp_bar_texture.get_size() * Vector2(1, 1.0 / 3.0))
-
-	hp_texture_medium = AtlasTexture.new()
-	hp_texture_medium.atlas = hp_bar_texture
-	hp_texture_medium.region = Rect2(Vector2(0, hp_bar_texture.get_height() / 3.0 * 1), hp_bar_texture.get_size() * Vector2(1, 1.0 / 3.0))
-
-	hp_texture_low = AtlasTexture.new()
-	hp_texture_low.atlas = hp_bar_texture
-	hp_texture_low.region = Rect2(Vector2(0, hp_bar_texture.get_height() / 3.0 * 2), hp_bar_texture.get_size() * Vector2(1, 1.0 / 3.0))
 
 	_refresh()
 
@@ -45,15 +29,9 @@ func _process(_delta: float) -> void:
 
 	if is_instance_valid(hp_bar) and hp_bar.value != pokemon.hp:
 		hp_bar.value = move_toward(hp_bar.value, pokemon.hp, 1)
-		if hp_bar.value <= floori(pokemon.max_hp * 0.2):
-			hp_bar.texture_progress = hp_texture_low
-		elif hp_bar.value <= floori(pokemon.max_hp * 0.5):
-			hp_bar.texture_progress = hp_texture_medium
-		else:
-			hp_bar.texture_progress = hp_texture_high
 		
 		if is_instance_valid(hp_numbers):
-			hp_numbers.text = "%s/%s" % [hp_bar.value, hp_bar.max_value]
+			hp_numbers.text = "%d/%d" % [hp_bar.value, hp_bar.max_value]
 	
 
 	if is_instance_valid(level_text):
@@ -79,4 +57,4 @@ func _refresh() -> void:
 		hp_bar.value = pokemon.hp
 
 	if is_instance_valid(hp_numbers):
-		hp_numbers.text = "%s/%s" % [pokemon.hp, pokemon.max_hp]
+		hp_numbers.text = "%d/%d" % [pokemon.hp, pokemon.max_hp]

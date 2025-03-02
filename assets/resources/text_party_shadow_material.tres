@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c1op1ca1h6pic"]
+
+[ext_resource type="Shader" uid="uid://b5hwb64hudevv" path="res://src/vfx/text_shadow.gdshader" id="1_p8r3b"]
+
+[resource]
+shader = ExtResource("1_p8r3b")
+shader_parameter/expand_boundary = 2.0
+shader_parameter/outline_color = Color(0.156863, 0.156863, 0.156863, 1)
+shader_parameter/outline_width = 2
+shader_parameter/directions = Basis(0, 0, 0, 0, 0, 1, 0, 1, 1)

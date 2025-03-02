@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg8ujnrh80qfn"]
+
+[ext_resource type="Script" uid="uid://dy1ompv6ha3rs" path="res://src/ui/hud/hud.gd" id="1_076te"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="1_jobw0"]
+[ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="2_cvkdw"]
+[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/misc/menu_list.tres" id="2_udh2q"]
+
+[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_quit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_076te")
+menu = NodePath("Menu")
+buttons_container = NodePath("Menu/VBoxContainer")
+button_party = NodePath("Menu/VBoxContainer/Pokemon")
+button_quit = NodePath("Menu/VBoxContainer/Quit")
+metadata/_edit_lock_ = true
+
+[node name="Menu" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -56.0
+offset_bottom = 30.0
+grow_horizontal = 0
+theme_override_styles/panel = ExtResource("1_jobw0")
+metadata/_edit_group_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("2_udh2q")
+theme_override_constants/separation = 0
+
+[node name="Pokedex" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Pokèdex"
+
+[node name="Pokemon" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Pokèmon"
+
+[node name="Bag" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Bag"
+
+[node name="Player" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Player"
+
+[node name="Save" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Save"
+
+[node name="Options" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Options"
+
+[node name="Quit" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
+layout_mode = 2
+text = "Quit game"

@@ -92,6 +92,27 @@ func remove_pokemon(pokemon: Pokemon) -> bool:
 	return false
 
 
+## Sets a slot to [param pokemon]. If [param slot] is bigger than the team size, it's the same as calling [method add_pokemon].
+## Returns [code]true[/code] if swapping was successful.
+## If less than 0, the slot will be [method size] - [param pokemon_slot].
+## [br][br][b]Note:[/b] Setting a slot to [param pokemon] is dangerous as you might lose reference to the old pokemon in that slot.
+func set_pokemon(pokemon_slot: int, pokemon: Pokemon) -> bool:
+	if pokemon_slot >= size():
+		return add_pokemon(pokemon)
+	if pokemon_slot < 0:
+		pokemon_slot = size() - pokemon_slot
+	_team[pokemon_slot] = pokemon
+	return true
+
+
+## Swaps two slots.
+func swap(from: int, to: int) -> void:
+	var from_pokemon: Pokemon = slot(from)
+	var to_pokemon: Pokemon = slot(to)
+	set_pokemon(to, from_pokemon)
+	set_pokemon(from, to_pokemon)
+
+
 ## Returns the first healthy pokemon in the party, that being a pokemon with more than 0 hp. Returns [code]null[/code] if there's none.
 func first_healthy() -> Pokemon:
 	for pokemon: Pokemon in _team:
