@@ -122,6 +122,8 @@ var spdefense: int: ## Shorthand for [member base_stats] SPECIAL_DEFENSE key
 var speed: int: ## Shorthand for [member base_stats] SPEED key
 	get: return base_stats.SPEED
 	set(value): base_stats.SPEED = value
+var metrics: Dictionary[String, int]:
+	get: return get_metrics(id, form_number)
 
 
 func _init(_id: String, _form_number: int = 0) -> void:
@@ -134,8 +136,13 @@ func _init(_id: String, _form_number: int = 0) -> void:
 			data.assign(form.duplicate(true))
 			break
 	
+	# Typed arrays and dictionaries
 	types.assign(data.types)
 	data.erase("types")
+	base_stats.assign(data.base_stats)
+	data.erase("base_stats")
+	evs.assign(data.evs)
+	data.erase("evs")
 	abilities.assign(data.abilities)
 	data.erase("abilities")
 	hidden_abilities.assign(data.hidden_abilities)
@@ -166,37 +173,48 @@ func _init(_id: String, _form_number: int = 0) -> void:
 
 
 func _set_sprites() -> void:
-	sprite_front_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
+	sprite_front_n_m = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
 	if not sprite_front_n_m:
 		sprite_front_n_m = DB.default_front_sprite
-	sprite_front_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
+	sprite_front_n_f = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
 	if not sprite_front_n_f:
 		sprite_front_n_f = sprite_front_n_m
-	sprite_front_s_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_m.png")
+	sprite_front_s_m = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_m.png")
 	if not sprite_front_s_m:
 		sprite_front_s_m = sprite_front_n_m
-	sprite_front_s_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_f.png")
+	sprite_front_s_f = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_f.png")
 	if not sprite_front_s_f:
 		sprite_front_s_f = sprite_front_s_m
 
-	sprite_back_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
+	sprite_back_n_m = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
 	if not sprite_back_n_m:
 		sprite_back_n_m = DB.default_back_sprite
-	sprite_back_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
+	sprite_back_n_f = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
 	if not sprite_back_n_f:
 		sprite_back_n_f = sprite_back_n_m
-	sprite_back_s_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_m.png")
+	sprite_back_s_m = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_m.png")
 	if not sprite_back_s_m:
 		sprite_back_s_m = sprite_back_n_m
-	sprite_back_s_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
+	sprite_back_s_f = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
 	if not sprite_back_s_f:
 		sprite_back_s_f = sprite_back_s_m
 	
-	sprite_icon_n = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
+	sprite_icon_n = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
 	if not sprite_icon_n:
 		sprite_icon_n = DB.default_icon_sprite
-	sprite_icon_s = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
+	sprite_icon_s = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
 	if not sprite_icon_s:
 		sprite_icon_s = sprite_icon_n
 	
-	sprite_footprint = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")
+	sprite_footprint = Utils.load_or_null(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")
+
+
+static func get_metrics(pokemon_id: String, form: int = 0) -> Dictionary[String, int]:
+	var data: Dictionary[String, int] = {}
+	for form_data: Dictionary in DB.metrics.get(pokemon_id, []):
+		if form_data.form_number == form:
+			data.assign(form_data)
+			break
+	if form > 0 and data.is_empty():
+		data.assign(DB.metrics.get(pokemon_id)[0])
+	return data

@@ -1,6 +1,7 @@
 class_name PartyMenu extends Control
 
 signal closed
+signal pokemon_selected(pokemon: Pokemon)
 
 const MENU_SCENE: PackedScene = preload("res://src/ui/party/party_menu.tscn")
 const SWAP_ANIMATION_DURATION: float = 1.0
@@ -11,11 +12,14 @@ const SWAP_OFFSET: float = 10.0
 @export var menu: Control
 @export var menu_buttons_container: Control
 @export_group("Menu buttons", "button_")
+@export var button_switch_in: BaseButton
 @export var button_summary: BaseButton
 @export var button_switch: BaseButton
+@export var button_item: BaseButton
 @export var button_menu_cancel: BaseButton
 
 
+var in_battle: bool = false
 var team: PokemonTeam
 var panels: Array[PartyPanel]
 var current_panel: PartyPanel
@@ -45,9 +49,22 @@ func _ready() -> void:
 	if team.size() < 2:
 		button_switch.hide()
 	
+	var team_array: Array[Pokemon] = team.get_array().duplicate()
+	if in_battle:
+		var mon_in_battle: Array[Pokemon]
+		var mon_out_battle: Array[Pokemon]
+		for pokemon: Pokemon in team_array:
+			if _is_pokemon_in_battle(pokemon):
+				mon_in_battle.append(pokemon)
+			else:
+				mon_out_battle.append(pokemon)
+		if Globals.current_battle.ally_pokemon[0].pokemon != mon_in_battle[0]:
+			mon_in_battle.reverse()
+		team_array = mon_in_battle + mon_out_battle
+	
 	for i: int in panels.size():
-		if i < team.size():
-			panels[i].pokemon = team.slot(i)
+		if i < team_array.size():
+			panels[i].pokemon = team_array[i]
 		else:
 			panels[i].pokemon = null
 		
@@ -55,21 +72,26 @@ func _ready() -> void:
 		panels[i].focus_exited.connect(_on_panel_unfocus.bind(panels[i]))
 		panels[i].pressed.connect(_on_panel_pressed.bind(panels[i]))
 
-
 	if team.size() != 0:
 		panels[0].grab_focus.call_deferred()
 	else:
 		cancel_button.grab_focus.call_deferred()
 	
 	button_switch.pressed.connect(_on_switch_pressed)
+	button_switch_in.pressed.connect(_on_switch_in_pressed)
 	button_menu_cancel.pressed.connect(_menu_cancel)
 	cancel_button.pressed.connect(closed.emit)
 	
-	menu.visibility_changed.connect(_set_menu_neighbors)
+	menu.visibility_changed.connect(_on_menu_visibility_changed)
 
+	if in_battle:
+		for button: BaseButton in menu_buttons_container.get_children():
+			button.visible = [button_switch_in, button_summary, button_menu_cancel].has(button)
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if swapping:
+		return
 	if event.is_action_pressed("B"):
 		if swapping_from != null or swapping_to != null:
 			swapping_from = null
@@ -97,9 +119,20 @@ func _on_panel_pressed(_panel: PartyPanel) -> void:
 		return
 	if swapping_from == null:
 		menu.show()
-		menu_buttons_container.get_child(0).grab_focus.call_deferred()
+		var first: Control
+		for node: Control in menu_buttons_container.get_children():
+			if node.visible:
+				first = node
+				break
+		first.grab_focus.call_deferred()
 	else:
 		swap_slots()
+
+
+func _set_panels_mouse(can_press: bool) -> void:
+	for node: Control in panels_container.get_children():
+		node.mouse_filter = Control.MOUSE_FILTER_STOP if can_press else Control.MOUSE_FILTER_IGNORE
+
 
 #region Menu functions
 func _menu_cancel() -> void:
@@ -111,10 +144,27 @@ func _set_menu_neighbors() -> void:
 	for node: Control in menu_buttons_container.get_children():
 		node.focus_neighbor_left = node.get_path()
 		node.focus_neighbor_right = node.get_path()
-		node.focus_neighbor_top = menu_buttons_container.get_child(min(node.get_index() - 1, 0)).get_path()
+		node.focus_neighbor_top = menu_buttons_container.get_child(max(node.get_index() - 1, 0)).get_path()
 		node.focus_neighbor_bottom = menu_buttons_container.get_child(min(node.get_index() + 1, menu_buttons_container.get_child_count() - 1)).get_path()
 
 
+func _on_menu_visibility_changed() -> void:
+	_set_menu_neighbors()
+	_set_panels_mouse.call_deferred(not menu.visible)
+
+
+#region In battle functions
+func _is_pokemon_in_battle(pokemon: Pokemon) -> bool:
+	for info: Battle.PokemonBattleInfo in Globals.current_battle.pokemons:
+		if info != null and pokemon == info.pokemon:
+			return true
+	return false
+
+func _on_switch_in_pressed() -> void:
+	if not _is_pokemon_in_battle(current_panel.pokemon):
+		pokemon_selected.emit(current_panel.pokemon)
+
+#endregion
 #region Swap only functions
 func _on_switch_pressed() -> void:
 	if team.size() <= 1:
@@ -176,7 +226,8 @@ func _refresh_panels():
 		panel.refresh()
 
 
-static func create(pokemon_team: PokemonTeam = null) -> PartyMenu:
+static func create(pokemon_team: PokemonTeam = null, is_in_battle: bool = false) -> PartyMenu:
 	var party_menu: PartyMenu = MENU_SCENE.instantiate()
 	party_menu.team = pokemon_team
+	party_menu.in_battle = is_in_battle
 	return party_menu

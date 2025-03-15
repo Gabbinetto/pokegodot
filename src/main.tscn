@@ -1,12 +1,25 @@
-[gd_scene load_steps=10 format=3 uid="uid://bmh2ortvoisba"]
+[gd_scene load_steps=51 format=3 uid="uid://bmh2ortvoisba"]
 
 [ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
 [ext_resource type="PackedScene" uid="uid://rjgxmbh4lr6f" path="res://src/maps/world.tscn" id="3_5q4o7"]
 [ext_resource type="PackedScene" uid="uid://cis6b23nmbwqm" path="res://src/ui/dialogue/dialogue.tscn" id="4_3cfgd"]
 [ext_resource type="PackedScene" uid="uid://dg8ujnrh80qfn" path="res://src/ui/hud/hud.tscn" id="4_fyndt"]
+[ext_resource type="Texture2D" uid="uid://dhugjfr0xgcwi" path="res://assets/graphics/ui/touchscreen_buttons/button_up.png" id="5_5mrjc"]
+[ext_resource type="Texture2D" uid="uid://cnjcx3iitja80" path="res://assets/graphics/ui/touchscreen_buttons/button_l.png" id="5_e7lu8"]
 [ext_resource type="Script" uid="uid://gb4ibe018bn1" path="res://src/ui/touch_controls/extra_action_button.gd" id="5_fyndt"]
-[ext_resource type="Texture2D" uid="uid://dmrlhwic3b670" path="res://assets/graphics/ui/party/icon_ball.png" id="5_rlaii"]
-[ext_resource type="Texture2D" uid="uid://bmn8k311dwbyl" path="res://assets/graphics/ui/party/icon_ball_sel.png" id="6_5mrjc"]
+[ext_resource type="Script" uid="uid://bwkpd5udadk57" path="res://src/ui/touch_controls/cross_buttons.gd" id="5_kf8lf"]
+[ext_resource type="Texture2D" uid="uid://dwdq73vtrn5so" path="res://assets/graphics/ui/touchscreen_buttons/button_start.png" id="5_mlv6i"]
+[ext_resource type="Script" uid="uid://d3xq35xormfqf" path="res://src/ui/touch_controls/touch_controls_container.gd" id="5_sif16"]
+[ext_resource type="Texture2D" uid="uid://dr622xb8s003o" path="res://assets/graphics/ui/touchscreen_buttons/button_select.png" id="6_tb146"]
+[ext_resource type="Texture2D" uid="uid://bwlmj1vk32bwa" path="res://assets/graphics/ui/touchscreen_buttons/button_right.png" id="8_mgm53"]
+[ext_resource type="Texture2D" uid="uid://cfc7fckdw5xsh" path="res://assets/graphics/ui/touchscreen_buttons/button_down.png" id="9_uewes"]
+[ext_resource type="Texture2D" uid="uid://boy276np462aw" path="res://assets/graphics/ui/touchscreen_buttons/button_left.png" id="10_kqbth"]
+[ext_resource type="Texture2D" uid="uid://tnht1db1k87w" path="res://assets/graphics/ui/touchscreen_buttons/button_x.png" id="11_d3u4l"]
+[ext_resource type="Texture2D" uid="uid://bfte1oy3y0puu" path="res://assets/graphics/ui/touchscreen_buttons/button_a.png" id="12_mlv6i"]
+[ext_resource type="Texture2D" uid="uid://dla0craoag0ey" path="res://assets/graphics/ui/touchscreen_buttons/button_b.png" id="13_tb146"]
+[ext_resource type="Texture2D" uid="uid://b7cex4288mc4q" path="res://assets/graphics/ui/touchscreen_buttons/button_y.png" id="14_e7lu8"]
+[ext_resource type="Texture2D" uid="uid://dm4xw8souejdm" path="res://assets/graphics/ui/touchscreen_buttons/button_r.png" id="18_okx7f"]
+[ext_resource type="Texture2D" uid="uid://dh4oye13neud1" path="res://assets/graphics/ui/touchscreen_buttons/button_visibility.png" id="19_sta5p"]
 
 [sub_resource type="GDScript" id="GDScript_rlaii"]
 script/source = "extends CanvasItem
@@ -17,8 +30,127 @@ func _ready() -> void:
 		show()
 "
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2usk"]
+atlas = ExtResource("5_e7lu8")
+region = Rect2(0, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_luju6"]
+atlas = ExtResource("5_e7lu8")
+region = Rect2(80, 0, 80, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlv6i"]
+size = Vector2(74, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lovvn"]
+atlas = ExtResource("6_tb146")
+region = Rect2(0, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jitvu"]
+atlas = ExtResource("6_tb146")
+region = Rect2(80, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tovjm"]
+atlas = ExtResource("18_okx7f")
+region = Rect2(0, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxsd3"]
+atlas = ExtResource("18_okx7f")
+region = Rect2(80, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocmcv"]
+atlas = ExtResource("5_mlv6i")
+region = Rect2(0, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adv81"]
+atlas = ExtResource("5_mlv6i")
+region = Rect2(80, 0, 80, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kf8lf"]
+atlas = ExtResource("5_5mrjc")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mrjc"]
+atlas = ExtResource("5_5mrjc")
+region = Rect2(56, 0, 56, 56)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_rlaii"]
 radius = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uewes"]
+atlas = ExtResource("8_mgm53")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqbth"]
+atlas = ExtResource("8_mgm53")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srxbw"]
+atlas = ExtResource("9_uewes")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3u4l"]
+atlas = ExtResource("9_uewes")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlv6i"]
+atlas = ExtResource("10_kqbth")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb146"]
+atlas = ExtResource("10_kqbth")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okx7f"]
+atlas = ExtResource("11_d3u4l")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sta5p"]
+atlas = ExtResource("11_d3u4l")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgm53"]
+atlas = ExtResource("12_mlv6i")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7lu8"]
+atlas = ExtResource("12_mlv6i")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sif16"]
+atlas = ExtResource("13_tb146")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7bab"]
+atlas = ExtResource("13_tb146")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib8ht"]
+atlas = ExtResource("14_e7lu8")
+region = Rect2(0, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43aqp"]
+atlas = ExtResource("14_e7lu8")
+region = Rect2(56, 0, 56, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n36qx"]
+atlas = ExtResource("19_sta5p")
+region = Rect2(0, 0, 48, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnhyx"]
+atlas = ExtResource("19_sta5p")
+region = Rect2(48, 0, 48, 32)
+
+[sub_resource type="GDScript" id="GDScript_sta5p"]
+resource_name = "Visibility button"
+script/source = "extends TextureButton
+
+@export var controls: CanvasItem
+
+func _ready() -> void:
+	var check: Callable = func():
+		button_pressed = controls.visible
+	check.call_deferred()
+"
 
 [node name="Main" type="Control" node_paths=PackedStringArray("viewport", "main_dialogue", "touchscreen_controls", "controls_visibility_button")]
 layout_mode = 3
@@ -78,18 +210,30 @@ visible = false
 [node name="TouchScreenControls" type="Node2D" parent="."]
 editor_description = "The controls in the buttons stop them from stealing focus, thus making possible interacting with GUI through buttons."
 visible = false
+modulate = Color(1, 1, 1, 0.5)
 script = SubResource("GDScript_rlaii")
 
-[node name="Left" type="Node2D" parent="TouchScreenControls"]
+[node name="Container" type="Control" parent="TouchScreenControls" node_paths=PackedStringArray("viewport")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 512.0
+offset_bottom = 384.0
+mouse_filter = 2
+script = ExtResource("5_sif16")
+viewport = NodePath("../../SubViewportContainer")
+metadata/_edit_lock_ = true
 
-[node name="Start" type="TouchScreenButton" parent="TouchScreenControls/Left"]
-position = Vector2(18, 63)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
-shape = SubResource("CircleShape2D_rlaii")
-action = "Start"
+[node name="LeftUpper" type="Node2D" parent="TouchScreenControls/Container"]
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/Start"]
+[node name="L" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper"]
+position = Vector2(18, 15)
+texture_normal = SubResource("AtlasTexture_c2usk")
+texture_pressed = SubResource("AtlasTexture_luju6")
+shape = SubResource("RectangleShape2D_mlv6i")
+action = "L"
+metadata/_edit_group_ = true
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftUpper/L"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,23 +241,113 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DPad" type="Marker2D" parent="TouchScreenControls/Left"]
-position = Vector2(96, 315)
-gizmo_extents = 50.0
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftUpper/L/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Select" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper"]
+position = Vector2(18, 87)
+texture_normal = SubResource("AtlasTexture_lovvn")
+texture_pressed = SubResource("AtlasTexture_jitvu")
+shape = SubResource("RectangleShape2D_mlv6i")
+action = "Select"
 metadata/_edit_group_ = true
 
-[node name="Up" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
-position = Vector2(-22, -72)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftUpper/Select"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftUpper/Select/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RightUpper" type="Node2D" parent="TouchScreenControls/Container"]
+position = Vector2(512, 0)
+
+[node name="R" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper"]
+position = Vector2(-94, 15)
+texture_normal = SubResource("AtlasTexture_tovjm")
+texture_pressed = SubResource("AtlasTexture_hxsd3")
+shape = SubResource("RectangleShape2D_mlv6i")
+action = "R"
+metadata/_edit_group_ = true
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightUpper/R"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightUpper/R/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper"]
+position = Vector2(-94, 87)
+texture_normal = SubResource("AtlasTexture_ocmcv")
+texture_pressed = SubResource("AtlasTexture_adv81")
+shape = SubResource("RectangleShape2D_mlv6i")
+action = "Start"
+metadata/_edit_group_ = true
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightUpper/Start"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightUpper/Start/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftLower" type="Node2D" parent="TouchScreenControls/Container"]
+position = Vector2(0, 384)
+
+[node name="DPad" type="Marker2D" parent="TouchScreenControls/Container/LeftLower" node_paths=PackedStringArray("buttons")]
+position = Vector2(80, -81)
+gizmo_extents = 50.0
+script = ExtResource("5_kf8lf")
+buttons = [NodePath("Up"), NodePath("Right"), NodePath("Down"), NodePath("Left")]
+buttons_size = Vector2i(56, 56)
+metadata/_edit_group_ = true
+
+[node name="Up" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+position = Vector2(-28, -74)
+texture_normal = SubResource("AtlasTexture_kf8lf")
+texture_pressed = SubResource("AtlasTexture_5mrjc")
 shape = SubResource("CircleShape2D_rlaii")
 passby_press = true
 action = "ui_up"
 script = ExtResource("5_fyndt")
 extra_action = "Up"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
+metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Up"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Up"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -121,81 +355,55 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Down" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
-position = Vector2(-22, 16)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
-shape = SubResource("CircleShape2D_rlaii")
-passby_press = true
-action = "ui_down"
-script = ExtResource("5_fyndt")
-extra_action = "Down"
-metadata/_custom_type_script = "uid://gb4ibe018bn1"
-
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Down"]
-layout_mode = 3
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Up/TouchScreenFocusBlocker"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Left" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
-position = Vector2(-66, -28)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
-shape = SubResource("CircleShape2D_rlaii")
-passby_press = true
-action = "ui_left"
-script = ExtResource("5_fyndt")
-extra_action = "Left"
-metadata/_custom_type_script = "uid://gb4ibe018bn1"
-
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Left"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Right" type="TouchScreenButton" parent="TouchScreenControls/Left/DPad"]
-position = Vector2(23, -28)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
+[node name="Right" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+position = Vector2(18, -28)
+texture_normal = SubResource("AtlasTexture_uewes")
+texture_pressed = SubResource("AtlasTexture_kqbth")
 shape = SubResource("CircleShape2D_rlaii")
 passby_press = true
 action = "ui_right"
 script = ExtResource("5_fyndt")
 extra_action = "Right"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
-
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Left/DPad/Right"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Right" type="Node2D" parent="TouchScreenControls"]
-position = Vector2(256, 0)
-
-[node name="Buttons" type="Marker2D" parent="TouchScreenControls/Right"]
-position = Vector2(166, 315)
-gizmo_extents = 50.0
 metadata/_edit_group_ = true
 
-[node name="X" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
-position = Vector2(-22, -72)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Right"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Right/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Down" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+position = Vector2(-28, 18)
+texture_normal = SubResource("AtlasTexture_srxbw")
+texture_pressed = SubResource("AtlasTexture_d3u4l")
 shape = SubResource("CircleShape2D_rlaii")
+passby_press = true
+action = "ui_down"
 script = ExtResource("5_fyndt")
-extra_action = "Start"
+extra_action = "Down"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
+metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/X"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Down"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -203,17 +411,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="B" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
-position = Vector2(-22, 16)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Down/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Left" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+position = Vector2(-74, -28)
+texture_normal = SubResource("AtlasTexture_mlv6i")
+texture_pressed = SubResource("AtlasTexture_tb146")
 shape = SubResource("CircleShape2D_rlaii")
-action = "ui_cancel"
+passby_press = true
+action = "ui_left"
 script = ExtResource("5_fyndt")
-extra_action = "B"
+extra_action = "Left"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
+metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/B"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Left"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,13 +439,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Y" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
-position = Vector2(-66, -28)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Left/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RightLower" type="Node2D" parent="TouchScreenControls/Container"]
+position = Vector2(512, 384)
+
+[node name="Buttons" type="Marker2D" parent="TouchScreenControls/Container/RightLower" node_paths=PackedStringArray("buttons")]
+position = Vector2(-80, -81)
+gizmo_extents = 50.0
+script = ExtResource("5_kf8lf")
+buttons = [null, NodePath("A"), NodePath("B"), null]
+buttons_size = Vector2i(56, 56)
+metadata/_edit_group_ = true
+
+[node name="X" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+position = Vector2(-28, -74)
+texture_normal = SubResource("AtlasTexture_okx7f")
+texture_pressed = SubResource("AtlasTexture_sta5p")
 shape = SubResource("CircleShape2D_rlaii")
+action = "X"
+metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/Y"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/X"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -235,17 +474,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="A" type="TouchScreenButton" parent="TouchScreenControls/Right/Buttons"]
-position = Vector2(23, -28)
-texture_normal = ExtResource("5_rlaii")
-texture_pressed = ExtResource("6_5mrjc")
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/X/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="A" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+position = Vector2(18, -28)
+texture_normal = SubResource("AtlasTexture_mgm53")
+texture_pressed = SubResource("AtlasTexture_e7lu8")
 shape = SubResource("CircleShape2D_rlaii")
 action = "ui_accept"
 script = ExtResource("5_fyndt")
 extra_action = "A"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
+metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Right/Buttons/A"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/A"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -253,14 +501,82 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ControlsVisibilityButton" type="Button" parent="."]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/A/TouchScreenFocusBlocker"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = -8.0
-offset_bottom = 8.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="B" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+position = Vector2(-28, 18)
+texture_normal = SubResource("AtlasTexture_sif16")
+texture_pressed = SubResource("AtlasTexture_d7bab")
+shape = SubResource("CircleShape2D_rlaii")
+action = "ui_cancel"
+script = ExtResource("5_fyndt")
+extra_action = "B"
+metadata/_custom_type_script = "uid://gb4ibe018bn1"
+metadata/_edit_group_ = true
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/B"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/B/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Y" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+position = Vector2(-74, -28)
+texture_normal = SubResource("AtlasTexture_ib8ht")
+texture_pressed = SubResource("AtlasTexture_43aqp")
+shape = SubResource("CircleShape2D_rlaii")
+action = "Y"
+metadata/_edit_group_ = true
+
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/Y"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/Y/TouchScreenFocusBlocker"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ControlsVisibilityButton" type="TextureButton" parent="." node_paths=PackedStringArray("controls")]
+modulate = Color(1, 1, 1, 0.5)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -31.0
+offset_right = 16.0
+grow_horizontal = 2
+grow_vertical = 0
 focus_mode = 0
-text = "VIS"
-flat = true
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_n36qx")
+texture_pressed = SubResource("AtlasTexture_nnhyx")
+texture_hover = SubResource("AtlasTexture_n36qx")
+script = SubResource("GDScript_sta5p")
+controls = NodePath("../TouchScreenControls")

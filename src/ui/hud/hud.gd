@@ -24,7 +24,7 @@ func _can_open() -> bool:
 
 func _input(event: InputEvent) -> void:
 	if _can_open():
-		if event.is_action_pressed("Start"):
+		if event.is_action_pressed("Start") or event.is_action_pressed("X"):
 			if not visible:
 				open()
 			else:

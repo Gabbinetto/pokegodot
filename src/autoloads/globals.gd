@@ -15,7 +15,8 @@ enum Languages { ## Possible languages.
 	KOREAN,
 }
 
-const STATS: Dictionary[String, String] = { ## Stat key names following an UPPERCASE_SNAKE_CASE format. Used in properties such as [member PokemonSpecies.base_stats]
+## Stat key names following an UPPERCASE_SNAKE_CASE format. Used in properties such as [member PokemonSpecies.base_stats] for consistency.
+const STATS: Dictionary[String, String] = {
 	"HP": "HP",
 	"ATTACK": "ATTACK",
 	"DEFENSE": "DEFENSE",
@@ -40,14 +41,16 @@ const MULTIPLE_TARGETS_MULTIPLIER: float = 0.75 ## Multiplier for multiple targe
 const SHINY_THRESHOLD: int = 16
 
 ## The viewport used by the game which mantains the aspect ratio while allowing to have nodes in the empty
-## space around. When in need for the viewport outside of the viewport itself, use this instead of [method @GDScript.get_viewport]
+## space around. When in need for the viewport outside of the viewport itself, use this instead of [method Node.get_viewport]
 var game_root: SubViewport
 var game_world: World ## The game world which holds maps, the player and similar stuff.
 var dialogue: Dialogue ## The main dialogue of the game. Has functionality to start [DialogueManager].
 var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
 var movement_enabled: bool = true ## Enable or disable the player's movement.
 var event_input_enabled: bool = true ## Enable or disable the player's ability to interact with events.
-var in_battle: bool = false ## True if a battle is happening.
+var current_battle: Battle = null ## The battle currently happening. [code]null[/code] if there's no battle.
+var in_battle: bool: ## True if a battle is happening. Checks if [member current_battle] is not [code]null[/code]. Can't be set.
+	get: return current_battle != null 
 ## A global random number generator. Useful to be "coherent" with randomness. 
 ## Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -60,6 +63,7 @@ func _init() -> void:
 	rng.randomize()
 	seed(rng.seed)
 
+	# Set nature multipliers
 	for nature: String in DB.natures:
 		var stats_multipliers: Dictionary[String, float] = {}
 		for stat: String in STATS:

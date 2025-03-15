@@ -14,7 +14,6 @@ enum Speeds {
 	MEDIUM, ## 15 characters shown per second.
 	FAST, ## 30 characters shown per second.
 	INSTANT, ## Text is shown istantly.
-
 }
 
 ## The time needed to show a single character, in seconds. Keys are [enum Speeds] values.

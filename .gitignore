@@ -5,6 +5,9 @@ recording.avi
 # VSCode
 .vscode/
 
+# Pyenv
+*.python-version
+
 # Project ignores
 dev/essentials_converting/essentials/
 builds/

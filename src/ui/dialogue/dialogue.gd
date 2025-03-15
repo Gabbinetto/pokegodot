@@ -24,10 +24,11 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not running:
 		return
-	if running.current_dialogue.get("needs_input") != null:
-		input_arrow.visible = running.current_dialogue.needs_input
-	else:
-		input_arrow.visible = false
+	if input_arrow:
+		if running.current_dialogue.get("needs_input") != null:
+			input_arrow.visible = running.current_dialogue.needs_input
+		else:
+			input_arrow.visible = false
 
 
 ## Run a [DialogueManager]

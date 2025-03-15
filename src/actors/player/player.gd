@@ -1,20 +1,25 @@
 class_name Player extends Actor
 
-const MALE_FRAMES: SpriteFrames = preload("res://src/actors/player/boy_frames.tres")
-const FEMALE_FRAMES: SpriteFrames = preload("res://src/actors/player/girl_frames.tres")
+## The player actor.
+##
+## Actor controlled by the player. Accepts input and moves accordingly.[br][br]
+## [b]Note[/b]: ignores [member Actor.speed] and uses [member walk_speed], [member run_speed] and [member bike_speed].
 
-const ANIMATION_RUN_PREFIX: String = "RUN_"
-const ANIMATION_BIKE_PREFIX: String = "BIKE_"
-const ANIMATION_BIKE_IDLE_PREFIX: String = "BIKE_IDLE_"
+const MALE_FRAMES: SpriteFrames = preload("res://src/actors/player/boy_frames.tres") ## Male [SpriteFrames].
+const FEMALE_FRAMES: SpriteFrames = preload("res://src/actors/player/girl_frames.tres") ## Female [SpriteFrames].
 
-@export var event_ray: RayCast2D
-@export var area: Area2D
-@export var walk_speed: float = 4.0
-@export var run_speed: float = 8.0
-@export var bike_speed: float = 12.0
+const ANIMATION_RUN_PREFIX: String = "RUN_" ## Prefix of the animations in the [SpriteFrames] when running.
+const ANIMATION_BIKE_PREFIX: String = "BIKE_" ## Prefix of the animations in the [SpriteFrames] when on a bike.
+const ANIMATION_BIKE_IDLE_PREFIX: String = "BIKE_IDLE_" ## Prefix of the animations in the [SpriteFrames] when idle on a bike.
 
-var is_running: bool = false
-var on_bike: bool = false
+@export var event_ray: RayCast2D ## Raycast that checks for interactable events in front of the player.
+@export var area: Area2D ## The player detecting area.
+@export var walk_speed: float = 4.0 ## Speed when walking.
+@export var run_speed: float = 8.0 ## Speed when running.
+@export var bike_speed: float = 12.0 ## Speed when biking.
+
+var is_running: bool = false ## True if the player is running. By default, is true when B is pressed.
+var on_bike: bool = false ## True if on a bike.
 
 
 func _ready() -> void:
@@ -34,6 +39,7 @@ func _physics_process(delta: float) -> void:
 		speed = run_speed if is_running else walk_speed
 	
 	if not is_moving:
+		# Can only move horizontally or vertically, not both.
 		if Input.get_axis("Left", "Right") == 0.0:
 			input_direction.y = Input.get_axis("Up", "Down")
 			input_direction.x = 0.0

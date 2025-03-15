@@ -33,6 +33,8 @@ var needs_input: bool:
 		return visible_characters == pauses.keys()[current_pause_index] and pauses[visible_characters] < 0
 
 
+
+
 func process(delta: float) -> void:
 	if done:
 		return

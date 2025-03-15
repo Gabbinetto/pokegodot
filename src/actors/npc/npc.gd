@@ -1,13 +1,15 @@
 class_name NPC extends Actor
 
-signal interact_changed
+## NPC actor.
+##
+## Actor representing an NPC. Has set movements patterns. Pretty useless without an [Event].
 
-@export var movement: Array[NPCMovement]
-@export var loop_movement: bool = true
-var current_step: int = 0
-var target_position: Vector2
-var processing_movement: bool = false
-var step_end_time: float = 0.0
+signal interact_changed ## Emitted when an interaction starts or ends.
+
+@export var movement: Array[NPCMovement] ## This NPC's movement pattern.
+@export var loop_movement: bool = true ## If true, loops around the movement pattern, going back to the first [NPCMovement] when the last one ends.
+var current_step: int = 0 ## Current [NPCMovement] being processed.
+var target_position: Vector2 ## Position the NPC has to move to.
 ## If this is true, the NPC won't advance in its movements,
 ## as it means that it is interacting with the player.
 var interacting: bool = false:
@@ -21,6 +23,7 @@ func _ready() -> void:
 	next_step()
 
 
+## Processes the next step. Automatically calls itself when finished, unless it's the last step and [member loop_movement] is false.
 func next_step() -> void:
 	if current_step >= movement.size():
 		return

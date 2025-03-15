@@ -1,5 +1,8 @@
 class_name BattleEffect extends Resource
 
+## An in-battle effect.
+##
+## An effect that occurs in battle, being that of a move, item or ability.
 
 const BATTLE_EFFECTS_PATH: String = "res://src/battle/battle_effects/"
 

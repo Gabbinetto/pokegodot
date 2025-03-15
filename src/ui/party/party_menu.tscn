@@ -46,7 +46,7 @@ Button/styles/hover = SubResource("StyleBoxTexture_vk85n")
 Button/styles/normal = SubResource("StyleBoxTexture_vk85n")
 Button/styles/pressed = SubResource("StyleBoxTexture_sble2")
 
-[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_summary", "button_switch", "button_menu_cancel")]
+[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_switch_in", "button_summary", "button_switch", "button_item", "button_menu_cancel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,8 +59,10 @@ panels_container = NodePath("Panels")
 cancel_button = NodePath("CancelButton")
 menu = NodePath("Menu")
 menu_buttons_container = NodePath("Menu/VBoxContainer")
+button_switch_in = NodePath("Menu/VBoxContainer/SwitchIn")
 button_summary = NodePath("Menu/VBoxContainer/Summary")
 button_switch = NodePath("Menu/VBoxContainer/Switch")
+button_item = NodePath("Menu/VBoxContainer/Item")
 button_menu_cancel = NodePath("Menu/VBoxContainer/Cancel")
 metadata/_edit_lock_ = true
 
@@ -234,6 +236,14 @@ size_flags_vertical = 0
 theme = ExtResource("15_wqgli")
 theme_override_constants/separation = 0
 alignment = 2
+
+[node name="SwitchIn" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+visible = false
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+text = "Switch in"
 
 [node name="Summary" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
 layout_mode = 2

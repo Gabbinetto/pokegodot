@@ -3,7 +3,7 @@ import json
 import os
 import shutil
 from enum import IntEnum, StrEnum
-from typing import Self
+from typing import Self, Any
 from PIL import Image, ImageOps
 
 BASE_PATH: str = os.path.join("essentials", "PBS")
@@ -23,6 +23,7 @@ class Files(StrEnum):
     POKEMON = "pokemon.txt"
     FORMS = "pokemon_forms.txt"
     TYPES = "types.txt"
+    METRICS = "pokemon_metrics.txt"
 
 
 class GrowthRates(IntEnum):
@@ -149,6 +150,15 @@ class TypeProperties(StrEnum):
     IMMUNITIES = "Immunities"
 
 
+class MetricsProperties(StrEnum):
+    """Based on https://essentialsdocs.fandom.com/wiki/Defining_a_species"""
+    BACK_SPRITE = "BackSprite"
+    FRONT_SPRITE = "FrontSprite"
+    ALTITUDE = "FrontSpriteAltitude"
+    SHADOW_X = "ShadowX"
+    SHADOW_SIZE = "ShadowSize"
+
+
 STATS = ["HP", "ATTACK", "DEFENSE", "SPECIAL_ATTACK", "SPECIAL_DEFENSE", "SPEED"]
 GENDER_RATIOS: dict[str, float] = {
     # Numerator for the fraction that calculates the probability of being female out of 8, so for example Always female is 8/8
@@ -162,7 +172,7 @@ GENDER_RATIOS: dict[str, float] = {
     "Genderless": -1.0,  # Special case
 }
 
-POKEMON_TEMPLATE: dict[str] = {
+POKEMON_TEMPLATE: dict[str, Any] = {
     "name": "Unnamed",
     "form_number": 0,
     "form_name": "",
@@ -198,7 +208,7 @@ POKEMON_TEMPLATE: dict[str] = {
     "evolutions": [],
 }
 
-MOVE_TEMPLATE: dict[str] = {
+MOVE_TEMPLATE: dict[str, Any] = {
     "name": "Unnamed",
     "type": 0,
     "power": 0,
@@ -212,13 +222,23 @@ MOVE_TEMPLATE: dict[str] = {
     "description": "???",
 }
 
-TYPE_TEMPLATE: dict[str] = {
+TYPE_TEMPLATE: dict[str, Any] = {
     "name": "???",
     "number": -1,
     "weaknesses": [],
     "resistances": [],
     "immunities": [],
     "is_special": False,
+}
+
+METRICS_TEMPLATE: dict[str, int] = {
+    "form_number": 0,
+    "front_sprite_x": 0,
+    "front_sprite_y": 0,
+    "back_sprite_x": 0,
+    "back_sprite_y": 0,
+    "shadow_x": 0,
+    "shadow_size": 2,
 }
 
 
@@ -259,9 +279,10 @@ class EssentialsConverter:
     def __init__(self):
         self.buffer: list[list[str]] = []
 
-        self.pokemon: dict[str, dict[str]] = {}
-        self.moves: dict[str, dict[str]] = {}
-        self.types: dict[str, dict[str]] = {}
+        self.pokemon: dict[str, dict[str, Any]] = {}
+        self.moves: dict[str, dict[str, Any]] = {}
+        self.types: dict[str, dict[str, Any]] = {}
+        self.metrics: dict[str, list[dict[str, int]]] = {}
 
         # Create an output path
         os.makedirs(OUTPUT_PATH, exist_ok=True)
@@ -300,7 +321,7 @@ class EssentialsConverter:
     def fetch_pokemon(self) -> Self:
 
         for index, pokemon_data in enumerate(self.buffer):
-            pokemon: dict[str] = copy.deepcopy(POKEMON_TEMPLATE)
+            pokemon: dict[str, Any] = copy.deepcopy(POKEMON_TEMPLATE)
 
             id: str = ""
             form_number: int = 0
@@ -312,8 +333,8 @@ class EssentialsConverter:
                         id, form_number = id.split(",")
                         form_number = int(form_number)
                         if form_number > 0:
-                            forms: list[dict[str]] = self.pokemon[id]["forms"]
-                            base_form: dict[str] = [
+                            forms: list[dict[str, Any]] = self.pokemon[id]["forms"]
+                            base_form: dict[str, Any] = [
                                 form for form in forms if form.get("form_number") == 0
                             ][0]
                             pokemon = copy.deepcopy(base_form)
@@ -422,9 +443,9 @@ class EssentialsConverter:
 
             # region Filter properties for alternate forms
             if form_number > 0:
-                form_properties: dict[str] = {}
-                forms: list[dict[str]] = self.pokemon[id]["forms"]
-                base_form: dict[str] = [
+                form_properties: dict[str, Any] = {}
+                forms: list[dict[str, Any]] = self.pokemon[id]["forms"]
+                base_form: dict[str, Any] = [
                     form for form in forms if form.get("form_number") == 0
                 ][0]
                 # Get only the properties that change from the base form
@@ -437,7 +458,7 @@ class EssentialsConverter:
                 pokemon = form_properties
             # endregion
 
-            if self.pokemon.get(id, None) is None:
+            if not self.pokemon.get(id, None):
                 self.pokemon[id] = {
                     "number": index + 1,
                     "forms": [pokemon],
@@ -449,7 +470,7 @@ class EssentialsConverter:
 
     def fetch_moves(self) -> None:
         for move_data in self.buffer:
-            move: dict[str] = copy.deepcopy(MOVE_TEMPLATE)
+            move: dict[str, Any] = copy.deepcopy(MOVE_TEMPLATE)
             id: str = ""
 
             for item in move_data:
@@ -506,10 +527,10 @@ class EssentialsConverter:
                         move["description"] = value
                 # endregion
             self.moves[id] = move
-    
+
     def fetch_types(self) -> None:
         for type_data in self.buffer:
-            type: dict[str] = copy.deepcopy(TYPE_TEMPLATE)
+            type: dict[str, Any] = copy.deepcopy(TYPE_TEMPLATE)
             id: str = ""
 
             for item in type_data:
@@ -536,6 +557,51 @@ class EssentialsConverter:
             type["number"] = Types[id]
             self.types[id] = type
 
+
+    def fetch_metrics(self) -> Self:
+        for metrics_data in self.buffer:
+            id = ""
+            form_number = 0
+            metrics: dict[str, int] = copy.deepcopy(METRICS_TEMPLATE)
+
+            for item in metrics_data:
+                if item.startswith("["):
+                    id = item.strip("[]")
+                    if "," in id:
+                        id, form_number = id.split(",")
+                        form_number = int(form_number)
+                    metrics["form_number"] = form_number
+                    continue
+
+
+                key, value = self.__get_pair(item)
+
+                match key:
+                    case MetricsProperties.BACK_SPRITE:
+                        x, y = value.split(",")
+                        x, y = int(x), int(y)
+                        metrics["back_sprite_x"] = x * 2
+                        metrics["back_sprite_y"] = y * 2
+                    case MetricsProperties.FRONT_SPRITE:
+                        x, y = value.split(",")
+                        x, y = int(x), int(y)
+                        metrics["front_sprite_x"] = x * 2
+                        metrics["front_sprite_y"] = y* 2
+                    case MetricsProperties.ALTITUDE:
+                        pass # Ignore unused property
+                    case MetricsProperties.SHADOW_X:
+                        metrics["shadow_x"] = int(value) * 2
+                    case MetricsProperties.SHADOW_SIZE:
+                        metrics["shadow_size"] = int(value)
+
+            if not self.metrics.get(id, None):
+                self.metrics[id] = [metrics]
+            else:
+                self.metrics[id].append(metrics)
+
+        return self
+
+
     def save(self, **kwargs) -> Self:
         if kwargs.get("pokemon"):
             with open(
@@ -552,6 +618,11 @@ class EssentialsConverter:
                 os.path.join(OUTPUT_PATH, "types.json"), "w", encoding="utf-8"
             ) as f:
                 json.dump(self.types, f, indent=2)
+        if kwargs.get("metrics"):
+            with open(
+                os.path.join(OUTPUT_PATH, "metrics.json"), "w", encoding="utf-8"
+            ) as f:
+                json.dump(self.metrics, f, indent=2)
 
         return self
 
@@ -570,7 +641,12 @@ class EssentialsConverter:
             with open(
                 os.path.join(OUTPUT_PATH, "types.json"), "r", encoding="utf-8"
             ) as f:
-                self.moves = json.load(f)
+                self.types = json.load(f)
+        if kwargs.get("metrics"):
+            with open(
+                os.path.join(OUTPUT_PATH, "metrics.json"), "r", encoding="utf-8"
+            ) as f:
+                self.metrics = json.load(f)
 
     def generate_sprites_folder(self, stop_at: int = 0) -> Self:
         if stop_at == 0:
@@ -711,7 +787,7 @@ class EssentialsConverter:
         # Bases
         # Merge bases into one image
         for base in bases:
-            image: Image = merge_images_vertically(
+            image: PIL.Image = merge_images_vertically(
                 os.path.join(BATTLEBACKS_PATH, base + "_base0.png"),
                 os.path.join(BATTLEBACKS_PATH, base + "_base1.png"),
             )
@@ -810,5 +886,7 @@ if __name__ == "__main__":
     # converter.save(moves=True)
     # converter.generate_sprites_folder()
     # converter.extract_speech_boxes()
-    converter.open(Files.TYPES).fetch_types()
-    converter.save(types=True)
+    # converter.open(Files.TYPES).fetch_types()
+    # converter.save(types=True)
+    converter.open(Files.METRICS).fetch_metrics()
+    converter.save(metrics=True)

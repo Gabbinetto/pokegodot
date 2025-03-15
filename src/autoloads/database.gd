@@ -20,6 +20,7 @@ var pokemon: Dictionary[String, Dictionary] ## Holds the data in [code]pokemon.j
 var natures: Dictionary[String, Array] ## Holds the data in [code]natures.json[/code]
 var moves: Dictionary[String, Dictionary] ## Holds the data in [code]moves.json[/code]
 var types: Dictionary[String, Dictionary] ## Holds the data in [code]types.json[/code]
+var metrics: Dictionary[String, Array] ## Holds the data in [code]metrics.json[/code]
 
 var zip_total_files: int = 0 # Unused
 var zip_checked_files: int = 0 # Unused
@@ -33,15 +34,16 @@ func _init() -> void:
 			push_error("Failed loading pokemon graphics asset pack.")
 
 	
-	default_front_sprite = load(POKEMON_SPRITES_PATH + "_default/front_n_m.png")
-	default_back_sprite = load(POKEMON_SPRITES_PATH + "_default/back_n_m.png")
-	default_icon_sprite = load(POKEMON_SPRITES_PATH + "_default/icon_n.png")
+	default_front_sprite = Utils.load_or_null(POKEMON_SPRITES_PATH + "_default/front_n_m.png")
+	default_back_sprite = Utils.load_or_null(POKEMON_SPRITES_PATH + "_default/back_n_m.png")
+	default_icon_sprite = Utils.load_or_null(POKEMON_SPRITES_PATH + "_default/icon_n.png")
 
 	# Load JSON files
 	pokemon.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "pokemon.json")))
 	natures.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "natures.json")))
 	moves.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "moves.json")))
 	types.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "types.json")))
+	metrics.assign(JSON.parse_string(FileAccess.get_file_as_string(DATA_PATH + "metrics.json")))
 
 
 ## Unused

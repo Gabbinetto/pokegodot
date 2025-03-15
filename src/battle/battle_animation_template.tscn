@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b47fq53xr1gsm"]
+
+[ext_resource type="Script" uid="uid://bdarnf114q5jf" path="res://src/battle/battle_animation.gd" id="1_5bml2"]
+
+[node name="BattleAnimation" type="Node2D" node_paths=PackedStringArray("pivot")]
+script = ExtResource("1_5bml2")
+pivot = NodePath("Pivot")
+
+[node name="Pivot" type="Marker2D" parent="."]

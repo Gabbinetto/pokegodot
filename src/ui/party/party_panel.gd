@@ -4,6 +4,9 @@ const ICON_MALE: Texture2D = preload("res://assets/graphics/ui/gender_male_icon.
 const ICON_FEMALE: Texture2D = preload("res://assets/graphics/ui/gender_female_icon.png")
 const POKEBALL_ICON: Texture2D = preload("res://assets/graphics/ui/party/icon_ball.png")
 const POKEBALL_ICON_SELECTED: Texture2D = preload("res://assets/graphics/ui/party/icon_ball_sel.png")
+const HP_BAR_NORMAL = preload("res://assets/graphics/ui/party/overlay_hp_back.png")
+const HP_BAR_FAINT = preload("res://assets/graphics/ui/party/overlay_hp_back_faint.png")
+const HP_BAR_SWAP = preload("res://assets/graphics/ui/party/overlay_hp_back_swap.png")
 const SPRITE_ICON_UPDATE_FRAMES: int = 20
 
 @export var pokemon_name: Label
@@ -28,7 +31,7 @@ var pokemon: Pokemon:
 	set(value):
 		pokemon = value
 		if pokemon:
-			pokemon.hp_changed.connect(func(old: int): _sync_hp())
+			pokemon.hp_changed.connect(func(_old: int): _sync_hp())
 			refresh()
 
 var swapping_from: bool = false
@@ -71,16 +74,18 @@ func refresh() -> void:
 		gender_icon.show()
 		gender_icon.texture = ICON_MALE if pokemon.gender == Pokemon.Genders.MALE else ICON_FEMALE
 	pokemon_icon.texture = pokemon.sprite_icon
-	item_icon.visible = pokemon.held_item != null
+	item_icon.visible = pokemon.held_item != null # TODO: Comeback when mail
 	pokeball_icon.texture = POKEBALL_ICON_SELECTED if has_focus() else POKEBALL_ICON
 	
 	
 	if pokemon.hp > 0:
 		texture_normal = texture_default
 		texture_pressed = texture_default_selected
+		hp_bar.texture_under = HP_BAR_NORMAL
 	else:
 		texture_normal = texture_fainted
 		texture_pressed = texture_fainted_selected
+		hp_bar.texture_under = HP_BAR_FAINT
 	
 	if swapping_from and swapping_to:
 		texture_normal = texture_swap_both
@@ -90,6 +95,8 @@ func refresh() -> void:
 		texture_normal = texture_swap_to
 	if swapping_from or swapping_to:
 		texture_pressed = texture_normal
+		hp_bar.texture_under = HP_BAR_SWAP
+		
 
 	texture_hover = texture_normal
 	texture_focused = texture_pressed

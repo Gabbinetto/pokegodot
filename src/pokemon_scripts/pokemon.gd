@@ -158,7 +158,7 @@ var markings: Array[Markings] = [Markings.NONE, Markings.NONE, Markings.NONE, Ma
 var ribbons: Array[int] # TODO: Change to enum eventually
 ## This pokemon's marks.
 var marks: Array[int] # TODO: Change to enum eventually
-## The pokemon this one is fused with. Used for pokemons like Kyurem (with Zekrom and Reshiram), Necrozma (With Solgaleo and Lunala), Calyrex (With Glastrier and Spectrier)
+## The pokemon this one is fused with. Used for pokemons like Kyurem (with Zekrom and Reshiram), Necrozma (With Solgaleo and Lunala) and Calyrex (With Glastrier and Spectrier).
 var fused_pokemon: Pokemon
 
 # Sprites
@@ -203,6 +203,8 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Vari
 			match attribute:
 				"ability":
 					ability = PokemonAbility.new(attributes[attribute])
+				"evs", "ivs", "moves", "contest_stats", "markings", "ribbons", "marks":
+					get(attribute).assign(attributes[attribute])
 				_:
 					set(attribute, attributes[attribute])
 	
@@ -233,6 +235,7 @@ func set_sprites() -> void:
 func calculate_stats() -> void:
 	for stat: String in Globals.STATS:
 		stats[stat] = calculate_stat(self, stat)
+		printt(name, stat, stats[stat])
 
 
 ## Heal this pokemon.
@@ -247,11 +250,18 @@ func set_moves(_level: int) -> void:
 		if moves.size() >= 4:
 			break
 		var moves_at_level: Array[String]
-		for move: Dictionary in species.moves.filter(func(item: Dictionary): return item.level == i):
+		for move: Dictionary in species.moves:
+			if move.level < 1:
+				continue
+			if move.level > _level:
+				break
 			moves_at_level.append(move.id)
+		moves_at_level.reverse()
 
 		for move_id: String in moves_at_level:
-			if moves.size() >= 4:
+			var learnt_moves: Array[String]
+			learnt_moves.assign(moves.map(func(move: PokemonMove): return move.id))
+			if moves.size() >= 4 or learnt_moves.has(move_id):
 				break
 			moves.append(PokemonMove.new(move_id))
 
@@ -303,20 +313,21 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 		for stat: String in Globals.STATS.values():
 			_ivs[stat] = randi_range(0, 31)
 		fixed_attributes["ivs"] = _ivs
-	
+
 	var pokemon: Pokemon = Pokemon.new(_species, 0, fixed_attributes)
 
 	return pokemon
 
 
-## Calculate the [param pokemon] [param stat]. [param stat] should be in [member Globals.STATS].
+## Calculate the [param pokemon] [param stat]. [param stat] should be in [member Globals.STATS].[br]
+## From [url]https://bulbapedia.bulbagarden.net/wiki/Stat#Generation_III_onward[/url]
 static func calculate_stat(pokemon: Pokemon, stat: String) -> int:
 	if stat == Globals.STATS.HP:
 		if pokemon.species.id == "SHEDINJA":
 			return 1
 		return floori(
-			((2.0 * pokemon.species.hp + pokemon.ivs[stat] + floorf(pokemon.evs[stat] / 4.0)) * pokemon.level) / 100.0
+			(((2.0 * pokemon.species.base_stats.HP + pokemon.ivs.HP + floorf(pokemon.evs.HP / 4.0))) * pokemon.level) / 100.0
 		) + pokemon.level + 10
 	return floori(
-		(floorf((2.0 * pokemon.species.base_stats[stat] + pokemon.ivs[stat] + floorf(pokemon.evs[stat] / 4.0)) * pokemon.level / 100.0) + 5.0) * Globals.natures[pokemon.nature][stat]
+		(floori((((2 * pokemon.stats[stat] + pokemon.ivs[stat] + floori(pokemon.evs[stat] / 4.0))) * pokemon.level) / 100.0) + 5) * Globals.natures[pokemon.nature][stat]
 	)

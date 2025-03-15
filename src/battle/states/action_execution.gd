@@ -2,24 +2,20 @@ extends State
 
 
 @export var battle: Battle
-@export var hurt_pivot: Node
-@export var sprite_list: Array[Node2D] # Ordered in the same way of Battle.pokemons
+@export var sprite_list: Array[Node2D] ## Ordered in the same way of Battle.pokemons
 
 
 var current_pokemon: Battle.PokemonBattleInfo
 var animating: bool = false
-var acted: Array[Battle.PokemonBattleInfo]
+var acted: Array[int]
 
 func enter() -> void:
 	acted.clear()
-	battle.show_commands(battle.battle_dialogue_box)
-
-	#await get_tree().create_timer(0.1).timeout
-	#transition.emit(self, "ActionSelection")
+	battle.show_commands(battle.battle_dialogue)
 
 
 func exit() -> void:
-	battle.show_text(battle.battle_dialogue, "")
+	battle.show_text("")
 
 
 func update(_delta: float) -> void:
@@ -36,8 +32,8 @@ func update(_delta: float) -> void:
 		return
 	
 	current_pokemon = battle.pokemons[battle.turn_order.pop_front()]
-	var action: Battle.TurnAction = battle.turn_selections[current_pokemon]
-	acted.append(current_pokemon)
+	var action: Battle.TurnAction = battle.turn_selections[battle.pokemons.find(current_pokemon)]
+	acted.append(battle.pokemons.find(current_pokemon))
 	
 	match action.type:
 		Battle.Actions.FIGHT:
@@ -49,29 +45,53 @@ func update(_delta: float) -> void:
 
 			var damage_list: Array[int] = Battle.damage_calc(battle, action.properties.move, current_pokemon, targets)
 			_start_damage_animation(damage_list, action.properties.move)
+		Battle.Actions.SWITCH:
+			battle.switch(action.properties.from, action.properties.to)
+		Battle.Actions.RUN:
+			var success: bool = Globals.rng.randf() <= battle.calc_escape_chance()
+			animating = true
+			if success:
+				await battle.show_text("Ran away!")
+				battle.end_battle()
+			else:
+				await battle.show_text("Failed to run away!")
+			animating = false
 
 
 func _start_damage_animation(damage_list: Array[int], move: PokemonMove) -> void:
+	var target_sprites: Array[Node2D]
 	for i: int in damage_list.size():
 		if damage_list[i] <= 0:
 			continue
-		var sprite: Node2D = sprite_list[i]
-		sprite.set_meta("original_parent", sprite.get_parent())
-		sprite.reparent(hurt_pivot)
+		target_sprites.append(sprite_list[i])
 	
 	animating = true
-	battle.show_text(battle.battle_dialogue, "%s used %s!" % [current_pokemon.pokemon.name, move.name])
-	await battle.battle_dialogue.finished
+	await battle.show_text("%s used %s!" % [current_pokemon.pokemon.name, move.name])
 	
-	battle.animation_player.play("battle_scene_library/hurt")
+	# TODO: Fix flash not appearing on enemies
+	var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", target_sprites, self)
+	hurt_flash.play()
+	await hurt_flash.finished
+	_apply_damage(damage_list)
+
+	#region Databox animation
+	if damage_list[2] != -1:
+		if battle.double_battle:
+			pass
+		else:
+			await battle.databox_enemy_single.animate_hp_bar().finished
+	if damage_list[3] != -1:
+		pass
+	if damage_list[0] != -1:
+		if battle.double_battle:
+			pass
+		else:
+			await battle.databox_ally_single.animate_hp_bar().finished
+	if damage_list[1] != -1:
+		pass
+	#endregion
 	
-	var on_animation_finish: Callable = func(_anim_name: String):
-		for child: Node in hurt_pivot.get_children():
-			child.reparent(child.get_meta("original_parent"))
-		_apply_damage(damage_list)
-		animating = false
-	
-	battle.animation_player.animation_finished.connect(on_animation_finish, CONNECT_ONE_SHOT | CONNECT_DEFERRED)
+	animating = false
 
 
 func _apply_damage(damage_list: Array[int]) -> void:

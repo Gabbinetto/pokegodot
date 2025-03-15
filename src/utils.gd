@@ -10,3 +10,8 @@ static func load_external_texture(path: String) -> ImageTexture:
 		return ImageTexture.create_from_image(image)
 	else:
 		return
+
+static func load_or_null(path: String) -> Variant:
+	if FileAccess.file_exists(path):
+		return load(path)
+	return

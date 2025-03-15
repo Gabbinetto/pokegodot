@@ -1,10 +1,8 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://crr2mnxmq6k88"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://crr2mnxmq6k88"]
 
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="1_k3ay1"]
-[ext_resource type="Texture2D" uid="uid://tpcx2b0r2pf6" path="res://assets/graphics/ui/battle/target_button.png" id="2_76ith"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cj4qn"]
-atlas = ExtResource("2_76ith")
 region = Rect2(92, 0, 46, 46)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gk4lm"]
@@ -17,7 +15,6 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gk4lm"]
-atlas = ExtResource("2_76ith")
 region = Rect2(46, 46, 46, 46)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jb338"]
@@ -30,7 +27,6 @@ axis_stretch_horizontal = 1
 region_rect = Rect2(0, 0, 46, 46)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jb338"]
-atlas = ExtResource("2_76ith")
 region = Rect2(0, 46, 46, 46)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jd0d3"]
@@ -42,7 +38,6 @@ texture_margin_bottom = 14.0
 axis_stretch_vertical = 2
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3ay1"]
-atlas = ExtResource("2_76ith")
 region = Rect2(46, 0, 46, 46)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k3ay1"]
@@ -55,7 +50,6 @@ axis_stretch_horizontal = 1
 region_rect = Rect2(0, 0, 46, 46)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_76ith"]
-atlas = ExtResource("2_76ith")
 region = Rect2(0, 0, 46, 46)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cj4qn"]

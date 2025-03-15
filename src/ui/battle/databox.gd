@@ -1,6 +1,8 @@
 class_name Databox extends Control
 
 
+const HP_BAR_TIME: float = 1.0 ## Time needed for the HP bar to go from full to empty.
+
 @export var enabled: bool = true
 @export var pokemon: Pokemon:
 	set(value):
@@ -14,7 +16,6 @@ class_name Databox extends Control
 
 
 func _ready() -> void:
-
 	_refresh()
 
 
@@ -22,21 +23,12 @@ func _process(_delta: float) -> void:
 	if not pokemon or not enabled:
 		return
 
+	if is_instance_valid(hp_numbers) and hp_numbers.visible:
+		_set_hp_numbers()
 
-	if is_instance_valid(name_label):
-		name_label.text = pokemon.name
-
-
-	if is_instance_valid(hp_bar) and hp_bar.value != pokemon.hp:
-		hp_bar.value = move_toward(hp_bar.value, pokemon.hp, 1)
-		
-		if is_instance_valid(hp_numbers):
-			hp_numbers.text = "%d/%d" % [hp_bar.value, hp_bar.max_value]
-	
 
 	if is_instance_valid(level_text):
 		level_text.text = str(pokemon.level)
-
 
 	if is_instance_valid(exp_bar):
 		# TODO: Completely revise in the future, possibly with a tween
@@ -56,5 +48,22 @@ func _refresh() -> void:
 		hp_bar.max_value = pokemon.max_hp
 		hp_bar.value = pokemon.hp
 
-	if is_instance_valid(hp_numbers):
-		hp_numbers.text = "%d/%d" % [pokemon.hp, pokemon.max_hp]
+	_set_hp_numbers()
+
+	if is_instance_valid(name_label):
+		name_label.text = pokemon.name
+
+
+func _set_hp_numbers() -> void:
+	if not is_instance_valid(hp_numbers):
+		return
+	hp_numbers.text = "%d/%d" % [pokemon.hp, pokemon.max_hp]
+
+
+func animate_hp_bar() -> Tween:
+	var tween: Tween = create_tween()
+	var time: float = abs(pokemon.hp - hp_bar.value) / pokemon.max_hp * HP_BAR_TIME
+	
+	tween.tween_property(hp_bar, "value", pokemon.hp, time)
+	
+	return tween
