@@ -1,31 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://new8ewxbug0r"]
+[gd_scene load_steps=9 format=3 uid="uid://new8ewxbug0r"]
 
 [ext_resource type="Texture2D" uid="uid://cunan261w1n60" path="res://assets/graphics/ui/battle/databox_normal_foe.png" id="1_gma8s"]
 [ext_resource type="Script" uid="uid://gihojunguedm" path="res://src/ui/battle/databox.gd" id="2_1ke1u"]
 [ext_resource type="Texture2D" uid="uid://db7wwvkp6e32m" path="res://assets/resources/hp_bar_textures/hp_bar_battle_high.tres" id="4_mkov4"]
 [ext_resource type="Script" uid="uid://ciis2yphy0kq4" path="res://src/ui/misc/hp_bar.gd" id="4_xbbhl"]
 [ext_resource type="Texture2D" uid="uid://ciylakjyru70a" path="res://assets/resources/hp_bar_textures/hp_bar_battle_middle.tres" id="6_2hs23"]
-[ext_resource type="Shader" uid="uid://b5hwb64hudevv" path="res://src/vfx/text_shadow.gdshader" id="6_rop3j"]
-[ext_resource type="Material" uid="uid://cnlxit28xvweh" path="res://assets/resources/text_shadow_material.tres" id="6_u6o0w"]
-[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="7_6wymj"]
 [ext_resource type="Texture2D" uid="uid://cd5dl6y687btc" path="res://assets/resources/hp_bar_textures/hp_bar_battle_low.tres" id="7_odyby"]
-[ext_resource type="FontFile" uid="uid://de1fxnae5kucj" path="res://assets/fonts/raw/hgss-databox-numbers.ttf" id="7_xbbhl"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_6tbnn"]
-font = ExtResource("7_6wymj")
-font_size = 32
-font_color = Color(0.282353, 0.282353, 0.282353, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1blkg"]
-shader = ExtResource("6_rop3j")
-shader_parameter/outline_color = Color(0.635, 0.635, 0.667, 1)
-shader_parameter/outline_width = 2
-shader_parameter/directions = Basis(0, 0, 0, 0, 0, 1, 0, 1, 0)
-
-[sub_resource type="LabelSettings" id="LabelSettings_6qul3"]
-font = ExtResource("7_xbbhl")
-font_size = 8
-font_color = Color(0.282353, 0.282353, 0.282353, 1)
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/text_resources/default_gray.tres" id="8_6qul3"]
+[ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/text_resources/databox_numbers.tres" id="10_6qul3"]
 
 [node name="DataboxEnemy" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "level_text")]
 offset_right = 260.0
@@ -58,7 +40,6 @@ metadata/_custom_type_script = "uid://ciis2yphy0kq4"
 metadata/_edit_lock_ = true
 
 [node name="PokemonName" type="Label" parent="."]
-material = ExtResource("6_u6o0w")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.031
@@ -70,10 +51,9 @@ offset_top = -12.01
 offset_right = 127.94
 offset_bottom = 11.99
 text = "Pikachu"
-label_settings = SubResource("LabelSettings_6tbnn")
+label_settings = ExtResource("8_6qul3")
 
 [node name="Level" type="Label" parent="."]
-material = SubResource("ShaderMaterial_1blkg")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.677
@@ -85,5 +65,5 @@ offset_top = -31.22
 offset_right = 31.98
 offset_bottom = -20.22
 text = "100"
-label_settings = SubResource("LabelSettings_6qul3")
+label_settings = ExtResource("10_6qul3")
 metadata/_edit_lock_ = true

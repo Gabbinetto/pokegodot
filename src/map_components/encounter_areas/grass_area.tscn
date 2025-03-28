@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwcvr0slvtms7"]
+
+[ext_resource type="Script" uid="uid://drewrhb6xfalb" path="res://src/map_components/encounter_areas/grass_area.gd" id="1_o604t"]
+[ext_resource type="Texture2D" uid="uid://bcdok3bkbotyc" path="res://assets/graphics/ui/grass_encounter.png" id="2_o8xf6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c6mu0"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0si2f"]
+atlas = ExtResource("2_o8xf6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6mk8"]
+atlas = ExtResource("2_o8xf6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyvlg"]
+atlas = ExtResource("2_o8xf6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2swym"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0si2f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6mk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyvlg")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"walked",
+"speed": 10.0
+}]
+
+[node name="GrassArea" type="Area2D" node_paths=PackedStringArray("leaves_sprite")]
+script = ExtResource("1_o604t")
+leaves_sprite = NodePath("Sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_c6mu0")
+debug_color = Color(0, 1, 0, 0.419608)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(16, 16)
+sprite_frames = SubResource("SpriteFrames_2swym")
+animation = &"walked"
+autoplay = "default"
+frame = 3
+frame_progress = 1.0

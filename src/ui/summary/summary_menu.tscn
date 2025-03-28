@@ -1,0 +1,1293 @@
+[gd_scene load_steps=57 format=3 uid="uid://crc0aprbfm7r"]
+
+[ext_resource type="Texture2D" uid="uid://e0b8aaenr7if" path="res://assets/graphics/ui/summary/backgrounds/bg_1.png" id="1_f4kky"]
+[ext_resource type="Script" uid="uid://cvsvw8m78vivj" path="res://src/ui/summary/summary_menu.gd" id="1_tb872"]
+[ext_resource type="Texture2D" uid="uid://cirdijukgj2ub" path="res://assets/graphics/ui/summary/info_panel.png" id="2_1kxk4"]
+[ext_resource type="Texture2D" uid="uid://bxl5c7o8y16lt" path="res://assets/graphics/ui/summary/backgrounds/bg_2.png" id="2_oubds"]
+[ext_resource type="Texture2D" uid="uid://dbnl15u1e3qlx" path="res://assets/graphics/ui/summary/backgrounds/bg_3.png" id="3_ptlt0"]
+[ext_resource type="Texture2D" uid="uid://10f37jo56aie" path="res://assets/graphics/ui/summary/summary_exp_overlay.png" id="3_qsy4l"]
+[ext_resource type="Texture2D" uid="uid://dqp5ut83jiots" path="res://assets/graphics/ui/summary/summary_exp_bar.png" id="4_0i5vf"]
+[ext_resource type="Texture2D" uid="uid://kuh3opwfuit" path="res://assets/graphics/ui/summary/backgrounds/bg_4.png" id="4_1kxk4"]
+[ext_resource type="Texture2D" uid="uid://cg4uak04jagt1" path="res://assets/graphics/ui/summary/backgrounds/bg_5.png" id="5_v21jn"]
+[ext_resource type="Texture2D" uid="uid://bp52xkajtdy5k" path="res://assets/graphics/ui/summary/name_panel.png" id="6_oubds"]
+[ext_resource type="Texture2D" uid="uid://cgysd5ouxsglb" path="res://assets/graphics/ui/summary/trainer_memo_panel.png" id="6_uk5lu"]
+[ext_resource type="Texture2D" uid="uid://dly23mae04v5c" path="res://assets/graphics/ui/summary/item_panel.png" id="7_ptlt0"]
+[ext_resource type="LabelSettings" uid="uid://bsv7mfc7inrpc" path="res://assets/resources/text_resources/light_gray.tres" id="9_2qb73"]
+[ext_resource type="LabelSettings" uid="uid://cocujbj5rvt00" path="res://assets/resources/text_resources/dark_gray.tres" id="9_wp0nx"]
+[ext_resource type="Texture2D" uid="uid://cuc5myebefu0e" path="res://assets/graphics/ui/summary/lv_icon.png" id="10_0i5vf"]
+[ext_resource type="LabelSettings" uid="uid://6its8el137o1" path="res://assets/resources/text_resources/blue.tres" id="11_udauf"]
+[ext_resource type="Texture2D" uid="uid://dqkw3bmhw4qcc" path="res://assets/graphics/ui/summary/buttons/info.png" id="14_bo0hq"]
+[ext_resource type="Texture2D" uid="uid://dkw1wdy27w2vv" path="res://assets/graphics/ui/summary/buttons/info_selected.png" id="15_822hw"]
+[ext_resource type="LabelSettings" uid="uid://wrhb2r7f2xhy" path="res://assets/resources/text_resources/red.tres" id="16_bivp4"]
+[ext_resource type="Texture2D" uid="uid://625lat6j16xm" path="res://assets/graphics/ui/summary/buttons/trainer_memo.png" id="16_r6x8v"]
+[ext_resource type="Texture2D" uid="uid://cmuu5cpluojrh" path="res://assets/graphics/ui/summary/buttons/trainer_memo_selected.png" id="17_0aokn"]
+[ext_resource type="LabelSettings" uid="uid://7pbu8bhyuiuc" path="res://assets/resources/text_resources/dark_gray_multiline.tres" id="17_a1e8x"]
+[ext_resource type="Texture2D" uid="uid://c2dic1o4a7l61" path="res://assets/graphics/ui/summary/buttons/skills.png" id="18_bopv8"]
+[ext_resource type="Texture2D" uid="uid://bm522klm7neyc" path="res://assets/graphics/ui/summary/buttons/skills_selected.png" id="19_7bdy5"]
+[ext_resource type="Texture2D" uid="uid://bequg5m4ks1xm" path="res://assets/graphics/ui/summary/skills_panel.png" id="19_whs73"]
+[ext_resource type="Texture2D" uid="uid://co54wsowug3us" path="res://assets/graphics/ui/summary/buttons/info_focus.png" id="20_0a83c"]
+[ext_resource type="Texture2D" uid="uid://di18joed2b3lp" path="res://assets/graphics/ui/summary/skiils_hp_bar.png" id="20_jn7my"]
+[ext_resource type="Texture2D" uid="uid://dsaxwmin5xi06" path="res://assets/graphics/ui/summary/buttons/moves.png" id="20_m8n3k"]
+[ext_resource type="Texture2D" uid="uid://cklahfu5p60x2" path="res://assets/graphics/ui/gender_male_icon.png" id="21_p1sa8"]
+[ext_resource type="Texture2D" uid="uid://db7wwvkp6e32m" path="res://assets/resources/hp_bar_textures/hp_bar_battle_high.tres" id="21_tns8j"]
+[ext_resource type="Texture2D" uid="uid://bskcotpoohi1s" path="res://assets/graphics/ui/summary/buttons/moves_selected.png" id="21_ussf2"]
+[ext_resource type="Script" uid="uid://ciis2yphy0kq4" path="res://src/ui/misc/hp_bar.gd" id="21_yjbnj"]
+[ext_resource type="Texture2D" uid="uid://bf2yukme1wjyx" path="res://assets/graphics/ui/summary/buttons/ribbons.png" id="22_oorjm"]
+[ext_resource type="Texture2D" uid="uid://b0637cjde4awu" path="res://assets/graphics/ui/summary/buttons/trainer_memo_focus.png" id="22_wp0nx"]
+[ext_resource type="Texture2D" uid="uid://dpyibh6rxrwr8" path="res://assets/graphics/ui/summary/buttons/ribbons_selected.png" id="23_jphqo"]
+[ext_resource type="Texture2D" uid="uid://ciylakjyru70a" path="res://assets/resources/hp_bar_textures/hp_bar_battle_middle.tres" id="23_uhmvo"]
+[ext_resource type="Texture2D" uid="uid://bp8ytdr3thhd3" path="res://assets/graphics/ui/summary/buttons/skills_focus.png" id="24_2qb73"]
+[ext_resource type="Texture2D" uid="uid://cd5dl6y687btc" path="res://assets/resources/hp_bar_textures/hp_bar_battle_low.tres" id="24_jhijp"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="25_qxruy"]
+[ext_resource type="Texture2D" uid="uid://bc70i1rjjiit6" path="res://assets/graphics/ui/summary/buttons/moves_focus.png" id="26_udauf"]
+[ext_resource type="Texture2D" uid="uid://dqd5eb3s57af3" path="res://assets/graphics/ui/summary/moves_panel.png" id="26_uhmvo"]
+[ext_resource type="PackedScene" uid="uid://dtptkf1wx7ag4" path="res://src/ui/summary/summary_move_button.tscn" id="27_fdwo2"]
+[ext_resource type="Texture2D" uid="uid://bme0v0ghpuwq3" path="res://assets/graphics/ui/summary/moves_detail_panel.png" id="27_jhijp"]
+[ext_resource type="Texture2D" uid="uid://dfga10061l331" path="res://assets/graphics/ui/summary/buttons/ribbons_focus.png" id="28_p1sa8"]
+[ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/misc/z_index_focus.gd" id="28_qljio"]
+[ext_resource type="Texture2D" uid="uid://catul0ywud4h0" path="res://assets/resources/move_category_textures/physical.tres" id="30_lomps"]
+[ext_resource type="Texture2D" uid="uid://cnxrnq1lvbov6" path="res://assets/graphics/ui/summary/summary_cross.png" id="47_wm2h6"]
+[ext_resource type="Texture2D" uid="uid://ctdypc3001cfm" path="res://assets/graphics/ui/summary/summary_cross_focus.png" id="48_4r0kn"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_wm2h6"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_4r0kn"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_p04ah"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_sy5fp"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p04ah"]
+size = Vector2(128, 64)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_0i5vf"]
+size = Vector2(192, 192)
+
+[sub_resource type="LabelSettings" id="LabelSettings_whs73"]
+line_spacing = 6.0
+font = ExtResource("25_qxruy")
+font_size = 32
+font_color = Color(0.752941, 0.784314, 0.815686, 1)
+shadow_size = 4
+shadow_color = Color(0.815686, 0.847059, 0.878431, 1)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_oorjm"]
+
+[node name="SummaryMenu" type="Control" node_paths=PackedStringArray("screens", "screen_buttons", "moves_screen_button", "close_button", "pokemon_name", "pokemon_level", "pokemon_sprite", "pokemon_gender_icon", "info_dex_number", "info_species", "info_type_1", "info_type_2", "info_ot", "info_id_number", "info_exp", "info_next_exp", "info_exp_bar", "memo_nature", "memo_date_obtained", "memo_met_place", "memo_met_level", "memo_personality", "skills_hp", "skills_hp_bar", "skills_stats_names", "skills_stats_values", "skills_ability", "skills_ability_description", "moves_buttons", "moves_detail_panel", "moves_detail_icon", "moves_detail_type_1", "moves_detail_type_2", "moves_category", "moves_power", "moves_accuracy", "moves_description")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tb872")
+screens = [NodePath("Info"), NodePath("TrainerMemo"), NodePath("Skills"), NodePath("Moves"), NodePath("Ribbons")]
+screen_buttons = [NodePath("ScreenButtons/Info"), NodePath("ScreenButtons/TrainerMemo"), NodePath("ScreenButtons/Skills"), NodePath("ScreenButtons/Moves"), NodePath("ScreenButtons/Ribbons")]
+screen_buttons_pressed = Array[Texture2D]([ExtResource("15_822hw"), ExtResource("17_0aokn"), ExtResource("19_7bdy5"), ExtResource("21_ussf2"), ExtResource("23_jphqo")])
+moves_screen_button = NodePath("ScreenButtons/Moves")
+close_button = NodePath("CloseButton")
+pokemon_name = NodePath("NamePanel/PokemonName")
+pokemon_level = NodePath("NamePanel/PokemonLevel")
+pokemon_sprite = NodePath("PokemonSprite")
+pokemon_gender_icon = NodePath("NamePanel/GenderIcon")
+info_dex_number = NodePath("Info/InfoPanel/DexNo/Value")
+info_species = NodePath("Info/InfoPanel/Species/Value")
+info_type_1 = NodePath("Info/InfoPanel/Type/HBoxContainer/Type1")
+info_type_2 = NodePath("Info/InfoPanel/Type/HBoxContainer/Type2")
+info_ot = NodePath("Info/InfoPanel/OT/Value")
+info_id_number = NodePath("Info/InfoPanel/IDNo/Value")
+info_exp = NodePath("Info/InfoPanel/Exp/Value")
+info_next_exp = NodePath("Info/InfoPanel/NextExp/Value")
+info_exp_bar = NodePath("Info/InfoPanel/ExpBar")
+memo_nature = NodePath("TrainerMemo/InfoPanel/HBoxContainer/Nature")
+memo_date_obtained = NodePath("TrainerMemo/InfoPanel/DateObtained")
+memo_met_place = NodePath("TrainerMemo/InfoPanel/MetPlace")
+memo_met_level = NodePath("TrainerMemo/InfoPanel/MetLevel")
+memo_personality = NodePath("TrainerMemo/InfoPanel/Personality")
+skills_hp = NodePath("Skills/InfoPanel/Hp")
+skills_hp_bar = NodePath("Skills/InfoPanel/HPBar")
+skills_stats_names = [NodePath("Skills/InfoPanel/Attack/Label"), NodePath("Skills/InfoPanel/Defense/Label"), NodePath("Skills/InfoPanel/SpecialAttack/Label"), NodePath("Skills/InfoPanel/SpecialDefense/Label"), NodePath("Skills/InfoPanel/Speed/Label")]
+skills_stats_values = [NodePath("Skills/InfoPanel/Attack/Value"), NodePath("Skills/InfoPanel/Defense/Value"), NodePath("Skills/InfoPanel/SpecialAttack/Value"), NodePath("Skills/InfoPanel/SpecialDefense/Value"), NodePath("Skills/InfoPanel/Speed/Value")]
+skills_ability = NodePath("Skills/InfoPanel/Ability")
+skills_ability_description = NodePath("Skills/InfoPanel/AbilityDescription")
+moves_buttons = [NodePath("Moves/InfoPanel/Move1"), NodePath("Moves/InfoPanel/Move2"), NodePath("Moves/InfoPanel/Move3"), NodePath("Moves/InfoPanel/Move4")]
+moves_detail_panel = NodePath("Moves/DetailPanel")
+moves_detail_icon = NodePath("Moves/DetailPanel/PokemonIcon")
+moves_detail_type_1 = NodePath("Moves/DetailPanel/HBoxContainer/Type1")
+moves_detail_type_2 = NodePath("Moves/DetailPanel/HBoxContainer/Type2")
+moves_category = NodePath("Moves/DetailPanel/Category/Value")
+moves_power = NodePath("Moves/DetailPanel/Power/Value")
+moves_accuracy = NodePath("Moves/DetailPanel/Accuracy/Value")
+moves_description = NodePath("Moves/DetailPanel/ScrollContainer/Description")
+metadata/_edit_lock_ = true
+
+[node name="Info" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="Info"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_f4kky")
+metadata/_edit_lock_ = true
+
+[node name="ScreenName" type="Label" parent="Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105469
+anchor_top = 0.0520833
+anchor_right = 0.199219
+anchor_bottom = 0.114583
+text = "INFO"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="InfoPanel" type="TextureRect" parent="Info"]
+layout_mode = 0
+anchor_left = 0.4375
+anchor_top = 0.192708
+anchor_right = 0.992188
+anchor_bottom = 0.96875
+mouse_filter = 0
+texture = ExtResource("2_1kxk4")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="DexNo" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 278.0
+offset_bottom = 36.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/DexNo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "Dex No."
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Info/InfoPanel/DexNo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -26.0
+text = "999"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Species" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 38.0
+offset_right = 278.0
+offset_bottom = 68.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/Species"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "Species"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Info/InfoPanel/Species"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -26.0
+text = "..."
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Type" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 70.0
+offset_right = 278.0
+offset_bottom = 100.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/Type"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "Type"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Info/InfoPanel/Type"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.00012
+offset_right = 134.0
+offset_bottom = 0.00012207
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Type1" type="TextureRect" parent="Info/InfoPanel/Type/HBoxContainer"]
+layout_mode = 2
+stretch_mode = 2
+
+[node name="Type2" type="TextureRect" parent="Info/InfoPanel/Type/HBoxContainer"]
+layout_mode = 2
+stretch_mode = 2
+
+[node name="OT" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 102.0
+offset_right = 278.0
+offset_bottom = 132.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/OT"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "OT"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Info/InfoPanel/OT"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -26.0
+text = "..."
+label_settings = ExtResource("11_udauf")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="IDNo" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 134.0
+offset_right = 278.0
+offset_bottom = 164.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/IDNo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "ID No."
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Info/InfoPanel/IDNo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -138.0
+offset_top = -26.0
+text = "99999"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Exp" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 166.0
+offset_right = 278.0
+offset_bottom = 196.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/Exp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "Exp. Points"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Info/InfoPanel/Exp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.971
+anchor_top = 2.0
+anchor_right = 0.971
+anchor_bottom = 2.0
+offset_left = -138.112
+offset_top = -26.0
+offset_right = -0.11203
+text = "5,690"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="NextExp" type="Control" parent="Info/InfoPanel"]
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 230.0
+offset_right = 278.0
+offset_bottom = 260.0
+
+[node name="Label" type="Label" parent="Info/InfoPanel/NextExp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0294118
+anchor_top = 0.133333
+anchor_right = 0.316176
+anchor_bottom = 0.933333
+text = "To Next Lv."
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Info/InfoPanel/NextExp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.971
+anchor_top = 2.0
+anchor_right = 0.971
+anchor_bottom = 2.0
+offset_left = -138.112
+offset_top = -26.0
+offset_right = -0.11203
+text = "5,690"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ExpBar" type="TextureProgressBar" parent="Info/InfoPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.330986
+anchor_top = 0.986577
+anchor_right = 0.957746
+anchor_bottom = 1.03356
+offset_bottom = 3.05176e-05
+value = 50.0
+texture_under = ExtResource("3_qsy4l")
+texture_progress = ExtResource("4_0i5vf")
+texture_progress_offset = Vector2(44, 4)
+metadata/_edit_use_anchors_ = true
+
+[node name="TrainerMemo" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="TrainerMemo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_oubds")
+metadata/_edit_lock_ = true
+
+[node name="InfoPanel" type="TextureRect" parent="TrainerMemo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4375
+anchor_top = 0.192708
+anchor_right = 0.992188
+anchor_bottom = 0.96875
+texture = ExtResource("6_uk5lu")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TrainerMemo/InfoPanel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -0.99987
+offset_right = 148.0
+offset_bottom = -259.0
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Nature" type="Label" parent="TrainerMemo/InfoPanel/HBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("16_bivp4")
+
+[node name="Label" type="Label" parent="TrainerMemo/InfoPanel/HBoxContainer"]
+layout_mode = 2
+text = "nature."
+label_settings = ExtResource("9_wp0nx")
+
+[node name="DateObtained" type="Label" parent="TrainerMemo/InfoPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0001
+offset_right = 90.0
+offset_bottom = 64.0001
+label_settings = ExtResource("9_wp0nx")
+
+[node name="MetPlace" type="Label" parent="TrainerMemo/InfoPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 72.0001
+offset_right = 90.0
+offset_bottom = 96.0001
+label_settings = ExtResource("16_bivp4")
+
+[node name="MetLevel" type="Label" parent="TrainerMemo/InfoPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 104.0
+offset_right = 90.0
+offset_bottom = 128.0
+label_settings = ExtResource("9_wp0nx")
+
+[node name="Personality" type="Label" parent="TrainerMemo/InfoPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 168.0
+offset_right = 276.0
+offset_bottom = 192.0
+label_settings = ExtResource("17_a1e8x")
+autowrap_mode = 3
+
+[node name="ScreenName" type="Label" parent="TrainerMemo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105469
+anchor_top = 0.0520833
+anchor_right = 0.378906
+anchor_bottom = 0.114583
+text = "TRAINER MEMO"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="Skills" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="Skills"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ptlt0")
+metadata/_edit_lock_ = true
+
+[node name="ScreenName" type="Label" parent="Skills"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105469
+anchor_top = 0.0520833
+anchor_right = 0.246094
+anchor_bottom = 0.114583
+text = "SKILLS"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="InfoPanel" type="TextureRect" parent="Skills"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.417969
+anchor_top = 0.192708
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("19_whs73")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HPBar" type="TextureProgressBar" parent="Skills/InfoPanel"]
+layout_mode = 0
+anchor_left = 0.38255
+anchor_top = 0.116129
+anchor_right = 0.832215
+anchor_bottom = 0.161291
+value = 100.0
+texture_under = ExtResource("20_jn7my")
+texture_progress = ExtResource("21_tns8j")
+texture_progress_offset = Vector2(32, 4)
+script = ExtResource("21_yjbnj")
+high_texture = ExtResource("21_tns8j")
+middle_texture = ExtResource("23_uhmvo")
+low_texture = ExtResource("24_jhijp")
+metadata/_custom_type_script = "uid://ciis2yphy0kq4"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0939597
+anchor_top = 0.0193548
+anchor_right = 0.463087
+anchor_bottom = 0.109677
+text = "HP"
+label_settings = ExtResource("9_2qb73")
+horizontal_alignment = 1
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Hp" type="Label" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.47651
+anchor_top = 0.0193548
+anchor_right = 0.812081
+anchor_bottom = 0.109677
+text = "999/999"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Attack" type="Control" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchor_left = 0.0872483
+anchor_top = 0.161291
+anchor_right = 0.912752
+anchor_bottom = 0.258065
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Skills/InfoPanel/Attack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0325203
+anchor_right = 0.455285
+anchor_bottom = 0.933333
+text = "Attack"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Skills/InfoPanel/Attack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.471545
+anchor_right = 0.878049
+anchor_bottom = 0.933333
+text = "00"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Defense" type="Control" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchor_left = 0.0872483
+anchor_top = 0.264517
+anchor_right = 0.912752
+anchor_bottom = 0.361291
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Skills/InfoPanel/Defense"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0325203
+anchor_right = 0.455285
+anchor_bottom = 0.933333
+text = "Defense"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Skills/InfoPanel/Defense"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.471545
+anchor_right = 0.878049
+anchor_bottom = 0.933333
+text = "00"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SpecialAttack" type="Control" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchor_left = 0.0872483
+anchor_top = 0.367742
+anchor_right = 0.912752
+anchor_bottom = 0.464517
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Skills/InfoPanel/SpecialAttack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0325203
+anchor_right = 0.455285
+anchor_bottom = 0.933333
+text = "Sp. Atk"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Skills/InfoPanel/SpecialAttack"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.471545
+anchor_right = 0.878049
+anchor_bottom = 0.933333
+text = "00"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SpecialDefense" type="Control" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchor_left = 0.0872483
+anchor_top = 0.470968
+anchor_right = 0.912752
+anchor_bottom = 0.567742
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Skills/InfoPanel/SpecialDefense"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0325203
+anchor_right = 0.455285
+anchor_bottom = 0.933333
+text = "Sp. Def"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Skills/InfoPanel/SpecialDefense"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.471545
+anchor_right = 0.878049
+anchor_bottom = 0.933333
+text = "00"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Speed" type="Control" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchor_left = 0.0872483
+anchor_top = 0.574194
+anchor_right = 0.912752
+anchor_bottom = 0.670968
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Skills/InfoPanel/Speed"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0325203
+anchor_right = 0.455285
+anchor_bottom = 0.933333
+text = "Speed"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Skills/InfoPanel/Speed"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.471545
+anchor_right = 0.878049
+anchor_bottom = 0.933333
+text = "00"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 2
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.033557
+anchor_top = 0.703226
+anchor_right = 0.261745
+anchor_bottom = 0.780646
+text = "Ability"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Ability" type="Label" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.496644
+anchor_top = 0.703226
+anchor_right = 0.986577
+anchor_bottom = 0.780646
+label_settings = ExtResource("9_wp0nx")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="AbilityDescription" type="Label" parent="Skills/InfoPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.033557
+anchor_top = 0.806452
+anchor_right = 1.0
+anchor_bottom = 0.987097
+label_settings = ExtResource("17_a1e8x")
+vertical_alignment = 2
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Moves" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="Moves"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_1kxk4")
+metadata/_edit_lock_ = true
+
+[node name="ScreenName" type="Label" parent="Moves"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105469
+anchor_top = 0.0520833
+anchor_right = 0.222656
+anchor_bottom = 0.114583
+text = "MOVES"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="InfoPanel" type="TextureRect" parent="Moves"]
+z_index = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.46875
+anchor_top = 0.239583
+anchor_right = 0.960938
+anchor_bottom = 0.932291
+mouse_filter = 0
+texture = ExtResource("26_uhmvo")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+
+[node name="Move1" parent="Moves/InfoPanel" instance=ExtResource("27_fdwo2")]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.270677
+grow_vertical = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../../ScreenButtons/Moves")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Move2")
+button_group = SubResource("ButtonGroup_wm2h6")
+
+[node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move1"]
+script = ExtResource("28_qljio")
+metadata/_custom_type_script = "uid://ba5nka84o1geb"
+
+[node name="Move2" parent="Moves/InfoPanel" instance=ExtResource("27_fdwo2")]
+layout_mode = 1
+anchor_top = 0.240602
+anchor_right = 1.0
+anchor_bottom = 0.511278
+grow_vertical = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Move1")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Move3")
+button_group = SubResource("ButtonGroup_4r0kn")
+
+[node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move2"]
+script = ExtResource("28_qljio")
+metadata/_custom_type_script = "uid://ba5nka84o1geb"
+
+[node name="Move3" parent="Moves/InfoPanel" instance=ExtResource("27_fdwo2")]
+layout_mode = 1
+anchor_top = 0.481203
+anchor_right = 1.0
+anchor_bottom = 0.75188
+grow_vertical = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Move2")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Move4")
+button_group = SubResource("ButtonGroup_p04ah")
+
+[node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move3"]
+script = ExtResource("28_qljio")
+metadata/_custom_type_script = "uid://ba5nka84o1geb"
+
+[node name="Move4" parent="Moves/InfoPanel" instance=ExtResource("27_fdwo2")]
+layout_mode = 1
+anchor_top = 0.721805
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_vertical = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Move3")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+button_group = SubResource("ButtonGroup_sy5fp")
+
+[node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move4"]
+script = ExtResource("28_qljio")
+metadata/_custom_type_script = "uid://ba5nka84o1geb"
+
+[node name="DetailPanel" type="TextureRect" parent="Moves"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.145833
+anchor_right = 0.476562
+anchor_bottom = 1.0
+mouse_filter = 0
+texture = ExtResource("27_jhijp")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+
+[node name="Category" type="Control" parent="Moves/DetailPanel"]
+layout_mode = 1
+anchor_top = 0.195122
+anchor_right = 0.97541
+anchor_bottom = 0.292683
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Moves/DetailPanel/Category"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0840336
+anchor_right = 0.508403
+anchor_bottom = 0.9375
+text = "CATEGORY"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="TextureRect" parent="Moves/DetailPanel/Category"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.697479
+anchor_top = 0.125
+anchor_right = 0.966387
+anchor_bottom = 1.0
+texture = ExtResource("30_lomps")
+metadata/_edit_use_anchors_ = true
+
+[node name="Power" type="Control" parent="Moves/DetailPanel"]
+layout_mode = 1
+anchor_top = 0.292683
+anchor_right = 0.97541
+anchor_bottom = 0.390244
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Moves/DetailPanel/Power"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0840336
+anchor_right = 0.508403
+anchor_bottom = 0.9375
+text = "POWER"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Moves/DetailPanel/Power"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.672269
+anchor_right = 0.991597
+anchor_bottom = 0.9375
+text = "---"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 1
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Accuracy" type="Control" parent="Moves/DetailPanel"]
+layout_mode = 1
+anchor_top = 0.390244
+anchor_right = 0.97541
+anchor_bottom = 0.487805
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Moves/DetailPanel/Accuracy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0840336
+anchor_right = 0.508403
+anchor_bottom = 0.9375
+text = "ACCURACY"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Value" type="Label" parent="Moves/DetailPanel/Accuracy"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.672269
+anchor_right = 0.991597
+anchor_bottom = 0.9375
+text = "100%"
+label_settings = ExtResource("9_wp0nx")
+horizontal_alignment = 1
+vertical_alignment = 2
+text_overrun_behavior = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Moves/DetailPanel"]
+layout_mode = 0
+anchor_left = 0.0163934
+anchor_top = 0.506097
+anchor_right = 0.97541
+anchor_bottom = 0.981707
+offset_bottom = 78.0
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Description" type="Label" parent="Moves/DetailPanel/ScrollContainer"]
+custom_minimum_size = Vector2(234, 234)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = ExtResource("17_a1e8x")
+autowrap_mode = 2
+
+[node name="PokemonIcon" type="Sprite2D" parent="Moves/DetailPanel"]
+position = Vector2(50, 32.0001)
+texture = SubResource("PlaceholderTexture2D_p04ah")
+hframes = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Moves/DetailPanel"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -17.0
+offset_top = 22.0001
+offset_right = 97.0
+offset_bottom = -278.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Type1" type="TextureRect" parent="Moves/DetailPanel/HBoxContainer"]
+layout_mode = 2
+stretch_mode = 2
+
+[node name="Type2" type="TextureRect" parent="Moves/DetailPanel/HBoxContainer"]
+layout_mode = 2
+stretch_mode = 2
+
+[node name="Ribbons" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="Ribbons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_v21jn")
+metadata/_edit_lock_ = true
+
+[node name="ScreenName" type="Label" parent="Ribbons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105469
+anchor_top = 0.0520833
+anchor_right = 0.269531
+anchor_bottom = 0.114583
+text = "RIBBONS"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="CloseButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.046875
+anchor_top = 0.0520833
+anchor_right = 0.09375
+anchor_bottom = 0.114583
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../ScreenButtons/Info")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../ScreenButtons/Info")
+texture_normal = ExtResource("47_wm2h6")
+texture_pressed = ExtResource("47_wm2h6")
+texture_hover = ExtResource("47_wm2h6")
+texture_focused = ExtResource("48_4r0kn")
+metadata/_edit_use_anchors_ = true
+
+[node name="PokemonSprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015625
+anchor_top = 0.286458
+anchor_right = 0.390625
+anchor_bottom = 0.786458
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_0i5vf")
+stretch_mode = 3
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="NamePanel" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.146
+anchor_bottom = 0.146
+offset_top = -0.064003
+offset_right = 200.0
+offset_bottom = 67.936
+texture = ExtResource("6_oubds")
+
+[node name="LvIcon" type="TextureRect" parent="NamePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.175
+anchor_top = 0.809
+anchor_right = 0.175
+anchor_bottom = 0.809
+offset_left = -11.0
+offset_top = -7.012
+offset_right = 11.0
+offset_bottom = 6.988
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_0i5vf")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="PokemonName" type="Label" parent="NamePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.23
+anchor_top = 0.147059
+anchor_right = 0.65
+anchor_bottom = 0.5
+text = "Pikachu"
+label_settings = ExtResource("9_2qb73")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="PokemonLevel" type="Label" parent="NamePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.23
+anchor_top = 0.588235
+anchor_right = 0.65
+anchor_bottom = 0.941176
+text = "100"
+label_settings = ExtResource("9_wp0nx")
+vertical_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="GenderIcon" type="TextureRect" parent="NamePanel"]
+layout_mode = 0
+offset_left = 178.0
+offset_top = 12.0
+offset_right = 190.0
+offset_bottom = 32.0
+texture = ExtResource("21_p1sa8")
+stretch_mode = 2
+
+[node name="ItemPanel" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -98.0
+offset_right = 200.0
+grow_vertical = 0
+texture = ExtResource("7_ptlt0")
+
+[node name="Label" type="Label" parent="ItemPanel"]
+layout_mode = 0
+anchor_left = 0.32
+anchor_top = 0.367347
+anchor_right = 0.56
+anchor_bottom = 0.612245
+text = "Item"
+label_settings = ExtResource("9_2qb73")
+metadata/_edit_use_anchors_ = true
+
+[node name="ItemName" type="Label" parent="ItemPanel"]
+layout_mode = 0
+anchor_left = 0.08
+anchor_top = 0.714286
+anchor_right = 0.32
+anchor_bottom = 0.959184
+text = "None"
+label_settings = SubResource("LabelSettings_whs73")
+metadata/_edit_use_anchors_ = true
+
+[node name="ScreenButtons" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -190.0
+offset_right = -6.0
+offset_bottom = -130.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="Info" type="TextureButton" parent="ScreenButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../../CloseButton")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../TrainerMemo")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../TrainerMemo")
+focus_previous = NodePath("../../CloseButton")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_oorjm")
+texture_normal = ExtResource("14_bo0hq")
+texture_pressed = ExtResource("14_bo0hq")
+texture_hover = ExtResource("14_bo0hq")
+texture_focused = ExtResource("20_0a83c")
+
+[node name="TrainerMemo" type="TextureButton" parent="ScreenButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Info")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Skills")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Skills")
+focus_previous = NodePath("../Info")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_oorjm")
+texture_normal = ExtResource("16_r6x8v")
+texture_pressed = ExtResource("16_r6x8v")
+texture_hover = ExtResource("16_r6x8v")
+texture_focused = ExtResource("22_wp0nx")
+
+[node name="Skills" type="TextureButton" parent="ScreenButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../TrainerMemo")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Moves")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Moves")
+focus_previous = NodePath("../TrainerMemo")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_oorjm")
+texture_normal = ExtResource("18_bopv8")
+texture_pressed = ExtResource("18_bopv8")
+texture_hover = ExtResource("18_bopv8")
+texture_focused = ExtResource("24_2qb73")
+
+[node name="Moves" type="TextureButton" parent="ScreenButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Skills")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Ribbons")
+focus_next = NodePath("../Ribbons")
+focus_previous = NodePath("../Skills")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_oorjm")
+texture_normal = ExtResource("20_m8n3k")
+texture_pressed = ExtResource("20_m8n3k")
+texture_hover = ExtResource("20_m8n3k")
+texture_focused = ExtResource("26_udauf")
+
+[node name="Ribbons" type="TextureButton" parent="ScreenButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Moves")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_next = NodePath("../Info")
+focus_previous = NodePath("../Moves")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_oorjm")
+texture_normal = ExtResource("22_oorjm")
+texture_pressed = ExtResource("22_oorjm")
+texture_hover = ExtResource("22_oorjm")
+texture_focused = ExtResource("28_p1sa8")

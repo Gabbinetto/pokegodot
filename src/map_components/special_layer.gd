@@ -1,6 +1,6 @@
 class_name SpecialMapLayer extends TileMapLayer
 
-const GRASS_AREA: PackedScene = preload("res://src/map_components/grass_area.tscn")
+const GRASS_AREA: PackedScene = preload("res://src/map_components/encounter_areas/grass_area.tscn")
 const GRASS_DATA_LAYER: String = "grass"
 
 @export var grass_encounters: Array[MapEncounter]
@@ -18,7 +18,7 @@ func _ready() -> void:
 	for coords: Vector2i in get_used_cells():
 		var tile_data: TileData = get_cell_tile_data(coords)
 		if tile_data.get_custom_data(GRASS_DATA_LAYER):
-			var area: GrassArea = GRASS_AREA.instantiate()
+			var area: EncounterArea = GRASS_AREA.instantiate()
 			grass_container.add_child(area)
 			area.name = "Grass%v" % coords
 			area.position = coords * tile_set.tile_size

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bqh1fa6ynb5cm"]
+[gd_scene load_steps=45 format=3 uid="uid://bqh1fa6ynb5cm"]
 
 [ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
 [ext_resource type="Script" uid="uid://dlykwa3kus8p6" path="res://src/battle/battle.gd" id="1_lx70w"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="14_1mk23"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="14_ckxlc"]
 [ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="15_d7rla"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_richtextlabel.tres" id="17_7sv81"]
 [ext_resource type="Theme" uid="uid://crr2mnxmq6k88" path="res://src/battle/target_selection_theme.tres" id="22_m5n8x"]
 [ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="23_bu0ik"]
 
@@ -90,7 +91,7 @@ region = Rect2(0, 414, 130, 46)
 atlas = ExtResource("9_ye118")
 region = Rect2(130, 414, 130, 46)
 
-[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "ui_message_bg", "player_ground", "enemy_ground", "ally_pokemon_1_sprite", "ally_pokemon_2_sprite", "enemy_pokemon_1_sprite", "enemy_pokemon_2_sprite", "all_commands", "databox_ally_single", "databox_enemy_single", "base_commands", "fight_button", "pokemon_button", "bag_button", "run_button", "fight_commands", "move_buttons", "fight_cancel_button", "move_info", "target_commands", "target_buttons", "target_cancel_button", "selection_dialogue", "battle_dialogue")]
+[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "ui_message_bg", "player_ground", "enemy_ground", "ally_pokemon_1_sprite", "ally_pokemon_2_sprite", "enemy_pokemon_1_sprite", "enemy_pokemon_2_sprite", "ui_layer", "all_commands", "databox_ally_single", "databox_enemy_single", "base_commands", "fight_button", "pokemon_button", "bag_button", "run_button", "fight_commands", "move_buttons", "fight_cancel_button", "move_info", "target_commands", "target_buttons", "target_cancel_button", "selection_dialogue", "battle_dialogue")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,6 +110,7 @@ ally_pokemon_1_sprite = NodePath("PlayerGround/AllyPokemon1")
 ally_pokemon_2_sprite = NodePath("PlayerGround/AllyPokemon2")
 enemy_pokemon_1_sprite = NodePath("EnemyGround/EnemyPokemon1")
 enemy_pokemon_2_sprite = NodePath("EnemyGround/EnemyPokemon2")
+ui_layer = NodePath("Over")
 all_commands = [NodePath("Over/BaseCommands"), NodePath("Over/FightCommands"), NodePath("Over/TargetSelectCommands"), NodePath("Over/BattleDialogue")]
 databox_ally_single = NodePath("Over/DataboxPlayer")
 databox_enemy_single = NodePath("Over/DataboxEnemy")
@@ -353,7 +355,7 @@ grow_vertical = 0
 mouse_filter = 1
 script = ExtResource("23_bu0ik")
 box = NodePath("DialogueBox")
-label = NodePath("../../BattleDialogue/BattleDialogueBox/BattleDialogueLabel")
+label = NodePath("DialogueBox/DialogueLabel")
 metadata/_custom_type_script = "uid://ctrsrrpf088yx"
 metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true
@@ -388,18 +390,7 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
-theme_override_colors/font_shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_constants/line_separation = 8
-theme_override_fonts/normal_font = ExtResource("12_qc4k4")
-theme_override_fonts/italics_font = ExtResource("13_3cv6g")
-theme_override_fonts/bold_font = ExtResource("14_ckxlc")
-theme_override_font_sizes/bold_italics_font_size = 32
-theme_override_font_sizes/italics_font_size = 32
-theme_override_font_sizes/mono_font_size = 32
-theme_override_font_sizes/normal_font_size = 32
-theme_override_font_sizes/bold_font_size = 32
+theme = ExtResource("17_7sv81")
 theme_override_styles/fill = SubResource("StyleBoxEmpty_xt6a1")
 theme_override_styles/background = SubResource("StyleBoxEmpty_ljkqi")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
@@ -414,12 +405,14 @@ metadata/_edit_use_anchors_ = true
 [node name="SelectionDialogue" type="Node" parent="Over/BaseCommands/SelectionDialogue" node_paths=PackedStringArray("label")]
 script = ExtResource("14_1mk23")
 hide_box = false
+disable_movement = false
 clear_label = false
 label = NodePath("../DialogueBox/DialogueLabel")
 
 [node name="SelectionDialogueSequence" type="Node" parent="Over/BaseCommands/SelectionDialogue/SelectionDialogue"]
 script = ExtResource("15_d7rla")
 needs_input_on_finish = false
+end_pause = 0.0
 
 [node name="FightCommands" type="Control" parent="Over"]
 visible = false
@@ -684,18 +677,7 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
-theme_override_colors/font_shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_constants/line_separation = 8
-theme_override_fonts/normal_font = ExtResource("12_qc4k4")
-theme_override_fonts/italics_font = ExtResource("13_3cv6g")
-theme_override_fonts/bold_font = ExtResource("14_ckxlc")
-theme_override_font_sizes/bold_italics_font_size = 32
-theme_override_font_sizes/italics_font_size = 32
-theme_override_font_sizes/mono_font_size = 32
-theme_override_font_sizes/normal_font_size = 32
-theme_override_font_sizes/bold_font_size = 32
+theme = ExtResource("17_7sv81")
 theme_override_styles/fill = SubResource("StyleBoxEmpty_xt6a1")
 theme_override_styles/background = SubResource("StyleBoxEmpty_ljkqi")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
@@ -708,8 +690,10 @@ metadata/_edit_use_anchors_ = true
 [node name="BattleDialogue" type="Node" parent="Over/BattleDialogue" node_paths=PackedStringArray("label")]
 script = ExtResource("14_1mk23")
 hide_box = false
+disable_movement = false
 label = NodePath("../BattleDialogueBox/BattleDialogueLabel")
 
 [node name="BattleDialogueSequence" type="Node" parent="Over/BattleDialogue/BattleDialogue"]
 script = ExtResource("15_d7rla")
 needs_input_on_finish = false
+end_pause = 0.8

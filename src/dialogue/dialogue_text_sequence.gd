@@ -9,7 +9,11 @@ signal pause_done ## Emitted when a pause is done.
 
 @export_multiline var text: String ## The text in the textbox.
 ## If true, an input will be needed to advance the sequence in the end.
-@export var needs_input_on_finish: bool = true
+@export var needs_input_on_finish: bool = true:
+	set(value):
+		needs_input_on_finish = value
+		notify_property_list_changed()
+@export_range(0.0, 100.0, 0.01) var end_pause: float = 1.0
 ## The moments in which the textbox pauses. Keys represent the amount of characters shown 
 ## when the text pauses. Negative pause times mean that an input is needed.
 @export var set_pauses: Dictionary[int, float] = {}
@@ -33,6 +37,12 @@ var needs_input: bool:
 		return visible_characters == pauses.keys()[current_pause_index] and pauses[visible_characters] < 0
 
 
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "end_pause":
+		if needs_input_on_finish:
+			property.usage &= ~PROPERTY_USAGE_EDITOR
+		else:
+			property.usage |= PROPERTY_USAGE_EDITOR
 
 
 func process(delta: float) -> void:
@@ -60,6 +70,8 @@ func start() -> void:
 
 	if needs_input_on_finish:
 		pauses[-1] = -1
+	else:
+		pauses[-1] = end_pause
 
 	# Count negative keys from the end
 	for pause_key: int in pauses.keys().filter(func(key: int): return key < 0):

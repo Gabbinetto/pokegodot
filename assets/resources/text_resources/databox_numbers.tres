@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cinq5f0xsksr1"]
+
+[ext_resource type="FontFile" uid="uid://de1fxnae5kucj" path="res://assets/fonts/raw/hgss-databox-numbers.ttf" id="1_r3fcy"]
+
+[resource]
+font = ExtResource("1_r3fcy")
+font_size = 8
+font_color = Color(0.282353, 0.282353, 0.282353, 1)
+shadow_size = 4
+shadow_color = Color(0.721569, 0.721569, 0.721569, 1)

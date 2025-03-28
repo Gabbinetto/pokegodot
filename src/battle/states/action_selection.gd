@@ -61,8 +61,8 @@ func _confirm_move(move: PokemonMove, targets: Array[bool]) -> void:
 
 
 func _open_party() -> void:
-	var party: PartyMenu = PartyMenu.create(PlayerData.team, true)
-	add_child(party)
+	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true})
+	battle.ui_layer.add_child(party)
 	party.pokemon_selected.connect(func(pokemon: Pokemon):
 		if pokemon.hp <= 0:
 			return

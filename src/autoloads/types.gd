@@ -28,6 +28,27 @@ enum List {
 const WEAKNESS_MULTIPLIER: float = 2.0 ## Multiplier for weaknesses.
 const RESISTANCE_MULTIPLIER: float = 0.5 ## Multiplier for resistances.
 const IMMUNITY_MULTIPLIER: float = 0.0 ## Multiplier for immunities.
+const ICONS: Dictionary[List, Texture2D] = {
+	List.NORMAL: preload("res://assets/resources/type_textures/normal.tres"),
+	List.FIGHTING: preload("res://assets/resources/type_textures/fighting.tres"),
+	List.FLYING: preload("res://assets/resources/type_textures/flying.tres"),
+	List.POISON: preload("res://assets/resources/type_textures/poison.tres"),
+	List.GROUND: preload("res://assets/resources/type_textures/ground.tres"),
+	List.ROCK: preload("res://assets/resources/type_textures/rock.tres"),
+	List.BUG: preload("res://assets/resources/type_textures/bug.tres"),
+	List.GHOST: preload("res://assets/resources/type_textures/ghost.tres"),
+	List.STEEL: preload("res://assets/resources/type_textures/steel.tres"),
+	List.QMARKS: preload("res://assets/resources/type_textures/qmarks.tres"),
+	List.FIRE: preload("res://assets/resources/type_textures/fire.tres"),
+	List.WATER: preload("res://assets/resources/type_textures/water.tres"),
+	List.GRASS: preload("res://assets/resources/type_textures/grass.tres"),
+	List.ELECTRIC: preload("res://assets/resources/type_textures/electric.tres"),
+	List.PSYCHIC: preload("res://assets/resources/type_textures/psychic.tres"),
+	List.ICE: preload("res://assets/resources/type_textures/ice.tres"),
+	List.DRAGON: preload("res://assets/resources/type_textures/dragon.tres"),
+	List.DARK: preload("res://assets/resources/type_textures/dark.tres"),
+	List.FAIRY: preload("res://assets/resources/type_textures/fairy.tres"),
+}
 
 
 var names: Dictionary[List, String] = {} ## Type names.

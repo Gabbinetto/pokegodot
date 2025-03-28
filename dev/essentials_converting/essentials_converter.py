@@ -159,6 +159,7 @@ class MetricsProperties(StrEnum):
     SHADOW_SIZE = "ShadowSize"
 
 
+ESSENTIALS_STATS = ["HP", "ATTACK", "DEFENSE", "SPEED", "SPECIAL_ATTACK", "SPECIAL_DEFENSE"]
 STATS = ["HP", "ATTACK", "DEFENSE", "SPECIAL_ATTACK", "SPECIAL_DEFENSE", "SPEED"]
 GENDER_RATIOS: dict[str, float] = {
     # Numerator for the fraction that calculates the probability of being female out of 8, so for example Always female is 8/8
@@ -355,10 +356,8 @@ class EssentialsConverter:
                             Types[pkmn_type] for pkmn_type in value.split(",")
                         ]
                     case PokemonProperties.BASE_STATS:
-                        pokemon["base_stats"] = {
-                            stat: int(stat_value)
-                            for stat, stat_value in zip(STATS, value.split(","))
-                        }
+                        for stat, stat_value in zip(ESSENTIALS_STATS, value.split(",")):
+                            pokemon["base_stats"][stat] = int(stat_value)
                     case PokemonProperties.GENDER_RATIO:
                         pokemon["gender_ratio"] = GENDER_RATIOS.get(value)
                     case PokemonProperties.GROWTH_RATE:
@@ -491,6 +490,8 @@ class EssentialsConverter:
                         move["power"] = int(value)
                     case MoveProperties.ACCURACY:
                         move["accuracy"] = int(value)
+                    case MoveProperties.TOTAL_PP:
+                        move["total_pp"] = int(value)
                     case MoveProperties.TARGET:
                         targets_conversion: dict[str, MoveTargets] = {
                             "None": MoveTargets.USER,
@@ -882,11 +883,11 @@ if __name__ == "__main__":
     # converter.open(Files.POKEMON).fetch_pokemon()
     # converter.open(Files.FORMS).fetch_pokemon()
     # converter.save(pokemon=True)
-    # converter.open(Files.MOVES).fetch_moves()
-    # converter.save(moves=True)
+    converter.open(Files.MOVES).fetch_moves()
+    converter.save(moves=True)
     # converter.generate_sprites_folder()
     # converter.extract_speech_boxes()
     # converter.open(Files.TYPES).fetch_types()
     # converter.save(types=True)
-    converter.open(Files.METRICS).fetch_metrics()
-    converter.save(metrics=True)
+    # converter.open(Files.METRICS).fetch_metrics()
+    # converter.save(metrics=True)

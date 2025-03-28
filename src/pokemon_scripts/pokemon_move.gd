@@ -22,6 +22,14 @@ enum Targets { ## The move's possible targets.
 	ALL_OTHER, ## Targets all pokemon except the user.
 }
 
+## Icons shown in the summary screen for move categories.
+const CATEGORY_ICONS: Dictionary[Categories, Texture2D] = {
+	Categories.PHYSICAL: preload("res://assets/resources/move_category_textures/physical.tres"),
+	Categories.SPECIAL: preload("res://assets/resources/move_category_textures/special.tres"),
+	Categories.STATUS: preload("res://assets/resources/move_category_textures/status.tres"),
+}
+
+
 var id: String = "" ## This move's id. Matches it's key in [member DB.moves].
 var name: String = "Unnamed" ## This move's name.
 var type: Types.List = Types.List.QMARKS ## This moves type.
@@ -68,6 +76,7 @@ func refresh_pp() -> void:
 ## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [Battle.PokemonBattleInfo] in [member Battle.pokemons]
 func get_possible_targets(battle: Battle, user: Battle.PokemonBattleInfo) -> Array[bool]:
 	var targets: Array[bool]
+	var user_is_enemy: bool = battle.enemy_pokemon.has(user)
 	targets.resize(battle.pokemons.size())
 	for i: int in targets.size(): 
 		var current: Battle.PokemonBattleInfo = battle.pokemons[i]
@@ -77,11 +86,20 @@ func get_possible_targets(battle: Battle, user: Battle.PokemonBattleInfo) -> Arr
 			Targets.OTHER, Targets.ALL_OTHER:
 				targets[i] = user != current
 			Targets.FOE, Targets.FOE_SIDE, Targets.RANDOM_FOE:
-				targets[i] = battle.enemy_pokemon.has(current)
+				if user_is_enemy:
+					targets[i] = battle.ally_pokemon.has(current)
+				else:
+					targets[i] = battle.enemy_pokemon.has(current)
 			Targets.ALLY:
-				targets[i] = battle.ally_pokemon.has(current) and current != user
+				if user_is_enemy:
+					targets[i] = battle.enemy_pokemon.has(current) and current != user
+				else:
+					targets[i] = battle.ally_pokemon.has(current) and current != user
 			Targets.ALLY_SIDE, Targets.USER_OR_ALLY:
-				targets[i] = battle.ally_pokemon.has(current)
+				if user_is_enemy:
+					targets[i] = battle.enemy_pokemon.has(current)
+				else:
+					targets[i] = battle.ally_pokemon.has(current)
 			Targets.ALL:
 				targets[i] = true
 	return targets

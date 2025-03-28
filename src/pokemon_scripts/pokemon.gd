@@ -194,9 +194,13 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Vari
 	elif _species is String:
 		species = PokemonSpecies.new(_species, form)
 
+	original_trainer_name = PlayerData.player_name
 	original_trainer_id = PlayerData.player_id
 	original_trainer_secret_id = PlayerData.secret_id
+	trainer_id = PlayerData.player_id
 	secret_id = Globals.rng.randi_range(0, 9999)
+
+	obtained_time = Time.get_unix_time_from_system()
 
 	for attribute: String in attributes:
 		if attribute in self:
@@ -210,6 +214,8 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Vari
 	
 	if not ability:
 		ability = PokemonAbility.new(species.abilities[0])
+
+	obtained_level = level
 
 	calculate_stats()
 	set_sprites()
@@ -235,7 +241,6 @@ func set_sprites() -> void:
 func calculate_stats() -> void:
 	for stat: String in Globals.STATS:
 		stats[stat] = calculate_stat(self, stat)
-		printt(name, stat, stats[stat])
 
 
 ## Heal this pokemon.
@@ -329,5 +334,5 @@ static func calculate_stat(pokemon: Pokemon, stat: String) -> int:
 			(((2.0 * pokemon.species.base_stats.HP + pokemon.ivs.HP + floorf(pokemon.evs.HP / 4.0))) * pokemon.level) / 100.0
 		) + pokemon.level + 10
 	return floori(
-		(floori((((2 * pokemon.stats[stat] + pokemon.ivs[stat] + floori(pokemon.evs[stat] / 4.0))) * pokemon.level) / 100.0) + 5) * Globals.natures[pokemon.nature][stat]
+		(floori((((2 * pokemon.species.base_stats[stat] + pokemon.ivs[stat] + floori(pokemon.evs[stat] / 4.0))) * pokemon.level) / 100.0) + 5) * Globals.natures[pokemon.nature][stat]
 	)

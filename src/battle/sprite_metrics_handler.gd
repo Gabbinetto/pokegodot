@@ -7,11 +7,11 @@ class_name SpriteMetricsHandler extends Node
 @export var battle: Battle ## The ongoing battle.
 @export_range(0, 3) var pokemon_slot: int = 0 ## The parent sprite pokemon slot.
 var parent: Sprite2D ## The parent, set on ready.
-var base_offset: int ## The starting [member Sprite2D.offset].
+var base_offset: Vector2 ## The starting [member Sprite2D.offset].
 
 func _ready() -> void:
 	parent = get_parent()
-	base_offset = parent.offset.y
+	base_offset = parent.offset
 	parent.texture_changed.connect(_shift)
 	
 	_shift.call_deferred()
@@ -32,6 +32,6 @@ func _shift() -> void:
 	else:
 		offset = Vector2i(metrics.back_sprite_x, metrics.back_sprite_y)
 	
-	parent.offset += Vector2(offset)
+	parent.offset = base_offset + Vector2(offset)
 	
 	

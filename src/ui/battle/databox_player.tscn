@@ -7,19 +7,13 @@
 [ext_resource type="Script" uid="uid://ciis2yphy0kq4" path="res://src/ui/misc/hp_bar.gd" id="5_m18us"]
 [ext_resource type="Texture2D" uid="uid://ciylakjyru70a" path="res://assets/resources/hp_bar_textures/hp_bar_battle_middle.tres" id="6_3gi0n"]
 [ext_resource type="Texture2D" uid="uid://cd5dl6y687btc" path="res://assets/resources/hp_bar_textures/hp_bar_battle_low.tres" id="7_d8m60"]
-[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="7_em8yo"]
 [ext_resource type="FontFile" uid="uid://de1fxnae5kucj" path="res://assets/fonts/raw/hgss-databox-numbers.ttf" id="8_t3ydq"]
+[ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/text_resources/databox_numbers.tres" id="9_kubli"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/text_resources/default_gray.tres" id="9_m18us"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3gi0n"]
 font = ExtResource("8_t3ydq")
 font_size = 8
-font_color = Color(0.282353, 0.282353, 0.282353, 1)
-shadow_size = 4
-shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_6tbnn"]
-font = ExtResource("7_em8yo")
-font_size = 32
 font_color = Color(0.282353, 0.282353, 0.282353, 1)
 shadow_size = 4
 shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
@@ -101,7 +95,7 @@ offset_top = -49.04
 offset_right = 83.98
 offset_bottom = -38.04
 text = "100"
-label_settings = SubResource("LabelSettings_3gi0n")
+label_settings = ExtResource("9_kubli")
 metadata/_edit_lock_ = true
 
 [node name="PokemonName" type="Label" parent="."]
@@ -116,5 +110,5 @@ offset_top = -12.008
 offset_right = 143.88
 offset_bottom = 11.992
 text = "Pikachu"
-label_settings = SubResource("LabelSettings_6tbnn")
+label_settings = ExtResource("9_m18us")
 metadata/_edit_lock_ = true

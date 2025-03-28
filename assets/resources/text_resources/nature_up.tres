@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cf55ijudfi5k0"]
+
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="1_t86b3"]
+
+[resource]
+line_spacing = 6.0
+font = ExtResource("1_t86b3")
+font_size = 32
+font_color = Color(0.972549, 0.972549, 0.972549, 1)
+shadow_size = 4
+shadow_color = Color(0.533333, 0.376471, 0.282353, 1)

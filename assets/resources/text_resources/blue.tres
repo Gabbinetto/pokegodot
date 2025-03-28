@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://6its8el137o1"]
+
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="1_qtxsq"]
+
+[resource]
+font = ExtResource("1_qtxsq")
+font_size = 32
+font_color = Color(0.0941176, 0.439216, 0.847059, 1)
+shadow_size = 4
+shadow_color = Color(0.533333, 0.658824, 0.815686, 1)

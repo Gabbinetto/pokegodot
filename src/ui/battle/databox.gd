@@ -9,7 +9,7 @@ const HP_BAR_TIME: float = 1.0 ## Time needed for the HP bar to go from full to 
 		pokemon = value
 		_refresh()
 @export var name_label: Label
-@export var hp_bar: HPBar
+@export var hp_bar: Range
 @export var hp_numbers: Label
 @export var exp_bar: TextureProgressBar
 @export var level_text: Label
@@ -17,14 +17,13 @@ const HP_BAR_TIME: float = 1.0 ## Time needed for the HP bar to go from full to 
 
 func _ready() -> void:
 	_refresh()
+	#if hp_bar:
+		#hp_bar.value_changed.connect(func(_value: float): _set_hp_numbers)
 
 
 func _process(_delta: float) -> void:
 	if not pokemon or not enabled:
 		return
-
-	if is_instance_valid(hp_numbers) and hp_numbers.visible:
-		_set_hp_numbers()
 
 
 	if is_instance_valid(level_text):
@@ -47,8 +46,7 @@ func _refresh() -> void:
 	if is_instance_valid(hp_bar):
 		hp_bar.max_value = pokemon.max_hp
 		hp_bar.value = pokemon.hp
-
-	_set_hp_numbers()
+		_set_hp_numbers()
 
 	if is_instance_valid(name_label):
 		name_label.text = pokemon.name
@@ -57,13 +55,19 @@ func _refresh() -> void:
 func _set_hp_numbers() -> void:
 	if not is_instance_valid(hp_numbers):
 		return
-	hp_numbers.text = "%d/%d" % [pokemon.hp, pokemon.max_hp]
+	hp_numbers.text = "%d/%d" % [hp_bar.value, hp_bar.max_value]
+
+
+func _tween_bar(value: int) -> void:
+	if hp_bar:
+		hp_bar.value = value
+		_set_hp_numbers()
 
 
 func animate_hp_bar() -> Tween:
 	var tween: Tween = create_tween()
 	var time: float = abs(pokemon.hp - hp_bar.value) / pokemon.max_hp * HP_BAR_TIME
 	
-	tween.tween_property(hp_bar, "value", pokemon.hp, time)
+	tween.tween_method(_tween_bar, hp_bar.value, pokemon.hp, time)
 	
 	return tween

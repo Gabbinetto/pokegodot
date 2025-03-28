@@ -6,9 +6,9 @@ extends Node
 
 enum {MALE, FEMALE} ## Player genders.
 
-const MAX_PLAYER_NAME: int = 12 ## The max length of a player's name.
+const MAX_PLAYER_NAME: int = 10 ## The max length of a player's name.
 
-var player_name: String: ## The player's name.
+var player_name: String = "Red": ## The player's name.
 	set(value):
 		player_name = value.substr(0, MAX_PLAYER_NAME)
 var team: PokemonTeam = PokemonTeam.new() ## The player's team.

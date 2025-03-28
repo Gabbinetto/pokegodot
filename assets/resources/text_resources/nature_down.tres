@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dc34m67jcdcsw"]
+
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="1_24pei"]
+
+[resource]
+line_spacing = 6.0
+font = ExtResource("1_24pei")
+font_size = 32
+font_color = Color(0.972549, 0.972549, 0.972549, 1)
+shadow_size = 4
+shadow_color = Color(0.25098, 0.470588, 0.596078, 1)

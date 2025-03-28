@@ -1,13 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://cis6b23nmbwqm"]
+[gd_scene load_steps=17 format=3 uid="uid://cis6b23nmbwqm"]
 
 [ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="1_5m8cj"]
-[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="3_5m8cj"]
 [ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/misc/menu_list.tres" id="3_w4qgl"]
 [ext_resource type="Script" uid="uid://cckqeo88bqtbx" path="res://src/ui/dialogue/choice_container.gd" id="4_l07e8"]
-[ext_resource type="FontVariation" uid="uid://ds5fdst7lttds" path="res://assets/fonts/ds_font_italic.tres" id="4_s5vpw"]
 [ext_resource type="StyleBox" uid="uid://dnxadgspegmfr" path="res://src/ui/misc/box_texture.tres" id="5_owvc8"]
 [ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="5_py1ry"]
-[ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="5_qgv4t"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_richtextlabel.tres" id="7_gidb7"]
 [ext_resource type="Texture2D" uid="uid://dl1bmj4lljo4p" path="res://addons/pokemon_dialogue/test_tab/default_arrow.png" id="7_s5vpw"]
 [ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="9_0waje"]
 
@@ -116,18 +114,7 @@ anchor_bottom = 1.06061
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_colors/default_color = Color(0.317647, 0.317647, 0.34902, 1)
-theme_override_colors/font_shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
-theme_override_constants/shadow_outline_size = 4
-theme_override_constants/line_separation = 8
-theme_override_fonts/normal_font = ExtResource("3_5m8cj")
-theme_override_fonts/italics_font = ExtResource("4_s5vpw")
-theme_override_fonts/bold_font = ExtResource("5_qgv4t")
-theme_override_font_sizes/bold_italics_font_size = 32
-theme_override_font_sizes/italics_font_size = 32
-theme_override_font_sizes/mono_font_size = 32
-theme_override_font_sizes/normal_font_size = 32
-theme_override_font_sizes/bold_font_size = 32
+theme = ExtResource("7_gidb7")
 theme_override_styles/fill = SubResource("StyleBoxEmpty_owvc8")
 theme_override_styles/background = SubResource("StyleBoxEmpty_0waje")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_x0sj7")

@@ -15,6 +15,31 @@ enum Languages { ## Possible languages.
 	KOREAN,
 }
 
+const DAY_NAMES: Dictionary[Time.Weekday, String] = { ## Days of the week
+	Time.WEEKDAY_MONDAY: "Monday",
+	Time.WEEKDAY_TUESDAY: "Tuesday",
+	Time.WEEKDAY_WEDNESDAY: "Wednesday",
+	Time.WEEKDAY_THURSDAY: "Thursday",
+	Time.WEEKDAY_FRIDAY: "Friday",
+	Time.WEEKDAY_SATURDAY: "Saturday",
+	Time.WEEKDAY_SUNDAY: "Sunday",
+}
+
+const MONTH_NAMES: Dictionary[Time.Month, String] = { ## Months of the year
+	Time.MONTH_JANUARY: "January",
+	Time.MONTH_FEBRUARY: "February",
+	Time.MONTH_MARCH: "March",
+	Time.MONTH_APRIL: "April",
+	Time.MONTH_MAY: "May",
+	Time.MONTH_JUNE: "June",
+	Time.MONTH_JULY: "July",
+	Time.MONTH_AUGUST: "August",
+	Time.MONTH_SEPTEMBER: "September",
+	Time.MONTH_OCTOBER: "October",
+	Time.MONTH_NOVEMBER: "November",
+	Time.MONTH_DECEMBER: "December",
+}
+
 ## Stat key names following an UPPERCASE_SNAKE_CASE format. Used in properties such as [member PokemonSpecies.base_stats] for consistency.
 const STATS: Dictionary[String, String] = {
 	"HP": "HP",

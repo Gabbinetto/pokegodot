@@ -20,6 +20,7 @@ const SWAP_OFFSET: float = 10.0
 
 
 var in_battle: bool = false
+var can_cancel: bool = true
 var team: PokemonTeam
 var panels: Array[PartyPanel]
 var current_panel: PartyPanel
@@ -77,10 +78,14 @@ func _ready() -> void:
 	else:
 		cancel_button.grab_focus.call_deferred()
 	
+	for button: BaseButton in menu_buttons_container.get_children():
+		button.gui_input.connect(_menu_button_input)
+	button_summary.pressed.connect(_on_summary_pressed)
 	button_switch.pressed.connect(_on_switch_pressed)
 	button_switch_in.pressed.connect(_on_switch_in_pressed)
 	button_menu_cancel.pressed.connect(_menu_cancel)
 	cancel_button.pressed.connect(closed.emit)
+	cancel_button.disabled = not can_cancel
 	
 	menu.visibility_changed.connect(_on_menu_visibility_changed)
 
@@ -97,9 +102,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			swapping_from = null
 			swapping_to = null
 			_refresh_panels()
-		elif menu.visible:
-			_menu_cancel()
-		else:
+		elif not menu.visible:
 			closed.emit()
 
 
@@ -138,6 +141,12 @@ func _set_panels_mouse(can_press: bool) -> void:
 func _menu_cancel() -> void:
 	menu.hide()
 	current_panel.grab_focus.call_deferred()
+
+
+func _menu_button_input(input: InputEvent) -> void:
+	if input.is_action_pressed("ui_cancel"):
+		print(input)
+		_menu_cancel.call_deferred()
 
 
 func _set_menu_neighbors() -> void:
@@ -221,13 +230,27 @@ func swap_slots() -> void:
 #endregion
 #endregion
 
+func _on_summary_pressed() -> void:
+	var summary: SummaryMenu = SummaryMenu.create(team.get_array(), {"starting_index": current_panel.get_index(), "in_battle": in_battle})
+	add_sibling(summary)
+	hide()
+	summary.closed.connect(
+		func():
+			summary.queue_free()
+			show()
+			# Await to make sure focus is grabbed after closing (Especially when in moves screen)
+			await get_tree().process_frame
+			button_summary.grab_focus()
+	)
+
 func _refresh_panels():
 	for panel: PartyPanel in panels:
 		panel.refresh()
 
 
-static func create(pokemon_team: PokemonTeam = null, is_in_battle: bool = false) -> PartyMenu:
+static func create(pokemon_team: PokemonTeam = null, attributes: Dictionary[String, Variant] = {}) -> PartyMenu:
 	var party_menu: PartyMenu = MENU_SCENE.instantiate()
 	party_menu.team = pokemon_team
-	party_menu.in_battle = is_in_battle
+	party_menu.in_battle = attributes.get("in_battle", false)
+	party_menu.can_cancel = attributes.get("can_cancel", true)
 	return party_menu

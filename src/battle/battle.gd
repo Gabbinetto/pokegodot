@@ -33,6 +33,7 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export_group("Animation")
 @export var animation_player: AnimationPlayer
 @export_group("UI")
+@export var ui_layer: CanvasLayer
 @export var all_commands: Array[CanvasItem]
 @export var databox_ally_single: Databox
 @export var databox_enemy_single: Databox
@@ -100,7 +101,7 @@ func show_commands(command: CanvasItem) -> void:
 ## Shows a text in battle. If [param selection] is true, the text is shown in the small textbox near the battle commands.
 func show_text(text: String, selection: bool = false) -> void:
 	var dialogue: Dialogue = selection_dialogue if selection else battle_dialogue
-	var manager: DialogueManager = dialogue.get_meta("manager")
+	var manager: DialogueManager = dialogue.get_meta("manager") if dialogue.has_meta("manager") else null
 	if not manager:
 		for child: Node in dialogue.get_children():
 			if child is DialogueManager:
@@ -108,7 +109,6 @@ func show_text(text: String, selection: bool = false) -> void:
 				dialogue.set_meta("manager", manager)
 				break
 	# The dialogue manager first child should be a DialogueTextEvent
-	print(dialogue.get_path_to(manager.get_child(0)))
 	manager.get_child(0).text = text
 	dialogue.run_dialogue(manager)
 	await dialogue.finished
@@ -170,9 +170,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 
 	fight_cancel_button.pressed.connect(_on_fight_cancel)
 
-	fight_cancel_button.focus_entered.connect(func():
-		move_info.text = ""
-	)
+	fight_cancel_button.focus_entered.connect(move_info.set.bind("text", ""))
 
 	for button: MoveButton in move_buttons:
 		button.focus_entered.connect(_on_move_focus.bind(button))
@@ -290,7 +288,7 @@ func refresh_target_buttons() -> void:
 func refresh_turn_order(acted: Array[int] = []) -> void:
 	turn_order.clear()
 	for i: int in pokemons.size():
-		if pokemons[i] and not acted.has(i):
+		if pokemons[i] and not acted.has(i) and pokemons[i].hp > 0:
 			turn_order.append(i)
 
 	var sort_by_speed: Callable = func(a: int, b: int):
@@ -317,16 +315,19 @@ func switch(from_slot: int, to: Pokemon) -> void:
 
 ## Calculates the chance to flee based on the first ally pokemon and the first enemy pokemon.
 func calc_escape_chance() -> float:
+	if ally_pokemon[0].speed >= enemy_pokemon[0].speed:
+		return 1.0
 	escape_attempts += 1
-	return (((ally_pokemon[0].speed * 32.0)/(enemy_pokemon[0].speed * 4.0)) + 30.0 * escape_attempts) / 256.0
+	return (floorf((ally_pokemon[0].speed * 32.0)/(enemy_pokemon[0].speed * 4.0)) + (30.0 * escape_attempts)) / 256.0
+	
 
 
 ## Starts a battle by creating a dedicated [CanvasLayer] and adding it to [member Globals.game_root].
 ## Stops [member Globals.game_world] from processing while the battle is on.[br]
 ## When the battle ends, it is freed. Calls [method setup] with [param attributes].
 static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle:
-	if PlayerData.team.get_array().is_empty():
-		printerr("Can't start battle without a pokemon team.")
+	if PlayerData.team.get_array().is_empty() or not PlayerData.team.first_healthy():
+		printerr("Can't start battle without a pokemon team or a healthy pokemon.")
 		return
 	var layer: CanvasLayer = CanvasLayer.new()
 	var battle: Battle = attributes.get("battle_scene", DEFAULT_BATTLE_SCENE).instantiate()
@@ -341,6 +342,9 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	
 	var on_finish: Callable = func(finished_battle: Battle):
 		if finished_battle == battle:
+			# Make sure movement and event input is enabled after battle.
+			Globals.movement_enabled = true
+			Globals.event_input_enabled = true
 			Globals.game_world.process_mode = Node.PROCESS_MODE_PAUSABLE
 			layer.queue_free()
 	
@@ -348,11 +352,10 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	return battle
 
 
-static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> Array[int]:
-	var values: Array[int]
+static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> Array[DamageCalculation]:
+	var values: Array[DamageCalculation]
 	values.resize(battle.pokemons.size())
-	values.fill(-1)
-
+	
 	for target: PokemonBattleInfo in targets:
 		var index: int = battle.pokemons.find(target)
 		if index == -1:
@@ -382,7 +385,7 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBatt
 
 		SignalRouter.battle_step.emit(battle, BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
-		values[index] = calculation.value()
+		values[index] = calculation
 
 	return values
 
