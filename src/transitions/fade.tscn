@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv035nf2ilaaf"]
+
+[sub_resource type="GDScript" id="GDScript_t4ac5"]
+resource_name = "FadeTransition"
+script/source = "extends Transition
+
+const DEFAULT_TIME: float = 0.2
+
+@onready var rect: ColorRect = $Color
+
+
+func play_in() -> void:
+	var tween: Tween = create_tween()
+	tween.finished.connect(finished.emit)
+	tween.tween_property(rect, \"color:a\", 1, params.get(\"in_time\", DEFAULT_TIME))
+
+
+func play_out() -> void:
+	var tween: Tween = create_tween()
+	tween.finished.connect(finished.emit)
+	tween.tween_property(rect, \"color:a\", 0, params.get(\"out_time\", DEFAULT_TIME))
+"
+
+[node name="Fade" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_t4ac5")
+metadata/_custom_type_script = "uid://c251gufje1xcj"
+
+[node name="Color" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

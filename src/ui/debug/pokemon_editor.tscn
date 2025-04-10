@@ -1,0 +1,400 @@
+[gd_scene load_steps=14 format=3 uid="uid://dspgx4n5u1cht"]
+
+[ext_resource type="Script" uid="uid://byujqto2fejee" path="res://src/ui/debug/pokemon_editor.gd" id="1_v2k4k"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="2_5kc3k"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="3_2350k"]
+[ext_resource type="Texture2D" uid="uid://cpvo4ct57q2rv" path="res://assets/graphics/ui/select_arrow.png" id="3_uhhfm"]
+[ext_resource type="Texture2D" uid="uid://cklahfu5p60x2" path="res://assets/graphics/ui/gender_male_icon.png" id="3_ypxmd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uhhfm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uhhfm"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 4
+border_color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huoaf"]
+
+[sub_resource type="Gradient" id="Gradient_uhhfm"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g2lur"]
+gradient = SubResource("Gradient_uhhfm")
+width = 12
+height = 28
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g2lur"]
+
+[sub_resource type="Theme" id="Theme_ypxmd"]
+default_font = ExtResource("2_5kc3k")
+Button/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.28, 0.28, 0.28, 0.941176)
+Button/colors/font_hover_color = Color(0.28, 0.28, 0.28, 0.862745)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0.28, 0.28, 0.28, 0.784314)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 32
+Button/styles/disabled = SubResource("StyleBoxEmpty_uhhfm")
+Button/styles/focus = SubResource("StyleBoxFlat_uhhfm")
+Button/styles/hover = SubResource("StyleBoxEmpty_uhhfm")
+Button/styles/normal = SubResource("StyleBoxEmpty_uhhfm")
+Button/styles/pressed = SubResource("StyleBoxEmpty_uhhfm")
+LineEdit/colors/caret_color = Color(0.282353, 0.282353, 0.282353, 1)
+LineEdit/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+LineEdit/colors/font_placeholder_color = Color(0.28, 0.28, 0.28, 0.784314)
+LineEdit/font_sizes/font_size = 32
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_huoaf")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_huoaf")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_huoaf")
+PopupMenu/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+PopupMenu/colors/font_hover_color = Color(0.28, 0.28, 0.28, 0.862745)
+PopupMenu/font_sizes/font_size = 24
+PopupMenu/icons/radio_checked = ExtResource("3_uhhfm")
+PopupMenu/icons/radio_unchecked = SubResource("GradientTexture2D_g2lur")
+PopupMenu/styles/hover = SubResource("StyleBoxEmpty_g2lur")
+PopupMenu/styles/panel = ExtResource("3_2350k")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8ys4n"]
+size = Vector2(192, 192)
+
+[node name="PokemonEditor" type="ScrollContainer" node_paths=PackedStringArray("close", "sprite", "species", "forms", "nickname", "gender", "shiny", "super_shiny", "level", "experience", "nature", "moves", "moves_at_level", "heal", "evs", "ivs")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 4
+script = ExtResource("1_v2k4k")
+close = NodePath("Control/Close")
+sprite = NodePath("Control/Sprite")
+species = NodePath("Control/Species")
+forms = NodePath("Control/Form")
+nickname = NodePath("Control/Nickname")
+gender = NodePath("Control/Gender")
+shiny = NodePath("Control/Shiny")
+super_shiny = NodePath("Control/SuperShiny")
+level = NodePath("Control/Level")
+experience = NodePath("Control/Experience")
+nature = NodePath("Control/Nature")
+moves = NodePath("Control/Moves")
+moves_at_level = NodePath("Control/MovesAtLevel")
+heal = NodePath("Control/Heal")
+evs = NodePath("Control/EVs")
+ivs = NodePath("Control/IVs")
+metadata/_edit_lock_ = true
+metadata/_edit_vertical_guides_ = [382.0]
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 768)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_ypxmd")
+metadata/_edit_lock_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Sprite" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 192.0
+texture = SubResource("PlaceholderTexture2D_8ys4n")
+stretch_mode = 2
+
+[node name="Close" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 52.0
+offset_bottom = 52.0
+theme_override_colors/font_outline_color = Color(0.513233, 0.513233, 0.513233, 1)
+theme_override_constants/outline_size = 9
+theme_override_font_sizes/font_size = 64
+text = "X"
+
+[node name="Nickname" type="LineEdit" parent="Control"]
+layout_mode = 1
+offset_left = 192.0
+offset_top = 64.0
+offset_right = 384.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("2_5kc3k")
+theme_override_font_sizes/font_size = 32
+placeholder_text = "Nickname"
+flat = true
+
+[node name="Species" type="OptionButton" parent="Control"]
+layout_mode = 2
+offset_left = 192.0
+offset_right = 384.0
+offset_bottom = 32.0
+flat = true
+text_overrun_behavior = 3
+
+[node name="Form" type="OptionButton" parent="Control"]
+layout_mode = 2
+offset_left = 192.0
+offset_top = 32.0
+offset_right = 384.0
+offset_bottom = 64.0
+flat = true
+text_overrun_behavior = 3
+selected = 0
+item_count = 3
+popup/item_0/text = "Normal"
+popup/item_0/id = 0
+popup/item_1/text = "Mega"
+popup/item_1/id = 1
+popup/item_2/text = "Alolan"
+popup/item_2/id = 2
+
+[node name="Gender" type="TextureButton" parent="Control"]
+layout_mode = 1
+offset_left = 384.0
+offset_right = 416.0
+offset_bottom = 32.0
+texture_normal = ExtResource("3_ypxmd")
+texture_pressed = ExtResource("3_ypxmd")
+texture_hover = ExtResource("3_ypxmd")
+stretch_mode = 5
+
+[node name="Shiny" type="CheckButton" parent="Control"]
+layout_mode = 1
+offset_left = 384.0
+offset_top = 64.0
+offset_right = 474.0
+offset_bottom = 96.0
+text = "Shiny"
+flat = true
+
+[node name="SuperShiny" type="CheckButton" parent="Control"]
+layout_mode = 1
+offset_left = 384.0
+offset_top = 96.0
+offset_right = 480.0
+offset_bottom = 128.0
+text = "Super"
+flat = true
+alignment = 2
+
+[node name="Level" type="SpinBox" parent="Control"]
+layout_mode = 2
+offset_left = 192.0
+offset_top = 96.0
+offset_right = 384.0
+offset_bottom = 127.0
+prefix = "Level:"
+
+[node name="Experience" type="SpinBox" parent="Control"]
+layout_mode = 2
+offset_left = 192.0
+offset_top = 128.0
+offset_right = 384.0
+offset_bottom = 159.0
+prefix = "Experience"
+
+[node name="Nature" type="OptionButton" parent="Control"]
+layout_mode = 2
+offset_left = 192.0
+offset_top = 160.0
+offset_right = 384.0
+offset_bottom = 192.0
+flat = true
+text_overrun_behavior = 3
+
+[node name="Moves" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 384.0
+theme_override_constants/separation = 0
+
+[node name="Slot1" type="HBoxContainer" parent="Control/Moves"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Move" type="OptionButton" parent="Control/Moves/Slot1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Clear" type="Button" parent="Control/Moves/Slot1"]
+layout_mode = 2
+text = " X "
+
+[node name="Slot2" type="HBoxContainer" parent="Control/Moves"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Move" type="OptionButton" parent="Control/Moves/Slot2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Clear" type="Button" parent="Control/Moves/Slot2"]
+layout_mode = 2
+text = " X "
+
+[node name="Slot3" type="HBoxContainer" parent="Control/Moves"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Move" type="OptionButton" parent="Control/Moves/Slot3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Clear" type="Button" parent="Control/Moves/Slot3"]
+layout_mode = 2
+text = " X "
+
+[node name="Slot4" type="HBoxContainer" parent="Control/Moves"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Move" type="OptionButton" parent="Control/Moves/Slot4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Clear" type="Button" parent="Control/Moves/Slot4"]
+layout_mode = 2
+text = " X "
+
+[node name="MovesAtLevel" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.031746
+anchor_right = -0.031746
+anchor_bottom = 0.0104167
+offset_left = 352.0
+offset_top = 192.0
+offset_right = 496.0
+offset_bottom = 256.0
+text = "Set moves
+at current
+level"
+metadata/_edit_use_anchors_ = true
+
+[node name="Heal" type="Button" parent="Control"]
+layout_mode = 1
+offset_left = 352.0
+offset_top = 256.0
+offset_right = 480.0
+offset_bottom = 320.0
+text = "Heal"
+
+[node name="EVs" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_top = 384.0
+offset_right = 240.0
+offset_bottom = 576.0
+theme_override_constants/separation = 0
+
+[node name="HP" type="SpinBox" parent="Control/EVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 252.0
+alignment = 2
+prefix = "HP EVs: "
+
+[node name="ATTACK" type="SpinBox" parent="Control/EVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 252.0
+alignment = 2
+prefix = "Attack EVs: "
+
+[node name="DEFENSE" type="SpinBox" parent="Control/EVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 252.0
+alignment = 2
+prefix = "Defense EVs: "
+
+[node name="SPECIAL_ATTACK" type="SpinBox" parent="Control/EVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 252.0
+alignment = 2
+prefix = "Sp. Attack EVs: "
+
+[node name="SPECIAL_DEFENSE" type="SpinBox" parent="Control/EVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 252.0
+alignment = 2
+prefix = "Sp. Defense EVs: "
+
+[node name="SPEED" type="SpinBox" parent="Control/EVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 252.0
+alignment = 2
+prefix = "Speed EVs: "
+
+[node name="IVs" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 384.0
+offset_right = 448.0
+offset_bottom = 576.0
+theme_override_constants/separation = 0
+
+[node name="HP" type="SpinBox" parent="Control/IVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 31.0
+alignment = 2
+prefix = "HP IVs: "
+
+[node name="ATTACK" type="SpinBox" parent="Control/IVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 31.0
+alignment = 2
+prefix = "Attack IVs: "
+
+[node name="DEFENSE" type="SpinBox" parent="Control/IVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 31.0
+alignment = 2
+prefix = "Defense IVs: "
+
+[node name="SPECIAL_ATTACK" type="SpinBox" parent="Control/IVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 31.0
+alignment = 2
+prefix = "Sp. Attack IVs: "
+
+[node name="SPECIAL_DEFENSE" type="SpinBox" parent="Control/IVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 31.0
+alignment = 2
+prefix = "Sp. Defense IVs: "
+
+[node name="SPEED" type="SpinBox" parent="Control/IVs"]
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 31.0
+alignment = 2
+prefix = "Speed IVs: "

@@ -60,17 +60,17 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 var double_battle: bool = false
 var trainer_battle: bool = false
 var battleback: Battlebacks.Set = Battlebacks.loaded_sets[0]
-var ally_trainers: Array[TrainerBattleInfo] = []
-var enemy_trainers: Array[TrainerBattleInfo] = []
-var trainers: Array[TrainerBattleInfo]:
+var ally_trainers: Array[BattleTrainer] = []
+var enemy_trainers: Array[BattleTrainer] = []
+var trainers: Array[BattleTrainer]:
 	get: return ally_trainers + enemy_trainers
-var pokemons: Array[PokemonBattleInfo] = [null, null, null, null]
-var ally_pokemon: Array[PokemonBattleInfo]:
+var pokemons: Array[BattlePokemon] = [null, null, null, null]
+var ally_pokemon: Array[BattlePokemon]:
 	get: return pokemons.slice(0, 2)
-var enemy_pokemon: Array[PokemonBattleInfo]:
+var enemy_pokemon: Array[BattlePokemon]:
 	get: return pokemons.slice(2, 4)
 var current_pokemon_index: int = 0
-var current_pokemon: PokemonBattleInfo:
+var current_pokemon: BattlePokemon:
 	get: return ally_pokemon[current_pokemon_index]
 var turn_order: Array[int]
 var turn_selections: Dictionary[int, TurnAction] = {}
@@ -81,6 +81,10 @@ var last_move_button_pressed: MoveButton
 
 
 func _ready() -> void:
+	if TransitionManager.transition:
+		TransitionManager.play_out()
+		await TransitionManager.finished
+	
 	fight_button.grab_focus.call_deferred()
 
 	state_machine.initial_state = machine_starting_state
@@ -119,7 +123,7 @@ func show_text(text: String, selection: bool = false) -> void:
 ## Possible attributes are: [br]
 ## - [code]double_battle[/code]: True if it is a double battle. False by default.[br]
 ## - [code]ally_trainer[/code]: The ally trainer for a double battle with an NPC ally.[br]
-## - [code]enemy_trainers[/code]: The enemy trainers. If it is a single battle, it can be just [TrainerBattleInfo] instead of being an array of these.[br]
+## - [code]enemy_trainers[/code]: The enemy trainers. If it is a single battle, it can be just [BattleTrainer] instead of being an array of these.[br]
 ## - [code]battleback[/code]: A [member Battlebacks.Sets].[br]
 func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback"), Battlebacks.loaded_sets[0])
@@ -132,32 +136,32 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 
 
 	# Set trainers and first pokemon
-	ally_trainers.append(TrainerBattleInfo.new(
+	ally_trainers.append(BattleTrainer.new(
 		PlayerData.player_name, PlayerData.team, true
 	))
 	if attributes.get("ally_trainer", null):
 		ally_trainers.append(attributes.get("ally_trainer"))
 	
 	var enemies: Variant = attributes.get("enemy_trainers")
-	if enemies is TrainerBattleInfo:
+	if enemies is BattleTrainer:
 		enemy_trainers.append(enemies)
 	else:
 		enemy_trainers.assign(enemies)
 	
 
-	pokemons[0] = PokemonBattleInfo.new(ally_trainers[0].team.first_healthy(), ally_trainers[0])
-	pokemons[2] = PokemonBattleInfo.new(enemy_trainers[0].team.first_healthy(), enemy_trainers[0])
+	pokemons[0] = BattlePokemon.new(ally_trainers[0].team.first_healthy(), ally_trainers[0])
+	pokemons[2] = BattlePokemon.new(enemy_trainers[0].team.first_healthy(), enemy_trainers[0])
 	# Set double battle
 	double_battle = attributes.get("double_battle", false)
 	if double_battle:
 		if ally_trainers.size() > 1:
-			pokemons[1] = PokemonBattleInfo.new(ally_trainers[1].team.first_healthy(), ally_trainers[1])
+			pokemons[1] = BattlePokemon.new(ally_trainers[1].team.first_healthy(), ally_trainers[1])
 		else:
-			pokemons[1] = PokemonBattleInfo.new(ally_trainers[0].team.second_healthy(), ally_trainers[0])
+			pokemons[1] = BattlePokemon.new(ally_trainers[0].team.second_healthy(), ally_trainers[0])
 		if enemy_trainers.size() > 1:
-			pokemons[1] = PokemonBattleInfo.new(enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
+			pokemons[1] = BattlePokemon.new(enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
 		else:
-			pokemons[1] = PokemonBattleInfo.new(enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
+			pokemons[1] = BattlePokemon.new(enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
 
 	refresh_visuals()
 
@@ -175,6 +179,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	for button: MoveButton in move_buttons:
 		button.focus_entered.connect(_on_move_focus.bind(button))
 		button.pressed.connect(set.bind("last_move_button_pressed", button))
+		button.gui_input.connect(_on_move_gui_input)
 	#endregion
 	
 	#region Target select signals
@@ -192,6 +197,7 @@ func _on_base_commands_visibility_changed() -> void:
 		return
 	fight_button.grab_focus.call_deferred()
 
+
 func _on_fight_commands_visibility_changed() -> void:
 	if not fight_commands.visible:
 		return
@@ -200,12 +206,14 @@ func _on_fight_commands_visibility_changed() -> void:
 	else:
 		move_buttons.front().grab_focus.call_deferred()
 
+
 func _on_fight_cancel() -> void:
 	if current_pokemon_index > 0:
 		current_pokemon_index -= 1
 		refresh_move_buttons()
 		return
 	show_commands(base_commands)
+
 
 func _on_move_focus(button: MoveButton) -> void:
 	var text: String = "PP: "
@@ -214,6 +222,12 @@ func _on_move_focus(button: MoveButton) -> void:
 	move_info.text = text
 	fight_cancel_button.focus_neighbor_left = button.get_path()
 
+
+func _on_move_gui_input(input: InputEvent) -> void:
+	if input.is_action_pressed("ui_cancel"):
+		_on_fight_cancel()
+
+
 func _on_target_commands_visibility_changed() -> void:
 	if not target_commands.visible:
 		return
@@ -221,15 +235,18 @@ func _on_target_commands_visibility_changed() -> void:
 		if not button.disabled:
 			button.grab_focus.call_deferred()
 			break
-
 #endregion
 
 
 ## Ends the battle, emitting all the signals needed and showing the proper animations.
 func end_battle() -> void:
-	Globals.current_battle = null
-	SignalRouter.battle_ended.emit(self)
-	queue_free()
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	TransitionManager.finished.connect(
+		func():
+			Globals.current_battle = null
+			SignalRouter.battle_ended.emit(self)
+			queue_free()
+	)
 
 
 ## Calls [method refresh_databoxes], [method refresh_move_buttons], [method refresh_pokemon_sprites] and [method refresh_target_buttons].
@@ -271,16 +288,13 @@ func refresh_move_buttons() -> void:
 			move_buttons[i].show()
 			move_buttons[i].move = ally_pokemon[current_pokemon_index].pokemon.moves[i]
 		
-		move_buttons[i].pressed.connect(
-			func():
-				print_debug("Move ", i + 1, " selected")
-		)
+		#move_buttons[i].pressed.connect()
 
 
 ## Update the target buttons with the current pokemon on the field.
 func refresh_target_buttons() -> void:
 	for i: int in pokemons.size():
-		target_buttons[i].text = pokemons[i].pokemon.name if pokemons[i] else ""
+		target_buttons[i].text = pokemons[i].name if pokemons[i] else ""
 
 
 ## Refreshes the turn order, excluding the pokemon slots who have acted. [br][br]
@@ -304,7 +318,7 @@ func refresh_turn_order(acted: Array[int] = []) -> void:
 
 ## Performs a switch, refreshing databoxes, sprites and target buttons.
 func switch(from_slot: int, to: Pokemon) -> void:
-	var new_mon: PokemonBattleInfo = PokemonBattleInfo.new(
+	var new_mon: BattlePokemon = BattlePokemon.new(
 		to, pokemons[from_slot].trainer
 	)
 	pokemons[from_slot] = new_mon
@@ -336,6 +350,10 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 
 	battle.setup(attributes)
 
+	TransitionManager.layer += 5 # Make sure the transitions appear on top
+	TransitionManager.play_in(TransitionManager.TransitionTypes.WILD_BATTLE)
+	await TransitionManager.finished
+
 	Globals.game_root.add_child(layer)
 	# Stop running the game world while the battle is happening
 	Globals.game_world.process_mode = Node.PROCESS_MODE_DISABLED
@@ -343,20 +361,28 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	var on_finish: Callable = func(finished_battle: Battle):
 		if finished_battle == battle:
 			# Make sure movement and event input is enabled after battle.
+			layer.queue_free()
+			layer.tree_exited.connect(
+				func():
+					if TransitionManager.transition:
+						TransitionManager.play_out()
+						await TransitionManager.finished
+						TransitionManager.layer -= 5
+					Globals.movement_enabled = true
+			)
 			Globals.movement_enabled = true
 			Globals.event_input_enabled = true
 			Globals.game_world.process_mode = Node.PROCESS_MODE_PAUSABLE
-			layer.queue_free()
 	
 	SignalRouter.battle_ended.connect(on_finish, CONNECT_ONE_SHOT)
 	return battle
 
 
-static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBattleInfo, targets: Array[PokemonBattleInfo]) -> Array[DamageCalculation]:
+static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokemon, targets: Array[BattlePokemon]) -> Array[DamageCalculation]:
 	var values: Array[DamageCalculation]
 	values.resize(battle.pokemons.size())
 	
-	for target: PokemonBattleInfo in targets:
+	for target: BattlePokemon in targets:
 		var index: int = battle.pokemons.find(target)
 		if index == -1:
 			continue
@@ -368,14 +394,13 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBatt
 		calculation.target = target
 
 		if move.category == PokemonMove.Categories.PHYSICAL:
-			calculation.attack = attacker.attack
-			calculation.defense = target.defense
+			calculation.attack_stat = Globals.STATS.ATTACK
+			calculation.defense_stat = Globals.STATS.DEFENSE
 		elif move.category == PokemonMove.Categories.SPECIAL:
-			calculation.attack = attacker.spattack
-			calculation.defense = target.spdefense
-		else:
-			calculation.attack = 0
-
+			calculation.attack_stat = Globals.STATS.SPECIAL_ATTACK
+			calculation.defense_stat = Globals.STATS.SPECIAL_DEFENSE
+		
+		
 		SignalRouter.battle_step.emit(battle, BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
 		calculation.random = randf_range(0.85, 1.0)
@@ -391,64 +416,6 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: PokemonBatt
 
 
 #region Utility subclasses
-## Subclass that holds the data for a trainer during battle.
-class TrainerBattleInfo:
-	var name: String = "Trainer" ## The trainer's name
-	var team: PokemonTeam ## The trainer's team
-	var is_player: bool = false ## True if the trainer is the player.
-	var is_wild: bool = false ## True if it's a wild pokemon.
-
-	func _init(trainer_name: String, trainer_team: PokemonTeam, trainer_is_player: bool = false, trainer_is_wild: bool = false) -> void:
-		name = trainer_name
-		team = trainer_team
-		is_player = trainer_is_player
-		is_wild = trainer_is_wild
-	
-	## Generates the trainer data for a wild pokemon with [member is_wild] on.
-	static func make_wild(pokemon: Pokemon) -> TrainerBattleInfo:
-		var pokemon_team: PokemonTeam = PokemonTeam.new([pokemon])
-		var info: TrainerBattleInfo = TrainerBattleInfo.new("Wild %s" % pokemon.name, pokemon_team, false, true)
-		return info
-
-
-## Subclass that holds the data for a pokemon during battle. Mainly useful for volatile effects.
-class PokemonBattleInfo:
-	var pokemon: Pokemon ## The pokemon bound to this class.
-	var trainer: TrainerBattleInfo ## This pokemon's trainer.
-	var species: PokemonSpecies: ## Shorthand for [member Pokemon.species]
-		get: return pokemon.species
-		set(value): pokemon.species = value
-	var hp: int: ## Shorthand for [member Pokemon.hp]
-		get: return pokemon.hp
-		set(value): pokemon.hp = value
-	var max_hp: int: ## Shorthand for [member Pokemon.max_hp]
-		get: return pokemon.max_hp
-		set(value): pokemon.max_hp = value
-	var attack: int: ## Shorthand for [member Pokemon.attack]
-		get: return pokemon.attack
-		set(value): pokemon.attack = value
-	var defense: int: ## Shorthand for [member Pokemon.defense]
-		get: return pokemon.defense
-		set(value): pokemon.defense = value
-	var spattack: int: ## Shorthand for [member Pokemon.spattack]
-		get: return pokemon.spattack
-		set(value): pokemon.spattack = value
-	var spdefense: int: ## Shorthand for [member Pokemon.spdefense]
-		get: return pokemon.spdefense
-		set(value): pokemon.spdefense = value
-	var speed: int: ## Shorthand for [member Pokemon.speed]
-		get: return pokemon.speed
-		set(value): pokemon.speed = value
-	var level: int: ## Shorthand for [member Pokemon.level]
-		get: return pokemon.level
-		set(value): pokemon.level = value
-
-
-	func _init(_pokemon: Pokemon, _trainer: TrainerBattleInfo) -> void:
-		pokemon = _pokemon
-		trainer = _trainer
-
-
 ## Subclass used to describe a turn action, with all the related properties.
 class TurnAction:
 	var type: Actions ## The type of action.
@@ -462,15 +429,15 @@ class TurnAction:
 ## Subclass used to hold values for damage calculations.
 ##
 ## As [BattleEffect]s work through signals, this allows to pass a reference to the
-## damage calculation without depending too much on dictionaries. [br][br]
+## damage calculation without depending too much on dictionaries.[br][br]
 ## The data is set outside of the class, in [method Battle.damage_calc]. 
 class DamageCalculation:
-	var attack: int = 0 ## The used attack stat.
-	var defense: int = 0 ## The used defense stat.
+	var attack_stat: String ## The used attack stat.
+	var defense_stat: String ## The used defense stat.
 	var battle: Battle ## A reference to the battle this is used in.
 	var move: PokemonMove ## The used move.
-	var attacker: PokemonBattleInfo ## The pokemon who attacks.
-	var target: PokemonBattleInfo ## The pokemon who gets attacked.
+	var attacker: BattlePokemon ## The pokemon who attacks.
+	var target: BattlePokemon ## The pokemon who gets attacked.
 	var random: float = 1.0 ## The 15% random damage fluctuation.
 	var critical_multiplier: float = 1.0 ## Equals to [member Globals.CRITICAL_MULTIPLIER] when a critical hit lands.
 	var targets_multiplier: float = 1.0 ## Equals to [member Globals.MULTIPLE_TARGETS_MULTIPLIER] when there's more than one target.
@@ -484,12 +451,14 @@ class DamageCalculation:
 	func value() -> int:
 		if type_multiplier == 0.0 or move.category == PokemonMove.Categories.STATUS:
 			return 0
-		var a: float = float(attack)
-		var d: float = float(defense)
+		var a: float = float(attacker.get_stat(attack_stat))
+		var d: float = float(target.get_stat(defense_stat))
 		if critical_multiplier > 1.0:
-			pass # TODO: Ignore positive stat changes
+			if attacker.boosts[attack_stat] < 0:
+				a = attacker.raw[attack_stat]
+			if attacker.boosts[attack_stat] > 0:
+				d = target.raw[defense_stat]
 		var damage: float = roundf((roundf(2.0 * attacker.level / 5.0) + 2.0) * move.power * roundf(a / d) / 50.0) + 2
 		damage = damage * random * critical_multiplier * targets_multiplier * weather_multiplier * type_multiplier * stab_multiplier * other_multipliers
 		return max(floori(damage), 1)
-
 #endregion

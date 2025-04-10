@@ -32,7 +32,7 @@ const CATEGORY_ICONS: Dictionary[Categories, Texture2D] = {
 
 var id: String = "" ## This move's id. Matches it's key in [member DB.moves].
 var name: String = "Unnamed" ## This move's name.
-var type: Types.List = Types.List.QMARKS ## This moves type.
+var type: int = Types.QMARKS ## This moves type.
 var power: int = 0 ## This move's base power.
 var accuracy: int = 100 ## This move's accuracy.
 var category: Categories = Categories.PHYSICAL ## This move's category.
@@ -73,13 +73,13 @@ func refresh_pp() -> void:
 	pp = total_pp + floor(total_pp * 0.2 * pp_upgrades)
 
 
-## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [Battle.PokemonBattleInfo] in [member Battle.pokemons]
-func get_possible_targets(battle: Battle, user: Battle.PokemonBattleInfo) -> Array[bool]:
+## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member Battle.pokemons]
+func get_possible_targets(battle: Battle, user: BattlePokemon) -> Array[bool]:
 	var targets: Array[bool]
 	var user_is_enemy: bool = battle.enemy_pokemon.has(user)
 	targets.resize(battle.pokemons.size())
 	for i: int in targets.size(): 
-		var current: Battle.PokemonBattleInfo = battle.pokemons[i]
+		var current: BattlePokemon = battle.pokemons[i]
 		match target:
 			Targets.USER:
 				targets[i] = user == current

@@ -11,7 +11,7 @@ func _ready() -> void:
 	$Name.text = pokemon.name
 	$FormNumber.text = "Form: %s" % pokemon.form_number
 	$FormName.text = pokemon.form_name
-	$Types.text = "%s %s" % [Types.List.find_key(pokemon.types[0]), Types.List.find_key(pokemon.types[1])]
+	$Types.text = "%s %s" % [Types.names[pokemon.types[0]], Types.names[pokemon.types[1]]]
 	$Abilities.text = str(pokemon.abilities)
 	$HiddenAbilities.text = str(pokemon.hidden_abilities)
 	var stats: GridContainer = %Stats

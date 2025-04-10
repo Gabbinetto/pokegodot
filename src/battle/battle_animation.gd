@@ -54,11 +54,12 @@ func _play_animation() -> void:
 static func get_animation(path: String, animation_targets: Array[Node2D] = [], parent: Node = null) -> BattleAnimation:
 	if path.get_extension() != "tscn":
 		path += ".tscn"
-	if FileAccess.file_exists(ANIMATIONS_PATH + path):
-		var animation_scene: PackedScene = load(ANIMATIONS_PATH + path)
+	var animation_scene: PackedScene = load(ANIMATIONS_PATH + path)
+	if animation_scene:
 		var animation: BattleAnimation = animation_scene.instantiate()
 		animation.targets.assign(animation_targets)
 		if parent:
 			parent.add_child(animation)
 		return animation
+	push_error("Animation %s doesn't exist" % path)
 	return

@@ -28,7 +28,7 @@ const DIRECTIONS: Dictionary[String, Vector2] = {
 @export var speed: float = 4.0 ## The walking speed (In tile percentage per frame)
 @export var no_turning: bool = false ## If true, the actor doesn't turn when moving.
 @export_enum("Down", "Left", "Right", "Up") var initial_direction: int = 0 ## The initial direction.
-
+@export var disable_collision: bool = false
 @onready var initial_position: Vector2 = position ## The initial position. Gets updated everytime a tile is moved.
 @onready var facing_direction: Vector2 = DIRECTIONS.values()[initial_direction] ## The direction this actor is facing.
 var turn_frames: int = 4 ## Frames necessary to turn. Allows the [Player] to turn without moving.
@@ -65,12 +65,17 @@ func _physics_process(delta: float) -> void:
 	turning_frames = max(turning_frames - 1, 0)
 
 
+func update_initial_position() -> void:
+	initial_position = position.snapped(TILE_SIZE * Vector2.ONE)
+	
+
+
 ## Advances the actor. Meant to be called in [method Node._physics_process]
 func move(delta: float) -> void:
 	var target_position: Vector2 = (initial_position + (TILE_SIZE * input_direction)).snapped(TILE_SIZE * Vector2.ONE)
 	collision_ray.target_position = input_direction * floori(TILE_SIZE / 2.0)
 	collision_ray.force_raycast_update()
-	if not collision_ray.is_colliding():
+	if not collision_ray.is_colliding() or disable_collision:
 		if percent_moved == 0.0:
 			started_moving.emit()
 		percent_moved += speed * delta
@@ -83,7 +88,7 @@ func move(delta: float) -> void:
 		else:
 			position = initial_position + (input_direction * TILE_SIZE * percent_moved)
 	else:
-		initial_position = position.snapped(TILE_SIZE * Vector2.ONE)
+		update_initial_position()
 		percent_moved = 0.0
 		is_moving = false
 		stopped_moving.emit()

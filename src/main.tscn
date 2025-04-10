@@ -1,9 +1,7 @@
-[gd_scene load_steps=51 format=3 uid="uid://bmh2ortvoisba"]
+[gd_scene load_steps=49 format=3 uid="uid://bmh2ortvoisba"]
 
 [ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
 [ext_resource type="PackedScene" uid="uid://rjgxmbh4lr6f" path="res://src/maps/world.tscn" id="3_5q4o7"]
-[ext_resource type="PackedScene" uid="uid://cis6b23nmbwqm" path="res://src/ui/dialogue/dialogue.tscn" id="4_3cfgd"]
-[ext_resource type="PackedScene" uid="uid://dg8ujnrh80qfn" path="res://src/ui/hud/hud.tscn" id="4_fyndt"]
 [ext_resource type="Texture2D" uid="uid://dhugjfr0xgcwi" path="res://assets/graphics/ui/touchscreen_buttons/button_up.png" id="5_5mrjc"]
 [ext_resource type="Texture2D" uid="uid://cnjcx3iitja80" path="res://assets/graphics/ui/touchscreen_buttons/button_l.png" id="5_e7lu8"]
 [ext_resource type="Script" uid="uid://gb4ibe018bn1" path="res://src/ui/touch_controls/extra_action_button.gd" id="5_fyndt"]
@@ -152,7 +150,7 @@ func _ready() -> void:
 	check.call_deferred()
 "
 
-[node name="Main" type="Control" node_paths=PackedStringArray("viewport", "main_dialogue", "touchscreen_controls", "controls_visibility_button")]
+[node name="Main" type="Control" node_paths=PackedStringArray("viewport", "touchscreen_controls", "controls_visibility_button", "hud_layer", "main_dialogue_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -162,9 +160,10 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_y8srd")
 viewport = NodePath("SubViewportContainer/SubViewport")
-main_dialogue = NodePath("SubViewportContainer/SubViewport/DialogueLayer/Dialogue")
 touchscreen_controls = NodePath("TouchScreenControls")
 controls_visibility_button = NodePath("ControlsVisibilityButton")
+hud_layer = NodePath("SubViewportContainer/SubViewport/HUDLayer")
+main_dialogue_layer = NodePath("SubViewportContainer/SubViewport/DialogueLayer")
 metadata/_edit_lock_ = true
 metadata/_edit_vertical_guides_ = [256.0]
 
@@ -197,16 +196,9 @@ render_target_update_mode = 4
 
 [node name="World" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_5q4o7")]
 
-[node name="DialogueLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
-
-[node name="Dialogue" parent="SubViewportContainer/SubViewport/DialogueLayer" instance=ExtResource("4_3cfgd")]
-process_mode = 3
-visible = false
-
 [node name="HUDLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
 
-[node name="HUD" parent="SubViewportContainer/SubViewport/HUDLayer" instance=ExtResource("4_fyndt")]
-visible = false
+[node name="DialogueLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
 
 [node name="TouchScreenControls" type="Node2D" parent="."]
 editor_description = "The controls in the buttons stop them from stealing focus, thus making possible interacting with GUI through buttons."
@@ -225,6 +217,7 @@ viewport = NodePath("../../SubViewportContainer")
 metadata/_edit_lock_ = true
 
 [node name="LeftUpper" type="Node2D" parent="TouchScreenControls/Container"]
+scale = Vector2(1.1, 1.1)
 
 [node name="L" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper"]
 position = Vector2(18, 15)
@@ -276,6 +269,7 @@ grow_vertical = 2
 
 [node name="RightUpper" type="Node2D" parent="TouchScreenControls/Container"]
 position = Vector2(512, 0)
+scale = Vector2(1.1, 1.1)
 
 [node name="R" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper"]
 position = Vector2(-94, 15)
@@ -327,6 +321,7 @@ grow_vertical = 2
 
 [node name="LeftLower" type="Node2D" parent="TouchScreenControls/Container"]
 position = Vector2(0, 384)
+scale = Vector2(1.1, 1.1)
 
 [node name="DPad" type="Marker2D" parent="TouchScreenControls/Container/LeftLower" node_paths=PackedStringArray("buttons")]
 position = Vector2(80, -81)
@@ -337,7 +332,7 @@ buttons_size = Vector2i(56, 56)
 metadata/_edit_group_ = true
 
 [node name="Up" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
-position = Vector2(-28, -74)
+position = Vector2(-28, -66.7273)
 texture_normal = SubResource("AtlasTexture_kf8lf")
 texture_pressed = SubResource("AtlasTexture_5mrjc")
 shape = SubResource("CircleShape2D_rlaii")
@@ -365,7 +360,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Right" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
-position = Vector2(18, -28)
+position = Vector2(10.7273, -28)
 texture_normal = SubResource("AtlasTexture_uewes")
 texture_pressed = SubResource("AtlasTexture_kqbth")
 shape = SubResource("CircleShape2D_rlaii")
@@ -393,7 +388,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Down" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
-position = Vector2(-28, 18)
+position = Vector2(-28, 10.7272)
 texture_normal = SubResource("AtlasTexture_srxbw")
 texture_pressed = SubResource("AtlasTexture_d3u4l")
 shape = SubResource("CircleShape2D_rlaii")
@@ -421,7 +416,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Left" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
-position = Vector2(-74, -28)
+position = Vector2(-66.7273, -28)
 texture_normal = SubResource("AtlasTexture_mlv6i")
 texture_pressed = SubResource("AtlasTexture_tb146")
 shape = SubResource("CircleShape2D_rlaii")
@@ -450,6 +445,7 @@ grow_vertical = 2
 
 [node name="RightLower" type="Node2D" parent="TouchScreenControls/Container"]
 position = Vector2(512, 384)
+scale = Vector2(1.1, 1.1)
 
 [node name="Buttons" type="Marker2D" parent="TouchScreenControls/Container/RightLower" node_paths=PackedStringArray("buttons")]
 position = Vector2(-80, -81)
@@ -460,7 +456,7 @@ buttons_size = Vector2i(56, 56)
 metadata/_edit_group_ = true
 
 [node name="X" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
-position = Vector2(-28, -74)
+position = Vector2(-28, -66.7273)
 texture_normal = SubResource("AtlasTexture_okx7f")
 texture_pressed = SubResource("AtlasTexture_sta5p")
 shape = SubResource("CircleShape2D_rlaii")
@@ -484,7 +480,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="A" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
-position = Vector2(18, -28)
+position = Vector2(10.7273, -28)
 texture_normal = SubResource("AtlasTexture_mgm53")
 texture_pressed = SubResource("AtlasTexture_e7lu8")
 shape = SubResource("CircleShape2D_rlaii")
@@ -511,7 +507,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="B" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
-position = Vector2(-28, 18)
+position = Vector2(-28, 10.7272)
 texture_normal = SubResource("AtlasTexture_sif16")
 texture_pressed = SubResource("AtlasTexture_d7bab")
 shape = SubResource("CircleShape2D_rlaii")
@@ -538,7 +534,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Y" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
-position = Vector2(-74, -28)
+position = Vector2(-66.7271, -28)
 texture_normal = SubResource("AtlasTexture_ib8ht")
 texture_pressed = SubResource("AtlasTexture_43aqp")
 shape = SubResource("CircleShape2D_rlaii")

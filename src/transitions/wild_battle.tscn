@@ -1,0 +1,97 @@
+[gd_scene load_steps=2 format=3 uid="uid://epc4mltd4ywe"]
+
+[sub_resource type="GDScript" id="GDScript_2kf77"]
+resource_name = "WildBattleTransition"
+script/source = "extends Transition
+
+var square_size: float = 64.0
+var square_color: Color = Color.BLACK
+var fade_color: Color = Color.WHITE
+var fade_in_duration: float = 0.2
+var fade_out_duration: float = 0.3
+var square_scale_time: float = 0.1
+var columns: int = 0
+var rows: int = 0
+
+var squares: Dictionary[Vector2, Polygon2D] = {}
+
+
+func _make_squares() -> void:
+	for node: Node in $Squares.get_children():
+		node.queue_free()
+	squares.clear()
+	
+	columns = ceili(size.x / square_size)
+	rows = ceili(size.y / square_size)
+	for x: int in columns:
+		for y: int in rows:
+			var square: Polygon2D = Polygon2D.new()
+			squares[Vector2(x, y)] = square
+			square.color = square_color
+			square.scale = Vector2.ZERO
+			square.polygon = PackedVector2Array([
+				Vector2(-square_size, -square_size) / 2.0,
+				Vector2(square_size, -square_size) / 2.0,
+				Vector2(square_size, square_size) / 2.0,
+				Vector2(-square_size, square_size) / 2.0
+			])
+			square.position = Vector2(x, y) * square_size + Vector2.ONE * (square_size / 2.0)
+			$Squares.add_child(square)
+
+
+func play_in() -> void:
+	square_color = params.get(\"square_color\", square_color)
+	square_size = params.get(\"square_size\", square_size)
+	fade_color = params.get(\"fade_color\", fade_color)
+	fade_in_duration = params.get(\"fade_in_duration\", fade_in_duration)
+	fade_out_duration = params.get(\"fade_out_duration\", fade_out_duration)
+	square_scale_time = params.get(\"square_scale_time\", square_scale_time)
+	
+	$Fade.color = fade_color
+	$Fade.color.a = 0
+	
+	_make_squares()
+	
+	var tween: Tween = create_tween()
+	tween.finished.connect(finished.emit)
+
+	for i in 2:
+		tween.tween_property($Fade, \"color:a\", 1, fade_in_duration)
+		tween.tween_property($Fade, \"color:a\", 0, fade_in_duration)
+
+	tween.tween_interval(0)
+
+	for y: int in rows:
+		for x: int in columns:
+			var square: Polygon2D = squares.get(Vector2(x, y))
+			tween.parallel().tween_property(square, \"scale\", Vector2.ONE, square_scale_time).set_delay(square_scale_time * (x + y) - (square_scale_time * 0.3))
+	
+	tween.tween_interval(params.get(\"last_delay\", 0.1))
+
+
+func play_out() -> void:
+	var tween: Tween = create_tween()
+	tween.finished.connect(finished.emit)
+	tween.tween_property($Squares, \"modulate:a\", 0, fade_out_duration)
+"
+
+[node name="WildBattle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_2kf77")
+metadata/_custom_type_script = "uid://c251gufje1xcj"
+
+[node name="Fade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Squares" type="CanvasGroup" parent="."]

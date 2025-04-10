@@ -5,6 +5,7 @@ extends Control
 @export var buttons_container: Control
 @export_group("Buttons", "button_")
 @export var button_party: BaseButton
+@export var button_debug: BaseButton
 @export var button_quit: BaseButton
 
 var last_menu_option: Control
@@ -15,11 +16,12 @@ func _ready() -> void:
 		node.focus_entered.connect(set.bind("last_menu_option", node))
 	
 	button_party.pressed.connect(_open_party)
+	button_debug.pressed.connect(_open_debug)
 	button_quit.pressed.connect(_quit)
 
 
 func _can_open() -> bool:
-	return not Globals.in_battle and not submenu_open and not Globals.dialogue.running
+	return not Globals.in_battle and not submenu_open and not MainDialogue.running and not TransitionManager.transition
 
 
 func _input(event: InputEvent) -> void:
@@ -34,21 +36,52 @@ func _input(event: InputEvent) -> void:
 
 
 func _open_party() -> void:
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+	
 	menu.hide()
+	
 	submenu_open = true
 	var party_menu: PartyMenu = PartyMenu.create()
 	add_child(party_menu)
 	party_menu.closed.connect(
 		func():
+			TransitionManager.layer += 1
+			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+			await TransitionManager.finished
+			party_menu.queue_free()
+			await party_menu.tree_exited
 			menu.show()
 			submenu_open = false
-			party_menu.queue_free()
+			
+			TransitionManager.play_out()
+			await TransitionManager.finished
+			TransitionManager.layer -= 1
+			
 			button_party.grab_focus.call_deferred()
 	)
 
 
+func _open_debug() -> void:
+	menu.hide()
+	submenu_open = true
+	var debug: DebugMenu = DebugMenu.create()
+	
+	add_child(debug)
+	
+	debug.closed.connect(
+		func():
+			debug.queue_free()
+			menu.show()
+			submenu_open = false
+			button_debug.grab_focus.call_deferred()
+	)
+
+
 func _quit() -> void:
-	get_tree().quit()
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+	get_tree().quit.call_deferred()
 
 
 func open() -> void:

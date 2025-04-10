@@ -5,7 +5,7 @@ extends State
 @export var sprite_list: Array[Node2D] ## Ordered in the same way of Battle.pokemons
 
 
-var current_pokemon: Battle.PokemonBattleInfo
+var current_pokemon: BattlePokemon
 var animating: bool = false
 var acted: Array[int]
 var switching: bool = false
@@ -44,9 +44,9 @@ func update(_delta: float) -> void:
 	
 	match action.type:
 		Battle.Actions.FIGHT:
-			var targets: Array[Battle.PokemonBattleInfo]
+			var targets: Array[BattlePokemon]
 			for i: int in action.properties.targets.size():
-				var target_pokemon: Battle.PokemonBattleInfo = battle.pokemons[i] if action.properties.targets[i] else null
+				var target_pokemon: BattlePokemon = battle.pokemons[i] if action.properties.targets[i] else null
 				if target_pokemon:
 					targets.append(target_pokemon)
 
@@ -93,7 +93,7 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 		if not damage_list[i]:
 			continue
 		if damage_list[i].type_multiplier == 0:
-			immune_texts.append("Does not affect %s." % damage_list[i].target.pokemon.name)
+			immune_texts.append("Does not affect %s." % damage_list[i].target.name)
 		elif damage_list[i].type_multiplier > 0 and damage_list[i].type_multiplier < 1:
 			type_effectiveness_texts[
 				battle.pokemons.find(damage_list[i].target)
@@ -107,7 +107,7 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 		target_sprites.append(sprite_list[i])
 	
 	animating = true
-	await battle.show_text("%s used %s!" % [current_pokemon.pokemon.name, move.name])
+	await battle.show_text("%s used %s!" % [current_pokemon.name, move.name])
 	
 	# Show immune texts
 	var show_immune_text: Callable = func(index: int, next_call: Callable):
@@ -135,15 +135,13 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 			await next_call.call(index + 1, next_call)
 			return
 		if type_effectiveness_texts[index] == 1:
-			await battle.show_text("It's not very effective on\n%s." % [battle.pokemons[index].pokemon.name])
+			await battle.show_text("It's not very effective on\n%s." % [battle.pokemons[index].name])
 		elif type_effectiveness_texts[index] == 2:
-			await battle.show_text("It's super effective on\n%s!" % [battle.pokemons[index].pokemon.name])
+			await battle.show_text("It's super effective on\n%s!" % [battle.pokemons[index].name])
 		await next_call.call(index + 1, next_call)
-	await show_effectiveness_text.call(0, show_effectiveness_text)
-
 	_apply_damage(damage_values)
-	# TODO: Fix
 	await databox_animation.call()
+	await show_effectiveness_text.call(0, show_effectiveness_text)
 
 	animating = false
 
@@ -170,8 +168,15 @@ func _check_switch() -> bool:
 				var index: int = PlayerData.team.get_array().find(pokemon)
 				if pokemon.hp > 0:
 					switch_to.append(index)
+					TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+					await TransitionManager.finished
 					party.queue_free()
+					await party.tree_exited
+					TransitionManager.play_out()
+					await TransitionManager.finished
 		)
+		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+		await TransitionManager.finished
 		battle.ui_layer.add_child(party)
 		await party.pokemon_selected
 	if battle.ally_pokemon[1] and battle.ally_pokemon[1].hp <= 0 and battle.ally_pokemon[1].trainer.is_player:
@@ -187,8 +192,15 @@ func _check_switch() -> bool:
 				var index: int = PlayerData.team.get_array().find(pokemon)
 				if pokemon.hp > 0 and not switch_to.has(index):
 					switch_to.append(index)
+					TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+					await TransitionManager.finished
 					party.queue_free()
+					await party.tree_exited
+					TransitionManager.play_out()
+					await TransitionManager.finished
 		)
+		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+		await TransitionManager.finished
 		battle.ui_layer.add_child(party)
 		await party.pokemon_selected
 	
@@ -198,17 +210,18 @@ func _check_switch() -> bool:
 	for i: int in switch_to.size():
 		if battle.ally_pokemon[i]:
 			battle.switch(
-				PlayerData.team.get_array().find(battle.ally_pokemon[i].pokemon),
+				i,
 				PlayerData.team.slot(switch_to[i])
 			)
 	animating = false
 	switching = false
+
 	return true
 
 
 func _is_battle_finished() -> bool:
 	var finished: bool = false
-	for trainer: Battle.TrainerBattleInfo in battle.trainers:
+	for trainer: BattleTrainer in battle.trainers:
 		if not trainer.team.first_healthy():
 			finished = true
 			break

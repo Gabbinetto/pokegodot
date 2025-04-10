@@ -17,6 +17,9 @@ signal pause_done ## Emitted when a pause is done.
 ## The moments in which the textbox pauses. Keys represent the amount of characters shown 
 ## when the text pauses. Negative pause times mean that an input is needed.
 @export var set_pauses: Dictionary[int, float] = {}
+## If false, the player won't be able to skip advancing text. Basically, input won't be picked,
+## unless input is required.
+@export var can_skip_text: bool = true
 # TODO: Fix it EditorInterface not being defined in builds
 #@export_tool_button("Show text length") var show_text_length: Callable = func():
 	#if OS.has_feature("editor"):
@@ -99,5 +102,5 @@ func advance_pause() -> void:
 func input() -> void:
 	if visible_characters == pauses.keys()[current_pause_index]:
 		advance_pause()
-	else:
+	elif can_skip_text:
 		visible_characters = pauses.keys()[current_pause_index]

@@ -17,7 +17,7 @@ func refresh() -> void:
 	if not move:
 		return
 
-	var button_size: Vector2 = buttons_texture.get_size() / Vector2(2.0, Types.List.size())
+	var button_size: Vector2 = buttons_texture.get_size() / Vector2(2.0, Types.count)
 
 	var normal: AtlasTexture = AtlasTexture.new()
 	normal.atlas = buttons_texture

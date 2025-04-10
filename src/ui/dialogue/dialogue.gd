@@ -4,7 +4,7 @@ class_name Dialogue extends Control
 ##
 ## A class that handles the UI side of dialogues, while [DialogueManager] does the actual processing. [br]
 ## This class is not necessary to use dialogues, but an instance where anything other than the main Dialogue
-## is used should be rare. Most of the time, [member Globals.dialogue] should be used.
+## is used should be rare. Most of the time, the [code]MainDialogue[/code] autoload should be used.
 
 signal finished
 

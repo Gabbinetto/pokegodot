@@ -20,7 +20,7 @@ func _ready() -> void:
 func _shift() -> void:
 	if not parent.texture:
 		return
-	var info: Battle.PokemonBattleInfo = battle.pokemons[pokemon_slot]
+	var info: BattlePokemon = battle.pokemons[pokemon_slot]
 	if not info:
 		return
 	
@@ -28,9 +28,9 @@ func _shift() -> void:
 	
 	var offset: Vector2i
 	if pokemon_slot > 1:
-		offset = Vector2i(metrics.front_sprite_x, metrics.front_sprite_y)
+		offset = Vector2i(metrics.get("front_sprite_x", 0), metrics.get("front_sprite_y", 0))
 	else:
-		offset = Vector2i(metrics.back_sprite_x, metrics.back_sprite_y)
+		offset = Vector2i(metrics.get("back_sprite_x", 0), metrics.get("back_sprite_y", 0))
 	
 	parent.offset = base_offset + Vector2(offset)
 	

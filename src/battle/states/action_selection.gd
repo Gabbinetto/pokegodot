@@ -62,6 +62,8 @@ func _confirm_move(move: PokemonMove, targets: Array[bool]) -> void:
 
 func _open_party() -> void:
 	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true})
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
 	battle.ui_layer.add_child(party)
 	party.pokemon_selected.connect(func(pokemon: Pokemon):
 		if pokemon.hp <= 0:
@@ -70,7 +72,14 @@ func _open_party() -> void:
 		_switch(pokemon)
 	)
 	party.closed.connect(func():
+		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+		var time: float = Time.get_ticks_msec()
+		await TransitionManager.finished
+		print(Time.get_ticks_msec() - time)
 		party.queue_free()
+		await party.tree_exited
+		TransitionManager.play_out()
+		await TransitionManager.finished
 		battle.pokemon_button.grab_focus.call_deferred()
 	)
 
@@ -88,5 +97,5 @@ func _try_run() -> void:
 	
 
 func _show_text() -> void:
-	await battle.show_text("What will\n%s do?" % battle.current_pokemon.pokemon.name, true)
+	await battle.show_text("What will\n%s do?" % battle.current_pokemon.name, true)
 	

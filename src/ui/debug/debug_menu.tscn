@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://cwahg2lat13ec"]
+
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="1_3pys2"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="1_8ys4n"]
+[ext_resource type="Script" uid="uid://ci4qmgpmbx37n" path="res://src/ui/debug/debug_menu.gd" id="1_xourw"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/text_resources/default_gray.tres" id="4_3pys2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3pys2"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 2
+border_color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[sub_resource type="Theme" id="Theme_03c1t"]
+default_font = ExtResource("1_3pys2")
+Button/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+Button/colors/font_focus_color = Color(0.28, 0.28, 0.28, 0.862745)
+Button/font_sizes/font_size = 32
+Button/styles/focus = SubResource("StyleBoxFlat_3pys2")
+Label/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+Label/font_sizes/font_size = 32
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3pys2"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3pys2"]
+size = Vector2(32, 32)
+
+[node name="DebugMenu" type="PanelContainer" node_paths=PackedStringArray("main", "buttons_edit")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_03c1t")
+theme_override_styles/panel = ExtResource("1_8ys4n")
+script = ExtResource("1_xourw")
+main = NodePath("Main")
+buttons_edit = [NodePath("Main/HBoxContainer/EditSlot1"), NodePath("Main/HBoxContainer/EditSlot2"), NodePath("Main/HBoxContainer/EditSlot3"), NodePath("Main/HBoxContainer/EditSlot4"), NodePath("Main/HBoxContainer/EditSlot5"), NodePath("Main/HBoxContainer/EditSlot6")]
+
+[node name="Main" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main/HBoxContainer"]
+layout_mode = 2
+text = "Edit pokemon: "
+label_settings = ExtResource("4_3pys2")
+
+[node name="VSeparator" type="VSeparator" parent="Main/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_3pys2")
+
+[node name="EditSlot1" type="TextureButton" parent="Main/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_3pys2")
+stretch_mode = 5
+
+[node name="EditSlot2" type="TextureButton" parent="Main/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_3pys2")
+stretch_mode = 5
+
+[node name="EditSlot3" type="TextureButton" parent="Main/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_3pys2")
+stretch_mode = 5
+
+[node name="EditSlot4" type="TextureButton" parent="Main/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_3pys2")
+stretch_mode = 5
+
+[node name="EditSlot5" type="TextureButton" parent="Main/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_3pys2")
+stretch_mode = 5
+
+[node name="EditSlot6" type="TextureButton" parent="Main/HBoxContainer"]
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_3pys2")
+stretch_mode = 5

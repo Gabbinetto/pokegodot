@@ -95,6 +95,10 @@ func _ready() -> void:
 	
 	_refresh_pokemon()
 	_refresh_screen()
+	
+	if TransitionManager.transition:
+		TransitionManager.play_out()
+		await TransitionManager.finished
 
 
 func _process(_delta: float) -> void:

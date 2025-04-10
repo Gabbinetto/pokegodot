@@ -21,7 +21,11 @@ var happiness: int = 70 ## This pokemon's happiness.
 var gender: Genders = Genders.MALE ## This pokemon's gender.
 var nature: String = "" ## This pokemon's nature. Must be one of [member Globals.natures] keys.
 var shiny: bool = false ## If true, this pokemon is shiny.
-var super_shiny: bool = false ## If true, this pokemon has shiny and has different, rarer sparkles.
+var super_shiny: bool = false: ## If true, this pokemon has shiny and has different, rarer sparkles.
+	set(value):
+		super_shiny = value
+		if super_shiny:
+			shiny = super_shiny
 var ability: PokemonAbility ## This pokemon's ability.
 var has_hidden_ability: bool: ## True if [member ability] is an hidden ability set in the [member species] [member PokemonSpecies.hidden_abilities]. If set manually, sets [member ability] to the first hidden ability (If true) or the first normal ability (If false).
 	get: return species.hidden_abilities.has(ability.id)
@@ -249,8 +253,10 @@ func heal() -> void:
 	status = null
 
 
-## Set this pokemon's moves to the last four moves learnt at [param level]
-func set_moves(_level: int) -> void:
+## Set this pokemon's moves to the last four moves learnt at [param _level]
+func set_moves(_level: int, clear_old: bool = false) -> void:
+	if clear_old:
+		moves.clear()
 	for i: int in range(_level, 0, -1):
 		if moves.size() >= 4:
 			break

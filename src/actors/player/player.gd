@@ -20,6 +20,7 @@ const ANIMATION_BIKE_IDLE_PREFIX: String = "BIKE_IDLE_" ## Prefix of the animati
 
 var is_running: bool = false ## True if the player is running. By default, is true when B is pressed.
 var on_bike: bool = false ## True if on a bike.
+var input_enabled: bool = true ## If false, won't pick up input from the player. Useful for cutscenes.
 
 
 func _ready() -> void:
@@ -31,6 +32,14 @@ func _ready() -> void:
 	Globals.player = self
 
 
+func _check_event_collision() -> void:
+	var event: Area2D = event_ray.get_collider()
+	if not event or not is_instance_valid(event) or not (event is Event):
+		return
+
+	event.collision(facing_direction)
+
+
 func _physics_process(delta: float) -> void:
 	is_running = Input.is_action_pressed("B")
 	if on_bike:
@@ -38,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		speed = run_speed if is_running else walk_speed
 	
-	if not is_moving:
+	if not is_moving and input_enabled:
 		# Can only move horizontally or vertically, not both.
 		if Input.get_axis("Left", "Right") == 0.0:
 			input_direction.y = Input.get_axis("Up", "Down")
@@ -50,10 +59,12 @@ func _physics_process(delta: float) -> void:
 
 	if not Globals.movement_enabled:
 		input_direction = Vector2.ZERO
-	
+
 	if input_direction:
 		event_ray.target_position = input_direction * TILE_SIZE
 		event_ray.force_raycast_update()
+		if not is_moving and input_enabled:
+			_check_event_collision()
 	
 	super(delta)
 

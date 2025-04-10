@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="14_1mk23"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="14_ckxlc"]
 [ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="15_d7rla"]
-[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_richtextlabel.tres" id="17_7sv81"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_theme.tres" id="17_7sv81"]
 [ext_resource type="Theme" uid="uid://crr2mnxmq6k88" path="res://src/battle/target_selection_theme.tres" id="22_m5n8x"]
 [ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="23_bu0ik"]
 
@@ -293,6 +293,7 @@ focus_neighbor_bottom = NodePath("../BagButton")
 focus_next = NodePath("../PokemonButton")
 focus_previous = NodePath("../RunButton")
 mouse_filter = 1
+action_mode = 0
 texture_normal = SubResource("AtlasTexture_tt4el")
 texture_pressed = SubResource("AtlasTexture_va54n")
 texture_hover = SubResource("AtlasTexture_tt4el")
@@ -308,6 +309,7 @@ focus_neighbor_bottom = NodePath("../RunButton")
 focus_next = NodePath("../BagButton")
 focus_previous = NodePath("../FightButton")
 mouse_filter = 1
+action_mode = 0
 texture_normal = SubResource("AtlasTexture_13ou7")
 texture_pressed = SubResource("AtlasTexture_kognc")
 texture_hover = SubResource("AtlasTexture_13ou7")
@@ -323,6 +325,7 @@ focus_neighbor_right = NodePath("../RunButton")
 focus_next = NodePath("../RunButton")
 focus_previous = NodePath("../PokemonButton")
 mouse_filter = 1
+action_mode = 0
 texture_normal = SubResource("AtlasTexture_xw20v")
 texture_pressed = SubResource("AtlasTexture_lgps0")
 texture_focused = SubResource("AtlasTexture_lgps0")
@@ -337,6 +340,7 @@ focus_neighbor_top = NodePath("../PokemonButton")
 focus_next = NodePath("../FightButton")
 focus_previous = NodePath("../BagButton")
 mouse_filter = 1
+action_mode = 0
 texture_normal = SubResource("AtlasTexture_l3q3p")
 texture_pressed = SubResource("AtlasTexture_5djbx")
 texture_hover = SubResource("AtlasTexture_l3q3p")
@@ -413,6 +417,7 @@ label = NodePath("../DialogueBox/DialogueLabel")
 script = ExtResource("15_d7rla")
 needs_input_on_finish = false
 end_pause = 0.0
+can_skip_text = false
 
 [node name="FightCommands" type="Control" parent="Over"]
 visible = false

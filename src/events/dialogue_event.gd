@@ -1,3 +1,4 @@
+@tool
 class_name DialogueEvent extends Event
 
 
@@ -5,6 +6,5 @@ class_name DialogueEvent extends Event
 
 
 func _run() -> void:
-	super()
-	Globals.dialogue.run_dialogue(dialogue)
-	Globals.dialogue.finished.connect(done.emit, CONNECT_ONE_SHOT)
+	MainDialogue.run_dialogue(dialogue)
+	MainDialogue.finished.connect(done.emit, CONNECT_ONE_SHOT)

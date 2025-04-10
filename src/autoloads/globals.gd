@@ -2,7 +2,8 @@ extends Node
 
 ## Pokegodot's Globals singleton
 ## 
-## A singleton holding general stuff, such as stats key names.
+## A singleton holding miscellaneous data that doesn't require a dedicated script, or
+## data that should be accessible from everywhere often.
 
 enum Languages { ## Possible languages.
 	UNKNOWN,
@@ -49,6 +50,18 @@ const STATS: Dictionary[String, String] = {
 	"SPECIAL_DEFENSE": "SPECIAL_DEFENSE",
 	"SPEED": "SPEED",
 }
+const SHORT_STATS: Dictionary[String, String] = { ## Shortened stats names.
+	STATS.ATTACK: "Atk",
+	STATS.DEFENSE: "Def",
+	STATS.SPECIAL_ATTACK: "Sp.Atk",
+	STATS.SPECIAL_DEFENSE: "Sp.Def",
+	STATS.SPEED: "Spd",
+}
+const OTHER_STATS: Dictionary[String, String] = { ## Same as [member STATS], but for other type of stats.
+	"ACCURACY": "ACCURACY",
+	"EVASIVENESS": "EVASIVENESS",
+	"CRITICAL": "CRITICAL",
+}
 const CONTEST_STATS: Dictionary[String, String] = { ## Same as [member STATS], but for contest stats.
 	"BEAUTY": "BEAUTY",
 	"COOL": "COOL",
@@ -57,6 +70,8 @@ const CONTEST_STATS: Dictionary[String, String] = { ## Same as [member STATS], b
 	"TOUGH": "TOUGH",
 	"SHEEN": "SHEEN",
 }
+const MAX_BOOST: int = 6 ## Max/min amount of stat boosts in battle.
+const MAX_OTHER_BOOST: int = 3 ## Max/min amount of accuracy/evasiveness boosts in battle.
 const CRITICAL_MULTIPLIER: float = 1.5 ## Critical hit multiplier
 const MULTIPLE_TARGETS_MULTIPLIER: float = 0.75 ## Multiplier for multiple targets
 ## Defines how rare a shiny is. When defining the shininess, a number between 0 and 65535.
@@ -69,7 +84,6 @@ const SHINY_THRESHOLD: int = 16
 ## space around. When in need for the viewport outside of the viewport itself, use this instead of [method Node.get_viewport]
 var game_root: SubViewport
 var game_world: World ## The game world which holds maps, the player and similar stuff.
-var dialogue: Dialogue ## The main dialogue of the game. Has functionality to start [DialogueManager].
 var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
 var movement_enabled: bool = true ## Enable or disable the player's movement.
 var event_input_enabled: bool = true ## Enable or disable the player's ability to interact with events.

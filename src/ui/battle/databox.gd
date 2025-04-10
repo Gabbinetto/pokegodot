@@ -17,8 +17,6 @@ const HP_BAR_TIME: float = 1.0 ## Time needed for the HP bar to go from full to 
 
 func _ready() -> void:
 	_refresh()
-	#if hp_bar:
-		#hp_bar.value_changed.connect(func(_value: float): _set_hp_numbers)
 
 
 func _process(_delta: float) -> void:

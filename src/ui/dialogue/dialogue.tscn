@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cckqeo88bqtbx" path="res://src/ui/dialogue/choice_container.gd" id="4_l07e8"]
 [ext_resource type="StyleBox" uid="uid://dnxadgspegmfr" path="res://src/ui/misc/box_texture.tres" id="5_owvc8"]
 [ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="5_py1ry"]
-[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_richtextlabel.tres" id="7_gidb7"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_theme.tres" id="7_gidb7"]
 [ext_resource type="Texture2D" uid="uid://dl1bmj4lljo4p" path="res://addons/pokemon_dialogue/test_tab/default_arrow.png" id="7_s5vpw"]
 [ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="9_0waje"]
 

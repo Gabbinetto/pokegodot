@@ -49,6 +49,7 @@ animations = [{
 [node name="GrassArea" type="Area2D" node_paths=PackedStringArray("leaves_sprite")]
 script = ExtResource("1_o604t")
 leaves_sprite = NodePath("Sprite")
+battleback = 29
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(16, 16)

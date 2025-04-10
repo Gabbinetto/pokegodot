@@ -93,6 +93,12 @@ func _ready() -> void:
 		for button: BaseButton in menu_buttons_container.get_children():
 			button.visible = [button_switch_in, button_summary, button_menu_cancel].has(button)
 
+	if TransitionManager.transition:
+		TransitionManager.play_out()
+		await TransitionManager.finished
+
+
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if swapping:
@@ -164,7 +170,7 @@ func _on_menu_visibility_changed() -> void:
 
 #region In battle functions
 func _is_pokemon_in_battle(pokemon: Pokemon) -> bool:
-	for info: Battle.PokemonBattleInfo in Globals.current_battle.pokemons:
+	for info: BattlePokemon in Globals.current_battle.pokemons:
 		if info != null and pokemon == info.pokemon:
 			return true
 	return false
@@ -232,12 +238,19 @@ func swap_slots() -> void:
 
 func _on_summary_pressed() -> void:
 	var summary: SummaryMenu = SummaryMenu.create(team.get_array(), {"starting_index": current_panel.get_index(), "in_battle": in_battle})
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
 	add_sibling(summary)
 	hide()
 	summary.closed.connect(
 		func():
+			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+			await TransitionManager.finished
 			summary.queue_free()
+			await summary.tree_exited
 			show()
+			TransitionManager.play_out()
+			await TransitionManager.finished
 			# Await to make sure focus is grabbed after closing (Especially when in moves screen)
 			await get_tree().process_frame
 			button_summary.grab_focus()

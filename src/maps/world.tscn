@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://rjgxmbh4lr6f"]
+[gd_scene load_steps=5 format=3 uid="uid://rjgxmbh4lr6f"]
 
 [ext_resource type="Script" uid="uid://bmjrada3vaj84" path="res://src/maps/world.gd" id="1_s45pl"]
-[ext_resource type="PackedScene" uid="uid://dbl03yj3owea" path="res://src/maps/map_template.tscn" id="2_bne4y"]
+[ext_resource type="PackedScene" uid="uid://dbl03yj3owea" path="res://src/maps/demo_maps/map_template.tscn" id="2_bne4y"]
+[ext_resource type="PackedScene" uid="uid://bmquf0qtub3c7" path="res://src/maps/demo_maps/demo_center.tscn" id="3_w4tlb"]
 [ext_resource type="PackedScene" uid="uid://btbgwcje6iv0b" path="res://src/actors/player/player.tscn" id="3_xprsa"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("map_container", "starting_map")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("map_container", "instantiated_map_container", "starting_map")]
 y_sort_enabled = true
 script = ExtResource("1_s45pl")
 map_container = NodePath("Maps")
+instantiated_map_container = NodePath("InstancedMaps")
 starting_map = NodePath("Maps/MapTemplate")
 
 [node name="Maps" type="Node2D" parent="."]
@@ -18,19 +20,29 @@ connections = [NodePath("../MapTemplate2")]
 
 [node name="MapTemplate2" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
 position = Vector2(0, 2176)
+id = "DEFAULT2"
 connections = [NodePath("../MapTemplate"), NodePath("../MapTemplate3")]
 
 [node name="MapTemplate3" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
 position = Vector2(0, 4352)
+id = "DEFAULT3"
 connections = [NodePath("../MapTemplate2"), NodePath("../MapTemplate4")]
 
 [node name="MapTemplate4" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
 position = Vector2(0, 6528)
+id = "DEFAULT4"
 connections = [NodePath("../MapTemplate3"), NodePath("../MapTemplate5")]
 
 [node name="MapTemplate5" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
 position = Vector2(0, 8704)
+id = "DEFAULT5"
 connections = [NodePath("../MapTemplate4")]
+
+[node name="InstancedMaps" type="Node2D" parent="."]
+editor_description = "Maps that aren't always loaded in memory, but that get instanced each time, like insides."
+visible = false
+
+[node name="DemoCenter" parent="InstancedMaps" instance=ExtResource("3_w4tlb")]
 
 [node name="Player" parent="." instance=ExtResource("3_xprsa")]
 position = Vector2(224, 160)

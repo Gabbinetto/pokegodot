@@ -6,7 +6,7 @@ extends State
 func enter() -> void:
 
 	# TODO: Make actual AI
-	for pokemon: Battle.PokemonBattleInfo in battle.enemy_pokemon:
+	for pokemon: BattlePokemon in battle.enemy_pokemon:
 		if not pokemon:
 			continue
 		var move: PokemonMove = pokemon.pokemon.moves[Globals.rng.randi_range(0, pokemon.pokemon.moves.size() - 1)]
