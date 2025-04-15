@@ -71,7 +71,7 @@ func add_boost(stat: String, amount: int) -> bool:
 	var max: int = Globals.MAX_OTHER_BOOST if Globals.OTHER_STATS.values().has(stat) else Globals.MAX_BOOST
 	if boosts[stat] >= max or boosts[stat] <= -max:
 		return false
-	boosts[stat] = clampi(boosts[stat], -max, max)
+	boosts[stat] = clampi(boosts[stat] + amount, -max, max)
 	return true
 
 

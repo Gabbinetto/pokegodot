@@ -18,7 +18,7 @@ const ICON_FEMALE: Texture2D = preload("res://assets/graphics/ui/gender_female_i
 @export var species: OptionButton
 @export var forms: OptionButton
 @export var nickname: LineEdit
-@export var gender: TextureButton
+@export var gender: Button
 @export var shiny: CheckButton
 @export var super_shiny: CheckButton
 @export var level: SpinBox
@@ -27,8 +27,11 @@ const ICON_FEMALE: Texture2D = preload("res://assets/graphics/ui/gender_female_i
 @export var moves: Control
 @export var moves_at_level: BaseButton
 @export var heal: BaseButton
-@export var evs: Control
-@export var ivs: Control
+@export var stats: Control
+
+var stat_labels: Dictionary[String, Label] = {}
+var evs: Dictionary[String, Range] = {}
+var ivs: Dictionary[String, Range] = {}
 
 var valid_moves: Array[String]
 
@@ -52,8 +55,10 @@ func _ready() -> void:
 			up = "-"
 			down = "-"
 		nature.add_item(
-			"%s (%s, %s)" % [key.capitalize(), up, down]
+			"%s (%s, %s)" % [item_name, up, down]
 		)
+	
+	nickname.grab_focus.call_deferred()
 	
 	species.item_selected.connect(species_edit)
 	forms.item_selected.connect(form_edit)
@@ -75,11 +80,13 @@ func _ready() -> void:
 		pokemon.heal()
 		_sync_pokemon()
 	)
-	for child: Range in evs.get_children():
-		child.value_changed.connect(stat_value_edit.bind(child.name, false))
+	for child: Control in stats.get_children():
+		stat_labels[child.name] = child.get_node("Stat")
+		evs[child.name] = child.get_node("EVS")
+		child.get_node("EVS").value_changed.connect(stat_value_edit.bind(child.name, false))
+		ivs[child.name] = child.get_node("IVS")
+		child.get_node("IVS").value_changed.connect(stat_value_edit.bind(child.name, true))
 
-	for child: Range in ivs.get_children():
-		child.value_changed.connect(stat_value_edit.bind(child.name, true))
 
 
 func _sync_forms() -> void:
@@ -119,32 +126,29 @@ func _sync_pokemon(sync_moves_options: bool = false) -> void:
 	_sync_forms()
 	nickname.text = pokemon.name
 	if pokemon.species.gender_ratio == -1:
-		gender.hide()
+		gender.icon = null
 	else:
-		gender.show()
-		gender.texture_normal = ICON_FEMALE if pokemon.gender == Pokemon.Genders.FEMALE else ICON_MALE
-		gender.texture_hover = gender.texture_normal
-		gender.texture_pressed = gender.texture_normal
-	
+		gender.icon = ICON_FEMALE if pokemon.gender == Pokemon.Genders.FEMALE else ICON_MALE
+		
 	shiny.button_pressed = pokemon.shiny
 	super_shiny.button_pressed = pokemon.super_shiny
 
 	level.set_value_no_signal(pokemon.level)
 	level.min_value = 1
 	level.max_value = Experience.MAX_LEVEL
-	experience.set_value_no_signal(pokemon.experience)
 	experience.min_value = pokemon.species.exp_table.front()
 	experience.max_value = pokemon.species.exp_table.back()
+	experience.set_value_no_signal(pokemon.experience)
 
 	nature.selected = Globals.natures.keys().find(pokemon.nature)
 
 	_sync_moves(sync_moves_options)
 	
-	for child: Range in evs.get_children():
-		child.set_value_no_signal(pokemon.evs[child.name])
-	
-	for child: Range in ivs.get_children():
-		child.set_value_no_signal(pokemon.ivs[child.name])
+	for stat: String in Globals.STATS.values():
+		stat_labels[stat].text = str(pokemon.stats[stat])
+		evs[stat].set_value_no_signal(pokemon.evs[stat])
+		ivs[stat].set_value_no_signal(pokemon.ivs[stat])
+
 
 #region Edit functions
 func _set_new_species(new_species: PokemonSpecies) -> void:
@@ -220,6 +224,7 @@ func move_edit(index: int, slot: int) -> void:
 	var id: String = valid_moves[index]
 	var learnt_already: int = pokemon.moves.map(func(move: PokemonMove): return move.id).find(id)
 	if learnt_already != -1:
+		print(learnt_already)
 		var options: OptionButton = moves.get_child(slot).get_node("Move")
 		options.selected = valid_moves.find(pokemon.moves[learnt_already])
 		return

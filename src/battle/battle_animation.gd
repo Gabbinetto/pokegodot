@@ -19,7 +19,7 @@ var targets: Array[Node2D] ## The targets of the animation, usually the Pokemon 
 ## Plays the animation on all nodes in [member targets].
 func play() -> void:
 	# Move in the middle of targets
-	var pos: Vector2
+	var pos: Vector2 = Vector2.ZERO
 	for target: Node2D in targets:
 		pos += target.global_position
 	pos /= float(targets.size())
@@ -56,10 +56,10 @@ static func get_animation(path: String, animation_targets: Array[Node2D] = [], p
 		path += ".tscn"
 	var animation_scene: PackedScene = load(ANIMATIONS_PATH + path)
 	if animation_scene:
-		var animation: BattleAnimation = animation_scene.instantiate()
-		animation.targets.assign(animation_targets)
+		var battle_animation: BattleAnimation = animation_scene.instantiate()
+		battle_animation.targets.assign(animation_targets)
 		if parent:
-			parent.add_child(animation)
-		return animation
+			parent.add_child(battle_animation)
+		return battle_animation
 	push_error("Animation %s doesn't exist" % path)
 	return

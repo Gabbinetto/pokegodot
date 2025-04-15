@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgwgu4cf32kju"]
+
+[ext_resource type="PackedScene" uid="uid://b47fq53xr1gsm" path="res://src/battle/battle_animation_template.tscn" id="1_ungbk"]
+[ext_resource type="Script" uid="uid://bu8rnivrgipsd" path="res://src/battle/battle_animations/stat_changes/stat_change_animation.gd" id="2_vawjf"]
+
+[sub_resource type="Animation" id="Animation_tcg1n"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tcg1n"]
+_data = {
+&"RESET": SubResource("Animation_tcg1n")
+}
+
+[sub_resource type="Curve" id="Curve_rwx7a"]
+_data = [Vector2(0.0107143, 0.023564), 0.0, 0.705371, 0, 0, Vector2(0.985714, 0), -6.5567, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_4o377"]
+curve = SubResource("Curve_rwx7a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cerou"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -96, 0)
+emission_shape = 3
+emission_box_extents = Vector3(16, 1, 1)
+angle_min = -180.0
+angle_max = 180.0
+direction = Vector3(0, -1, 0)
+spread = 20.0
+initial_velocity_max = 28.3
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 9.99998
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_4o377")
+color = Color(0.4, 0.61, 1, 1)
+
+[node name="StatDown" node_paths=PackedStringArray("base_particle") instance=ExtResource("1_ungbk")]
+script = ExtResource("2_vawjf")
+base_particle = NodePath("GPUParticles2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_tcg1n")
+}
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="2"]
+emitting = false
+amount = 40
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_cerou")

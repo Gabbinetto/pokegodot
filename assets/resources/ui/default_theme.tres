@@ -1,0 +1,67 @@
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://kn74wkgbq6w5"]
+
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://assets/resources/ui/box_full_texture.tres" id="2_jwjv1"]
+[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="3_kp4iy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uhhfm"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 2
+border_color = Color(0.282353, 0.282353, 0.282353, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_747tx"]
+color = Color(0.282353, 0.282353, 0.282353, 1)
+grow_begin = 0.0
+grow_end = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ro142"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 2
+border_color = Color(0.282353, 0.282353, 0.282353, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kp4iy"]
+bg_color = Color(0, 0, 0, 0)
+border_width_bottom = 2
+border_color = Color(0.282353, 0.282353, 0.282353, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_747tx"]
+bg_color = Color(0.282353, 0.282353, 0.282353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kk35x"]
+bg_color = Color(0.32, 0.32, 0.32, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwjv1"]
+bg_color = Color(0.4, 0.4, 0.4, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_kk35x"]
+color = Color(0.282353, 0.282353, 0.282353, 1)
+grow_begin = 0.0
+grow_end = 0.0
+
+[resource]
+default_font = ExtResource("3_kp4iy")
+Button/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+Button/colors/font_focus_color = Color(0.28, 0.28, 0.28, 0.901961)
+Button/colors/font_hover_color = Color(0.28, 0.28, 0.28, 0.862745)
+Button/colors/font_pressed_color = Color(0.28, 0.28, 0.28, 0.784314)
+Button/font_sizes/font_size = 32
+Button/styles/focus = SubResource("StyleBoxFlat_uhhfm")
+HSeparator/styles/separator = SubResource("StyleBoxLine_747tx")
+Label/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+Label/font_sizes/font_size = 32
+LineEdit/colors/caret_color = Color(0.282353, 0.282353, 0.282353, 1)
+LineEdit/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+LineEdit/colors/font_placeholder_color = Color(0.28, 0.28, 0.28, 0.784314)
+LineEdit/font_sizes/font_size = 32
+LineEdit/styles/focus = SubResource("StyleBoxFlat_ro142")
+PanelContainer/styles/panel = ExtResource("2_jwjv1")
+PopupMenu/colors/font_color = Color(0.282353, 0.282353, 0.282353, 1)
+PopupMenu/colors/font_hover_color = Color(0.278431, 0.278431, 0.278431, 0.901961)
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_kp4iy")
+PopupMenu/styles/panel = ExtResource("2_jwjv1")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_747tx")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_kk35x")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_jwjv1")
+VSeparator/styles/separator = SubResource("StyleBoxLine_kk35x")

@@ -120,14 +120,15 @@ metadata/_custom_type_script = "uid://da65406gveta6"
 position = Vector2(16, 32)
 shape = SubResource("RectangleShape2D_j20by")
 
-[node name="DialogueManager" type="Node" parent="Pikachu/Event"]
+[node name="DialogueManager" type="Node" parent="Pikachu/Event" node_paths=PackedStringArray("starting_sequence")]
 script = ExtResource("8_j20by")
+starting_sequence = NodePath("DialogueTextSequence")
 metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
 
-[node name="DialogueTextSequence" type="Node" parent="Pikachu/Event/DialogueManager"]
+[node name="DialogueTextSequence" type="Node" parent="Pikachu/Event/DialogueManager" node_paths=PackedStringArray("next_sequence")]
 script = ExtResource("9_50yq6")
 text = "Want me to heal your pokemon?"
-can_skip_text = null
+next_sequence = NodePath("../DialogueChoiceSequence")
 metadata/_custom_type_script = "uid://cjypfwj7jwa"
 
 [node name="DialogueChoiceSequence" type="Node" parent="Pikachu/Event/DialogueManager"]

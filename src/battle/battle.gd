@@ -48,7 +48,7 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var move_buttons: Array[MoveButton]
 @export var fight_cancel_button: BaseButton
 @export var move_info: RichTextLabel
-@export_group("Target selection")
+@export_subgroup("Target selection commands")
 @export var target_commands: Control
 @export var target_buttons: Array[Button] ## Target buttons when choosing a target in double battles. Should select the allies first, then the foes.
 @export var target_cancel_button: BaseButton

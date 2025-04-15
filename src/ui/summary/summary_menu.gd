@@ -5,9 +5,9 @@ signal closed
 const MENU_SCENE: PackedScene = preload("res://src/ui/summary/summary_menu.tscn")
 const GENDER_FEMALE_ICON = preload("res://assets/graphics/ui/gender_female_icon.png")
 const GENDER_MALE_ICON = preload("res://assets/graphics/ui/gender_male_icon.png")
-const NATURE_NEUTRAL = preload("res://assets/resources/text_resources/light_gray.tres")
-const NATURE_UP = preload("res://assets/resources/text_resources/nature_up.tres")
-const NATURE_DOWN = preload("res://assets/resources/text_resources/nature_down.tres")
+const NATURE_NEUTRAL = preload("res://assets/resources/ui/text_resources/light_gray.tres")
+const NATURE_UP = preload("res://assets/resources/ui/text_resources/nature_up.tres")
+const NATURE_DOWN = preload("res://assets/resources/ui/text_resources/nature_down.tres")
 const SPRITE_ICON_UPDATE_FRAMES: int = 20
 
 @export var screens: Array[Control]

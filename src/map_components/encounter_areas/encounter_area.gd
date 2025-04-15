@@ -22,8 +22,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if area != Globals.player.area or encounters.is_empty():
 		return
 	
-	print("Palle")
-	
 	if Globals.player.is_moving:
 		await Globals.player.stopped_moving
 	

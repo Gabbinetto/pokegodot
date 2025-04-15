@@ -118,6 +118,17 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 	await show_immune_text.call(0, show_immune_text)
 	
 	if not target_sprites.is_empty():
+		var move_animation: BattleAnimation = BattleAnimation.get_animation(
+			"moves/" + move.id, target_sprites, self
+		)
+		if not move_animation:
+			move_animation = BattleAnimation.get_animation(
+				"moves/DEFAULT_" + Types.string_ids[move.type], target_sprites, self
+			)
+		if move_animation:
+			move_animation.play()
+			await move_animation.finished
+		
 		var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", target_sprites, self)
 		hurt_flash.play()
 		await hurt_flash.finished

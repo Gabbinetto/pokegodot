@@ -16,6 +16,8 @@ enum Languages { ## Possible languages.
 	KOREAN,
 }
 
+const SCREENSHOT_PATH: String = "user://screenshots/" ## Path where screenshots are saved. Screenshots are taken by pressing F9 (Default).
+
 const DAY_NAMES: Dictionary[Time.Weekday, String] = { ## Days of the week
 	Time.WEEKDAY_MONDAY: "Monday",
 	Time.WEEKDAY_TUESDAY: "Tuesday",
@@ -115,3 +117,16 @@ func _init() -> void:
 		stats_multipliers[down_nature] = 0.9 if up_nature != down_nature else 1.0
 
 		natures[nature] = stats_multipliers
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("Screenshot"):
+		var image: Image = game_root.get_texture().get_image()
+		if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(SCREENSHOT_PATH)):
+			DirAccess.make_dir_absolute(ProjectSettings.globalize_path(SCREENSHOT_PATH))
+		var time: Dictionary = Time.get_datetime_dict_from_system()
+		var filename: String = "%04d%02d%02d-%02d%02d%02d.png" % [
+			time.year, time.month, time.day, time.hour, time.minute, time.second
+		]
+		image.save_png(SCREENSHOT_PATH + filename)
+		print_rich("[color=#55FF55]Saved screenshot at %s" % filename)

@@ -138,7 +138,7 @@ var trainer_id: int = 0 ## The current trainer's ID.
 var obtained_level: int = 1 ## The level this was obtained at.
 ## The map this was obtained on.
 var obtained_map: String = "" # TODO: Review when maps are implemented
-var obtained_time: int = 0 ## The UNIX time this was obtained at.
+var obtained_time: float = 0 ## The UNIX time this was obtained at.
 var has_hatched: bool = false ## If this pokemon was obtained through hatching or not.
 var hatched_map: String = "" ## The map this was hatched on.
 var hatched_time: int = 0 ## The UNIX time this pokemon was hatched at.

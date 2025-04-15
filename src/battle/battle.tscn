@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="14_1mk23"]
 [ext_resource type="FontVariation" uid="uid://c8773l8pgx2c5" path="res://assets/fonts/ds_font_bold.tres" id="14_ckxlc"]
 [ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="15_d7rla"]
-[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/text_resources/default_gray_theme.tres" id="17_7sv81"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/ui/text_resources/default_gray_theme.tres" id="17_7sv81"]
 [ext_resource type="Theme" uid="uid://crr2mnxmq6k88" path="res://src/battle/target_selection_theme.tres" id="22_m5n8x"]
 [ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="23_bu0ik"]
 
@@ -406,8 +406,9 @@ scroll_active = false
 autowrap_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="SelectionDialogue" type="Node" parent="Over/BaseCommands/SelectionDialogue" node_paths=PackedStringArray("label")]
+[node name="SelectionDialogue" type="Node" parent="Over/BaseCommands/SelectionDialogue" node_paths=PackedStringArray("starting_sequence", "label")]
 script = ExtResource("14_1mk23")
+starting_sequence = NodePath("SelectionDialogueSequence")
 hide_box = false
 disable_movement = false
 clear_label = false
@@ -692,8 +693,9 @@ scroll_active = false
 autowrap_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="BattleDialogue" type="Node" parent="Over/BattleDialogue" node_paths=PackedStringArray("label")]
+[node name="BattleDialogue" type="Node" parent="Over/BattleDialogue" node_paths=PackedStringArray("starting_sequence", "label")]
 script = ExtResource("14_1mk23")
+starting_sequence = NodePath("BattleDialogueSequence")
 hide_box = false
 disable_movement = false
 label = NodePath("../BattleDialogueBox/BattleDialogueLabel")

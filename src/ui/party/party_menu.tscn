@@ -13,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://bmi3hc6k483u7" path="res://assets/graphics/ui/party/cancel_button_selected.png" id="11_np6a4"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="11_v3b2l"]
 [ext_resource type="Texture2D" uid="uid://bon30hcc7tvd3" path="res://assets/graphics/ui/party/cancel_button.png" id="11_vk85n"]
-[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://src/ui/misc/box_full_texture.tres" id="14_0cmm0"]
-[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://src/ui/misc/menu_list.tres" id="15_wqgli"]
+[ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://assets/resources/ui/box_full_texture.tres" id="14_0cmm0"]
+[ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://assets/resources/ui/menu_list.tres" id="15_wqgli"]
 [ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="16_71sut"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vk85n"]

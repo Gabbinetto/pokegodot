@@ -213,22 +213,44 @@ metadata/_custom_type_script = "uid://da65406gveta6"
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_6uvlq")
 
-[node name="DialogueManager" type="Node" parent="Starter/Event"]
+[node name="DialogueManager" type="Node" parent="Starter/Event" node_paths=PackedStringArray("starting_sequence")]
 script = ExtResource("10_yq41x")
+starting_sequence = NodePath("DialogueTextSequence")
 metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
 
-[node name="DialogueTextSequence" type="Node" parent="Starter/Event/DialogueManager"]
+[node name="DialogueTextSequence" type="Node" parent="Starter/Event/DialogueManager" node_paths=PackedStringArray("next_sequence")]
 script = ExtResource("11_dhpha")
 text = "Which starter pokemon do you choose?"
+next_sequence = NodePath("../DialogueChoiceSequence")
 metadata/_custom_type_script = "uid://cjypfwj7jwa"
 
-[node name="DialogueChoiceSequence" type="Node" parent="Starter/Event/DialogueManager"]
+[node name="DialogueChoiceSequence" type="Node" parent="Starter/Event/DialogueManager" node_paths=PackedStringArray("next_sequences")]
 script = ExtResource("12_tdcis")
 choices = Array[String](["Bulbasaur", "Charmander", "Squirtle"])
+next_sequences = [NodePath("../DialogueTextSequence2"), NodePath("../DialogueTextSequence3"), NodePath("../DialogueTextSequence4")]
 metadata/_custom_type_script = "uid://c2p1q2x2alki"
 
-[node name="DialogueManager2" type="Node" parent="Starter/Event"]
+[node name="DialogueTextSequence2" type="Node" parent="Starter/Event/DialogueManager"]
+script = ExtResource("11_dhpha")
+text = "Bulbasaur is a great choice!
+A great grass type."
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence3" type="Node" parent="Starter/Event/DialogueManager"]
+script = ExtResource("11_dhpha")
+text = "Charmander is a great choice!
+A great fire type."
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence4" type="Node" parent="Starter/Event/DialogueManager"]
+script = ExtResource("11_dhpha")
+text = "Squirtle is a great choice!
+A great water type."
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueManager2" type="Node" parent="Starter/Event" node_paths=PackedStringArray("starting_sequence")]
 script = ExtResource("10_yq41x")
+starting_sequence = NodePath("DialogueTextSequence")
 metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
 
 [node name="DialogueTextSequence" type="Node" parent="Starter/Event/DialogueManager2"]
@@ -267,8 +289,9 @@ metadata/_custom_type_script = "uid://da65406gveta6"
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_6uvlq")
 
-[node name="DialogueManager" type="Node" parent="Pikachu/Event"]
+[node name="DialogueManager" type="Node" parent="Pikachu/Event" node_paths=PackedStringArray("starting_sequence")]
 script = ExtResource("10_yq41x")
+starting_sequence = NodePath("DialogueTextSequence")
 metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
 
 [node name="DialogueTextSequence" type="Node" parent="Pikachu/Event/DialogueManager"]

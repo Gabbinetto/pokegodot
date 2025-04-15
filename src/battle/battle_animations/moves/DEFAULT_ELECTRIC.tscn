@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://bsbbcxpyo056v"]
+
+[ext_resource type="PackedScene" uid="uid://b47fq53xr1gsm" path="res://src/battle/battle_animation_template.tscn" id="1_07eaf"]
+
+[sub_resource type="Curve" id="Curve_07eaf"]
+_data = [Vector2(0, 0), 0.0, 3.02134, 0, 0, Vector2(0.989583, 0), -4.73917, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_s8l0m"]
+curve = SubResource("Curve_07eaf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_07eaf"]
+lifetime_randomness = 0.2
+angle_min = -135.0
+angle_max = 135.0
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 120.0
+radial_velocity_min = 20.15
+radial_velocity_max = 20.15
+gravity = Vector3(0, 0, 0)
+damping_min = 15.0
+damping_max = 15.0
+scale_min = 4.0
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_s8l0m")
+color = Color(1, 1, 0, 1)
+hue_variation_min = -0.02
+hue_variation_max = 0.02
+turbulence_enabled = true
+turbulence_noise_strength = 20.0
+turbulence_noise_scale = 8.0
+turbulence_noise_speed = Vector3(1, 1, 1)
+turbulence_influence_min = 0.01
+
+[sub_resource type="Animation" id="Animation_s8l0m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_07eaf"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s8l0m"]
+_data = {
+&"RESET": SubResource("Animation_s8l0m"),
+&"default": SubResource("Animation_07eaf")
+}
+
+[node name="ELECTRIC" node_paths=PackedStringArray("animation") instance=ExtResource("1_07eaf")]
+animation = NodePath("AnimationPlayer")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." index="1"]
+emitting = false
+amount = 40
+explosiveness = 0.8
+trail_enabled = true
+trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_07eaf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_s8l0m")
+}

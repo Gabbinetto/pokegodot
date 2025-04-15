@@ -24,6 +24,10 @@ const SECONDS_PER_CHARACTER: Dictionary[Speeds, float] = {
 	Speeds.INSTANT: 0.0,
 }
 
+## The first sequence in the dialogue. If not set, it will check the first child. If that child
+## is a [DialogueSequence], it will be set as the starting sequence, otherwise an error will be pushed.[br][br]
+## [b]NOTE[/b]: It won't throw an error and stop the game execution, it will just push an error with [method @GlobalScope.push_error].
+@export var starting_sequence: DialogueSequence
 @export var speed: Speeds = Speeds.FAST ## The currently set speed.
 ## Whether the dialogue box should be hidden when the dialogue ends.[br][br]
 ## [b]Warning:[/b] this node doesn't handle hiding the dialogue box. It should be handled by the script running 
@@ -33,19 +37,19 @@ const SECONDS_PER_CHARACTER: Dictionary[Speeds, float] = {
 @export var clear_label: bool = true ## Clear label on finish
 @export var label: RichTextLabel ## The label where the dialogue is shown.
 @export var choices: DialogueChoiceContainer ## The container for choice dialogues like `Yes/No`
-var dialogues: Array[DialogueSequence] ## The [DialogueSequence]s of the dialogue.
-var current_index: int = -1 ## The index of the current [DialogueSequence] shown.
-var current_dialogue: DialogueSequence: ## Shorthand to get the current dialogue from [member dialogues] with [member current_index].
-	get: return dialogues[current_index]
+var current_dialogue: DialogueSequence ## The dialogue currently being ran.
 var running: bool = false ## Is the dialogue is running.
 
 
 func _ready() -> void:
 	finished.connect(_on_finished)
-	child_exiting_tree.connect(func(_node: Node): _update_dialogues())
-	child_entered_tree.connect(func(_node: Node): _update_dialogues())
-	child_order_changed.connect(_update_dialogues)
-	_update_dialogues()
+	if not starting_sequence:
+		var child: Node = get_child(0)
+		if child is DialogueSequence:
+			starting_sequence = child
+		else:
+			push_error("Couln't find a valid DialogueSequence for ", name)
+
 
 
 func _process(delta: float) -> void:
@@ -53,47 +57,43 @@ func _process(delta: float) -> void:
 		current_dialogue.process(delta)
 
 
-func _update_dialogues() -> void:
-	dialogues.clear()
-	for child: Node in get_children():
-		if child is DialogueSequence:
-			dialogues.append(child)
-
-
 func _on_finished() -> void:
 	running = false
 	label.visible_characters = -1
+	if disable_movement:
+		Globals.movement_enabled = true
+	Globals.event_input_enabled = true
 	if clear_label:
 		label.text = ""
 
 
-## Start the dialogue.
 func start() -> void:
-	current_index = -1
+	current_dialogue = starting_sequence
+	if not current_dialogue:
+		push_error("No starting sequence selected for ", name)
+		return
 	label.text = ""
 	if Globals.player.is_moving and Globals.player.is_processing():
 		await Globals.player.stopped_moving
 	if disable_movement:
 		Globals.movement_enabled = false
 	Globals.event_input_enabled = false
+	running = true
 	next()
 
 
 ## Advance to the next [DialogueSequence]
 func next() -> void:
-	current_index += 1
-	if current_index == dialogues.size():
-		if disable_movement:
-			Globals.movement_enabled = true
-		Globals.event_input_enabled = true
-		finished.emit()
-		return
 	current_dialogue.manager = self
 	current_dialogue.done = false
 	current_dialogue.start()
-	if not current_dialogue.finished.is_connected(next):
-		current_dialogue.finished.connect(next, CONNECT_ONE_SHOT)
-	running = true
+	await current_dialogue.finished
+	var next_dialogue: DialogueSequence = current_dialogue.get_next()
+	if next_dialogue:
+		current_dialogue = next_dialogue
+		next()
+	else:
+		finished.emit()
 
 
 ## Sends input to the [current_dialogue].

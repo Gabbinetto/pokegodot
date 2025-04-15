@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://ciis2yphy0kq4" path="res://src/ui/misc/hp_bar.gd" id="4_xbbhl"]
 [ext_resource type="Texture2D" uid="uid://ciylakjyru70a" path="res://assets/resources/hp_bar_textures/hp_bar_battle_middle.tres" id="6_2hs23"]
 [ext_resource type="Texture2D" uid="uid://cd5dl6y687btc" path="res://assets/resources/hp_bar_textures/hp_bar_battle_low.tres" id="7_odyby"]
-[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/text_resources/default_gray.tres" id="8_6qul3"]
-[ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/text_resources/databox_numbers.tres" id="10_6qul3"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="8_6qul3"]
+[ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/ui/text_resources/databox_numbers.tres" id="10_6qul3"]
 
 [node name="DataboxEnemy" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "level_text")]
 offset_right = 260.0

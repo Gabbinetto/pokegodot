@@ -53,6 +53,7 @@ const ICONS: Dictionary[int, Texture2D] = {
 ## The amount of types.
 var count: int:
 	get: return FAIRY + 1 # FAIRY should be the last type
+var string_ids: Dictionary[int, String] = {} ## Type IDs (Example: Normal's id is NORMAL, as in [member DB.types]).
 var names: Dictionary[int, String] = {} ## Type names.
 var _chart: Dictionary[int, Dictionary] = {}
 
@@ -65,6 +66,7 @@ func _ready() -> void:
 	for type: String in DB.types:
 		var type_enum: int = get(type)
 		_chart[type_enum] = _chart.get(type_enum, {})
+		string_ids[type_enum] = type 
 		
 		var data: Dictionary[String, Variant]
 		data.assign(DB.types[type])
