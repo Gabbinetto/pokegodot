@@ -8,6 +8,7 @@ class_name EncounterArea extends Area2D
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	
 
 
 func _pick_random() -> MapEncounter:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwcvr0slvtms7"]
+[gd_scene load_steps=9 format=3 uid="uid://bwcvr0slvtms7"]
 
 [ext_resource type="Script" uid="uid://drewrhb6xfalb" path="res://src/map_components/encounter_areas/grass_area.gd" id="1_o604t"]
 [ext_resource type="Texture2D" uid="uid://bcdok3bkbotyc" path="res://assets/graphics/ui/grass_encounter.png" id="2_o8xf6"]
+[ext_resource type="Texture2D" uid="uid://ua70pwoxt2ry" path="res://assets/graphics/tilesets/outside_0.png" id="2_qtvm7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c6mu0"]
 size = Vector2(16, 16)
@@ -46,9 +47,10 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="GrassArea" type="Area2D" node_paths=PackedStringArray("leaves_sprite")]
+[node name="GrassArea" type="Area2D" node_paths=PackedStringArray("over_sprite", "leaves_sprite")]
 script = ExtResource("1_o604t")
-leaves_sprite = NodePath("Sprite")
+over_sprite = NodePath("Over")
+leaves_sprite = NodePath("Leaves")
 battleback = 29
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -56,7 +58,16 @@ position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_c6mu0")
 debug_color = Color(0, 1, 0, 0.419608)
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
+[node name="Over" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+position = Vector2(0, 18)
+texture = ExtResource("2_qtvm7")
+centered = false
+region_enabled = true
+region_rect = Rect2(192, 18, 32, 14)
+
+[node name="Leaves" type="AnimatedSprite2D" parent="."]
 z_index = 1
 position = Vector2(16, 16)
 sprite_frames = SubResource("SpriteFrames_2swym")

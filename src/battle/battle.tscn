@@ -91,7 +91,7 @@ region = Rect2(0, 414, 130, 46)
 atlas = ExtResource("9_ye118")
 region = Rect2(130, 414, 130, 46)
 
-[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "ui_message_bg", "player_ground", "enemy_ground", "ally_pokemon_1_sprite", "ally_pokemon_2_sprite", "enemy_pokemon_1_sprite", "enemy_pokemon_2_sprite", "ui_layer", "all_commands", "databox_ally_single", "databox_enemy_single", "base_commands", "fight_button", "pokemon_button", "bag_button", "run_button", "fight_commands", "move_buttons", "fight_cancel_button", "move_info", "target_commands", "target_buttons", "target_cancel_button", "selection_dialogue", "battle_dialogue")]
+[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "ui_message_bg", "player_ground", "enemy_ground", "sprites", "ui_layer", "all_commands", "databox_ally_single", "databox_enemy_single", "base_commands", "fight_button", "pokemon_button", "bag_button", "run_button", "fight_commands", "move_buttons", "fight_cancel_button", "move_info", "target_commands", "target_buttons", "target_cancel_button", "selection_dialogue", "battle_dialogue")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -106,10 +106,7 @@ background = NodePath("Background")
 ui_message_bg = NodePath("Over/MessageBackground")
 player_ground = NodePath("PlayerGround")
 enemy_ground = NodePath("EnemyGround")
-ally_pokemon_1_sprite = NodePath("PlayerGround/AllyPokemon1")
-ally_pokemon_2_sprite = NodePath("PlayerGround/AllyPokemon2")
-enemy_pokemon_1_sprite = NodePath("EnemyGround/EnemyPokemon1")
-enemy_pokemon_2_sprite = NodePath("EnemyGround/EnemyPokemon2")
+sprites = [NodePath("PlayerGround/AllyPokemon1"), NodePath("PlayerGround/AllyPokemon2"), NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
 ui_layer = NodePath("Over")
 all_commands = [NodePath("Over/BaseCommands"), NodePath("Over/FightCommands"), NodePath("Over/TargetSelectCommands"), NodePath("Over/BattleDialogue")]
 databox_ally_single = NodePath("Over/DataboxPlayer")
@@ -141,10 +138,9 @@ battle = NodePath("../..")
 script = ExtResource("4_7dsqg")
 battle = NodePath("../..")
 
-[node name="ActionExecution" type="Node" parent="StateMachine" node_paths=PackedStringArray("battle", "sprite_list")]
+[node name="ActionExecution" type="Node" parent="StateMachine" node_paths=PackedStringArray("battle")]
 script = ExtResource("5_deknt")
 battle = NodePath("../..")
-sprite_list = [NodePath("../../PlayerGround/AllyPokemon1"), NodePath("../../PlayerGround/AllyPokemon2"), NodePath("../../EnemyGround/EnemyPokemon1"), NodePath("../../EnemyGround/EnemyPokemon2")]
 
 [node name="BattleFinish" type="Node" parent="StateMachine" node_paths=PackedStringArray("battle")]
 script = ExtResource("7_libal")

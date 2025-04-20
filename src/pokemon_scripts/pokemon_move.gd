@@ -53,10 +53,12 @@ func _init(_id: String) -> void:
 	var data: Dictionary[String, Variant]
 	data.assign(DB.moves[id].duplicate(true))
 
-	for effect: Dictionary[String, String] in data.effects:
-		var effect_script: GDScript = BattleEffect.get_effect(effect.id)
+	for effect: Dictionary in data.effects:
+		var effect_script: GDScript = BattleEffect.get_effect(effect.script)
 		if effect_script:
-			effects.append(effect_script.new(effect.attributes))
+			var attributes: Dictionary[String, Variant] = {}
+			attributes.assign(effect.get("attributes", {}))
+			effects.append(effect_script.new(self, effect.get("chance", 100.0), attributes))
 	data.erase("effects")
 	flags.assign(data.flags)
 	data.erase("flags")
@@ -74,13 +76,13 @@ func refresh_pp() -> void:
 
 
 ## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member Battle.pokemons]
-func get_possible_targets(battle: Battle, user: BattlePokemon) -> Array[bool]:
+func get_possible_targets(battle: Battle, user: BattlePokemon, move_target: Targets = target) -> Array[bool]:
 	var targets: Array[bool]
 	var user_is_enemy: bool = battle.enemy_pokemon.has(user)
 	targets.resize(battle.pokemons.size())
 	for i: int in targets.size(): 
 		var current: BattlePokemon = battle.pokemons[i]
-		match target:
+		match move_target:
 			Targets.USER:
 				targets[i] = user == current
 			Targets.OTHER, Targets.ALL_OTHER:
@@ -103,3 +105,13 @@ func get_possible_targets(battle: Battle, user: BattlePokemon) -> Array[bool]:
 			Targets.ALL:
 				targets[i] = true
 	return targets
+
+
+func enable_effects() -> void:
+	for effect: BattleEffect in effects:
+		effect.enable()
+
+
+func disable_effects() -> void:
+	for effect: BattleEffect in effects:
+		effect.disable()

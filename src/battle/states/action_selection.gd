@@ -75,7 +75,6 @@ func _open_party() -> void:
 		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 		var time: float = Time.get_ticks_msec()
 		await TransitionManager.finished
-		print(Time.get_ticks_msec() - time)
 		party.queue_free()
 		await party.tree_exited
 		TransitionManager.play_out()
@@ -97,5 +96,12 @@ func _try_run() -> void:
 	
 
 func _show_text() -> void:
-	await battle.show_text("What will\n%s do?" % battle.current_pokemon.name, true)
+	var manager: DialogueManager
+	for node: Node in battle.selection_dialogue.get_children():
+		if node is DialogueManager:
+			manager = node
+			node.starting_sequence.text = "What will\n%s do?" % battle.current_pokemon.name
+			break
+	battle.selection_dialogue.run_dialogue(manager)
+	await battle.selection_dialogue.finished
 	

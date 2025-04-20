@@ -2,13 +2,12 @@ extends State
 
 
 @export var battle: Battle
-@export var sprite_list: Array[Node2D] ## Ordered in the same way of Battle.pokemons
-
 
 var current_pokemon: BattlePokemon
 var animating: bool = false
 var acted: Array[int]
 var switching: bool = false
+
 
 func enter() -> void:
 	acted.clear()
@@ -16,7 +15,9 @@ func enter() -> void:
 
 
 func exit() -> void:
-	battle.show_text("")
+	for node: Node in battle.battle_dialogue.get_children():
+		if node is DialogueManager:
+			node.starting_sequence.text = ""
 
 
 func update(_delta: float) -> void:
@@ -45,114 +46,121 @@ func update(_delta: float) -> void:
 	match action.type:
 		Battle.Actions.FIGHT:
 			var targets: Array[BattlePokemon]
+			var move: PokemonMove = action.properties.move
+			move.enable_effects()
 			for i: int in action.properties.targets.size():
 				var target_pokemon: BattlePokemon = battle.pokemons[i] if action.properties.targets[i] else null
 				if target_pokemon:
 					targets.append(target_pokemon)
 
-			var damage_list: Array[Battle.DamageCalculation] = Battle.damage_calc(battle, action.properties.move, current_pokemon, targets)
-			_start_damage_animation(damage_list, action.properties.move)
+			var damage_list: Array[Battle.DamageCalculation] = Battle.damage_calc(battle, move, current_pokemon, targets)
+			targets.clear()
+			for damage: Battle.DamageCalculation in damage_list:
+				if damage and not damage.miss:
+					targets.append(damage.target)
+
+			await _start_damage_animation(damage_list, move)
+			SignalRouter.battle_step.emit(
+				battle,
+				Battle.BattleSteps.AFTER_MOVE_ANIMATION,
+				{
+					"damage": damage_list,
+					"move": move,
+					"targets": targets,
+				} as Dictionary[String, Variant]
+			)
+			move.disable_effects()
 		Battle.Actions.SWITCH:
 			battle.switch(action.properties.from, action.properties.to)
 		Battle.Actions.RUN:
 			var success: bool = Globals.rng.randf() <= battle.calc_escape_chance()
 			animating = true
 			if success:
-				await battle.show_text("Ran away!")
+				battle.show_text("Ran away!")
+				await battle.last_buffer_ran
 				battle.end_battle()
 			else:
-				await battle.show_text("Failed to run away!")
-			animating = false
+				battle.show_text("Failed to run away!")
+				await battle.last_buffer_ran
+				animating = false
 
 
 func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move: PokemonMove) -> void:
-	#region Databox animation lambda
-	var databox_animation: Callable = func():
-		if damage_list[2]:
-			if battle.double_battle:
-				pass
-			else:
-				await battle.databox_enemy_single.animate_hp_bar().finished
-		if damage_list[3]:
-			pass
-		if damage_list[0]:
-			if battle.double_battle:
-				pass
-			else:
-				await battle.databox_ally_single.animate_hp_bar().finished
-		if damage_list[1]:
-			pass
-	#endregion
-	
-	var target_sprites: Array[Node2D]
-	var immune_texts: Array[String]
-	var type_effectiveness_texts: Array[int]
-	type_effectiveness_texts.resize(battle.pokemons.size())
-	
+	var hurt_flash_sprites: Array[Node2D]
+	var move_animation_sprites: Array[Node2D]
+	var pre_animation_texts: Array[String]
+	var post_animation_texts: Array[String]
+
 	for i: int in damage_list.size():
-		if not damage_list[i]:
+		var damage: Battle.DamageCalculation = damage_list[i]
+		if not damage:
 			continue
-		if damage_list[i].type_multiplier == 0:
-			immune_texts.append("Does not affect %s." % damage_list[i].target.name)
-		elif damage_list[i].type_multiplier > 0 and damage_list[i].type_multiplier < 1:
-			type_effectiveness_texts[
-				battle.pokemons.find(damage_list[i].target)
-			] = 1
-		elif damage_list[i].type_multiplier > 1:
-			type_effectiveness_texts[
-				battle.pokemons.find(damage_list[i].target)
-			] = 2
-		if damage_list[i].value() <= 0:
-			continue
-		target_sprites.append(sprite_list[i])
-	
+		if damage.type_multiplier != 0 and damage.miss:
+			pre_animation_texts.append("Attack failed.")
+		elif damage.type_multiplier == 0:
+			pre_animation_texts.append("Does not affect %s." % damage.target.name)
+		elif damage.type_multiplier > 0 and damage.type_multiplier < 1:
+			post_animation_texts.append("It's not very effective on %s." % damage.target.name)
+		elif damage.type_multiplier > 1:
+			post_animation_texts.append("It's supereffective on %s." % damage.target.name)
+		
+		if not damage.miss:
+			move_animation_sprites.append(battle.sprites[i])
+		if damage.value() > 0:
+			hurt_flash_sprites.append(battle.sprites[i])
+		
 	animating = true
-	await battle.show_text("%s used %s!" % [current_pokemon.name, move.name])
+	battle.show_text("%s used %s!" % [current_pokemon.name, move.name])
+	await battle.last_buffer_ran
 	
 	# Show immune texts
-	var show_immune_text: Callable = func(index: int, next_call: Callable):
-		if index >= immune_texts.size():
-			return
-		await battle.show_text(immune_texts[index])
-		await next_call.call(index + 1, next_call)
-	await show_immune_text.call(0, show_immune_text)
+	for text: String in pre_animation_texts:
+		battle.show_text(text) 
 	
-	if not target_sprites.is_empty():
+	if not move_animation_sprites.is_empty():
 		var move_animation: BattleAnimation = BattleAnimation.get_animation(
-			"moves/" + move.id, target_sprites, self
+			"moves/" + move.id, move_animation_sprites, self
 		)
 		if not move_animation:
 			move_animation = BattleAnimation.get_animation(
-				"moves/DEFAULT_" + Types.string_ids[move.type], target_sprites, self
+				"moves/DEFAULT_" + Types.string_ids[move.type], move_animation_sprites, self
 			)
 		if move_animation:
-			move_animation.play()
-			await move_animation.finished
+			battle.add_buffer(Battle.BufferType.ANIMATION, move_animation)
+			await battle.last_buffer_ran
 		
-		var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", target_sprites, self)
-		hurt_flash.play()
-		await hurt_flash.finished
+	if not hurt_flash_sprites.is_empty():
+		var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", hurt_flash_sprites, self)
+		battle.add_buffer(Battle.BufferType.ANIMATION, hurt_flash)
+	
 	var damage_values: Array[int]
 	for damage: Battle.DamageCalculation in damage_list:
 		if damage:
 			damage_values.append(damage.value())
 		else:
 			damage_values.append(-1)
-	# Show effectiveness texts
-	var show_effectiveness_text: Callable = func(index: int, next_call: Callable):
-		if index >= type_effectiveness_texts.size():
-			return
-		if type_effectiveness_texts[index] == 0:
-			await next_call.call(index + 1, next_call)
-			return
-		if type_effectiveness_texts[index] == 1:
-			await battle.show_text("It's not very effective on\n%s." % [battle.pokemons[index].name])
-		elif type_effectiveness_texts[index] == 2:
-			await battle.show_text("It's super effective on\n%s!" % [battle.pokemons[index].name])
-		await next_call.call(index + 1, next_call)
 	_apply_damage(damage_values)
-	await databox_animation.call()
-	await show_effectiveness_text.call(0, show_effectiveness_text)
+	
+	# Databoxes
+	if damage_list[2]:
+		if battle.double_battle:
+			pass
+		else:
+			battle.animate_databox(battle.databox_enemy_single)
+	if damage_list[3]:
+		pass
+	if damage_list[0]:
+		if battle.double_battle:
+			pass
+		else:
+			battle.animate_databox(battle.databox_ally_single)
+	if damage_list[1]:
+		pass
+	
+	# Show effectiveness texts
+	for text: String in post_animation_texts:
+		battle.show_text(text)
+	await battle.last_buffer_ran
 
 	animating = false
 

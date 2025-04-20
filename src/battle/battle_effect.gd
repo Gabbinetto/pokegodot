@@ -6,20 +6,35 @@ class_name BattleEffect extends Resource
 
 const BATTLE_EFFECTS_PATH: String = "res://src/battle/battle_effects/"
 
+var owner: Variant
+var chance: float = 100.0
+var attributes: Dictionary[String, Variant] = {}
 
-func _init(_attributes: Dictionary[String, Variant] = {}) -> void:
+
+func _init(_owner: Variant, _chance: float = 100.0, _attributes: Dictionary[String, Variant] = {}) -> void:
+	owner = _owner
+	chance = _chance
+	attributes = _attributes
+
+
+func apply(battle: Battle, step: Battle.BattleSteps, data: Dictionary[String, Variant]) -> void:
+	if Globals.rng.randf_range(0.0, 100.0) <= chance:
+		_effect(battle, step, data)
+
+
+func _effect(_battle: Battle, _step: Battle.BattleSteps, _data: Dictionary[String, Variant]) -> void:
+	pass
+
+
+func enable() -> void:
 	SignalRouter.battle_step.connect(apply)
 
 
-func apply(_battle: Battle, _step: Battle.BattleSteps, _data: Dictionary[String, Variant]) -> void:
-	print_debug(_step)
-	match _step:
-		Battle.BattleSteps.AFTER_DAMAGE_CALC:
-			print_debug(_data.damage.random)
+func disable() -> void:
+	SignalRouter.battle_step.disconnect(apply)
 
 
 static func get_effect(id: String) -> GDScript:
-	if FileAccess.file_exists(BATTLE_EFFECTS_PATH + id + ".gd"):
-		return load(BATTLE_EFFECTS_PATH + id + ".gd")
-	else:
-		return
+	if id.get_extension() != "gd":
+		id += ".gd"
+	return load(BATTLE_EFFECTS_PATH + id)

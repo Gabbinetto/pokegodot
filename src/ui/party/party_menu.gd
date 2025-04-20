@@ -151,7 +151,6 @@ func _menu_cancel() -> void:
 
 func _menu_button_input(input: InputEvent) -> void:
 	if input.is_action_pressed("ui_cancel"):
-		print(input)
 		_menu_cancel.call_deferred()
 
 

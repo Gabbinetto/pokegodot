@@ -1,5 +1,8 @@
 class_name Battle extends Node
 
+signal buffer_ran(buffer: Dictionary)
+signal last_buffer_ran(buffer: Dictionary)
+
 ## Type of actions that can be selected.
 enum Actions {
 	FIGHT,
@@ -12,7 +15,10 @@ enum Actions {
 enum BattleSteps {
 	BEFORE_DAMAGE_CALC,
 	AFTER_DAMAGE_CALC,
+	AFTER_MOVE_ANIMATION,
 }
+
+enum BufferType {TEXT, ANIMATION, DATABOX}
 
 ## The default battle scene.
 const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn")
@@ -26,10 +32,7 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var player_ground: TextureRect
 @export var enemy_ground: TextureRect
 @export_group("Pokemon sprites")
-@export var ally_pokemon_1_sprite: Sprite2D
-@export var ally_pokemon_2_sprite: Sprite2D
-@export var enemy_pokemon_1_sprite: Sprite2D
-@export var enemy_pokemon_2_sprite: Sprite2D
+@export var sprites: Array[Sprite2D] = [null, null, null, null]
 @export_group("Animation")
 @export var animation_player: AnimationPlayer
 @export_group("UI")
@@ -75,6 +78,8 @@ var current_pokemon: BattlePokemon:
 var turn_order: Array[int]
 var turn_selections: Dictionary[int, TurnAction] = {}
 var escape_attempts: int = 0
+var _buffer: Array[Dictionary] = []
+var _buffering: bool = false
 
 var last_move_button_pressed: MoveButton
 
@@ -93,6 +98,12 @@ func _ready() -> void:
 	Globals.current_battle = self
 
 
+func _process(_delta: float) -> void:
+	if not _buffering:
+		_execute_buffer()
+	
+
+
 ## Shows [param command] while hiding all other commands.
 func show_commands(command: CanvasItem) -> void:
 	for child: CanvasItem in all_commands:
@@ -101,23 +112,72 @@ func show_commands(command: CanvasItem) -> void:
 		else:
 			child.hide()
 
+#region Buffer functions
+## Shows a text in battle, adding it to the buffer.
+func show_text(text: String) -> void:
+	await add_buffer(BufferType.TEXT, text)
 
-## Shows a text in battle. If [param selection] is true, the text is shown in the small textbox near the battle commands.
-func show_text(text: String, selection: bool = false) -> void:
-	var dialogue: Dialogue = selection_dialogue if selection else battle_dialogue
-	var manager: DialogueManager = dialogue.get_meta("manager") if dialogue.has_meta("manager") else null
-	if not manager:
-		for child: Node in dialogue.get_children():
-			if child is DialogueManager:
-				manager = child
-				dialogue.set_meta("manager", manager)
-				break
-	# The dialogue manager first child should be a DialogueTextEvent
-	manager.get_child(0).text = text
-	dialogue.run_dialogue(manager)
-	await dialogue.finished
-	return
-	
+
+## Plays a [BattleAnimation], adding it to the buffer.
+func play_animation(animation: BattleAnimation) -> void:
+	await add_buffer(BufferType.ANIMATION, animation)
+
+
+## Animates the given [param databox], adding it to the buffer.
+func animate_databox(databox: Databox) -> void:
+	await add_buffer(BufferType.DATABOX, databox)
+
+
+## Returns the slot (the index) of [param pokemon], which can be either [BattlePokemon] or [Pokemon].
+func get_slot(pokemon: Variant) -> int:
+	if pokemon is BattlePokemon:
+		return pokemons.find(pokemon)
+	elif pokemon is Pokemon:
+		for slot: BattlePokemon in pokemons:
+			if slot and slot.pokemon == pokemon:
+				return pokemons.find(slot)
+	return -1
+
+
+func add_buffer(type: BufferType, data: Variant = null) -> void:
+	_buffer.append(
+		{
+			"type": type,
+			"data": data,
+		}
+	)
+
+func _execute_buffer() -> void:
+	if _buffer.is_empty():
+		return
+
+	_buffering = true
+	var buffer: Dictionary = _buffer.pop_front()
+	match buffer.type:
+		BufferType.TEXT:
+			var data: String = buffer.data
+			var manager: DialogueManager = battle_dialogue.get_meta("manager") if battle_dialogue.has_meta("manager") else null
+			if not manager:
+				for child: Node in battle_dialogue.get_children():
+					if child is DialogueManager:
+						manager = child
+						battle_dialogue.set_meta("manager", manager)
+						break
+			manager.starting_sequence.text = data
+			battle_dialogue.run_dialogue(manager)
+			await battle_dialogue.finished
+		BufferType.ANIMATION:
+			var data: BattleAnimation = buffer.data
+			data.play()
+			await data.finished
+		BufferType.DATABOX:
+			var data: Databox = buffer.data
+			await data.animate_hp_bar().finished
+	_buffering = false
+	buffer_ran.emit(buffer)
+	if _buffer.is_empty():
+		last_buffer_ran.emit(buffer)
+#endregion
 
 ## Sets up the battle according to [param attributes].
 ## Possible attributes are: [br]
@@ -149,19 +209,19 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		enemy_trainers.assign(enemies)
 	
 
-	pokemons[0] = BattlePokemon.new(ally_trainers[0].team.first_healthy(), ally_trainers[0])
-	pokemons[2] = BattlePokemon.new(enemy_trainers[0].team.first_healthy(), enemy_trainers[0])
+	pokemons[0] = BattlePokemon.new(self, ally_trainers[0].team.first_healthy(), ally_trainers[0])
+	pokemons[2] = BattlePokemon.new(self, enemy_trainers[0].team.first_healthy(), enemy_trainers[0])
 	# Set double battle
 	double_battle = attributes.get("double_battle", false)
 	if double_battle:
 		if ally_trainers.size() > 1:
-			pokemons[1] = BattlePokemon.new(ally_trainers[1].team.first_healthy(), ally_trainers[1])
+			pokemons[1] = BattlePokemon.new(self, ally_trainers[1].team.first_healthy(), ally_trainers[1])
 		else:
-			pokemons[1] = BattlePokemon.new(ally_trainers[0].team.second_healthy(), ally_trainers[0])
+			pokemons[1] = BattlePokemon.new(self, ally_trainers[0].team.second_healthy(), ally_trainers[0])
 		if enemy_trainers.size() > 1:
-			pokemons[1] = BattlePokemon.new(enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
+			pokemons[1] = BattlePokemon.new(self, enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
 		else:
-			pokemons[1] = BattlePokemon.new(enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
+			pokemons[1] = BattlePokemon.new(self, enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
 
 	refresh_visuals()
 
@@ -259,10 +319,15 @@ func refresh_visuals() -> void:
 
 ## Sets the pokemon sprites to the current pokemon in [member pokemons].
 func refresh_pokemon_sprites() -> void:
-	ally_pokemon_1_sprite.texture = ally_pokemon.front().pokemon.sprite_back if ally_pokemon.front() else null
-	ally_pokemon_2_sprite.texture = ally_pokemon.back().pokemon.sprite_back if ally_pokemon.back() else null
-	enemy_pokemon_1_sprite.texture = enemy_pokemon.front().pokemon.sprite_front if enemy_pokemon.front() else null
-	enemy_pokemon_2_sprite.texture = enemy_pokemon.back().pokemon.sprite_front if enemy_pokemon.back() else null
+	for i: int in sprites.size():
+		var pokemon: BattlePokemon = pokemons[i]
+		if not pokemon:
+			sprites[i].texture = null
+		elif pokemon in ally_pokemon:
+			sprites[i].texture = pokemon.pokemon.sprite_back
+		else:
+			sprites[i].texture = pokemon.pokemon.sprite_front
+
 
 
 ## Assigns the current pokemon to the databoxes and hides them if needed.
@@ -319,7 +384,7 @@ func refresh_turn_order(acted: Array[int] = []) -> void:
 ## Performs a switch, refreshing databoxes, sprites and target buttons.
 func switch(from_slot: int, to: Pokemon) -> void:
 	var new_mon: BattlePokemon = BattlePokemon.new(
-		to, pokemons[from_slot].trainer
+		self, to, pokemons[from_slot].trainer
 	)
 	pokemons[from_slot] = new_mon
 	refresh_databoxes()
@@ -373,6 +438,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 			Globals.movement_enabled = true
 			Globals.event_input_enabled = true
 			Globals.game_world.process_mode = Node.PROCESS_MODE_PAUSABLE
+
 	
 	SignalRouter.battle_ended.connect(on_finish, CONNECT_ONE_SHOT)
 	return battle
@@ -381,7 +447,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokemon, targets: Array[BattlePokemon]) -> Array[DamageCalculation]:
 	var values: Array[DamageCalculation]
 	values.resize(battle.pokemons.size())
-	
+
 	for target: BattlePokemon in targets:
 		var index: int = battle.pokemons.find(target)
 		if index == -1:
@@ -400,6 +466,11 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokem
 			calculation.attack_stat = Globals.STATS.SPECIAL_ATTACK
 			calculation.defense_stat = Globals.STATS.SPECIAL_DEFENSE
 		
+		# TODO: Complete accuracy check: https://bulbapedia.bulbagarden.net/wiki/Accuracy#Generation_V_onward
+		var accuracy: float = move.accuracy * BattlePokemon.get_accuracy_multiplier(
+			attacker.boosts[Globals.OTHER_STATS.ACCURACY], target.boosts[Globals.OTHER_STATS.ACCURACY]
+		)
+		calculation.miss = Globals.rng.randf_range(0.0, 100.0) > accuracy
 		
 		SignalRouter.battle_step.emit(battle, BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
@@ -407,6 +478,8 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokem
 		calculation.critical_multiplier = Globals.CRITICAL_MULTIPLIER if randf_range(0.0, 1.0) <= (1.0 / 24.0) else 1.0
 		calculation.targets_multiplier = 1.0 if targets.size() <= 1 else Globals.MULTIPLE_TARGETS_MULTIPLIER
 		calculation.type_multiplier = Types.get_interaction(move.type, target.pokemon.species.types)
+		if calculation.type_multiplier == 0:
+			calculation.miss = true
 
 		SignalRouter.battle_step.emit(battle, BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
@@ -444,12 +517,12 @@ class DamageCalculation:
 	var weather_multiplier: float = 1.0 ## Increases the move's power with a favorable weather.
 	var type_multiplier: float = 1.0 ## The multiplier for type interactions.
 	var stab_multiplier: float = 1.0 ## The multiplier for stab.
-	var other_multipliers: float = 1.0 ## Misc multipliers, often used by [BattleEffect]s
-
+	var other_multipliers: float = 1.0 ## Misc multipliers, often used by [BattleEffect]s.
+	var miss: bool = false ## True if missed.
 
 	## Calculates the values based on the data.
 	func value() -> int:
-		if type_multiplier == 0.0 or move.category == PokemonMove.Categories.STATUS:
+		if type_multiplier == 0.0 or move.category == PokemonMove.Categories.STATUS or miss:
 			return 0
 		var a: float = float(attacker.get_stat(attack_stat))
 		var d: float = float(target.get_stat(defense_stat))

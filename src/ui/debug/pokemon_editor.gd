@@ -170,7 +170,6 @@ func form_edit(index: int) -> void:
 	var new_species: PokemonSpecies = PokemonSpecies.new(
 		pokemon.species.id, index
 	)
-	printt(new_species.id, new_species.form_number)
 	_set_new_species(new_species)
 
 
@@ -224,7 +223,6 @@ func move_edit(index: int, slot: int) -> void:
 	var id: String = valid_moves[index]
 	var learnt_already: int = pokemon.moves.map(func(move: PokemonMove): return move.id).find(id)
 	if learnt_already != -1:
-		print(learnt_already)
 		var options: OptionButton = moves.get_child(slot).get_node("Move")
 		options.selected = valid_moves.find(pokemon.moves[learnt_already])
 		return
