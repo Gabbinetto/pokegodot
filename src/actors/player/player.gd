@@ -41,7 +41,7 @@ func _check_event_collision() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	is_running = Input.is_action_pressed("B")
+	is_running = Input.is_action_pressed("B") != Settings.default_run
 	if on_bike:
 		speed = bike_speed
 	else:

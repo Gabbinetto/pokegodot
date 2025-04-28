@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmm70q3nwac64"]
+
+[ext_resource type="Texture2D" uid="uid://cpvo4ct57q2rv" path="res://assets/graphics/ui/select_arrow.png" id="1_jer4r"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="2_q076f"]
+
+[sub_resource type="GDScript" id="GDScript_r7cj8"]
+resource_name = "Settings entry button"
+script/source = "extends \"res://src/ui/settings/settings_menu_entry.gd\"
+
+@export var press_outside: bool = false
+
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_accept\") or (
+			event is InputEventMouseButton and
+			not event.pressed and
+			event.button_index == MOUSE_BUTTON_LEFT and
+			has_focus()
+		):
+		if event is InputEventMouseButton and not press_outside:
+			var rect: Rect2 = Rect2(Vector2.ZERO, size)
+			if not rect.has_point(get_local_mouse_position()):
+				return
+		value_changed.emit()
+"
+
+[node name="EntryButton" type="HBoxContainer" node_paths=PackedStringArray("arrow", "label")]
+size_flags_vertical = 0
+focus_mode = 2
+script = SubResource("GDScript_r7cj8")
+arrow = NodePath("Arrow")
+label = NodePath("Label")
+
+[node name="Arrow" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_jer4r")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = ExtResource("2_q076f")
+vertical_alignment = 1

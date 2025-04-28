@@ -1,0 +1,121 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbhwug00s4wo0"]
+
+[ext_resource type="Texture2D" uid="uid://cpvo4ct57q2rv" path="res://assets/graphics/ui/select_arrow.png" id="1_53u4j"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="2_ls0lr"]
+[ext_resource type="LabelSettings" uid="uid://wrhb2r7f2xhy" path="res://assets/resources/ui/text_resources/red.tres" id="3_ls0lr"]
+
+[sub_resource type="GDScript" id="GDScript_53u4j"]
+resource_name = "Settings entry spinbox"
+script/source = "extends \"res://src/ui/settings/settings_menu_entry.gd\"
+
+@export var starting_value: float
+@export var max: float = 100.0:
+	set(value):
+		if not range:
+			return
+		range.max_value = max
+		_sync()
+@export var min: float:
+	set(value):
+		if not range:
+			return
+		range.min_value = min
+		_sync()
+@export var step: float = 1.0:
+	set(value):
+		if not range:
+			return
+		range.step = step
+		_sync()
+@export var content_text: String = \"%s/%s\":
+	set(value):
+		if not range:
+			return
+		content_text = value
+		_sync()
+@export var prefix: String = \"\":
+	set(value):
+		if not range:
+			return
+		prefix = value
+		_sync()
+@export var content: Label
+
+var range: Range
+
+
+func _ready() -> void:
+	super()
+	range = Range.new()
+	add_child(range)
+	range.max_value = max
+	range.min_value = min
+	range.step = step
+	range.set_value_no_signal(starting_value)
+	range.value_changed.connect(_on_value_changed)
+	content.gui_input.connect(_content_input)
+	_sync()
+
+
+func get_value() -> Variant:
+	return range.value
+
+
+func set_value(value: Variant) -> void:
+	range.set_value_no_signal(value)
+	_sync()
+
+
+func _sync() -> void:
+	var val: Variant = int(range.value) if range.value == int(range.value) else range.value
+	var max_val: Variant = int(range.max_value) if range.max_value == int(range.max_value) else range.max_value
+	content.text = prefix + content_text % [val, max_val]
+
+
+func _on_value_changed(_value: float) -> void:
+	_sync()
+	value_changed.emit()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_right\"):
+		range.value += range.step
+	elif event.is_action_pressed(\"ui_left\"):
+		range.value -= range.step
+
+
+func _content_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			if event.position.x > content.size.x / 2.0:
+				range.value += 1
+			else:
+				range.value -= 1
+"
+
+[node name="EntrySpinbox" type="HBoxContainer" node_paths=PackedStringArray("content", "arrow", "label")]
+focus_mode = 2
+script = SubResource("GDScript_53u4j")
+content = NodePath("Content")
+arrow = NodePath("Arrow")
+label = NodePath("Label")
+
+[node name="Arrow" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_53u4j")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+label_settings = ExtResource("2_ls0lr")
+vertical_alignment = 1
+
+[node name="Content" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+label_settings = ExtResource("3_ls0lr")
+horizontal_alignment = 1
+vertical_alignment = 1

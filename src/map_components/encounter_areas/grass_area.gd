@@ -20,4 +20,5 @@ func _on_body_entered(body: Node2D) -> void:
 			if body.is_moving:
 				await body.stopped_moving
 			over_sprite.show()
-			body.started_moving.connect(over_sprite.hide)
+			if not body.started_moving.is_connected(over_sprite.hide):
+				body.started_moving.connect(over_sprite.hide)

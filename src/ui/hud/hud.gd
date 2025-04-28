@@ -5,6 +5,7 @@ extends Control
 @export var buttons_container: Control
 @export_group("Buttons", "button_")
 @export var button_party: BaseButton
+@export var button_settings: BaseButton
 @export var button_debug: BaseButton
 @export var button_quit: BaseButton
 
@@ -16,6 +17,7 @@ func _ready() -> void:
 		node.focus_entered.connect(set.bind("last_menu_option", node))
 	
 	button_party.pressed.connect(_open_party)
+	button_settings.pressed.connect(_open_settings)
 	button_debug.pressed.connect(_open_debug)
 	button_quit.pressed.connect(_quit)
 
@@ -62,6 +64,22 @@ func _open_party() -> void:
 	)
 
 
+func _open_settings() -> void:
+	menu.hide()
+	submenu_open = true
+	var settings: SettingsMenu = SettingsMenu.create()
+	
+	add_child(settings)
+	
+	settings.closed.connect(
+		func():
+			settings.queue_free()
+			menu.show.call_deferred()
+			submenu_open = false
+			button_settings.grab_focus.call_deferred()
+	)
+
+
 func _open_debug() -> void:
 	menu.hide()
 	submenu_open = true
@@ -72,7 +90,7 @@ func _open_debug() -> void:
 	debug.closed.connect(
 		func():
 			debug.queue_free()
-			menu.show()
+			menu.show.call_deferred()
 			submenu_open = false
 			button_debug.grab_focus.call_deferred()
 	)

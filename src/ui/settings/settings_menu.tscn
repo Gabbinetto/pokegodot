@@ -1,0 +1,156 @@
+[gd_scene load_steps=12 format=3 uid="uid://crn2m03o3vu58"]
+
+[ext_resource type="Theme" uid="uid://kn74wkgbq6w5" path="res://assets/resources/ui/default_theme.tres" id="1_o05gs"]
+[ext_resource type="Script" uid="uid://b5bpj13ecj3av" path="res://src/ui/settings/settings_menu.gd" id="2_bte7v"]
+[ext_resource type="PackedScene" uid="uid://b6gbcg833l6" path="res://src/ui/settings/entry_choice.tscn" id="2_mfqe4"]
+[ext_resource type="PackedScene" uid="uid://dbhwug00s4wo0" path="res://src/ui/settings/entry_spinbox.tscn" id="3_unrsy"]
+[ext_resource type="StyleBox" uid="uid://dnxadgspegmfr" path="res://assets/resources/ui/box_texture.tres" id="4_bte7v"]
+[ext_resource type="PackedScene" uid="uid://cmm70q3nwac64" path="res://src/ui/settings/entry_button.tscn" id="4_cqgto"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/ui/text_resources/default_gray_theme.tres" id="5_cqgto"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unrsy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6itg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fepe5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vcw7t"]
+
+[node name="SettingsMenu" type="Control" node_paths=PackedStringArray("entries", "description", "text_speed", "battle_effects", "battle_style", "default_run", "automatic_box", "give_nickname", "box_frame", "window_size", "close")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_o05gs")
+script = ExtResource("2_bte7v")
+entries = NodePath("PanelContainer/ScrollContainer/Entries")
+description = NodePath("DescriptionBox/Control/DialogueLabel")
+text_speed = NodePath("PanelContainer/ScrollContainer/Entries/TextSpeed")
+battle_effects = NodePath("PanelContainer/ScrollContainer/Entries/BattleEffects")
+battle_style = NodePath("PanelContainer/ScrollContainer/Entries/BattleStyle")
+default_run = NodePath("PanelContainer/ScrollContainer/Entries/DefaultRun")
+automatic_box = NodePath("PanelContainer/ScrollContainer/Entries/AutomaticBox")
+give_nickname = NodePath("PanelContainer/ScrollContainer/Entries/GiveNickname")
+box_frame = NodePath("PanelContainer/ScrollContainer/Entries/BoxFrame")
+window_size = NodePath("PanelContainer/ScrollContainer/Entries/WindowSize")
+close = NodePath("PanelContainer/ScrollContainer/Entries/Close")
+metadata/_edit_lock_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="Entries" type="VBoxContainer" parent="PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="TextSpeed" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["Slow", "Mid", "Fast", "Inst."])
+text = "Text speed"
+description = "Choose the speed at which text
+appears."
+
+[node name="BattleEffects" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["On", "Off"])
+text = "Battle effects"
+description = "Choose whether you wish to see move
+animations in battle."
+
+[node name="BattleStyle" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["Switch", "Set"])
+text = "Battle style"
+description = "Choose whether you can switch Pokemon
+when an opponent's Pokemon faints."
+
+[node name="DefaultRun" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["Walk", "Run"])
+text = "Default movement"
+description = "Choose your movement speed. Hold B to
+move at the other speed."
+
+[node name="AutomaticBox" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["Manual", "Automatic"])
+text = "Send to Boxes"
+description = "Choose whether caught Pokémon are
+sent to Boxes when your party is full."
+
+[node name="GiveNickname" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["Give", "Don't give"])
+text = "Give nickname"
+description = "Choose whether you can give a nickname
+to a Pokémon when you obtain it."
+
+[node name="BoxFrame" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("3_unrsy")]
+layout_mode = 2
+prefix = "Type "
+text = "Box frame"
+description = "Choose the appearance of
+interface boxes."
+
+[node name="WindowSize" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+layout_mode = 2
+choices = Array[String](["S", "M", "L", "XL", "Full"])
+text = "Window size"
+description = "Choose the size of the game window."
+
+[node name="Close" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("4_cqgto")]
+layout_mode = 2
+text = "Close"
+description = "Closes this screen."
+
+[node name="DescriptionBox" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = ExtResource("4_bte7v")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="DescriptionBox"]
+layout_mode = 2
+mouse_filter = 1
+metadata/_edit_group_ = true
+
+[node name="DialogueLabel" type="RichTextLabel" parent="DescriptionBox/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00921659
+anchor_top = 0.0909091
+anchor_right = 0.990783
+anchor_bottom = 1.06061
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("5_cqgto")
+theme_override_styles/fill = SubResource("StyleBoxEmpty_unrsy")
+theme_override_styles/background = SubResource("StyleBoxEmpty_c6itg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fepe5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vcw7t")
+bbcode_enabled = true
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_use_anchors_ = true

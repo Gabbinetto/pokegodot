@@ -112,7 +112,7 @@ class Set:
 
 	func _init(_base: String, _background: String, _message: String) -> void:
 
-		var base: Texture = load(BASES_PATH + _base.replace(".png", "") + ".png")
+		var base: Texture2D = load(BASES_PATH + _base.replace(".png", "") + ".png")
 		player_base = AtlasTexture.new()
 		player_base.atlas = base
 		player_base.region = Rect2(Vector2(0, 0), Vector2(512, 64))

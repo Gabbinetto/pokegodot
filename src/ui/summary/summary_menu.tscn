@@ -73,7 +73,7 @@ shadow_color = Color(0.815686, 0.847059, 0.878431, 1)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_oorjm"]
 
-[node name="SummaryMenu" type="Control" node_paths=PackedStringArray("screens", "screen_buttons", "moves_screen_button", "close_button", "pokemon_name", "pokemon_level", "pokemon_sprite", "pokemon_gender_icon", "info_dex_number", "info_species", "info_type_1", "info_type_2", "info_ot", "info_id_number", "info_exp", "info_next_exp", "info_exp_bar", "memo_nature", "memo_date_obtained", "memo_met_place", "memo_met_level", "memo_personality", "skills_hp", "skills_hp_bar", "skills_stats_names", "skills_stats_values", "skills_ability", "skills_ability_description", "moves_buttons", "moves_detail_panel", "moves_detail_icon", "moves_detail_type_1", "moves_detail_type_2", "moves_category", "moves_power", "moves_accuracy", "moves_description")]
+[node name="SummaryMenu" type="Control" node_paths=PackedStringArray("screens", "screen_buttons", "moves_screen_button", "close_button", "pokemon_name", "pokemon_level", "pokemon_sprite", "pokemon_gender_icon", "info_dex_number", "info_species", "info_type_1", "info_type_2", "info_ot", "info_id_number", "info_exp", "info_next_exp", "info_exp_bar", "memo_nature", "memo_date_obtained", "memo_met_place", "memo_met_level", "memo_personality", "skills_hp", "skills_hp_bar", "skills_stats_names", "skills_stats_values", "skills_ability", "skills_ability_description", "moves_buttons", "moves_detail_panel", "moves_detail_icon", "moves_detail_type_1", "moves_detail_type_2", "moves_category", "moves_power", "moves_accuracy", "moves_description_scroll", "moves_description", "moves_description_start_timer", "moves_description_stop_timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,7 +118,10 @@ moves_detail_type_2 = NodePath("Moves/DetailPanel/HBoxContainer/Type2")
 moves_category = NodePath("Moves/DetailPanel/Category/Value")
 moves_power = NodePath("Moves/DetailPanel/Power/Value")
 moves_accuracy = NodePath("Moves/DetailPanel/Accuracy/Value")
+moves_description_scroll = NodePath("Moves/DetailPanel/ScrollContainer")
 moves_description = NodePath("Moves/DetailPanel/ScrollContainer/Description")
+moves_description_start_timer = NodePath("Moves/DetailPanel/ScrollContainer/Start")
+moves_description_stop_timer = NodePath("Moves/DetailPanel/ScrollContainer/Stop")
 metadata/_edit_lock_ = true
 
 [node name="Info" type="Control" parent="."]
@@ -792,7 +795,6 @@ autowrap_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Moves" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -900,7 +902,6 @@ script = ExtResource("28_qljio")
 metadata/_custom_type_script = "uid://ba5nka84o1geb"
 
 [node name="DetailPanel" type="TextureRect" parent="Moves"]
-visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
@@ -1004,23 +1005,33 @@ text_overrun_behavior = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Moves/DetailPanel"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.0163934
 anchor_top = 0.506097
 anchor_right = 0.97541
-anchor_bottom = 0.981707
-offset_bottom = 78.0
+anchor_bottom = 0.975609
+scroll_vertical_custom_step = 32.0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Description" type="Label" parent="Moves/DetailPanel/ScrollContainer"]
-custom_minimum_size = Vector2(234, 234)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 2
 label_settings = ExtResource("17_a1e8x")
 autowrap_mode = 2
+
+[node name="Stop" type="Timer" parent="Moves/DetailPanel/ScrollContainer"]
+wait_time = 3.5
+one_shot = true
+ignore_time_scale = true
+
+[node name="Start" type="Timer" parent="Moves/DetailPanel/ScrollContainer"]
+wait_time = 3.5
+one_shot = true
+ignore_time_scale = true
 
 [node name="PokemonIcon" type="Sprite2D" parent="Moves/DetailPanel"]
 position = Vector2(50, 32.0001)

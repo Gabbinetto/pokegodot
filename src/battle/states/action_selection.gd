@@ -71,16 +71,17 @@ func _open_party() -> void:
 		party.closed.emit()
 		_switch(pokemon)
 	)
-	party.closed.connect(func():
-		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-		var time: float = Time.get_ticks_msec()
-		await TransitionManager.finished
-		party.queue_free()
-		await party.tree_exited
-		TransitionManager.play_out()
-		await TransitionManager.finished
-		battle.pokemon_button.grab_focus.call_deferred()
-	)
+	party.closed.connect(_close_party.bind(party))
+	
+func _close_party(party: PartyMenu) -> void:
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+	party.queue_free()
+	await party.tree_exited
+	TransitionManager.play_out()
+	await TransitionManager.finished
+	battle.pokemon_button.grab_focus.call_deferred()
+
 
 
 func _switch(to: Pokemon) -> void:

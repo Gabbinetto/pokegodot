@@ -78,6 +78,8 @@ var current_pokemon: BattlePokemon:
 var turn_order: Array[int]
 var turn_selections: Dictionary[int, TurnAction] = {}
 var escape_attempts: int = 0
+var is_buffering: bool:
+	get: return _buffering
 var _buffer: Array[Dictionary] = []
 var _buffering: bool = false
 
@@ -405,6 +407,10 @@ func calc_escape_chance() -> float:
 ## Stops [member Globals.game_world] from processing while the battle is on.[br]
 ## When the battle ends, it is freed. Calls [method setup] with [param attributes].
 static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle:
+	if Globals.in_battle:
+		printerr("Can't start a battle while another one is in progress.")
+		return
+	
 	if PlayerData.team.get_array().is_empty() or not PlayerData.team.first_healthy():
 		printerr("Can't start battle without a pokemon team or a healthy pokemon.")
 		return

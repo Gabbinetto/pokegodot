@@ -24,6 +24,7 @@ Experience="*res://src/autoloads/experience.gd"
 Types="*res://src/autoloads/types.gd"
 Battlebacks="*res://src/autoloads/battlebacks.gd"
 Globals="*res://src/autoloads/globals.gd"
+Settings="*res://src/autoloads/settings.gd"
 PlayerData="*res://src/autoloads/player_data.gd"
 HUD="*res://src/ui/hud/hud.tscn"
 MainDialogue="*res://src/ui/dialogue/dialogue.tscn"
@@ -33,8 +34,6 @@ TransitionManager="*res://src/autoloads/transition_manager.gd"
 
 window/size/viewport_width=512
 window/size/viewport_height=384
-window/size/window_width_override=1024
-window/size/window_height_override=768
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=6
@@ -42,6 +41,14 @@ window/handheld/orientation=6
 [dotnet]
 
 project/assembly_name="Pokegodot"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg")
+
+[gui]
+
+theme/custom="uid://kn74wkgbq6w5"
 
 [importer_defaults]
 

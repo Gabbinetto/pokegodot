@@ -52,7 +52,10 @@ const SPRITE_ICON_UPDATE_FRAMES: int = 20
 @export var moves_category: TextureRect
 @export var moves_power: Label
 @export var moves_accuracy: Label
+@export var moves_description_scroll: ScrollContainer
 @export var moves_description: Label
+@export var moves_description_start_timer: Timer
+@export var moves_description_stop_timer: Timer
 
 var pokemon_list: Array[Pokemon]
 var current_index: int = 0:
@@ -104,6 +107,16 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Engine.get_process_frames() % SPRITE_ICON_UPDATE_FRAMES == 0 and moves_detail_icon and moves_detail_panel.visible:
 		moves_detail_icon.frame = 0 if bool(moves_detail_icon.frame) else 1
+
+	# Scroll move description
+	if moves_detail_panel.visible and Engine.get_process_frames() % 5 and moves_description_start_timer.is_stopped() and moves_description_stop_timer.is_stopped():
+		var last_description_scroll = moves_description_scroll.scroll_vertical
+		moves_description_scroll.scroll_vertical += 1
+		if moves_description_scroll.scroll_vertical == last_description_scroll:
+			moves_description_stop_timer.start()
+			await moves_description_stop_timer.timeout
+			moves_description_scroll.scroll_vertical = 0
+			moves_description_start_timer.start()
 
 
 func _show_screen(screen: Control) -> void:
@@ -246,6 +259,10 @@ func _on_move_button_focused(button: SummaryMoveButton) -> void:
 	moves_accuracy.text = (str(button.move.accuracy) + "%") if button.move.accuracy > 0 else "---"
 	moves_description.text = button.move.description
 	moves_detail_panel.show()
+	
+	moves_description_start_timer.start()
+	moves_description_stop_timer.stop()
+	moves_description_scroll.scroll_vertical = 0
 
 
 func _on_move_screen_button_pressed() -> void:

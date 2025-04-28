@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="2_cvkdw"]
 [ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://assets/resources/ui/menu_list.tres" id="2_udh2q"]
 
-[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_debug", "button_quit")]
+[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_settings", "button_debug", "button_quit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ script = ExtResource("1_076te")
 menu = NodePath("Menu")
 buttons_container = NodePath("Menu/VBoxContainer")
 button_party = NodePath("Menu/VBoxContainer/Pokemon")
+button_settings = NodePath("Menu/VBoxContainer/Options")
 button_debug = NodePath("Menu/VBoxContainer/Debug")
 button_quit = NodePath("Menu/VBoxContainer/Quit")
 metadata/_edit_lock_ = true

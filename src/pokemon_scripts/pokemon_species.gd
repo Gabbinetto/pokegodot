@@ -55,6 +55,7 @@ var egg_cycles: int = 1 ## The egg cycles needed for this species to hatch. 1 eg
 ## [codeblock]
 ## {
 ##   "id": "", # The id of the offspring
+##   "form_number": 0, # The form number of the offspring
 ##   "item": "" # The id of the item needed to get the offspring, such as incense for many babies
 ##   "special_moves": [] # Special moves that the offspring will have. For Volt Tackle and Pichu
 ## }
@@ -179,40 +180,40 @@ func _init(_id: String, _form_number: int = 0) -> void:
 
 
 func _set_sprites() -> void:
-	sprite_front_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
+	sprite_front_n_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
 	if not sprite_front_n_m:
 		sprite_front_n_m = DB.default_front_sprite
-	sprite_front_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
+	sprite_front_n_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
 	if not sprite_front_n_f:
 		sprite_front_n_f = sprite_front_n_m
-	sprite_front_s_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_m.png")
+	sprite_front_s_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_m.png")
 	if not sprite_front_s_m:
 		sprite_front_s_m = sprite_front_n_m
-	sprite_front_s_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_f.png")
+	sprite_front_s_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_f.png")
 	if not sprite_front_s_f:
 		sprite_front_s_f = sprite_front_s_m
 
-	sprite_back_n_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
+	sprite_back_n_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
 	if not sprite_back_n_m:
 		sprite_back_n_m = DB.default_back_sprite
-	sprite_back_n_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
+	sprite_back_n_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
 	if not sprite_back_n_f:
 		sprite_back_n_f = sprite_back_n_m
-	sprite_back_s_m = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_m.png")
+	sprite_back_s_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_m.png")
 	if not sprite_back_s_m:
 		sprite_back_s_m = sprite_back_n_m
-	sprite_back_s_f = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
+	sprite_back_s_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
 	if not sprite_back_s_f:
 		sprite_back_s_f = sprite_back_s_m
 	
-	sprite_icon_n = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
+	sprite_icon_n = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
 	if not sprite_icon_n:
 		sprite_icon_n = DB.default_icon_sprite
-	sprite_icon_s = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
+	sprite_icon_s = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
 	if not sprite_icon_s:
 		sprite_icon_s = sprite_icon_n
 	
-	sprite_footprint = load(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")
+	sprite_footprint = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")
 
 
 ## Get the pokemon metrics from [member DB.metrics].

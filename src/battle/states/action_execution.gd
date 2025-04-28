@@ -1,10 +1,8 @@
 extends State
 
-
 @export var battle: Battle
 
 var current_pokemon: BattlePokemon
-var animating: bool = false
 var acted: Array[int]
 var switching: bool = false
 
@@ -12,6 +10,7 @@ var switching: bool = false
 func enter() -> void:
 	acted.clear()
 	battle.show_commands(battle.battle_dialogue)
+	_process_turn()
 
 
 func exit() -> void:
@@ -20,12 +19,10 @@ func exit() -> void:
 			node.starting_sequence.text = ""
 
 
-func update(_delta: float) -> void:
-	if animating:
-		return
-	
+func _process_turn() -> void:
 	if _is_battle_finished():
-		transition.emit(self, "BattleFinish")
+		if not battle.is_buffering:
+			transition.emit(self, "BattleFinish")
 		return
 	
 	_check_switch()
@@ -34,7 +31,8 @@ func update(_delta: float) -> void:
 	
 	battle.refresh_turn_order(acted)
 	if battle.turn_order.is_empty():
-		transition.emit(self, "ActionSelection")
+		if not battle.is_buffering:
+			transition.emit(self, "ActionSelection")
 		return
 	
 	current_pokemon = battle.pokemons[battle.turn_order.pop_front()]
@@ -70,11 +68,12 @@ func update(_delta: float) -> void:
 				} as Dictionary[String, Variant]
 			)
 			move.disable_effects()
+			_process_turn()
 		Battle.Actions.SWITCH:
 			battle.switch(action.properties.from, action.properties.to)
+			_process_turn()
 		Battle.Actions.RUN:
 			var success: bool = Globals.rng.randf() <= battle.calc_escape_chance()
-			animating = true
 			if success:
 				battle.show_text("Ran away!")
 				await battle.last_buffer_ran
@@ -82,7 +81,8 @@ func update(_delta: float) -> void:
 			else:
 				battle.show_text("Failed to run away!")
 				await battle.last_buffer_ran
-				animating = false
+				_process_turn()
+	
 
 
 func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move: PokemonMove) -> void:
@@ -99,9 +99,9 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 			pre_animation_texts.append("Attack failed.")
 		elif damage.type_multiplier == 0:
 			pre_animation_texts.append("Does not affect %s." % damage.target.name)
-		elif damage.type_multiplier > 0 and damage.type_multiplier < 1:
+		elif damage.type_multiplier > 0 and damage.type_multiplier < 1 and damage.move.category != PokemonMove.Categories.STATUS:
 			post_animation_texts.append("It's not very effective on %s." % damage.target.name)
-		elif damage.type_multiplier > 1:
+		elif damage.type_multiplier > 1 and damage.move.category != PokemonMove.Categories.STATUS:
 			post_animation_texts.append("It's supereffective on %s." % damage.target.name)
 		
 		if not damage.miss:
@@ -109,7 +109,6 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 		if damage.value() > 0:
 			hurt_flash_sprites.append(battle.sprites[i])
 		
-	animating = true
 	battle.show_text("%s used %s!" % [current_pokemon.name, move.name])
 	await battle.last_buffer_ran
 	
@@ -162,8 +161,6 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 		battle.show_text(text)
 	await battle.last_buffer_ran
 
-	animating = false
-
 
 func _apply_damage(damage_list: Array[int]) -> void:
 	for i: int in damage_list.size():
@@ -175,53 +172,9 @@ func _check_switch() -> bool:
 	var switch_to: Array = []
 	
 	if battle.ally_pokemon[0].hp <= 0:
-		animating = true
-		switching = true
-		battle.show_commands(null)
-		var slot: int = battle.pokemons.find(battle.ally_pokemon[0])
-		battle.turn_selections.erase(slot)
-		
-		var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": false})
-		party.pokemon_selected.connect(
-			func(pokemon: Pokemon):
-				var index: int = PlayerData.team.get_array().find(pokemon)
-				if pokemon.hp > 0:
-					switch_to.append(index)
-					TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-					await TransitionManager.finished
-					party.queue_free()
-					await party.tree_exited
-					TransitionManager.play_out()
-					await TransitionManager.finished
-		)
-		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-		await TransitionManager.finished
-		battle.ui_layer.add_child(party)
-		await party.pokemon_selected
+		await _prompt_switch(battle.get_slot(battle.ally_pokemon[0]), switch_to)
 	if battle.ally_pokemon[1] and battle.ally_pokemon[1].hp <= 0 and battle.ally_pokemon[1].trainer.is_player:
-		animating = true
-		switching = true
-		battle.show_commands(null)
-		var slot: int = battle.pokemons.find(battle.ally_pokemon[1])
-		battle.turn_selections.erase(slot)
-		
-		var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": false})
-		party.pokemon_selected.connect(
-			func(pokemon: Pokemon):
-				var index: int = PlayerData.team.get_array().find(pokemon)
-				if pokemon.hp > 0 and not switch_to.has(index):
-					switch_to.append(index)
-					TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-					await TransitionManager.finished
-					party.queue_free()
-					await party.tree_exited
-					TransitionManager.play_out()
-					await TransitionManager.finished
-		)
-		TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-		await TransitionManager.finished
-		battle.ui_layer.add_child(party)
-		await party.pokemon_selected
+		await _prompt_switch(battle.get_slot(battle.ally_pokemon[1]), switch_to)
 	
 	if switch_to.is_empty(): return false
 	battle.show_commands(battle.base_commands)
@@ -232,10 +185,33 @@ func _check_switch() -> bool:
 				i,
 				PlayerData.team.slot(switch_to[i])
 			)
-	animating = false
 	switching = false
 
 	return true
+
+
+func _prompt_switch(slot: int, switch_to: Array) -> void:
+	switching = true
+	battle.show_commands(null)
+	battle.turn_selections.erase(slot)
+		
+	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": false})
+	party.pokemon_selected.connect(
+		func(pokemon: Pokemon):
+			var index: int = PlayerData.team.get_array().find(pokemon)
+			if pokemon.hp > 0 and not switch_to.has(index):
+				switch_to.append(index)
+				TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+				await TransitionManager.finished
+				party.queue_free()
+				await party.tree_exited
+				TransitionManager.play_out()
+				await TransitionManager.finished
+	)
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+	battle.ui_layer.add_child(party)
+	await party.pokemon_selected
 
 
 func _is_battle_finished() -> bool:

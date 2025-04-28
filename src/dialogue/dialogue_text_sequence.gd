@@ -52,8 +52,8 @@ func process(delta: float) -> void:
 	if done:
 		return
 
-	if time_elapsed >= DialogueManager.SECONDS_PER_CHARACTER.get(manager.speed):
-		if manager.speed == DialogueManager.Speeds.INSTANT:
+	if time_elapsed >= DialogueManager.SECONDS_PER_CHARACTER.get(Settings.text_speed):
+		if Settings.text_speed == DialogueManager.Speeds.INSTANT:
 			visible_characters = target_characters
 		visible_characters = int(move_toward(visible_characters, target_characters, 1))
 		time_elapsed = 0.0

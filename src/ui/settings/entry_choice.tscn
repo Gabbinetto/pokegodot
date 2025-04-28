@@ -1,0 +1,103 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6gbcg833l6"]
+
+[ext_resource type="Texture2D" uid="uid://cpvo4ct57q2rv" path="res://assets/graphics/ui/select_arrow.png" id="2_o4bnm"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="3_8wbll"]
+
+[sub_resource type="GDScript" id="GDScript_yltv3"]
+resource_name = "Settings entry choice"
+script/source = "extends \"res://src/ui/settings/settings_menu_entry.gd\"
+
+const RED_LABEL: LabelSettings = preload(\"res://assets/resources/ui/text_resources/red.tres\")
+
+@export var choices: Array[String]
+@export var content: Control
+
+var selected: Label
+
+func _ready() -> void:
+	super()
+
+	for i: int in choices.size():
+		var choice: Label = Label.new()
+		choice.label_settings = DEFAULT_GRAY_LABEL
+		choice.text = choices[i]
+		if choices.size() == 2 and i == 1:
+			choice.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		choice.set_meta(\"value\", i)
+		choice.size_flags_horizontal = Control.SIZE_EXPAND
+		choice.mouse_filter = Control.MOUSE_FILTER_PASS
+		choice.gui_input.connect(_choice_input.bind(choice))
+		content.add_child(choice)
+
+
+func _choice_input(event: InputEvent, choice: Label) -> void:
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			if selected != choice:
+				_set_selected(choice)
+				value_changed.emit()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if not selected:
+		return
+
+	if event.is_action_pressed(\"ui_right\"):
+		if selected.get_index() < content.get_child_count() - 1:
+			_set_selected(content.get_child(selected.get_index() + 1))
+			value_changed.emit()
+	elif event.is_action_pressed(\"ui_left\"):
+		if selected.get_index() > 0:
+			_set_selected(content.get_child(selected.get_index() - 1))
+			value_changed.emit()
+
+
+func _set_selected(value: Label) -> void:
+	if selected:
+		selected.label_settings = DEFAULT_GRAY_LABEL
+	selected = value
+	if selected:
+		selected.label_settings = RED_LABEL
+
+
+func get_value() -> Variant:
+	if selected:
+		return selected.get_meta(\"value\")
+	return
+
+
+func set_value(value: Variant) -> void:
+	match typeof(value):
+		TYPE_STRING:
+			set_value(content.get_child(choices.find(value)))
+		TYPE_INT:
+			set_value(choices[value])
+		TYPE_OBJECT:
+			if value is Label and content.get_children().has(value):
+				_set_selected(value)
+"
+
+[node name="EntryChoice" type="HBoxContainer" node_paths=PackedStringArray("content", "arrow", "label")]
+focus_mode = 2
+script = SubResource("GDScript_yltv3")
+content = NodePath("Content")
+arrow = NodePath("Arrow")
+label = NodePath("Label")
+
+[node name="Arrow" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_o4bnm")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+label_settings = ExtResource("3_8wbll")
+vertical_alignment = 1
+
+[node name="Content" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+alignment = 2
