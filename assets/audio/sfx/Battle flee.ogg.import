@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cr05dm0yp0txv"
+path="res://.godot/imported/Battle flee.ogg-69b7cb841e5d838399094f0662e046a4.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Battle flee.ogg"
+dest_files=["res://.godot/imported/Battle flee.ogg-69b7cb841e5d838399094f0662e046a4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

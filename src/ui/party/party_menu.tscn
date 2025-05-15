@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://gxdupyfmp02s"]
+[gd_scene load_steps=22 format=3 uid="uid://gxdupyfmp02s"]
 
 [ext_resource type="Texture2D" uid="uid://0qtvnknqc8vi" path="res://assets/graphics/ui/party/bg.png" id="1_omhq7"]
 [ext_resource type="Script" uid="uid://bp0nrbtxmjqnx" path="res://src/ui/party/party_menu.gd" id="1_sble2"]
@@ -10,9 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://banueyc1ka7as" path="res://assets/graphics/ui/party/panel_textures/panel_round_swap.png" id="7_vk85n"]
 [ext_resource type="Texture2D" uid="uid://s7qeg6pil715" path="res://assets/graphics/ui/party/panel_textures/panel_round_swap_sel.png" id="8_np6a4"]
 [ext_resource type="Texture2D" uid="uid://bg2167vq8sb0v" path="res://assets/graphics/ui/party/panel_textures/panel_round_swap_sel2.png" id="9_v3b2l"]
+[ext_resource type="AudioStream" uid="uid://cq4jmfichqjh5" path="res://assets/audio/sfx/GUI sel cursor.ogg" id="11_71sut"]
 [ext_resource type="Texture2D" uid="uid://bmi3hc6k483u7" path="res://assets/graphics/ui/party/cancel_button_selected.png" id="11_np6a4"]
 [ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="11_v3b2l"]
 [ext_resource type="Texture2D" uid="uid://bon30hcc7tvd3" path="res://assets/graphics/ui/party/cancel_button.png" id="11_vk85n"]
+[ext_resource type="Script" uid="uid://dni7erlf70lfg" path="res://src/audio/control_focus_sound.gd" id="12_x0f6l"]
 [ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://assets/resources/ui/box_full_texture.tres" id="14_0cmm0"]
 [ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://assets/resources/ui/menu_list.tres" id="15_wqgli"]
 [ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="16_71sut"]
@@ -215,6 +217,11 @@ focus_previous = NodePath("../Panels/PartyPanel6")
 theme = SubResource("Theme_sble2")
 text = "CANCEL"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="CancelButton"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Menu" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 1
@@ -245,6 +252,11 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
 text = "Switch in"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/SwitchIn"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Summary" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -252,14 +264,34 @@ focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
 text = "Summary"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Summary"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Switch" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
 layout_mode = 2
 text = "Switch"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Switch"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
 
 [node name="Item" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
 layout_mode = 2
 text = "Item"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Item"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Cancel" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
 layout_mode = 2
 text = "Cancel"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Cancel"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"

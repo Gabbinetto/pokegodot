@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c18kmelovtcuq"
+path="res://.godot/imported/Battle ball hit.ogg-b330e26bb4f19140c0d9766e42eaa784.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Battle ball hit.ogg"
+dest_files=["res://.godot/imported/Battle ball hit.ogg-b330e26bb4f19140c0d9766e42eaa784.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

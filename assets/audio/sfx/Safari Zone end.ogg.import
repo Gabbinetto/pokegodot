@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://lvds6yaj54ur"
+path="res://.godot/imported/Safari Zone end.ogg-241d7b882d0692b0d2d59dd97402645e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Safari Zone end.ogg"
+dest_files=["res://.godot/imported/Safari Zone end.ogg-241d7b882d0692b0d2d59dd97402645e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

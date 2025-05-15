@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cct3ma05h25kx"
+path="res://.godot/imported/Water berry plant.ogg-32dabd46c3a3e8d711948a30595d487f.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Water berry plant.ogg"
+dest_files=["res://.godot/imported/Water berry plant.ogg-32dabd46c3a3e8d711948a30595d487f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

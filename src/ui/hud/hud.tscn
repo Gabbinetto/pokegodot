@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dg8ujnrh80qfn"]
+[gd_scene load_steps=7 format=3 uid="uid://dg8ujnrh80qfn"]
 
 [ext_resource type="Script" uid="uid://dy1ompv6ha3rs" path="res://src/ui/hud/hud.gd" id="1_076te"]
 [ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://assets/resources/ui/box_full_texture.tres" id="1_jobw0"]
 [ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="2_cvkdw"]
 [ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://assets/resources/ui/menu_list.tres" id="2_udh2q"]
+[ext_resource type="AudioStream" uid="uid://cq4jmfichqjh5" path="res://assets/audio/sfx/GUI sel cursor.ogg" id="5_cio14"]
+[ext_resource type="Script" uid="uid://dni7erlf70lfg" path="res://src/audio/control_focus_sound.gd" id="6_4dm8p"]
 
 [node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_settings", "button_debug", "button_quit")]
 layout_mode = 3
@@ -44,30 +46,70 @@ theme_override_constants/separation = 0
 layout_mode = 2
 text = "Pokèdex"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Pokedex"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Pokemon" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Pokèmon"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Pokemon"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
 
 [node name="Bag" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Bag"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Bag"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Player" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Player"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Player"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
 
 [node name="Save" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Save"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Save"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Options" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Options"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Options"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
 
 [node name="Debug" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Debug"
 
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Debug"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
 [node name="Quit" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2
 text = "Quit game"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Quit"]
+stream = ExtResource("5_cio14")
+script = ExtResource("6_4dm8p")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"

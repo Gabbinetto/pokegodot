@@ -29,6 +29,7 @@ PlayerData="*res://src/autoloads/player_data.gd"
 HUD="*res://src/ui/hud/hud.tscn"
 MainDialogue="*res://src/ui/dialogue/dialogue.tscn"
 TransitionManager="*res://src/autoloads/transition_manager.gd"
+Audio="*res://src/autoloads/audio.gd"
 
 [display]
 

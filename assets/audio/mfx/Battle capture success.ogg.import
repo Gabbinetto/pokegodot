@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://hjxpjvlaqx7t"
+path="res://.godot/imported/Battle capture success.ogg-390ead284c1a0def98f8b04bc3566767.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/mfx/Battle capture success.ogg"
+dest_files=["res://.godot/imported/Battle capture success.ogg-390ead284c1a0def98f8b04bc3566767.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

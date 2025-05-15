@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://crc0aprbfm7r"]
+[gd_scene load_steps=59 format=3 uid="uid://crc0aprbfm7r"]
 
 [ext_resource type="Texture2D" uid="uid://e0b8aaenr7if" path="res://assets/graphics/ui/summary/backgrounds/bg_1.png" id="1_f4kky"]
 [ext_resource type="Script" uid="uid://cvsvw8m78vivj" path="res://src/ui/summary/summary_menu.gd" id="1_tb872"]
@@ -46,16 +46,18 @@
 [ext_resource type="Texture2D" uid="uid://dfga10061l331" path="res://assets/graphics/ui/summary/buttons/ribbons_focus.png" id="28_p1sa8"]
 [ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/misc/z_index_focus.gd" id="28_qljio"]
 [ext_resource type="Texture2D" uid="uid://catul0ywud4h0" path="res://assets/resources/move_category_textures/physical.tres" id="30_lomps"]
+[ext_resource type="AudioStream" uid="uid://cq4jmfichqjh5" path="res://assets/audio/sfx/GUI sel cursor.ogg" id="34_p04ah"]
+[ext_resource type="Script" uid="uid://dni7erlf70lfg" path="res://src/audio/control_focus_sound.gd" id="35_sy5fp"]
 [ext_resource type="Texture2D" uid="uid://cnxrnq1lvbov6" path="res://assets/graphics/ui/summary/summary_cross.png" id="47_wm2h6"]
 [ext_resource type="Texture2D" uid="uid://ctdypc3001cfm" path="res://assets/graphics/ui/summary/summary_cross_focus.png" id="48_4r0kn"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_wm2h6"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_4r0kn"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_p04ah"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_sy5fp"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_uxp8c"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_m3kt2"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p04ah"]
 size = Vector2(128, 64)
@@ -847,7 +849,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../../ScreenButtons/Moves")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Move2")
-button_group = SubResource("ButtonGroup_wm2h6")
+button_group = SubResource("ButtonGroup_p04ah")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move1"]
 script = ExtResource("28_qljio")
@@ -863,7 +865,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Move1")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Move3")
-button_group = SubResource("ButtonGroup_4r0kn")
+button_group = SubResource("ButtonGroup_sy5fp")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move2"]
 script = ExtResource("28_qljio")
@@ -879,7 +881,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Move2")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Move4")
-button_group = SubResource("ButtonGroup_p04ah")
+button_group = SubResource("ButtonGroup_uxp8c")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move3"]
 script = ExtResource("28_qljio")
@@ -895,13 +897,14 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Move3")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
-button_group = SubResource("ButtonGroup_sy5fp")
+button_group = SubResource("ButtonGroup_m3kt2")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move4"]
 script = ExtResource("28_qljio")
 metadata/_custom_type_script = "uid://ba5nka84o1geb"
 
 [node name="DetailPanel" type="TextureRect" parent="Moves"]
+visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
@@ -1017,6 +1020,7 @@ vertical_scroll_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Description" type="Label" parent="Moves/DetailPanel/ScrollContainer"]
+custom_minimum_size = Vector2(234, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 2
@@ -1109,6 +1113,11 @@ texture_pressed = ExtResource("47_wm2h6")
 texture_hover = ExtResource("47_wm2h6")
 texture_focused = ExtResource("48_4r0kn")
 metadata/_edit_use_anchors_ = true
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="CloseButton"]
+stream = ExtResource("34_p04ah")
+script = ExtResource("35_sy5fp")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
 
 [node name="PokemonSprite" type="TextureRect" parent="."]
 layout_mode = 1

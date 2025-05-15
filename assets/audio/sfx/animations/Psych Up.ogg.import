@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://qc275ggx0hoi"
+path="res://.godot/imported/Psych Up.ogg-fdbda9dffd4421b899169eafe9006add.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/animations/Psych Up.ogg"
+dest_files=["res://.godot/imported/Psych Up.ogg-fdbda9dffd4421b899169eafe9006add.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

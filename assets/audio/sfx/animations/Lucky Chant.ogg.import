@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bnm430wmhv2cf"
+path="res://.godot/imported/Lucky Chant.ogg-2bf30bf336bd72873c5e1e0363b55fc5.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/animations/Lucky Chant.ogg"
+dest_files=["res://.godot/imported/Lucky Chant.ogg-2bf30bf336bd72873c5e1e0363b55fc5.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

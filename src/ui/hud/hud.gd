@@ -38,6 +38,7 @@ func _input(event: InputEvent) -> void:
 
 
 func _open_party() -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
 	
@@ -48,6 +49,7 @@ func _open_party() -> void:
 	add_child(party_menu)
 	party_menu.closed.connect(
 		func():
+			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
 			TransitionManager.layer += 1
 			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 			await TransitionManager.finished
@@ -65,6 +67,7 @@ func _open_party() -> void:
 
 
 func _open_settings() -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	menu.hide()
 	submenu_open = true
 	var settings: SettingsMenu = SettingsMenu.create()
@@ -73,6 +76,7 @@ func _open_settings() -> void:
 	
 	settings.closed.connect(
 		func():
+			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
 			settings.queue_free()
 			menu.show.call_deferred()
 			submenu_open = false
@@ -81,6 +85,7 @@ func _open_settings() -> void:
 
 
 func _open_debug() -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	menu.hide()
 	submenu_open = true
 	var debug: DebugMenu = DebugMenu.create()
@@ -89,6 +94,7 @@ func _open_debug() -> void:
 	
 	debug.closed.connect(
 		func():
+			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
 			debug.queue_free()
 			menu.show.call_deferred()
 			submenu_open = false
@@ -97,6 +103,7 @@ func _open_debug() -> void:
 
 
 func _quit() -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
 	get_tree().quit.call_deferred()
@@ -112,16 +119,28 @@ func open() -> void:
 	button_party.visible = PlayerData.team.size() > 0
 	
 	show()
+	var focus_node: Control
 	if last_menu_option:
-		last_menu_option.grab_focus.call_deferred()
+		focus_node = last_menu_option
 	else:
 		for node: Control in buttons_container.get_children():
 			if node.visible:
-				node.grab_focus.call_deferred()
+				focus_node = node
 				break
+	focus_node.grab_focus.call_deferred()
+	var focus_sound: ControlFocusSound
+	for node: Node in focus_node.get_children():
+		if node is ControlFocusSound:
+			focus_sound = node
+	if focus_sound:
+		focus_sound.volume_linear = 0.0
+	Audio.play_sfx(Audio.SOUNDS.GUI_MENU_OPEN)
+	if focus_sound:
+		Audio.sfx_finished.connect(focus_sound.set.bind("volume_linear", 1.0), CONNECT_ONE_SHOT)
 
 
 func close() -> void:
 	Globals.movement_enabled = true
 	Globals.event_input_enabled = true
 	hide()
+	Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://yxrlvryukx6l"
+path="res://.godot/imported/Player bump.ogg-34ebf9f22e48b2bb2ba133e0c14ef0d9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Player bump.ogg"
+dest_files=["res://.godot/imported/Player bump.ogg-34ebf9f22e48b2bb2ba133e0c14ef0d9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bp8qtbksmpq26"
+path="res://.godot/imported/Mart buy item.ogg-8df240de178bcfbe488f08dc7519669e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Mart buy item.ogg"
+dest_files=["res://.godot/imported/Mart buy item.ogg-8df240de178bcfbe488f08dc7519669e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

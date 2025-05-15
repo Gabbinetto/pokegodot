@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b3xty7smeqk8f"
+path="res://.godot/imported/GUI pokedex open.ogg-751d6d8c495226a0eb07ff932a1d25fc.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/GUI pokedex open.ogg"
+dest_files=["res://.godot/imported/GUI pokedex open.ogg-751d6d8c495226a0eb07ff932a1d25fc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

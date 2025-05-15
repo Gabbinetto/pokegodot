@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://svfu3bgr7rr3"
+path="res://.godot/imported/Battle throw.ogg-3fb82a8ef6819955445fce59e0f526d8.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Battle throw.ogg"
+dest_files=["res://.godot/imported/Battle throw.ogg-3fb82a8ef6819955445fce59e0f526d8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -9,6 +9,7 @@ const NATURE_NEUTRAL = preload("res://assets/resources/ui/text_resources/light_g
 const NATURE_UP = preload("res://assets/resources/ui/text_resources/nature_up.tres")
 const NATURE_DOWN = preload("res://assets/resources/ui/text_resources/nature_down.tres")
 const SPRITE_ICON_UPDATE_FRAMES: int = 20
+const SOUND_CHANGE_PAGE = preload("res://assets/audio/sfx/GUI summary change page.ogg")
 
 @export var screens: Array[Control]
 @export var screen_buttons: Array[TextureButton]
@@ -122,7 +123,9 @@ func _process(_delta: float) -> void:
 func _show_screen(screen: Control) -> void:
 	for node: Control in screens:
 		if node == screen:
-			node.show()
+			if not node.visible:
+				node.show()
+				Audio.play_sfx(SOUND_CHANGE_PAGE)
 		else:
 			node.hide()
 
@@ -229,6 +232,7 @@ func _refresh_pokemon() -> void:
 
 
 func _on_move_button_pressed(button: SummaryMoveButton) -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	if not selected_move_button:
 		selected_move_button = button
 		moves_buttons[0].focus_neighbor_top = moves_buttons[0].get_path()
@@ -249,9 +253,12 @@ func _on_move_button_unfocused() -> void:
 	if not moves_buttons.has(get_viewport().gui_get_focus_owner()):
 		moves_detail_panel.hide()
 		moves_screen_button.grab_focus.call_deferred()
+		Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
 
 
 func _on_move_button_focused(button: SummaryMoveButton) -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_CURSOR)
+	
 	last_move_button = button
 	
 	moves_category.texture = PokemonMove.CATEGORY_ICONS[button.move.category]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cgo4q68enpgw3"
+path="res://.godot/imported/Defense Curl.ogg-eae1ee029f417b4717636f49b1a3e72b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/animations/Defense Curl.ogg"
+dest_files=["res://.godot/imported/Defense Curl.ogg-eae1ee029f417b4717636f49b1a3e72b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

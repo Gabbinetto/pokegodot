@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cxvunmeey0h2n"
+path="res://.godot/imported/Pkmn exp full.ogg-43feaaa309a381067096daa84f7677f2.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Pkmn exp full.ogg"
+dest_files=["res://.godot/imported/Pkmn exp full.ogg-43feaaa309a381067096daa84f7677f2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

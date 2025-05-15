@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ckq648bgyfi"
+path="res://.godot/imported/Tile Game cursor.ogg-5fd678d907db995bd526aa686e34852b.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Tile Game cursor.ogg"
+dest_files=["res://.godot/imported/Tile Game cursor.ogg-5fd678d907db995bd526aa686e34852b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

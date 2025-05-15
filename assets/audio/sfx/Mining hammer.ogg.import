@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://wslyhbninwfl"
+path="res://.godot/imported/Mining hammer.ogg-9ba09d50ba01cbc4e28cc5d95851d3db.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Mining hammer.ogg"
+dest_files=["res://.godot/imported/Mining hammer.ogg-9ba09d50ba01cbc4e28cc5d95851d3db.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

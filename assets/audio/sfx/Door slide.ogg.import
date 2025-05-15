@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://phpalw2n48uk"
+path="res://.godot/imported/Door slide.ogg-4c6ea12f4eb5e48030177f3c4ae73bf8.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Door slide.ogg"
+dest_files=["res://.godot/imported/Door slide.ogg-4c6ea12f4eb5e48030177f3c4ae73bf8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

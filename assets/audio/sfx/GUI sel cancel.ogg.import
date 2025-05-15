@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cmhrepkbhlugt"
+path="res://.godot/imported/GUI sel cancel.ogg-f1b11c76d69baff6963d2448cc249d7d.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/GUI sel cancel.ogg"
+dest_files=["res://.godot/imported/GUI sel cancel.ogg-f1b11c76d69baff6963d2448cc249d7d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

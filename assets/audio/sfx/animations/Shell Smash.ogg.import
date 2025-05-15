@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://byv8nlag1rgf"
+path="res://.godot/imported/Shell Smash.ogg-30a2d0cffa43370b8345c65990dbe3d9.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/animations/Shell Smash.ogg"
+dest_files=["res://.godot/imported/Shell Smash.ogg-30a2d0cffa43370b8345c65990dbe3d9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

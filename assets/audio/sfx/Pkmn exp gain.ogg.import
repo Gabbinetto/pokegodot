@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://1s0k0ca4y1kk"
+path="res://.godot/imported/Pkmn exp gain.ogg-f226ad59a85e4bfc9bd7acbfd6c6ea5e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Pkmn exp gain.ogg"
+dest_files=["res://.godot/imported/Pkmn exp gain.ogg-f226ad59a85e4bfc9bd7acbfd6c6ea5e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

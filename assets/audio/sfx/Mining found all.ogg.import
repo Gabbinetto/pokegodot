@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://coktats5r0pg"
+path="res://.godot/imported/Mining found all.ogg-ee6386bd6bc9f313732f8d4b4a326dbf.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Mining found all.ogg"
+dest_files=["res://.godot/imported/Mining found all.ogg-ee6386bd6bc9f313732f8d4b4a326dbf.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

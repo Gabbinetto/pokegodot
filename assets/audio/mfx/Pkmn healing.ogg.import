@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://rwiuqgnynrtw"
+path="res://.godot/imported/Pkmn healing.ogg-fa7106c19c27167f633246940c4c7df0.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/mfx/Pkmn healing.ogg"
+dest_files=["res://.godot/imported/Pkmn healing.ogg-fa7106c19c27167f633246940c4c7df0.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -6,6 +6,8 @@ signal pokemon_selected(pokemon: Pokemon)
 const MENU_SCENE: PackedScene = preload("res://src/ui/party/party_menu.tscn")
 const SWAP_ANIMATION_DURATION: float = 1.0
 const SWAP_OFFSET: float = 10.0
+const SOUND_PARTY_SWITCH = preload("res://assets/audio/sfx/GUI party switch.ogg")
+
 
 @export var panels_container: Control
 @export var cancel_button: BaseButton
@@ -113,6 +115,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_panel_focus(panel: PartyPanel) -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_CURSOR)
 	current_panel = panel
 	if swapping_from != null:
 		swapping_to = panel
@@ -163,6 +166,7 @@ func _set_menu_neighbors() -> void:
 
 
 func _on_menu_visibility_changed() -> void:
+	Audio.play_sfx.call_deferred(Audio.SOUNDS.GUI_SEL_DECISION)
 	_set_menu_neighbors()
 	_set_panels_mouse.call_deferred(not menu.visible)
 
@@ -174,11 +178,12 @@ func _is_pokemon_in_battle(pokemon: Pokemon) -> bool:
 			return true
 	return false
 
+
 func _on_switch_in_pressed() -> void:
 	if not _is_pokemon_in_battle(current_panel.pokemon):
 		pokemon_selected.emit(current_panel.pokemon)
-
 #endregion
+
 #region Swap only functions
 func _on_switch_pressed() -> void:
 	if team.size() <= 1:
@@ -218,10 +223,13 @@ func swap_slots() -> void:
 			target_position.x = size.x + SWAP_OFFSET
 		panel.set_meta("target_position", target_position)
 	
+	
 	var tween: Tween = create_tween()
+	tween.tween_callback(Audio.play_sfx.bind(SOUND_PARTY_SWITCH))
 	tween.tween_property(swapping_from, "position", swapping_from.get_meta("target_position"), SWAP_ANIMATION_DURATION / 2.0)
 	tween.parallel().tween_property(swapping_to, "position", swapping_to.get_meta("target_position"), SWAP_ANIMATION_DURATION / 2.0)
 	tween.tween_callback(_swap)
+	tween.tween_callback(Audio.play_sfx.bind(SOUND_PARTY_SWITCH))
 	tween.tween_property(swapping_from, "position", swapping_from.get_meta("original_position"), SWAP_ANIMATION_DURATION / 2.0)
 	tween.parallel().tween_property(swapping_to, "position", swapping_to.get_meta("original_position"), SWAP_ANIMATION_DURATION / 2.0)
 	

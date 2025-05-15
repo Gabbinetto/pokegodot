@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ru6ccpykvxss"
+path="res://.godot/imported/Voltorb Flip tile.ogg-6a8f339030bc5b8a745e2a47c04ddb2e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Voltorb Flip tile.ogg"
+dest_files=["res://.godot/imported/Voltorb Flip tile.ogg-6a8f339030bc5b8a745e2a47c04ddb2e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

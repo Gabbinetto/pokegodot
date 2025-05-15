@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dfapuay2c8ffp"
+path="res://.godot/imported/Pkmn move learnt.ogg-13b811f3acd8cb2f55f5076c354a113a.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Pkmn move learnt.ogg"
+dest_files=["res://.godot/imported/Pkmn move learnt.ogg-13b811f3acd8cb2f55f5076c354a113a.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

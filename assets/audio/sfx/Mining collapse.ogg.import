@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c7o8godep5hc"
+path="res://.godot/imported/Mining collapse.ogg-5546c4c3408bbd886857a1f9103cffef.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/Mining collapse.ogg"
+dest_files=["res://.godot/imported/Mining collapse.ogg-5546c4c3408bbd886857a1f9103cffef.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
