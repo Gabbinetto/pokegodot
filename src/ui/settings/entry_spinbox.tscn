@@ -9,66 +9,72 @@ resource_name = "Settings entry spinbox"
 script/source = "extends \"res://src/ui/settings/settings_menu_entry.gd\"
 
 @export var starting_value: float
-@export var max: float = 100.0:
+@export var max_value: float = 100.0:
 	set(value):
-		if not range:
+		if not range_node:
 			return
-		range.max_value = max
+		max_value = value
+		range_node.max_value = max_value
 		_sync()
-@export var min: float:
+@export var min_value: float:
 	set(value):
-		if not range:
+		if not range_node:
 			return
-		range.min_value = min
+		min_value = value
+		range_node.min_value = min_value
 		_sync()
 @export var step: float = 1.0:
 	set(value):
-		if not range:
+		if not range_node:
 			return
-		range.step = step
+		step = value
+		range_node.step = step
 		_sync()
 @export var content_text: String = \"%s/%s\":
 	set(value):
-		if not range:
+		if not range_node:
 			return
 		content_text = value
 		_sync()
 @export var prefix: String = \"\":
 	set(value):
-		if not range:
+		if not range_node:
 			return
 		prefix = value
 		_sync()
 @export var content: Label
 
-var range: Range
+var range_node: Range
+
+
+func _init() -> void:
+	range_node = Range.new()
+	add_child(range_node)
 
 
 func _ready() -> void:
 	super()
-	range = Range.new()
-	add_child(range)
-	range.max_value = max
-	range.min_value = min
-	range.step = step
-	range.set_value_no_signal(starting_value)
-	range.value_changed.connect(_on_value_changed)
+	range_node.max_value = max_value
+	range_node.min_value = min_value
+	range_node.step = step
+	range_node.set_value_no_signal(starting_value)
+	range_node.value_changed.connect(_on_value_changed)
 	content.gui_input.connect(_content_input)
 	_sync()
 
 
 func get_value() -> Variant:
-	return range.value
+	return range_node.value
 
 
 func set_value(value: Variant) -> void:
-	range.set_value_no_signal(value)
+	range_node.set_value_no_signal(value)
 	_sync()
 
 
 func _sync() -> void:
-	var val: Variant = int(range.value) if range.value == int(range.value) else range.value
-	var max_val: Variant = int(range.max_value) if range.max_value == int(range.max_value) else range.max_value
+	var val: Variant = int(range_node.value) if range_node.value == int(range_node.value) else range_node.value
+	var max_val: Variant = int(range_node.max_value) if range_node.max_value == int(range_node.max_value) else range_node.max_value
 	content.text = prefix + content_text % [val, max_val]
 
 
@@ -79,18 +85,18 @@ func _on_value_changed(_value: float) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed(\"ui_right\"):
-		range.value += range.step
+		range_node.value += range_node.step
 	elif event.is_action_pressed(\"ui_left\"):
-		range.value -= range.step
+		range_node.value -= range_node.step
 
 
 func _content_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			if event.position.x > content.size.x / 2.0:
-				range.value += 1
+				range_node.value += 1
 			else:
-				range.value -= 1
+				range_node.value -= 1
 "
 
 [node name="EntrySpinbox" type="HBoxContainer" node_paths=PackedStringArray("content", "arrow", "label")]

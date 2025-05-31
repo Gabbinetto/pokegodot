@@ -1,7 +1,7 @@
 class_name PokemonMove extends Resource
 
 ## Pokegodot's move resource
-## 
+##
 ## A resource holding information about a pokemon move, including per-instance properties such ass PPs left.
 
 enum Categories { ## Move categories.
@@ -66,7 +66,7 @@ func _init(_id: String) -> void:
 	for attribute: String in data:
 		if attribute in self:
 			set(attribute, data[attribute])
-	
+
 	refresh_pp()
 
 
@@ -80,7 +80,7 @@ func get_possible_targets(battle: Battle, user: BattlePokemon, move_target: Targ
 	var targets: Array[bool]
 	var user_is_enemy: bool = battle.enemy_pokemon.has(user)
 	targets.resize(battle.pokemons.size())
-	for i: int in targets.size(): 
+	for i: int in targets.size():
 		var current: BattlePokemon = battle.pokemons[i]
 		match move_target:
 			Targets.USER:
@@ -115,3 +115,18 @@ func enable_effects() -> void:
 func disable_effects() -> void:
 	for effect: BattleEffect in effects:
 		effect.disable()
+
+
+func as_save_data() -> Dictionary[String, Variant]:
+	return {
+		"id": id,
+		"pp_upgrades": pp_upgrades,
+		"pp": pp,
+	}
+
+
+static func from_save_data(data: Dictionary[String, Variant]) -> PokemonMove:
+	var move: PokemonMove = PokemonMove.new(data.id)
+	move.pp_upgrades = data.pp_upgrades
+	move.pp = data.pp
+	return move

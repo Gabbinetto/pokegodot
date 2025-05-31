@@ -2,7 +2,6 @@ extends Control
 
 
 @export var viewport: SubViewport
-@export var main_dialogue: Dialogue
 @export var touchscreen_controls: CanvasItem
 @export var controls_visibility_button: BaseButton
 @export_group("Autoload reparenting")

@@ -8,7 +8,7 @@ var split_amount: int = 2
 
 
 func _run() -> void:
-	main_screen = get_editor_interface().get_editor_main_screen()
+	main_screen = EditorInterface.get_editor_main_screen()
 	var popup: ConfirmationDialog = ConfirmationDialog.new()
 	var hbox: HBoxContainer = HBoxContainer.new()
 	var tile_size_input: SpinBox = SpinBox.new()
@@ -33,11 +33,11 @@ func _run() -> void:
 	popup.grab_focus.call_deferred()
 	popup.confirmed.connect(
 		func():
-			tile_size = tile_size_input.value
-			split_amount = split_amount_input.value
+			tile_size = int(tile_size_input.value)
+			split_amount = int(split_amount_input.value)
 			_open_dialog()
 	)
-	
+
 
 
 func _open_dialog() -> void:
@@ -55,7 +55,7 @@ func _open_dialog() -> void:
 
 
 func _on_file_selected(path: String) -> void:
-	
+
 	var image: Image = Image.load_from_file(path)
 	var splits: Array[Image]
 	var last_y: int = 0

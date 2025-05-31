@@ -30,6 +30,7 @@ offset_left = -0.0400085
 offset_top = 0.00999832
 offset_right = 95.96
 offset_bottom = 6.01
+step = 0.1
 value = 50.0
 texture_progress = ExtResource("4_mkov4")
 script = ExtResource("4_xbbhl")

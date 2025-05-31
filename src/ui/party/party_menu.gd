@@ -17,6 +17,7 @@ const SOUND_PARTY_SWITCH = preload("res://assets/audio/sfx/GUI party switch.ogg"
 @export var button_switch_in: BaseButton
 @export var button_summary: BaseButton
 @export var button_switch: BaseButton
+@export var button_nickname: BaseButton
 @export var button_item: BaseButton
 @export var button_menu_cancel: BaseButton
 
@@ -51,7 +52,7 @@ func _ready() -> void:
 		team = PlayerData.team
 	if team.size() < 2:
 		button_switch.hide()
-	
+
 	var team_array: Array[Pokemon] = team.get_array().duplicate()
 	if in_battle:
 		var mon_in_battle: Array[Pokemon]
@@ -64,13 +65,13 @@ func _ready() -> void:
 		if Globals.current_battle.ally_pokemon[0].pokemon != mon_in_battle[0]:
 			mon_in_battle.reverse()
 		team_array = mon_in_battle + mon_out_battle
-	
+
 	for i: int in panels.size():
 		if i < team_array.size():
 			panels[i].pokemon = team_array[i]
 		else:
 			panels[i].pokemon = null
-		
+
 		panels[i].focus_entered.connect(_on_panel_focus.bind(panels[i]))
 		panels[i].focus_exited.connect(_on_panel_unfocus.bind(panels[i]))
 		panels[i].pressed.connect(_on_panel_pressed.bind(panels[i]))
@@ -79,16 +80,17 @@ func _ready() -> void:
 		panels[0].grab_focus.call_deferred()
 	else:
 		cancel_button.grab_focus.call_deferred()
-	
+
 	for button: BaseButton in menu_buttons_container.get_children():
 		button.gui_input.connect(_menu_button_input)
 	button_summary.pressed.connect(_on_summary_pressed)
 	button_switch.pressed.connect(_on_switch_pressed)
+	button_nickname.pressed.connect(_on_nickname_pressed)
 	button_switch_in.pressed.connect(_on_switch_in_pressed)
 	button_menu_cancel.pressed.connect(_menu_cancel)
 	cancel_button.pressed.connect(closed.emit)
 	cancel_button.disabled = not can_cancel
-	
+
 	menu.visibility_changed.connect(_on_menu_visibility_changed)
 
 	if in_battle:
@@ -206,14 +208,14 @@ func _disable_cancel_on_swap() -> void:
 func swap_slots() -> void:
 	if swapping_from == swapping_to:
 		return
-	
+
 	swapping = true
 	var _swap: Callable = func():
 		team.swap(swapping_from.get_index(), swapping_to.get_index())
 		var tmp: Pokemon = swapping_from.pokemon
 		swapping_from.pokemon = swapping_to.pokemon
 		swapping_to.pokemon = tmp
-	
+
 	for panel: PartyPanel in [swapping_from, swapping_to]:
 		panel.set_meta("original_position", panel.position)
 		var target_position: Vector2 = Vector2(0, panel.position.y)
@@ -222,8 +224,8 @@ func swap_slots() -> void:
 		else:
 			target_position.x = size.x + SWAP_OFFSET
 		panel.set_meta("target_position", target_position)
-	
-	
+
+
 	var tween: Tween = create_tween()
 	tween.tween_callback(Audio.play_sfx.bind(SOUND_PARTY_SWITCH))
 	tween.tween_property(swapping_from, "position", swapping_from.get_meta("target_position"), SWAP_ANIMATION_DURATION / 2.0)
@@ -232,13 +234,13 @@ func swap_slots() -> void:
 	tween.tween_callback(Audio.play_sfx.bind(SOUND_PARTY_SWITCH))
 	tween.tween_property(swapping_from, "position", swapping_from.get_meta("original_position"), SWAP_ANIMATION_DURATION / 2.0)
 	tween.parallel().tween_property(swapping_to, "position", swapping_to.get_meta("original_position"), SWAP_ANIMATION_DURATION / 2.0)
-	
+
 	await tween.finished
-	
+
 	swapping_from = null
 	swapping_to = null
 	swapping = false
-	
+
 	_refresh_panels()
 #endregion
 #endregion
@@ -262,6 +264,39 @@ func _on_summary_pressed() -> void:
 			await get_tree().process_frame
 			button_summary.grab_focus()
 	)
+
+
+func _on_nickname_pressed() -> void:
+	var pokemon: Pokemon = current_panel.pokemon
+	var text_input: TextInput = TextInput.create(
+		{
+			"label": "What is %s's name?" % pokemon.species.name,
+			"length": Pokemon.MAX_NICKNAME_SIZE,
+		}
+	)
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+	add_sibling(text_input)
+	hide()
+	TransitionManager.play_out()
+	await TransitionManager.finished
+	text_input.submitted.connect(
+		func(text: String):
+			pokemon.name = text
+			_refresh_panels()
+
+			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+			await TransitionManager.finished
+
+			text_input.queue_free()
+			show()
+
+			TransitionManager.play_out()
+			await TransitionManager.finished
+
+			button_nickname.grab_focus.call_deferred()
+	)
+
 
 func _refresh_panels():
 	for panel: PartyPanel in panels:

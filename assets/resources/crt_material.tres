@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cco1to4ba8t57"]
+
+[ext_resource type="Shader" uid="uid://4nr22nvyiyh6" path="res://src/vfx/crt.gdshader" id="1_ud1fx"]
+
+[resource]
+shader = ExtResource("1_ud1fx")
+shader_parameter/resolution = Vector2(512, 394)
+shader_parameter/brightness = 0.666

@@ -34,5 +34,5 @@ func get_value() -> Variant:
 	return
 
 
-func set_value(value: Variant) -> void:
+func set_value(_value: Variant) -> void:
 	pass

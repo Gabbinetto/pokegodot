@@ -24,21 +24,21 @@ func play() -> void:
 		pos += target.global_position
 	pos /= float(targets.size())
 	global_position += pos
-	
+
 	# Reparent targets to pivot
 	for target: Node2D in targets:
 		target.set_meta("original_parent", target.get_parent())
 		target.reparent(pivot)
-	
+
 	await _play_animation()
-	
+
 	for target: Node2D in targets:
 		target.reparent(target.get_meta("original_parent"))
 		target.remove_meta("original_parent")
 	global_position -= pos
-	
+
 	finished.emit()
-	
+
 	if clear:
 		queue_free()
 
@@ -54,12 +54,11 @@ func _play_animation() -> void:
 static func get_animation(path: String, animation_targets: Array[Node2D] = [], parent: Node = null) -> BattleAnimation:
 	if path.get_extension() != "tscn":
 		path += ".tscn"
-	var animation_scene: PackedScene = load(ANIMATIONS_PATH + path)
+	var animation_scene: PackedScene = Utils.load_no_error(ANIMATIONS_PATH + path)
 	if animation_scene:
 		var battle_animation: BattleAnimation = animation_scene.instantiate()
 		battle_animation.targets.assign(animation_targets)
 		if parent:
 			parent.add_child(battle_animation)
 		return battle_animation
-	push_error("Animation %s doesn't exist" % path)
 	return

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmtpwar7sdfmr"]
+
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="1_ol4tn"]
+[ext_resource type="Texture2D" uid="uid://bvmm8nswsi8q6" path="res://assets/graphics/ui/text_input/text_field_underline.png" id="2_lxwhj"]
+
+[node name="TextInputFieldCharacter" type="Label"]
+custom_minimum_size = Vector2(22, 0)
+anchors_preset = -1
+anchor_right = 0.0429688
+anchor_bottom = 0.0625
+mouse_filter = 1
+label_settings = ExtResource("1_ol4tn")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Underline" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(22, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.08333
+anchor_right = 1.09091
+anchor_bottom = 1.33333
+offset_left = -1.0
+offset_right = -1.0
+texture = ExtResource("2_lxwhj")
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true

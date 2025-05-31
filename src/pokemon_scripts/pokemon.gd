@@ -6,6 +6,7 @@ class_name Pokemon extends Resource
 ## Not to be confused with [PokemonSpecies].
 
 signal hp_changed(old_hp: int) ## Emitted when [member hp] changes.
+signal level_up ## Emitted when the pokemon levels up, therefore when [member experience] increases enough for [member level] to go up.
 
 enum Genders {MALE, FEMALE, GENDERLESS} ## Possible pokemon genders.
 enum Markings {NONE, BLACK, BLUE, PINK} ## Possible markings states.
@@ -28,27 +29,28 @@ var super_shiny: bool = false: ## If true, this pokemon has shiny and has differ
 			shiny = super_shiny
 var ability: PokemonAbility ## This pokemon's ability.
 var has_hidden_ability: bool: ## True if [member ability] is an hidden ability set in the [member species] [member PokemonSpecies.hidden_abilities]. If set manually, sets [member ability] to the first hidden ability (If true) or the first normal ability (If false).
-	get: return species.hidden_abilities.has(ability.id)
 	set(value):
 		if has_hidden_ability == value:
 			return
-		if value:
-			ability = PokemonAbility.new(species.hidden_abilities[0])
-		else:
-			ability = PokemonAbility.new(species.abilities[0])
+		has_hidden_ability = value
+		ability_index = ability_index
 ## This pokemons [member ability] index. Corresponds to the index of the ability id in the [member species] [member PokemonSpecies.abilities]
 ## property (If [member has_hidden_ability] is false) or the [member PokemonSpecies.hidden_abilities] property (If [member has_hidden_ability] is true)
 var ability_index: int:
-	get:
-		if has_hidden_ability:
-			return species.hidden_abilities.find(ability.id)
-		else:
-			return species.abilities.find(ability.id)
 	set(value):
+		ability_index = value
 		if has_hidden_ability:
-			ability = PokemonAbility.new(species.hidden_abilities[value])
+			ability = PokemonAbility.new(
+				species.hidden_abilities[
+					clampi(value, 0, species.hidden_abilities.size() - 1)
+				]
+			)
 		else:
-			ability = PokemonAbility.new(species.abilities[value])
+			ability = PokemonAbility.new(
+				species.abilities[
+					clampi(value, 0, species.abilities.size() - 1)
+				]
+			)
 ## Random value bound to the instance of one pokemon, used in things such as [url=https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess]shininess[/url]
 var personality_value: int = 0
 ## Extension of [member personality_value]. Check [url]https://bulbapedia.bulbagarden.net/wiki/Personality_value[/url].
@@ -56,20 +58,17 @@ var encryption_constant: int = 0
 var secret_id: int = 0 ## A random 4 digit number like [member personality_value].
 # Growth and stats
 var experience: int = 0: ## This pokemon's experience points, limited between 0 and the highest value in the growth rate table ([member Experience.tables])
-	set(value): experience = clampi(value, 0, Experience.tables[species.growth_rate][-1])
+	set(value):
+		var old_level: int = level
+		experience = clampi(value, 0, Experience.tables[species.growth_rate][-1])
+		if level > old_level:
+			level_up.emit()
+			SignalRouter.pokemon_level_up.emit(self)
 ## This pokemon's level. When set, it also sets [member experience] to the closest needed experience points to get to the set level. [br]
 ## For example, if level 2 requires 10 points, 3 requires 20 and 4 requires 40 and the pokemon has 23 points, when [member level] gets set to 2,
 ## [member experience] will be 19. When set to 4, [member experience] will be 40. When set to 3, [member experience] will remain the same.
 var level: int = 1:
-	get:
-		var out: int = 1
-		for i in Experience.tables[species.growth_rate].size():
-			var level_exp: int = Experience.tables[species.growth_rate][i]
-			if experience >= level_exp:
-				out = i + 1
-			else:
-				break
-		return out
+	get: return Experience.get_level_at_exp(experience, species.growth_rate)
 	set(value):
 		var table: Array[int] = Experience.tables[species.growth_rate]
 		value = clampi(value, 1, Experience.MAX_LEVEL)
@@ -147,8 +146,8 @@ var language: Globals.Languages = Globals.Languages.UNKNOWN ## This pokemon's la
 var moves: Array[PokemonMove] ## This pokemon's 4 or less learnt moves.
 # Miscellaneous
 var pokeball: String ## The pokeball id this pokemon was caught in.
-## This pokemon contest stats. Keys should match [member Globals.CONTEST_STATS] values. 
-var constest_stats: Dictionary[String, int] = {
+## This pokemon contest stats. Keys should match [member Globals.CONTEST_STATS] values.
+var contest_stats: Dictionary[String, int] = {
 	Globals.CONTEST_STATS.BEAUTY: 0,
 	Globals.CONTEST_STATS.COOL: 0,
 	Globals.CONTEST_STATS.CUTE: 0,
@@ -209,13 +208,11 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Vari
 	for attribute: String in attributes:
 		if attribute in self:
 			match attribute:
-				"ability":
-					ability = PokemonAbility.new(attributes[attribute])
 				"evs", "ivs", "moves", "contest_stats", "markings", "ribbons", "marks":
 					get(attribute).assign(attributes[attribute])
 				_:
 					set(attribute, attributes[attribute])
-	
+
 	if not ability:
 		ability = PokemonAbility.new(species.abilities[0])
 
@@ -227,6 +224,16 @@ func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Vari
 
 	if moves.size() == 0:
 		set_moves(level)
+
+
+	level_up.connect(_on_level_up)
+
+
+func _on_level_up() -> void:
+	var old_max_hp: int = max_hp
+	calculate_stats()
+	hp += max_hp - old_max_hp
+
 
 
 ## Resets the sprites.
@@ -277,6 +284,81 @@ func set_moves(_level: int, clear_old: bool = false) -> void:
 			moves.append(PokemonMove.new(move_id))
 
 
+func as_save_data() -> Dictionary[String, Variant]:
+	var data: Dictionary[String, Variant] = {
+		"species_id": species.id,
+		"form": species.form_number,
+		"name": name if name != species.name else "",
+		"happiness": happiness,
+		"gender": gender,
+		"nature": nature,
+		"shiny": shiny,
+		"super_shiny": super_shiny,
+		"has_hidden_ability": has_hidden_ability,
+		"ability_index": ability_index,
+		"personality_value": personality_value,
+		"encryption_constant": encryption_constant,
+		"secret_id": secret_id,
+		"experience": experience,
+		"evs": evs,
+		"ivs": ivs,
+		"pokerus_strain": pokerus_strain,
+		"pokerus_day_left": pokerus_day_left,
+		"hp": hp,
+		"status": status.as_save_data() if status else {},
+		"held_item": held_item.as_save_data() if held_item else {},
+		"egg_cycles_left": egg_cycles_left,
+		"original_trainer_id": original_trainer_id,
+		"original_trainer_secret_id": original_trainer_secret_id,
+		"original_trainer_name": original_trainer_name,
+		"trainer_id": trainer_id,
+		"obtained_level": obtained_level,
+		"obtained_map": obtained_map,
+		"obtained_time": obtained_time,
+		"has_hatched": has_hatched,
+		"hatched_map": hatched_map,
+		"hatched_time": hatched_time,
+		"language": language,
+		"moves": [],
+		"pokeball": pokeball,
+		"contest_stats": contest_stats,
+		"markings": markings,
+		"ribbons": ribbons,
+		"marks": marks,
+		"fused_pokemon": fused_pokemon.as_save_data() if fused_pokemon else {},
+	}
+
+	# Add moves
+	for move: PokemonMove in moves:
+		data.moves.append(move.as_save_data())
+
+	return data
+
+
+static func from_save_data(data: Dictionary[String, Variant]) -> Pokemon:
+	var attributes: Dictionary[String, Variant] = data.duplicate()
+	attributes.erase("species_id")
+	attributes.erase("form")
+
+	var buffer: Dictionary[String, Variant] = {}
+	buffer.assign(data.status)
+	attributes.status = PokemonStatus.from_save_data(buffer)
+	buffer.assign(data.held_item)
+	attributes.held_item = Item.from_save_data(buffer)
+
+	# Add moves
+	attributes.moves = []
+	for move: Dictionary[String, Variant] in data.moves:
+		attributes.moves.append(PokemonMove.from_save_data(move))
+
+	# Fused pokemon
+	if data.fused_pokemon:
+		attributes.fused_pokemon = Pokemon.from_save_data(data.fused_pokemon)
+
+	return Pokemon.new(data.species_id, data.form, attributes)
+
+
+
 ## Generate a random pokemon. [param fixed_attributes] is a dictionary of attributes you don't want to be randomly generated, rather be set to the value held in the dictionary.
 static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary[String, Variant] = {}) -> Pokemon:
 
@@ -303,7 +385,7 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 
 	if not fixed_attributes.has("nature"):
 		fixed_attributes["nature"] = Globals.natures.keys().pick_random()
-	
+
 	# https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess
 	if not fixed_attributes.has("shiny") or not fixed_attributes.has("super_shiny"):
 		# TODO: Account for modifiers like the Masuda method

@@ -27,7 +27,7 @@ func _iter_get(_arg) -> Pokemon:
 	return _team[_iterator]
 
 
-## Returns the internal array of the team holding the pokemon data. 
+## Returns the internal array of the team holding the pokemon data.
 ## Basically meant only to be used for methods like [method Array.filter] and [method Array.map]. [br][br]
 ## [b]NOTE[/b]: Be careful, as this returns not a copy of the internal array, but a direct reference to it.
 ## Modifying it means modifying the team.
@@ -74,7 +74,7 @@ func remove_slot(pokemon_slot: int) -> bool:
 	return true
 
 
-## Adds [param pokemon] to the team and returns [code]true[/code]. If there's no room, will return [code]false[/code]. 
+## Adds [param pokemon] to the team and returns [code]true[/code]. If there's no room, will return [code]false[/code].
 func add_pokemon(pokemon: Pokemon) -> bool:
 	if size() < 6:
 		_team.append(pokemon)
@@ -83,7 +83,7 @@ func add_pokemon(pokemon: Pokemon) -> bool:
 	return false
 
 
-## Removes [param pokemon] from the team and returns [code]true[/code]. If not found, will return [code]false[/code]. 
+## Removes [param pokemon] from the team and returns [code]true[/code]. If not found, will return [code]false[/code].
 func remove_pokemon(pokemon: Pokemon) -> bool:
 	if _team.has(pokemon):
 		_team.erase(pokemon)
@@ -120,7 +120,7 @@ func first_healthy() -> Pokemon:
 			return pokemon
 	return
 
-## Returns the second healthy pokemon in the party, that being a pokemon with more than 0 hp. Returns [code]null[/code] if there's none. 
+## Returns the second healthy pokemon in the party, that being a pokemon with more than 0 hp. Returns [code]null[/code] if there's none.
 ## Used mainly to set up double battles.
 func second_healthy() -> Pokemon:
 	var first: bool = true
@@ -137,3 +137,21 @@ func second_healthy() -> Pokemon:
 func heal() -> void:
 	for pokemon: Pokemon in _team:
 		pokemon.heal()
+
+
+
+func as_save_data() -> Array[Dictionary]:
+	var data: Array[Dictionary] = []
+
+	for pokemon: Pokemon in _team:
+		data.append(pokemon.as_save_data())
+
+	return data
+
+
+static func from_save_data(data: Array[Dictionary]) -> PokemonTeam:
+	var list: Array[Pokemon] = []
+	for pokemon: Dictionary[String, Variant] in data:
+		list.append(Pokemon.from_save_data(pokemon))
+
+	return PokemonTeam.new(list)

@@ -29,7 +29,7 @@ const SECONDS_PER_CHARACTER: Dictionary[Speeds, float] = {
 ## [b]NOTE[/b]: It won't throw an error and stop the game execution, it will just push an error with [method @GlobalScope.push_error].
 @export var starting_sequence: DialogueSequence
 ## Whether the dialogue box should be hidden when the dialogue ends.[br][br]
-## [b]Warning:[/b] this node doesn't handle hiding the dialogue box. It should be handled by the script running 
+## [b]Warning:[/b] this node doesn't handle hiding the dialogue box. It should be handled by the script running
 ## the dialogue. This is only useful to tell the running script whether to do it or not.
 @export var hide_box: bool = true
 @export var disable_movement: bool = true ## Disables player movement while the dialogue is running.
@@ -72,7 +72,7 @@ func start() -> void:
 		push_error("No starting sequence selected for ", name)
 		return
 	label.text = ""
-	if Globals.player.is_moving and Globals.player.is_processing():
+	if Globals.player and Globals.player.is_moving and Globals.player.is_processing():
 		await Globals.player.stopped_moving
 	if disable_movement:
 		Globals.movement_enabled = false

@@ -23,7 +23,7 @@ const ICON_FEMALE: Texture2D = preload("res://assets/graphics/ui/gender_female_i
 @export var super_shiny: CheckButton
 @export var level: SpinBox
 @export var experience: SpinBox
-@export var nature: OptionButton 
+@export var nature: OptionButton
 @export var moves: Control
 @export var moves_at_level: BaseButton
 @export var heal: BaseButton
@@ -36,12 +36,12 @@ var ivs: Dictionary[String, Range] = {}
 var valid_moves: Array[String]
 
 func _ready() -> void:
-	
+
 	close.pressed.connect(closed.emit)
-	
+
 	for species_name: String in DB.pokemon.keys():
 		species.add_item(species_name.capitalize())
-	
+
 	for key: String in Globals.natures:
 		var item_name: String = key.capitalize()
 		var up: String = ""
@@ -57,9 +57,9 @@ func _ready() -> void:
 		nature.add_item(
 			"%s (%s, %s)" % [item_name, up, down]
 		)
-	
+
 	nickname.grab_focus.call_deferred()
-	
+
 	species.item_selected.connect(species_edit)
 	forms.item_selected.connect(form_edit)
 	nickname.text_submitted.connect(name_edit)
@@ -117,7 +117,7 @@ func _sync_moves(change_options: bool = true) -> void:
 			options.selected = -1
 		else:
 			options.selected = valid_moves.find(pokemon.moves[i].id)
-		
+
 
 
 func _sync_pokemon(sync_moves_options: bool = false) -> void:
@@ -129,7 +129,7 @@ func _sync_pokemon(sync_moves_options: bool = false) -> void:
 		gender.icon = null
 	else:
 		gender.icon = ICON_FEMALE if pokemon.gender == Pokemon.Genders.FEMALE else ICON_MALE
-		
+
 	shiny.button_pressed = pokemon.shiny
 	super_shiny.button_pressed = pokemon.super_shiny
 
@@ -143,7 +143,7 @@ func _sync_pokemon(sync_moves_options: bool = false) -> void:
 	nature.selected = Globals.natures.keys().find(pokemon.nature)
 
 	_sync_moves(sync_moves_options)
-	
+
 	for stat: String in Globals.STATS.values():
 		stat_labels[stat].text = str(pokemon.stats[stat])
 		evs[stat].set_value_no_signal(pokemon.evs[stat])
@@ -155,7 +155,7 @@ func _set_new_species(new_species: PokemonSpecies) -> void:
 	pokemon.species = new_species
 	pokemon.set_sprites()
 	pokemon.calculate_stats()
-	
+
 	_sync_pokemon(true)
 
 
@@ -221,20 +221,20 @@ func gender_edit() -> void:
 
 func move_edit(index: int, slot: int) -> void:
 	var id: String = valid_moves[index]
-	var learnt_already: int = pokemon.moves.map(func(move: PokemonMove): return move.id).find(id)
+	var learnt_already: int = pokemon.moves.map(func(learnt_move: PokemonMove): return learnt_move.id).find(id)
 	if learnt_already != -1:
 		var options: OptionButton = moves.get_child(slot).get_node("Move")
 		options.selected = valid_moves.find(pokemon.moves[learnt_already])
 		return
 	var move: PokemonMove = PokemonMove.new(id)
-	
+
 	if slot >= pokemon.moves.size():
 		pokemon.moves.append(move)
 	else:
 		pokemon.moves[slot] = move
-	
+
 	_sync_moves(false)
-	
+
 
 
 func clear_move(slot: int) -> void:
@@ -245,12 +245,12 @@ func clear_move(slot: int) -> void:
 	_sync_moves(false)
 
 
-func stat_value_edit(new_value: int, stat: String, ivs: bool) -> void:
-	if ivs:
+func stat_value_edit(new_value: int, stat: String, is_ivs: bool) -> void:
+	if is_ivs:
 		pokemon.ivs[stat] = new_value
 	else:
 		pokemon.evs[stat] = new_value
-	
+
 	pokemon.calculate_stats()
 	_sync_pokemon()
 

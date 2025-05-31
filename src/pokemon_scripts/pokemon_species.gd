@@ -3,7 +3,7 @@ class_name PokemonSpecies extends Resource
 
 ## Pokegodot's PokemonSpecies class
 ##
-## Pokegodot's PokemonSpecies class. It defines a Pokemon species and all it's properties. Those aren't meant to change at runtime. 
+## Pokegodot's PokemonSpecies class. It defines a Pokemon species and all it's properties. Those aren't meant to change at runtime.
 ## The data is taken from [member DB.pokemon], therefore [code]pokemon.json[/code].
 ## Not to be confused with [Pokemon].
 
@@ -61,7 +61,7 @@ var egg_cycles: int = 1 ## The egg cycles needed for this species to hatch. 1 eg
 ## }
 ## [/codeblock]
 ## Offsprings have an equal chance to be picked, but offsprings requiring an item have priority over those who don't.
-## For example, if a species has 3 offsprings, and one of them requires an incense, 
+## For example, if a species has 3 offsprings, and one of them requires an incense,
 ## if the pokemon has the incense the only possible offspring will be the one requiring the incense,
 ## otherwise it will be a 50/50 between one of the other two offsprings.
 var offspring: Array[Dictionary] = []
@@ -86,10 +86,27 @@ var info: Dictionary[String, Variant] = {
 }
 ## Flags useful for various things, such as fateful encounters.
 var flags: Array[String] = []
-## List of wild items. Those are dictionaries with the [code]id[/code] key, holding the id of the item, and the [code]weight[/code] key, used in the weigthed random function to spawn it.
+## List of wild items. Those are dictionaries with the [code]id[/code] key,
+## holding the id of the item, and the [code]weight[/code] key,
+## used in the weigthed random function to spawn it.
 var items: Array[Dictionary] = []
 var evolutions: Array[Dictionary] = [] # TODO: Implement
-# TODO: Implement form properties
+# Form properties
+## The ID of the item needed for this pokemon to mega evolve. Currently unused.
+var mega_stone: String = ""
+## The ID of the move needed for this pokemon to mega evolve. Currently unused.
+var mega_move: String = ""
+## The message shown when this pokemon mega evolves. Currently unused.
+var mega_message: String = "{pokemon}'s {mega_stone} is reacting to {player}'s Mega Ring!"
+## The form this pokemon goes back to when mega evolution ends. Currently unused.
+var unmega_form: int = 0
+## If [code]pokedex_form[/code] is different from 0, this pokemon species is invisible in the pokedex and
+## the form corresponding to [code]pokedex_form[/code] will be shown instead. [br][br]
+## Used in instances such as Zygarde, who has two complete forms to remember if it turned complete from the
+## 10% form or the 50% form. The second complete form just points to the first one in the pokedex by having
+## [code]pokedex_form[/code] set to the first complete form.
+var pokedex_form: int = 0
+
 
 # Sprites
 var sprite_front_n_m: Texture ## Front normal male sprite.
@@ -142,7 +159,7 @@ func _init(_id: String, _form_number: int = 0) -> void:
 			for key: String in form:
 				data[key] = form[key]
 			break
-	
+
 	# Typed arrays and dictionaries
 	types.assign(data.get("types", types))
 	data.erase("types")
@@ -205,14 +222,14 @@ func _set_sprites() -> void:
 	sprite_back_s_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
 	if not sprite_back_s_f:
 		sprite_back_s_f = sprite_back_s_m
-	
+
 	sprite_icon_n = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
 	if not sprite_icon_n:
 		sprite_icon_n = DB.default_icon_sprite
 	sprite_icon_s = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
 	if not sprite_icon_s:
 		sprite_icon_s = sprite_icon_n
-	
+
 	sprite_footprint = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")
 
 

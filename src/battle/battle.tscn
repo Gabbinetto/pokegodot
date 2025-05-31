@@ -642,7 +642,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_top = 288.0
 offset_right = 512.0
-offset_bottom = 384.0
+offset_bottom = 382.0
 script = ExtResource("23_bu0ik")
 box = NodePath("BattleDialogueBox")
 label = NodePath("BattleDialogueBox/BattleDialogueLabel")
@@ -651,9 +651,10 @@ metadata/_edit_group_ = true
 
 [node name="BattleDialogueBox" type="NinePatchRect" parent="Over/BattleDialogue"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.0425532
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 1.02128
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -665,6 +666,7 @@ patch_margin_right = 22
 patch_margin_bottom = 16
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BattleDialogueLabel" type="RichTextLabel" parent="Over/BattleDialogue/BattleDialogueBox"]
 layout_mode = 1
@@ -686,7 +688,6 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_18qcr")
 bbcode_enabled = true
 scroll_active = false
-autowrap_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="BattleDialogue" type="Node" parent="Over/BattleDialogue" node_paths=PackedStringArray("starting_sequence", "label")]

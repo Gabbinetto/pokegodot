@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bgtviaivfmvlf"]
+[gd_scene load_steps=25 format=3 uid="uid://bgtviaivfmvlf"]
 
 [ext_resource type="Texture2D" uid="uid://cj6k8q8g0h6jk" path="res://assets/graphics/ui/party/panel_textures/panel_rect.png" id="1_xaxhu"]
 [ext_resource type="Texture2D" uid="uid://ddfphohcxodr3" path="res://assets/graphics/ui/party/panel_textures/panel_rect_sel.png" id="2_vbe4v"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dfu3h0lpjvpw" path="res://assets/resources/hp_bar_textures/hp_bar_party_low.tres" id="11_kxard"]
 [ext_resource type="Texture2D" uid="uid://chobtoegltse2" path="res://assets/graphics/ui/party/lv_icon.png" id="12_7ji4v"]
 [ext_resource type="FontVariation" uid="uid://8n7fipmjxjqh" path="res://assets/fonts/ds_font_small.tres" id="13_3gdyj"]
+[ext_resource type="Script" uid="uid://64byk01xnafy" path="res://src/ui/misc/pokemon_icon_texture_rect.gd" id="20_5xnbw"]
 [ext_resource type="Texture2D" uid="uid://mkub0gqka6s1" path="res://assets/graphics/ui/party/icon_item.png" id="21_5xnbw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_v3b2l"]
@@ -36,7 +37,7 @@ shadow_size = 4
 shadow_color = Color(0.156863, 0.156863, 0.156863, 1)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fxyfn"]
-size = Vector2(128, 64)
+size = Vector2(64, 64)
 
 [node name="PartyPanel" type="TextureButton" node_paths=PackedStringArray("pokemon_name", "level", "hp_bar", "health_text", "gender_icon", "pokemon_icon", "pokeball_icon", "item_icon")]
 offset_right = 256.0
@@ -170,10 +171,22 @@ text = "100 "
 label_settings = SubResource("LabelSettings_pfb4m")
 vertical_alignment = 2
 
-[node name="PokemonIcon" type="Sprite2D" parent="."]
-position = Vector2(60, 30)
+[node name="PokemonIcon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.234
+anchor_top = 0.633
+anchor_right = 0.234
+anchor_bottom = 0.633
+offset_left = -31.904
+offset_top = -64.034
+offset_right = 32.096
+offset_bottom = -0.0340004
+grow_horizontal = 2
+grow_vertical = 0
 texture = SubResource("PlaceholderTexture2D_fxyfn")
-hframes = 2
+script = ExtResource("20_5xnbw")
+metadata/_custom_type_script = "uid://64byk01xnafy"
 
 [node name="ItemIcon" type="TextureRect" parent="."]
 layout_mode = 1

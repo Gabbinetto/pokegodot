@@ -6,3 +6,5 @@ extends Node
 
 signal battle_step(battle: Battle, step: Battle.BattleSteps, data: Dictionary[String, Variant])
 signal battle_ended(battle: Battle)
+
+signal pokemon_level_up(pokemon: Pokemon)

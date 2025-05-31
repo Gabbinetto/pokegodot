@@ -75,10 +75,10 @@ func get_stat(stat: String) -> int:
 ## If the [param stat] is already at its max/min, returns [code]false[/code], else [code]true[/code]. [br][br]
 ## [b]NOTE[/b]: Does not play animations, only meant to be used in [method add_boosts].
 func add_boost(stat: String, amount: int) -> bool:
-	var max: int = Globals.MAX_OTHER_BOOST if Globals.OTHER_STATS.values().has(stat) else Globals.MAX_BOOST
-	if boosts[stat] >= max or boosts[stat] <= -max:
+	var max_boost: int = Globals.MAX_OTHER_BOOST if Globals.OTHER_STATS.values().has(stat) else Globals.MAX_BOOST
+	if boosts[stat] >= max_boost or boosts[stat] <= -max_boost:
 		return false
-	boosts[stat] = clampi(boosts[stat] + amount, -max, max)
+	boosts[stat] = clampi(boosts[stat] + amount, -max_boost, max_boost)
 	return true
 
 

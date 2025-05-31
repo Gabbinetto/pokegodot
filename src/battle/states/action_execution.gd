@@ -24,23 +24,23 @@ func _process_turn() -> void:
 		if not battle.is_buffering:
 			transition.emit(self, "BattleFinish")
 		return
-	
+
 	_check_switch()
 	if switching:
 		return
-	
+
 	battle.refresh_turn_order(acted)
 	if battle.turn_order.is_empty():
 		if not battle.is_buffering:
 			transition.emit(self, "ActionSelection")
 		return
-	
+
 	current_pokemon = battle.pokemons[battle.turn_order.pop_front()]
 	var action: Battle.TurnAction = battle.turn_selections.get(battle.pokemons.find(current_pokemon))
 	acted.append(battle.pokemons.find(current_pokemon))
 	if not action:
 		return
-	
+
 	match action.type:
 		Battle.Actions.FIGHT:
 			var targets: Array[BattlePokemon]
@@ -82,7 +82,7 @@ func _process_turn() -> void:
 				battle.show_text("Failed to run away!")
 				await battle.last_buffer_ran
 				_process_turn()
-	
+
 
 
 func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move: PokemonMove) -> void:
@@ -103,19 +103,19 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 			post_animation_texts.append("It's not very effective on %s." % damage.target.name)
 		elif damage.type_multiplier > 1 and damage.move.category != PokemonMove.Categories.STATUS:
 			post_animation_texts.append("It's supereffective on %s." % damage.target.name)
-		
+
 		if not damage.miss:
 			move_animation_sprites.append(battle.sprites[i])
 		if damage.value() > 0:
 			hurt_flash_sprites.append(battle.sprites[i])
-		
+
 	battle.show_text("%s used %s!" % [current_pokemon.name, move.name])
 	await battle.last_buffer_ran
-	
+
 	# Show immune texts
 	for text: String in pre_animation_texts:
-		battle.show_text(text) 
-	
+		battle.show_text(text)
+
 	if not move_animation_sprites.is_empty():
 		var move_animation: BattleAnimation = BattleAnimation.get_animation(
 			"moves/" + move.id, move_animation_sprites, self
@@ -127,58 +127,56 @@ func _start_damage_animation(damage_list: Array[Battle.DamageCalculation], move:
 		if move_animation:
 			battle.add_buffer(Battle.BufferType.ANIMATION, move_animation)
 			await battle.last_buffer_ran
-		
+
 	if not hurt_flash_sprites.is_empty():
 		var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", hurt_flash_sprites, self)
 		battle.add_buffer(Battle.BufferType.ANIMATION, hurt_flash)
-	
-	var damage_values: Array[int]
-	for damage: Battle.DamageCalculation in damage_list:
+
+	# Apply the damage
+	for i: int in damage_list.size():
+		var damage: Battle.DamageCalculation = damage_list[i]
 		if damage:
-			damage_values.append(damage.value())
-		else:
-			damage_values.append(-1)
-	_apply_damage(damage_values)
-	
+			var target: BattlePokemon = battle.pokemons[i]
+			target.hp -= damage.value()
+			# Add exp
+			if target.hp <= 0:
+				var pokemon_side: Array[BattlePokemon] = battle.ally_pokemon if battle.enemy_pokemon.has(target) else battle.enemy_pokemon
+
+				for pokemon: BattlePokemon in pokemon_side:
+					if not pokemon or not pokemon.trainer.is_player:
+						continue
+					var exp_yield: int = Experience.exp_yield(
+						target.species.base_exp,
+						pokemon.level,
+						target.level,
+						true,
+						[],
+					)
+					pokemon.pokemon.experience += exp_yield
+
 	# Databoxes
-	if damage_list[2]:
-		if battle.double_battle:
-			pass
-		else:
-			battle.animate_databox(battle.databox_enemy_single)
-	if damage_list[3]:
-		pass
-	if damage_list[0]:
-		if battle.double_battle:
-			pass
-		else:
-			battle.animate_databox(battle.databox_ally_single)
-	if damage_list[1]:
-		pass
-	
+	battle.animate_databox(battle.databox_enemy_single)
+	battle.animate_databox(battle.databox_ally_single)
+
 	# Show effectiveness texts
 	for text: String in post_animation_texts:
 		battle.show_text(text)
 	await battle.last_buffer_ran
 
 
-func _apply_damage(damage_list: Array[int]) -> void:
-	for i: int in damage_list.size():
-		if damage_list[i] != -1:
-			battle.pokemons[i].hp -= damage_list[i]
 
 
 func _check_switch() -> bool:
 	var switch_to: Array = []
-	
+
 	if battle.ally_pokemon[0].hp <= 0:
 		await _prompt_switch(battle.get_slot(battle.ally_pokemon[0]), switch_to)
 	if battle.ally_pokemon[1] and battle.ally_pokemon[1].hp <= 0 and battle.ally_pokemon[1].trainer.is_player:
 		await _prompt_switch(battle.get_slot(battle.ally_pokemon[1]), switch_to)
-	
+
 	if switch_to.is_empty(): return false
 	battle.show_commands(battle.base_commands)
-	
+
 	for i: int in switch_to.size():
 		if battle.ally_pokemon[i]:
 			battle.switch(
@@ -194,7 +192,7 @@ func _prompt_switch(slot: int, switch_to: Array) -> void:
 	switching = true
 	battle.show_commands(null)
 	battle.turn_selections.erase(slot)
-		
+
 	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": false})
 	party.pokemon_selected.connect(
 		func(pokemon: Pokemon):

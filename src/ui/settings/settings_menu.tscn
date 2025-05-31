@@ -53,6 +53,7 @@ layout_mode = 2
 follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
+scroll_deadzone = 10
 
 [node name="Entries" type="VBoxContainer" parent="PanelContainer/ScrollContainer"]
 layout_mode = 2
@@ -104,6 +105,8 @@ to a Pokémon when you obtain it."
 
 [node name="BoxFrame" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("3_unrsy")]
 layout_mode = 2
+starting_value = 1.0
+min_value = 1.0
 prefix = "Type "
 text = "Box frame"
 description = "Choose the appearance of

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dg8ujnrh80qfn"]
+[gd_scene load_steps=10 format=3 uid="uid://dg8ujnrh80qfn"]
 
 [ext_resource type="Script" uid="uid://dy1ompv6ha3rs" path="res://src/ui/hud/hud.gd" id="1_076te"]
 [ext_resource type="StyleBox" uid="uid://bjysv1qtmyml8" path="res://assets/resources/ui/box_full_texture.tres" id="1_jobw0"]
@@ -6,8 +6,11 @@
 [ext_resource type="Theme" uid="uid://d1mfc61pyhic0" path="res://assets/resources/ui/menu_list.tres" id="2_udh2q"]
 [ext_resource type="AudioStream" uid="uid://cq4jmfichqjh5" path="res://assets/audio/sfx/GUI sel cursor.ogg" id="5_cio14"]
 [ext_resource type="Script" uid="uid://dni7erlf70lfg" path="res://src/audio/control_focus_sound.gd" id="6_4dm8p"]
+[ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="7_qtkbr"]
+[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="8_raafm"]
+[ext_resource type="Script" uid="uid://c2p1q2x2alki" path="res://src/dialogue/dialogue_choice_sequence.gd" id="9_4u0hr"]
 
-[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_settings", "button_debug", "button_quit")]
+[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_save", "button_settings", "button_debug", "button_quit", "save_dialogue", "save_choice")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,9 +22,12 @@ script = ExtResource("1_076te")
 menu = NodePath("Menu")
 buttons_container = NodePath("Menu/VBoxContainer")
 button_party = NodePath("Menu/VBoxContainer/Pokemon")
+button_save = NodePath("Menu/VBoxContainer/Save")
 button_settings = NodePath("Menu/VBoxContainer/Options")
 button_debug = NodePath("Menu/VBoxContainer/Debug")
 button_quit = NodePath("Menu/VBoxContainer/Quit")
+save_dialogue = NodePath("Menu/VBoxContainer/Save/DialogueManager")
+save_choice = NodePath("Menu/VBoxContainer/Save/DialogueManager/DialogueChoiceSequence")
 metadata/_edit_lock_ = true
 
 [node name="Menu" type="PanelContainer" parent="."]
@@ -86,6 +92,22 @@ text = "Save"
 stream = ExtResource("5_cio14")
 script = ExtResource("6_4dm8p")
 metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
+[node name="DialogueManager" type="Node" parent="Menu/VBoxContainer/Save" node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("7_qtkbr")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="Menu/VBoxContainer/Save/DialogueManager" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("8_raafm")
+text = "Do you want to save?"
+next_sequence = NodePath("../DialogueChoiceSequence")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueChoiceSequence" type="Node" parent="Menu/VBoxContainer/Save/DialogueManager"]
+script = ExtResource("9_4u0hr")
+choices = Array[String](["Yes", "No"])
+metadata/_custom_type_script = "uid://c2p1q2x2alki"
 
 [node name="Options" parent="Menu/VBoxContainer" instance=ExtResource("2_cvkdw")]
 layout_mode = 2

@@ -23,7 +23,7 @@ func _ready() -> void:
 	for node: Control in entries.get_children():
 		if node is SettingsMenuEntry:
 			node.focus_entered.connect(description.set_text.bind(node.description))
-	
+
 	# TODO: Add music and sfx volume sliders
 	text_speed.value_changed.connect(_set_setting.bind("text_speed", text_speed.get_value))
 	battle_effects.value_changed.connect(_set_setting.bind("battle_effects", func(): return battle_effects.get_value() == 0))
@@ -31,10 +31,10 @@ func _ready() -> void:
 	default_run.value_changed.connect(_set_setting.bind("default_run", func(): return default_run.get_value() > 0))
 	automatic_box.value_changed.connect(_set_setting.bind("automatic_box", func(): return default_run.get_value() > 0))
 	give_nickname.value_changed.connect(_set_setting.bind("give_nickname", func(): return default_run.get_value() == 0))
-	box_frame.value_changed.connect(_set_setting.bind("box_frame", func(): return box_frame.get_value()))
+	box_frame.value_changed.connect(_set_setting.bind("box_frame", func(): return box_frame.get_value() - 1))
 	window_size.value_changed.connect(_window_size_changed)
 	close.value_changed.connect(_close)
-	
+
 	_sync()
 	entries.get_child(0).grab_focus.call_deferred()
 
@@ -57,7 +57,7 @@ func _sync() -> void:
 	automatic_box.set_value(int(Settings.automatic_box))
 	give_nickname.set_value(int(not Settings.give_nicknames))
 	box_frame.set_value(Settings.box_frame)
-	box_frame.max = Settings.box_frame_count
+	box_frame.max_value = Settings.box_frame_count
 
 	# Window size
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
@@ -66,7 +66,7 @@ func _sync() -> void:
 		window_size.set_value(Settings.SCREEN_SIZES.find_key(DisplayServer.window_get_size()))
 	else:
 		window_size.set_value(0)
-		
+
 
 
 func _set_setting(setting: String, value_function: Callable) -> void:

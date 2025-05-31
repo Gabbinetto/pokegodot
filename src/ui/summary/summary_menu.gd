@@ -84,22 +84,22 @@ func _ready() -> void:
 		screen_buttons[i].set_meta("normal", screen_buttons[i].texture_normal)
 		screen_buttons[i].set_meta("pressed", screen_buttons_pressed[i])
 		screen_buttons[i].focus_entered.connect(set.bind("current_screen_index", i))
-	
+
 	close_button.pressed.connect(closed.emit)
-	
+
 	for button: SummaryMoveButton in moves_buttons:
 		button.disabled = not can_switch_moves
 		button.pressed.connect(_on_move_button_pressed.bind(button))
 		button.focus_entered.connect(_on_move_button_focused.bind(button))
 		button.focus_exited.connect(_on_move_button_unfocused.call_deferred)
 
-		
+
 	moves_screen_button.pressed.connect(_on_move_screen_button_pressed)
 	moves_screen_button.focus_entered.connect(_reset_move_buttons_state)
-	
+
 	_refresh_pokemon()
 	_refresh_screen()
-	
+
 	if TransitionManager.transition:
 		TransitionManager.play_out()
 		await TransitionManager.finished
@@ -147,7 +147,7 @@ func _refresh_screen() -> void:
 func _refresh_pokemon() -> void:
 	if not current_pokemon:
 		return
-	
+
 	#region General
 	pokemon_name.text = current_pokemon.name
 	pokemon_level.text = str(current_pokemon.level)
@@ -184,16 +184,16 @@ func _refresh_pokemon() -> void:
 		info_exp_bar.value = 0
 	# TODO: Add pokeball and item icons
 	#endregion
-	
+
 	#region Trainer memo
 	memo_nature.text = current_pokemon.nature.capitalize()
-	var datetime: Dictionary = Time.get_datetime_dict_from_unix_time(current_pokemon.obtained_time)
+	var datetime: Dictionary = Time.get_datetime_dict_from_unix_time(int(current_pokemon.obtained_time))
 	memo_date_obtained.text = "%d %s, %d" % [datetime.day, Globals.MONTH_NAMES[datetime.month], datetime.year]
 	memo_met_place.text = "Placeholder" # TODO: Add map names
 	memo_met_level.text = "Met at Lv. %d" % current_pokemon.obtained_level
 	memo_personality.text = "Lorem ipsum dolor sit amet." # TODO: Add personality characteristics
 	#endregion
-	
+
 	#region Skills
 	skills_hp.text = "%d/%d" % [current_pokemon.hp, current_pokemon.max_hp]
 	skills_hp_bar.max_value = current_pokemon.max_hp
@@ -211,7 +211,7 @@ func _refresh_pokemon() -> void:
 	skills_ability.text = "Placeholder"
 	skills_ability_description.text = "Lorem ipsum dolor sit amet."
 	#endregion
-	
+
 	#region Moves
 	for i: int in moves_buttons.size():
 		if i < current_pokemon.moves.size():
@@ -258,15 +258,15 @@ func _on_move_button_unfocused() -> void:
 
 func _on_move_button_focused(button: SummaryMoveButton) -> void:
 	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_CURSOR)
-	
+
 	last_move_button = button
-	
+
 	moves_category.texture = PokemonMove.CATEGORY_ICONS[button.move.category]
 	moves_power.text = str(button.move.power) if button.move.power > 0 else "---"
 	moves_accuracy.text = (str(button.move.accuracy) + "%") if button.move.accuracy > 0 else "---"
 	moves_description.text = button.move.description
 	moves_detail_panel.show()
-	
+
 	moves_description_start_timer.start()
 	moves_description_stop_timer.stop()
 	moves_description_scroll.scroll_vertical = 0
@@ -286,7 +286,7 @@ func _reset_move_buttons_state() -> void:
 func _swap_moves(from: int, to: int) -> void:
 	var tmp: PokemonMove = current_pokemon.moves[from]
 	current_pokemon.moves[from] = current_pokemon.moves[to]
-	current_pokemon.moves[to] = tmp 
+	current_pokemon.moves[to] = tmp
 
 
 func _input(event: InputEvent) -> void:

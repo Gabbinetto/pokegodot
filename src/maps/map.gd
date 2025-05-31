@@ -12,7 +12,7 @@ signal map_exited(map: Map)
 
 func _ready() -> void:
 	name = id
-	
+
 	area.body_entered.connect(
 		func(body: Node2D):
 			if body == Globals.player:

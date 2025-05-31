@@ -38,7 +38,7 @@ func run_dialogue(manager: DialogueManager) -> void:
 	manager.label = label
 	manager.choices = choice_container
 	manager.start()
-	
+
 	manager.finished.connect(_on_manager_ran, CONNECT_ONE_SHOT)
 
 
@@ -62,3 +62,11 @@ func _on_box_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.pressed:
 			running.input()
+
+
+static func format_dialogue(dialogue: String) -> String:
+	var mapping: Dictionary[String, Variant] = {
+		"pn": PlayerData.player_name,
+	}
+
+	return dialogue.format(mapping)

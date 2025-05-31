@@ -9,7 +9,7 @@ var tile_size: int:
 	get: return RED_CROSS.get_width()
 
 func _run() -> void:
-	main_screen = get_editor_interface().get_editor_main_screen()
+	main_screen = EditorInterface.get_editor_main_screen()
 	file_dialog = EditorFileDialog.new()
 	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILES
 	file_dialog.access = EditorFileDialog.ACCESS_FILESYSTEM

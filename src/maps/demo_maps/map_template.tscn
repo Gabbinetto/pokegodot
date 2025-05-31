@@ -91,7 +91,6 @@ func _run() -> void:
 	
 	$DialogueManager/DialogueChoiceSequence.choice_taken.connect(
 		func(choice: int):
-			print(MainDialogue.choice_container.get_children())
 			var starters: Array[String] = [\"BULBASAUR\", \"CHARMANDER\", \"SQUIRTLE\"]
 			PlayerData.team.add_pokemon(
 				Pokemon.generate(starters[choice], 0, {\"level\": 5})

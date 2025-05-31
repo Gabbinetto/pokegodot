@@ -5,9 +5,12 @@ extends Control
 @export var buttons_container: Control
 @export_group("Buttons", "button_")
 @export var button_party: BaseButton
+@export var button_save: BaseButton
 @export var button_settings: BaseButton
 @export var button_debug: BaseButton
 @export var button_quit: BaseButton
+@export var save_dialogue: DialogueManager
+@export var save_choice: DialogueChoiceSequence
 
 var last_menu_option: Control
 var submenu_open: bool = false
@@ -15,15 +18,22 @@ var submenu_open: bool = false
 func _ready() -> void:
 	for node: Control in buttons_container.get_children():
 		node.focus_entered.connect(set.bind("last_menu_option", node))
-	
+
 	button_party.pressed.connect(_open_party)
+	button_save.pressed.connect(_save)
 	button_settings.pressed.connect(_open_settings)
 	button_debug.pressed.connect(_open_debug)
 	button_quit.pressed.connect(_quit)
 
 
 func _can_open() -> bool:
-	return not Globals.in_battle and not submenu_open and not MainDialogue.running and not TransitionManager.transition
+	return (
+		not Globals.in_battle and
+		not submenu_open and
+		not MainDialogue.running and
+		not TransitionManager.transition and
+		is_instance_valid(Globals.player)
+	)
 
 
 func _input(event: InputEvent) -> void:
@@ -41,9 +51,9 @@ func _open_party() -> void:
 	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
-	
+
 	menu.hide()
-	
+
 	submenu_open = true
 	var party_menu: PartyMenu = PartyMenu.create()
 	add_child(party_menu)
@@ -57,11 +67,11 @@ func _open_party() -> void:
 			await party_menu.tree_exited
 			menu.show()
 			submenu_open = false
-			
+
 			TransitionManager.play_out()
 			await TransitionManager.finished
 			TransitionManager.layer -= 1
-			
+
 			button_party.grab_focus.call_deferred()
 	)
 
@@ -71,9 +81,9 @@ func _open_settings() -> void:
 	menu.hide()
 	submenu_open = true
 	var settings: SettingsMenu = SettingsMenu.create()
-	
+
 	add_child(settings)
-	
+
 	settings.closed.connect(
 		func():
 			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
@@ -89,9 +99,9 @@ func _open_debug() -> void:
 	menu.hide()
 	submenu_open = true
 	var debug: DebugMenu = DebugMenu.create()
-	
+
 	add_child(debug)
-	
+
 	debug.closed.connect(
 		func():
 			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
@@ -112,12 +122,12 @@ func _quit() -> void:
 func open() -> void:
 	if Globals.player.is_moving:
 		await Globals.player.stopped_moving
-	
+
 	Globals.movement_enabled = false
 	Globals.event_input_enabled = false
-	
+
 	button_party.visible = PlayerData.team.size() > 0
-	
+
 	show()
 	var focus_node: Control
 	if last_menu_option:
@@ -144,3 +154,20 @@ func close() -> void:
 	Globals.event_input_enabled = true
 	hide()
 	Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
+
+
+#region Saving
+func _save() -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
+	save_choice.choice_taken.connect(_on_save_selected, CONNECT_ONE_SHOT)
+	MainDialogue.run_dialogue(save_dialogue)
+
+
+
+func _on_save_selected(choice: int) -> void:
+	if choice > 0:
+		return
+	PlayerData.save_data()
+	print("Saved!")
+
+#endregion

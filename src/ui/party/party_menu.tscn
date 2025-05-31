@@ -48,7 +48,7 @@ Button/styles/hover = SubResource("StyleBoxTexture_vk85n")
 Button/styles/normal = SubResource("StyleBoxTexture_vk85n")
 Button/styles/pressed = SubResource("StyleBoxTexture_sble2")
 
-[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_switch_in", "button_summary", "button_switch", "button_item", "button_menu_cancel")]
+[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_switch_in", "button_summary", "button_switch", "button_nickname", "button_item", "button_menu_cancel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,6 +64,7 @@ menu_buttons_container = NodePath("Menu/VBoxContainer")
 button_switch_in = NodePath("Menu/VBoxContainer/SwitchIn")
 button_summary = NodePath("Menu/VBoxContainer/Summary")
 button_switch = NodePath("Menu/VBoxContainer/Switch")
+button_nickname = NodePath("Menu/VBoxContainer/Nickname")
 button_item = NodePath("Menu/VBoxContainer/Item")
 button_menu_cancel = NodePath("Menu/VBoxContainer/Cancel")
 metadata/_edit_lock_ = true
@@ -274,6 +275,15 @@ layout_mode = 2
 text = "Switch"
 
 [node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Switch"]
+stream = ExtResource("11_71sut")
+script = ExtResource("12_x0f6l")
+metadata/_custom_type_script = "uid://dni7erlf70lfg"
+
+[node name="Nickname" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+layout_mode = 2
+text = "Nickname"
+
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Nickname"]
 stream = ExtResource("11_71sut")
 script = ExtResource("12_x0f6l")
 metadata/_custom_type_script = "uid://dni7erlf70lfg"

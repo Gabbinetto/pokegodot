@@ -13,6 +13,7 @@ signal choice_taken(index: int) ## Emitted when a choice is taken.
 ## If this isn't empty, [member next_sequence] will be set to the sequence at the taken index before emitting [signal DialogueSequence.finished].
 @export var next_sequences: Array[DialogueSequence]
 
+var last_choice: int = -1 ## The last choice taken. If no choice was taken yet this is -1.
 
 ## Start the sequence.
 func start() -> void:
@@ -24,6 +25,7 @@ func start() -> void:
 
 
 func _on_choice_taken(index: int) -> void:
+	last_choice = index
 	if next_sequences.size() > 0:
 		next_sequence = next_sequences[index]
 	manager.choices.get_parent().hide()

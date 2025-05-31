@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvjg4el48eiii"]
+
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="1_wbb36"]
+[ext_resource type="Script" uid="uid://cblqvqbjuqq0u" path="res://src/ui/text_input/text_input_button.gd" id="2_blkhw"]
+[ext_resource type="Texture2D" uid="uid://j8d56yo720g" path="res://assets/graphics/ui/text_input/cursor_1.png" id="3_tkepr"]
+
+[node name="TextInputButton" type="Label"]
+custom_minimum_size = Vector2(32, 38)
+focus_mode = 2
+mouse_filter = 1
+label_settings = ExtResource("1_wbb36")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_blkhw")
+focus_texture = ExtResource("3_tkepr")

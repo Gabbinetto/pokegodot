@@ -1,0 +1,159 @@
+[gd_scene load_steps=10 format=3 uid="uid://big45i1vk04m3"]
+
+[ext_resource type="Texture2D" uid="uid://bem3uwamkwxqm" path="res://assets/graphics/ui/main_menu/background.png" id="1_2hyyg"]
+[ext_resource type="Script" uid="uid://ckx4issdbl78o" path="res://src/ui/main_menu/main_menu.gd" id="1_hhctb"]
+[ext_resource type="PackedScene" uid="uid://dnv0evn5cl1u3" path="res://src/ui/main_menu/game_continue_button.tscn" id="3_6ut4k"]
+[ext_resource type="Texture2D" uid="uid://bcprojldoob50" path="res://assets/graphics/ui/main_menu/main_menu_button.png" id="4_vivct"]
+[ext_resource type="Texture2D" uid="uid://cl8id3lu8fult" path="res://assets/graphics/ui/main_menu/main_menu_button_focus.png" id="5_6ut4k"]
+[ext_resource type="LabelSettings" uid="uid://bsv7mfc7inrpc" path="res://assets/resources/ui/text_resources/light_gray.tres" id="6_6ut4k"]
+[ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="7_2rik1"]
+[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="8_776kc"]
+[ext_resource type="Script" uid="uid://c2p1q2x2alki" path="res://src/dialogue/dialogue_choice_sequence.gd" id="9_776kc"]
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("new_game_dialogue", "new_game_choice", "button_continue", "button_new", "button_settings", "button_quit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hhctb")
+new_game_dialogue = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame/DialogueManager")
+new_game_choice = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame/DialogueManager/DialogueChoiceSequence2")
+button_continue = NodePath("ScrollContainer/MarginContainer/VBoxContainer/GameContinueButton")
+button_new = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame")
+button_settings = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Options")
+button_quit = NodePath("ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Quit Game")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_2hyyg")
+metadata/_edit_lock_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+scroll_deadzone = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 52
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 52
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="GameContinueButton" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_6ut4k")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="NewGame" type="TextureButton" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_vivct")
+texture_pressed = ExtResource("5_6ut4k")
+texture_hover = ExtResource("4_vivct")
+texture_focused = ExtResource("5_6ut4k")
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0408163
+anchor_top = 0.26087
+anchor_right = 0.938776
+anchor_bottom = 0.782609
+text = "New Game"
+label_settings = ExtResource("6_6ut4k")
+vertical_alignment = 2
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="DialogueManager" type="Node" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame" node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("7_2rik1")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame/DialogueManager" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("8_776kc")
+text = "Do you want to start a new game?"
+next_sequence = NodePath("../DialogueChoiceSequence")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueChoiceSequence" type="Node" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame/DialogueManager" node_paths=PackedStringArray("next_sequences")]
+script = ExtResource("9_776kc")
+choices = Array[String](["Yes", "No"])
+next_sequences = [NodePath("../DialogueTextSequence2"), null]
+metadata/_custom_type_script = "uid://c2p1q2x2alki"
+
+[node name="DialogueTextSequence2" type="Node" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame/DialogueManager" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("8_776kc")
+text = "Are you sure? Saving after this will delete your current data."
+next_sequence = NodePath("../DialogueChoiceSequence2")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueChoiceSequence2" type="Node" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame/DialogueManager"]
+script = ExtResource("9_776kc")
+choices = Array[String](["Yes", "No"])
+metadata/_custom_type_script = "uid://c2p1q2x2alki"
+
+[node name="Options" type="TextureButton" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_vivct")
+texture_pressed = ExtResource("5_6ut4k")
+texture_hover = ExtResource("4_vivct")
+texture_focused = ExtResource("5_6ut4k")
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Options"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0408163
+anchor_top = 0.26087
+anchor_right = 0.938776
+anchor_bottom = 0.782609
+text = "Options"
+label_settings = ExtResource("6_6ut4k")
+vertical_alignment = 2
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Quit Game" type="TextureButton" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("4_vivct")
+texture_pressed = ExtResource("5_6ut4k")
+texture_hover = ExtResource("4_vivct")
+texture_focused = ExtResource("5_6ut4k")
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Quit Game"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0408163
+anchor_top = 0.26087
+anchor_right = 0.938776
+anchor_bottom = 0.782609
+text = "Quit Game"
+label_settings = ExtResource("6_6ut4k")
+vertical_alignment = 2
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true

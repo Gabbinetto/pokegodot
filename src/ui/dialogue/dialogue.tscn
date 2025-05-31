@@ -93,10 +93,17 @@ script = ExtResource("4_l07e8")
 choice_button = ExtResource("5_py1ry")
 
 [node name="DialogueBox" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_top = 288.0
-offset_right = 512.0
-offset_bottom = 384.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -96.0
+offset_right = 256.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_styles/panel = ExtResource("5_owvc8")
 
 [node name="Control" type="Control" parent="DialogueBox"]
@@ -123,7 +130,6 @@ bbcode_enabled = true
 text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abcdefghijklmnopqrstuvwxyz0123456789"
 scroll_active = false
-autowrap_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="DialogueArrow" type="AnimatedSprite2D" parent="DialogueBox/Control"]

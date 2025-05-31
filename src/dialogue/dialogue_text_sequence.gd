@@ -14,7 +14,7 @@ signal pause_done ## Emitted when a pause is done.
 		needs_input_on_finish = value
 		notify_property_list_changed()
 @export_range(0.0, 100.0, 0.01) var end_pause: float = 1.0
-## The moments in which the textbox pauses. Keys represent the amount of characters shown 
+## The moments in which the textbox pauses. Keys represent the amount of characters shown
 ## when the text pauses. Negative pause times mean that an input is needed.
 @export var set_pauses: Dictionary[int, float] = {}
 ## If false, the player won't be able to skip advancing text. Basically, input won't be picked,
@@ -69,7 +69,7 @@ func process(delta: float) -> void:
 func start() -> void:
 	pauses = set_pauses.duplicate()
 
-	parsed_text = text
+	parsed_text = Dialogue.format_dialogue(text)
 
 	if needs_input_on_finish:
 		pauses[-1] = -1

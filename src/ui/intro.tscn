@@ -1,0 +1,241 @@
+[gd_scene load_steps=11 format=3 uid="uid://bl8iiuqjkqvw6"]
+
+[ext_resource type="Texture2D" uid="uid://drokxqyc5r20h" path="res://assets/graphics/ui/intro/background.png" id="1_5f0kv"]
+[ext_resource type="Script" uid="uid://cvrbmfnk708it" path="res://src/ui/intro.gd" id="1_e6onn"]
+[ext_resource type="Texture2D" uid="uid://ddxwjto8a8tsi" path="res://assets/graphics/ui/intro/base.png" id="2_8q34u"]
+[ext_resource type="Texture2D" uid="uid://dcpwh27xnj6va" path="res://assets/graphics/ui/intro/intro_boy.png" id="3_s45pr"]
+[ext_resource type="Texture2D" uid="uid://beqsshcspxucp" path="res://assets/graphics/ui/intro/intro_girl.png" id="4_yuvuh"]
+[ext_resource type="Texture2D" uid="uid://npsor8p8bn42" path="res://assets/graphics/ui/intro/intro_oak.png" id="5_e6onn"]
+[ext_resource type="Texture2D" uid="uid://bfhbutlc6ns0w" path="res://assets/graphics/ui/intro/intro_pokemon.png" id="6_paodg"]
+[ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="8_ivkjx"]
+[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="9_otfpy"]
+[ext_resource type="Script" uid="uid://c2p1q2x2alki" path="res://src/dialogue/dialogue_choice_sequence.gd" id="10_otfpy"]
+
+[node name="Intro" type="Control" node_paths=PackedStringArray("base_sprite", "oak_sprite", "pokemon_sprite", "boy_sprite", "girl_sprite", "gender_choice", "name_confirm", "dialogue_first", "dialogue_second", "dialogue_third", "dialogue_fourth", "dialogue_fifth", "dialogue_sixth", "dialogue_seventh")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e6onn")
+base_sprite = NodePath("Base")
+oak_sprite = NodePath("Base/Oak")
+pokemon_sprite = NodePath("Base/Pokemon")
+boy_sprite = NodePath("Base/Boy")
+girl_sprite = NodePath("Base/Girl")
+gender_choice = NodePath("FourthSequence/DialogueChoiceSequence")
+name_confirm = NodePath("SixthSequence/DialogueChoiceSequence")
+dialogue_first = NodePath("FirstSequence")
+dialogue_second = NodePath("SecondSequence")
+dialogue_third = NodePath("ThirdSequence")
+dialogue_fourth = NodePath("FourthSequence")
+dialogue_fifth = NodePath("FifthSequence")
+dialogue_sixth = NodePath("SixthSequence")
+dialogue_seventh = NodePath("SeventhSequence")
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -472.0
+offset_bottom = -344.0
+texture = ExtResource("1_5f0kv")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Base" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.351562
+anchor_top = 0.744792
+anchor_right = 0.960938
+anchor_bottom = 0.890625
+offset_left = -12.0
+offset_top = -52.0
+offset_right = -148.0
+offset_bottom = -60.0
+texture = ExtResource("2_8q34u")
+metadata/_edit_use_anchors_ = true
+
+[node name="Boy" type="TextureRect" parent="Base"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+anchor_left = 0.25
+anchor_top = -2.70833
+anchor_right = 0.704545
+anchor_bottom = 0.625
+texture = ExtResource("3_s45pr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Girl" type="TextureRect" parent="Base"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+anchor_left = 0.284091
+anchor_top = -2.66667
+anchor_right = 0.738636
+anchor_bottom = 0.666667
+texture = ExtResource("4_yuvuh")
+metadata/_edit_use_anchors_ = true
+
+[node name="Oak" type="TextureRect" parent="Base"]
+layout_mode = 0
+anchor_left = 0.125
+anchor_top = -2.95833
+anchor_right = 0.75
+anchor_bottom = 0.625
+texture = ExtResource("5_e6onn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Pokemon" type="TextureRect" parent="Base"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+anchor_left = 0.238636
+anchor_top = -1.0
+anchor_right = 0.693182
+anchor_bottom = 0.583333
+texture = ExtResource("6_paodg")
+metadata/_edit_use_anchors_ = true
+
+[node name="FirstSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="FirstSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "Hello! Sorry to keep you waiting!"
+next_sequence = NodePath("../DialogueTextSequence2")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence2" type="Node" parent="FirstSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "Welcome to the world of Pokémon."
+next_sequence = NodePath("../DialogueTextSequence3")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence3" type="Node" parent="FirstSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "My name is Oak."
+next_sequence = NodePath("../DialogueTextSequence4")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence4" type="Node" parent="FirstSequence"]
+script = ExtResource("9_otfpy")
+text = "People call me the Pokémon Professor."
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="SecondSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="SecondSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "This world is inhabitated by creatures we call Pokemon."
+next_sequence = NodePath("../DialogueTextSequence2")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence2" type="Node" parent="SecondSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "People and Pokémon live together by supporting each other."
+next_sequence = NodePath("../DialogueTextSequence3")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence3" type="Node" parent="SecondSequence"]
+script = ExtResource("9_otfpy")
+text = "Some people play with Pokémon, some battle with them."
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="ThirdSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="ThirdSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "But we don't know everything about them yet."
+next_sequence = NodePath("../DialogueTextSequence2")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence2" type="Node" parent="ThirdSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "There are still many mysteries to solve."
+next_sequence = NodePath("../DialogueTextSequence3")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence3" type="Node" parent="ThirdSequence"]
+script = ExtResource("9_otfpy")
+text = "That's why I study Pokémon every day."
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="FourthSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="FourthSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "Are you a boy or a girl?"
+next_sequence = NodePath("../DialogueChoiceSequence")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueChoiceSequence" type="Node" parent="FourthSequence"]
+script = ExtResource("10_otfpy")
+choices = Array[String](["Boy", "Girl"])
+metadata/_custom_type_script = "uid://c2p1q2x2alki"
+
+[node name="FifthSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="FifthSequence"]
+script = ExtResource("9_otfpy")
+text = "Now what did you say your name was?"
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="SixthSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="SixthSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "So you're {pn}?"
+next_sequence = NodePath("../DialogueChoiceSequence")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueChoiceSequence" type="Node" parent="SixthSequence"]
+script = ExtResource("10_otfpy")
+choices = Array[String](["Yes", "No"])
+metadata/_custom_type_script = "uid://c2p1q2x2alki"
+
+[node name="SeventhSequence" type="Node" parent="." node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("8_ivkjx")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="SeventhSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "{pn}, are you ready?"
+next_sequence = NodePath("../DialogueTextSequence2")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence2" type="Node" parent="SeventhSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "Your very own Pokémon story is about to unfold."
+next_sequence = NodePath("../DialogueTextSequence3")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence3" type="Node" parent="SeventhSequence" node_paths=PackedStringArray("next_sequence")]
+script = ExtResource("9_otfpy")
+text = "You'll face fun times and tough challenges."
+next_sequence = NodePath("../DialogueTextSequence4")
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DialogueTextSequence4" type="Node" parent="SeventhSequence"]
+script = ExtResource("9_otfpy")
+text = "A world of dreams and adventures with Pokémon awaits! Let's go!"
+metadata/_custom_type_script = "uid://cjypfwj7jwa"

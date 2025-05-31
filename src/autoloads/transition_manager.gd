@@ -19,15 +19,20 @@ func play_in(type: TransitionTypes, params: Dictionary[String, Variant] = {}) ->
 	if transition:
 		push_error("Wait for a transition to finish before starting a new one.")
 		return
-	set_meta("last_input_enabled", Globals.player.input_enabled)
-	set_meta("last_event_input_enabled", Globals.event_input_enabled)
-	Globals.player.input_enabled = false
-	Globals.player.input_direction = Vector2.ZERO
-	Globals.event_input_enabled = false
+
+	if Globals.player:
+		set_meta("last_input_enabled", Globals.player.input_enabled)
+		set_meta("last_event_input_enabled", Globals.event_input_enabled)
+
+		Globals.player.input_enabled = false
+		Globals.player.input_direction = Vector2.ZERO
+		Globals.event_input_enabled = false
+
 	var path: String = PATHS.get(type, "")
 	if not path:
 		push_error("Transition type %s doesn't exist." % type)
 		return
+
 	transition = load(path).instantiate()
 	transition.params = params
 	transition.finished.connect(finished.emit, CONNECT_ONE_SHOT)
@@ -41,15 +46,16 @@ func play_out() -> void:
 		push_error("To play out, a transition has to play in first.")
 		return
 	transition.play_out()
-	
+
 	await transition.finished
 
 	if is_instance_valid(transition):
 		transition.queue_free()
 	transition = null
 
-	Globals.player.input_enabled = get_meta("last_input_enabled", true)
-	Globals.event_input_enabled = get_meta("last_event_input_enabled", true)
+	if Globals.player:
+		Globals.player.input_enabled = get_meta("last_input_enabled", true)
+		Globals.event_input_enabled = get_meta("last_event_input_enabled", true)
 
 	remove_meta("last_input_enabled")
 	remove_meta("last_input_enabled")

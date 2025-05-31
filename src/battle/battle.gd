@@ -91,19 +91,19 @@ func _ready() -> void:
 	if TransitionManager.transition:
 		TransitionManager.play_out()
 		await TransitionManager.finished
-	
+
 	fight_button.grab_focus.call_deferred()
 
 	state_machine.initial_state = machine_starting_state
 	state_machine.start()
-	
+
 	Globals.current_battle = self
 
 
 func _process(_delta: float) -> void:
 	if not _buffering:
 		_execute_buffer()
-	
+
 
 
 ## Shows [param command] while hiding all other commands.
@@ -117,17 +117,17 @@ func show_commands(command: CanvasItem) -> void:
 #region Buffer functions
 ## Shows a text in battle, adding it to the buffer.
 func show_text(text: String) -> void:
-	await add_buffer(BufferType.TEXT, text)
+	add_buffer(BufferType.TEXT, text)
 
 
 ## Plays a [BattleAnimation], adding it to the buffer.
 func play_animation(animation: BattleAnimation) -> void:
-	await add_buffer(BufferType.ANIMATION, animation)
+	add_buffer(BufferType.ANIMATION, animation)
 
 
 ## Animates the given [param databox], adding it to the buffer.
 func animate_databox(databox: Databox) -> void:
-	await add_buffer(BufferType.DATABOX, databox)
+	add_buffer(BufferType.DATABOX, databox)
 
 
 ## Returns the slot (the index) of [param pokemon], which can be either [BattlePokemon] or [Pokemon].
@@ -175,6 +175,8 @@ func _execute_buffer() -> void:
 		BufferType.DATABOX:
 			var data: Databox = buffer.data
 			await data.animate_hp_bar().finished
+			if data.exp_bar:
+				await data.animate_exp_bar().finished
 	_buffering = false
 	buffer_ran.emit(buffer)
 	if _buffer.is_empty():
@@ -203,13 +205,13 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	))
 	if attributes.get("ally_trainer", null):
 		ally_trainers.append(attributes.get("ally_trainer"))
-	
+
 	var enemies: Variant = attributes.get("enemy_trainers")
 	if enemies is BattleTrainer:
 		enemy_trainers.append(enemies)
 	else:
 		enemy_trainers.assign(enemies)
-	
+
 
 	pokemons[0] = BattlePokemon.new(self, ally_trainers[0].team.first_healthy(), ally_trainers[0])
 	pokemons[2] = BattlePokemon.new(self, enemy_trainers[0].team.first_healthy(), enemy_trainers[0])
@@ -229,7 +231,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 
 	#region Connect UI signals
 	base_commands.visibility_changed.connect(_on_base_commands_visibility_changed)
-	
+
 	#region Fight command signals
 	fight_button.pressed.connect(show_commands.bind(fight_commands))
 	fight_commands.visibility_changed.connect(_on_fight_commands_visibility_changed)
@@ -243,12 +245,12 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		button.pressed.connect(set.bind("last_move_button_pressed", button))
 		button.gui_input.connect(_on_move_gui_input)
 	#endregion
-	
+
 	#region Target select signals
 	target_commands.visibility_changed.connect(_on_target_commands_visibility_changed)
 	target_cancel_button.pressed.connect(show_commands.bind(fight_commands))
 	#endregion
-	
+
 	#endregion
 	#endregion
 
@@ -340,7 +342,7 @@ func refresh_databoxes() -> void:
 		databox_ally_single.show()
 		databox_ally_single.enabled = true
 		databox_ally_single.pokemon = ally_pokemon.front().pokemon
-	
+
 		databox_enemy_single.show()
 		databox_enemy_single.enabled = true
 		databox_enemy_single.pokemon = enemy_pokemon.front().pokemon
@@ -354,7 +356,7 @@ func refresh_move_buttons() -> void:
 		else:
 			move_buttons[i].show()
 			move_buttons[i].move = ally_pokemon[current_pokemon_index].pokemon.moves[i]
-		
+
 		#move_buttons[i].pressed.connect()
 
 
@@ -376,7 +378,7 @@ func refresh_turn_order(acted: Array[int] = []) -> void:
 		if pokemons[a].speed == pokemons[b].speed:
 			return Globals.rng.randf() <= 0.5
 		return pokemons[a].speed > pokemons[b].speed
-	
+
 	turn_order.sort_custom(sort_by_speed)
 	turn_order.sort_custom(func(a: int, b: int):
 		return turn_selections.get(a).type > turn_selections.get(b).type
@@ -400,7 +402,7 @@ func calc_escape_chance() -> float:
 		return 1.0
 	escape_attempts += 1
 	return (floorf((ally_pokemon[0].speed * 32.0)/(enemy_pokemon[0].speed * 4.0)) + (30.0 * escape_attempts)) / 256.0
-	
+
 
 
 ## Starts a battle by creating a dedicated [CanvasLayer] and adding it to [member Globals.game_root].
@@ -410,7 +412,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	if Globals.in_battle:
 		printerr("Can't start a battle while another one is in progress.")
 		return
-	
+
 	if PlayerData.team.get_array().is_empty() or not PlayerData.team.first_healthy():
 		printerr("Can't start battle without a pokemon team or a healthy pokemon.")
 		return
@@ -428,7 +430,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	Globals.game_root.add_child(layer)
 	# Stop running the game world while the battle is happening
 	Globals.game_world.process_mode = Node.PROCESS_MODE_DISABLED
-	
+
 	var on_finish: Callable = func(finished_battle: Battle):
 		if finished_battle == battle:
 			# Make sure movement and event input is enabled after battle.
@@ -445,7 +447,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 			Globals.event_input_enabled = true
 			Globals.game_world.process_mode = Node.PROCESS_MODE_PAUSABLE
 
-	
+
 	SignalRouter.battle_ended.connect(on_finish, CONNECT_ONE_SHOT)
 	return battle
 
@@ -458,7 +460,7 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokem
 		var index: int = battle.pokemons.find(target)
 		if index == -1:
 			continue
-			
+
 		var calculation: DamageCalculation = DamageCalculation.new()
 		calculation.battle = battle
 		calculation.move = move
@@ -471,13 +473,13 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokem
 		elif move.category == PokemonMove.Categories.SPECIAL:
 			calculation.attack_stat = Globals.STATS.SPECIAL_ATTACK
 			calculation.defense_stat = Globals.STATS.SPECIAL_DEFENSE
-		
+
 		# TODO: Complete accuracy check: https://bulbapedia.bulbagarden.net/wiki/Accuracy#Generation_V_onward
 		var accuracy: float = move.accuracy * BattlePokemon.get_accuracy_multiplier(
 			attacker.boosts[Globals.OTHER_STATS.ACCURACY], target.boosts[Globals.OTHER_STATS.ACCURACY]
 		)
 		calculation.miss = Globals.rng.randf_range(0.0, 100.0) > accuracy
-		
+
 		SignalRouter.battle_step.emit(battle, BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
 		calculation.random = randf_range(0.85, 1.0)
@@ -509,7 +511,7 @@ class TurnAction:
 ##
 ## As [BattleEffect]s work through signals, this allows to pass a reference to the
 ## damage calculation without depending too much on dictionaries.[br][br]
-## The data is set outside of the class, in [method Battle.damage_calc]. 
+## The data is set outside of the class, in [method Battle.damage_calc].
 class DamageCalculation:
 	var attack_stat: String ## The used attack stat.
 	var defense_stat: String ## The used defense stat.

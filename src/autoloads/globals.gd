@@ -1,7 +1,7 @@
 extends Node
 
 ## Pokegodot's Globals singleton
-## 
+##
 ## A singleton holding miscellaneous data that doesn't require a dedicated script, or
 ## data that should be accessible from everywhere often.
 
@@ -85,14 +85,15 @@ const SHINY_THRESHOLD: int = 16
 ## The viewport used by the game which mantains the aspect ratio while allowing to have nodes in the empty
 ## space around. When in need for the viewport outside of the viewport itself, use this instead of [method Node.get_viewport]
 var game_root: SubViewport
+var in_game: bool = false ## Must be true when playing. False when in menus like the main menu, before loading the save file.
 var game_world: World ## The game world which holds maps, the player and similar stuff.
 var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
 var movement_enabled: bool = true ## Enable or disable the player's movement.
 var event_input_enabled: bool = true ## Enable or disable the player's ability to interact with events.
 var current_battle: Battle = null ## The battle currently happening. [code]null[/code] if there's no battle.
 var in_battle: bool: ## True if a battle is happening. Checks if [member current_battle] is not [code]null[/code]. Can't be set.
-	get: return current_battle != null 
-## A global random number generator. Useful to be "coherent" with randomness. 
+	get: return current_battle != null
+## A global random number generator. Useful to be "coherent" with randomness.
 ## Its seed gets also set as the global seed, to make methods such as [method Array.pick_random] coherent.
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 ## Dictionary where the key is the nature name in uppercase and the value is another dictionary the multiplier for each stat [member STATS] (10% increase or decrease).
@@ -109,7 +110,7 @@ func _init() -> void:
 		var stats_multipliers: Dictionary[String, float] = {}
 		for stat: String in STATS:
 			stats_multipliers[stat] = 1.0
-		
+
 		var up_nature: String = DB.natures[nature][0]
 		var down_nature: String = DB.natures[nature][1]
 

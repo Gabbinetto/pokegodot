@@ -1,0 +1,252 @@
+[gd_scene load_steps=25 format=3 uid="uid://pk4sjpp8dpqy"]
+
+[ext_resource type="Script" uid="uid://bv5mirsq3ehbm" path="res://src/ui/text_input/text_input.gd" id="1_3ocqu"]
+[ext_resource type="Texture2D" uid="uid://cuab0ijr3oqnv" path="res://assets/graphics/ui/text_input/bg.png" id="1_kllq0"]
+[ext_resource type="Texture2D" uid="uid://bc2j68np0sepy" path="res://assets/graphics/ui/text_input/overlay_controls.png" id="2_onkpg"]
+[ext_resource type="Texture2D" uid="uid://deiar2e0xidui" path="res://assets/graphics/ui/text_input/tab_1.png" id="2_rbouj"]
+[ext_resource type="Script" uid="uid://b7yw3y5nscgv8" path="res://src/ui/text_input/input_button_grid.gd" id="3_3ocqu"]
+[ext_resource type="Texture2D" uid="uid://cqr6la17s8ler" path="res://assets/graphics/ui/text_input/tab_button_1.png" id="3_ee6ir"]
+[ext_resource type="Texture2D" uid="uid://c3pjmqiolb3i7" path="res://assets/graphics/ui/text_input/tab_2.png" id="3_ygjp2"]
+[ext_resource type="Texture2D" uid="uid://dmunxxcsto6o4" path="res://assets/graphics/ui/text_input/tab_3.png" id="4_2dvnd"]
+[ext_resource type="Texture2D" uid="uid://cywf7dxrs1p35" path="res://assets/graphics/ui/text_input/tab_button_1_pressed.png" id="4_bugl7"]
+[ext_resource type="Texture2D" uid="uid://buplemnak0bi7" path="res://assets/graphics/ui/text_input/tab_button_2.png" id="5_63o0p"]
+[ext_resource type="Texture2D" uid="uid://cr1idde5b88ni" path="res://assets/graphics/ui/text_input/cursor_2.png" id="5_b7f6l"]
+[ext_resource type="Texture2D" uid="uid://cen0hjm00qgem" path="res://assets/graphics/ui/text_input/tab_4.png" id="5_bounr"]
+[ext_resource type="Texture2D" uid="uid://c7h4jp6c01p8a" path="res://assets/graphics/ui/text_input/tab_button_2_pressed.png" id="6_b7f6l"]
+[ext_resource type="Texture2D" uid="uid://c8luyag315ao" path="res://assets/graphics/ui/text_input/tab_button_3.png" id="7_b0y31"]
+[ext_resource type="Texture2D" uid="uid://dq7ysmncms2i1" path="res://assets/graphics/ui/text_input/tab_button_3_pressed.png" id="8_l8oxk"]
+[ext_resource type="Texture2D" uid="uid://dewsslrou2k1s" path="res://assets/graphics/ui/text_input/tab_button_4.png" id="9_rbouj"]
+[ext_resource type="Texture2D" uid="uid://1hbwfg43hjjy" path="res://assets/graphics/ui/text_input/tab_button_4_pressed.png" id="10_ygjp2"]
+[ext_resource type="Texture2D" uid="uid://bhrr1bfjxogka" path="res://assets/graphics/ui/text_input/cursor_3.png" id="12_b0y31"]
+[ext_resource type="Texture2D" uid="uid://c36v5ag4hp5tt" path="res://assets/graphics/ui/text_input/back_button.png" id="13_b7f6l"]
+[ext_resource type="Texture2D" uid="uid://cjhg3exvvoha5" path="res://assets/graphics/ui/text_input/ok_button.png" id="14_b0y31"]
+[ext_resource type="Script" uid="uid://bgdxw1bkspytm" path="res://src/ui/text_input/text_input_field.gd" id="19_nujcn"]
+[ext_resource type="Texture2D" uid="uid://j8d56yo720g" path="res://assets/graphics/ui/text_input/cursor_1.png" id="20_4lb8q"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="23_bounr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4lb8q"]
+texture = ExtResource("20_4lb8q")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+expand_margin_left = 8.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 8.0
+
+[node name="TextInput" type="Control" node_paths=PackedStringArray("tabs", "tab_buttons", "tab_overlays", "field", "ok_button", "back_button", "label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3ocqu")
+tabs = [NodePath("TabOverlay1/Tab1"), NodePath("TabOverlay1/Tab2")]
+tab_buttons = NodePath("TabButtons")
+tab_overlays = [NodePath("TabOverlay1"), NodePath("TabOverlay2")]
+tab_textures = Array[Texture2D]([ExtResource("2_rbouj"), ExtResource("3_ygjp2"), ExtResource("4_2dvnd"), ExtResource("5_bounr")])
+field = NodePath("TextInputField")
+ok_button = NodePath("OkButton")
+back_button = NodePath("BackButton")
+label = NodePath("Label")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -472.0
+offset_bottom = -344.0
+mouse_filter = 2
+texture = ExtResource("1_kllq0")
+metadata/_edit_lock_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="TabOverlay1" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 162.0
+offset_right = 494.0
+offset_bottom = 382.0
+mouse_filter = 2
+texture = ExtResource("2_rbouj")
+metadata/_edit_lock_ = true
+
+[node name="Tab1" type="GridContainer" parent="TabOverlay1"]
+editor_description = "ÀÁÂÄÃàáâäã Ææ
+ÈÉÊË èéêë  Çç
+ÌÍÎÏ ìíîï  Œœ
+ÒÓÔÖÕòóôöõÑñ
+ÙÚÛÜ ùúûü  Ýý"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.059322
+anchor_top = 0.0636364
+anchor_right = 0.940678
+anchor_bottom = 0.927273
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 13
+script = ExtResource("3_3ocqu")
+charset = "ABCDEFGHIJ ,.
+KLMNOPQRST '-
+UVWXYZ     ♂♀
+             
+0123456789   "
+metadata/_edit_use_anchors_ = true
+
+[node name="Tab2" type="GridContainer" parent="TabOverlay1"]
+editor_description = ",.:;…·!?¡¿ ♂♀
+“”‘’()*~_^ --
+@#&%+-×÷/= --
+----------  $
+---------    "
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.059322
+anchor_top = 0.0636364
+anchor_right = 0.940678
+anchor_bottom = 0.927273
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 13
+script = ExtResource("3_3ocqu")
+charset = "abcdefghij ,.
+klmnopqrst '-
+uvwxyz     ♂♀
+             
+0123456789   "
+metadata/_edit_use_anchors_ = true
+
+[node name="TabOverlay2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -472.0
+offset_top = 162.0
+offset_bottom = 382.0
+mouse_filter = 2
+texture = ExtResource("3_ygjp2")
+metadata/_edit_lock_ = true
+
+[node name="BackButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 120.0
+offset_right = 388.0
+offset_bottom = 164.0
+focus_neighbor_left = NodePath("../TabButtons/Tab4")
+focus_neighbor_top = NodePath("../TextInputField")
+focus_neighbor_right = NodePath("../OkButton")
+texture_normal = ExtResource("13_b7f6l")
+texture_pressed = ExtResource("13_b7f6l")
+texture_hover = ExtResource("13_b7f6l")
+texture_disabled = ExtResource("13_b7f6l")
+texture_focused = ExtResource("12_b0y31")
+metadata/_edit_lock_ = true
+
+[node name="OkButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 394.0
+offset_top = 120.0
+offset_right = 468.0
+offset_bottom = 164.0
+focus_neighbor_left = NodePath("../BackButton")
+focus_neighbor_top = NodePath("../TextInputField")
+focus_neighbor_right = NodePath(".")
+texture_normal = ExtResource("14_b0y31")
+texture_pressed = ExtResource("14_b0y31")
+texture_hover = ExtResource("14_b0y31")
+texture_disabled = ExtResource("14_b0y31")
+texture_focused = ExtResource("12_b0y31")
+metadata/_edit_lock_ = true
+
+[node name="TabButtons" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.0859375
+anchor_top = 0.3125
+anchor_right = 0.566406
+anchor_bottom = 0.427083
+theme_override_constants/separation = 2
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Tab1" type="TextureButton" parent="TabButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../../TextInputField")
+focus_neighbor_right = NodePath("../Tab2")
+toggle_mode = true
+texture_normal = ExtResource("3_ee6ir")
+texture_pressed = ExtResource("4_bugl7")
+texture_hover = ExtResource("3_ee6ir")
+texture_focused = ExtResource("5_b7f6l")
+
+[node name="Tab2" type="TextureButton" parent="TabButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Tab1")
+focus_neighbor_top = NodePath("../../TextInputField")
+focus_neighbor_right = NodePath("../Tab3")
+toggle_mode = true
+texture_normal = ExtResource("5_63o0p")
+texture_pressed = ExtResource("6_b7f6l")
+texture_hover = ExtResource("5_63o0p")
+texture_focused = ExtResource("5_b7f6l")
+
+[node name="Tab3" type="TextureButton" parent="TabButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Tab2")
+focus_neighbor_top = NodePath("../../TextInputField")
+focus_neighbor_right = NodePath("../Tab4")
+toggle_mode = true
+texture_normal = ExtResource("7_b0y31")
+texture_pressed = ExtResource("8_l8oxk")
+texture_hover = ExtResource("7_b0y31")
+texture_focused = ExtResource("5_b7f6l")
+
+[node name="Tab4" type="TextureButton" parent="TabButtons"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../Tab3")
+focus_neighbor_top = NodePath("../../TextInputField")
+focus_neighbor_right = NodePath("../../BackButton")
+toggle_mode = true
+texture_normal = ExtResource("9_rbouj")
+texture_pressed = ExtResource("10_ygjp2")
+texture_hover = ExtResource("9_rbouj")
+texture_focused = ExtResource("12_b0y31")
+
+[node name="Overlay" type="TextureRect" parent="."]
+layout_mode = 0
+anchor_left = 0.03125
+anchor_top = 0.25
+anchor_right = 0.96875
+anchor_bottom = 0.786458
+mouse_filter = 2
+texture = ExtResource("2_onkpg")
+metadata/_edit_lock_ = true
+
+[node name="TextInputField" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3125
+anchor_top = 0.114583
+anchor_right = 0.394531
+anchor_bottom = 0.21875
+offset_left = 1.0
+offset_right = 1.0
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_mode = 2
+script = ExtResource("19_nujcn")
+focus_style = SubResource("StyleBoxTexture_4lb8q")
+metadata/_custom_type_script = "uid://bgdxw1bkspytm"
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 8.0
+offset_right = 201.0
+offset_bottom = 32.0
+label_settings = ExtResource("23_bounr")
