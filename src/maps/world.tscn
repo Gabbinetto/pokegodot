@@ -15,28 +15,7 @@ starting_map = NodePath("Maps/MapTemplate")
 [node name="Maps" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="MapTemplate" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
-connections = [NodePath("../MapTemplate2")]
-
-[node name="MapTemplate2" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
-position = Vector2(0, 2176)
-id = "DEFAULT2"
-connections = [NodePath("../MapTemplate"), NodePath("../MapTemplate3")]
-
-[node name="MapTemplate3" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
-position = Vector2(0, 4352)
-id = "DEFAULT3"
-connections = [NodePath("../MapTemplate2"), NodePath("../MapTemplate4")]
-
-[node name="MapTemplate4" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
-position = Vector2(0, 6528)
-id = "DEFAULT4"
-connections = [NodePath("../MapTemplate3"), NodePath("../MapTemplate5")]
-
-[node name="MapTemplate5" parent="Maps" node_paths=PackedStringArray("connections") instance=ExtResource("2_bne4y")]
-position = Vector2(0, 8704)
-id = "DEFAULT5"
-connections = [NodePath("../MapTemplate4")]
+[node name="MapTemplate" parent="Maps" instance=ExtResource("2_bne4y")]
 
 [node name="InstancedMaps" type="Node2D" parent="."]
 editor_description = "Maps that aren't always loaded in memory, but that get instanced each time, like insides."

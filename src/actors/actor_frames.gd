@@ -13,12 +13,12 @@ class_name ActorFrames extends SpriteFrames
 
 func generate_animations() -> void:
 	var frame_size: Vector2i = Vector2i(
-		texture.get_width() / animation_frames,
-		texture.get_height() / Actor.DIRECTIONS.size()
+		floori(texture.get_width() / float(animation_frames)),
+		floori(texture.get_height() / float(Globals.DIRECTIONS.size()))
 	)
-	
-	for i: int in Actor.DIRECTIONS.size():
-		var direction: String = Actor.DIRECTIONS.keys()[i]
+
+	for i: int in Globals.DIRECTIONS.size():
+		var direction: String = Globals.DIRECTIONS.keys()[i]
 		if has_animation(Actor.ANIMATION_WALK_PREFIX + direction):
 			remove_animation(Actor.ANIMATION_WALK_PREFIX + direction)
 		add_animation(Actor.ANIMATION_WALK_PREFIX + direction)

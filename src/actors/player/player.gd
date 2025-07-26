@@ -28,8 +28,15 @@ func _ready() -> void:
 		sprite.sprite_frames = MALE_FRAMES
 	else:
 		sprite.sprite_frames = FEMALE_FRAMES
-		
+
 	Globals.player = self
+
+	SignalRouter.elevation_changed.emit.call_deferred(elevation)
+
+
+func _set_elevation(value: int) -> void:
+	super(value)
+	SignalRouter.elevation_changed.emit(elevation)
 
 
 func _check_event_collision() -> void:
@@ -46,7 +53,7 @@ func _physics_process(delta: float) -> void:
 		speed = bike_speed
 	else:
 		speed = run_speed if is_running else walk_speed
-	
+
 	if not is_moving and input_enabled:
 		# Can only move horizontally or vertically, not both.
 		if Input.get_axis("Left", "Right") == 0.0:
@@ -61,17 +68,17 @@ func _physics_process(delta: float) -> void:
 		input_direction = Vector2.ZERO
 
 	if input_direction:
-		event_ray.target_position = input_direction * TILE_SIZE
+		event_ray.target_position = input_direction * Globals.TILE_SIZE
 		event_ray.force_raycast_update()
 		if not is_moving and input_enabled:
 			_check_event_collision()
-	
+
 	super(delta)
 
 
 func _animate() -> void:
 	var anim_prefix: String = ""
-	var dir_string = DIRECTIONS.find_key(facing_direction)
+	var dir_string = Globals.DIRECTIONS.find_key(facing_direction)
 	if on_bike:
 		anim_prefix = ANIMATION_BIKE_PREFIX
 	elif is_running:
@@ -84,10 +91,10 @@ func _animate() -> void:
 			anim_prefix = ANIMATION_BIKE_IDLE_PREFIX
 		else:
 			anim_prefix = ANIMATION_IDLE_PREFIX
-	
+
 	if anim_prefix:
 		sprite.animation = anim_prefix + dir_string
-	
+
 	if not sprite.is_playing():
 		sprite.play()
 
@@ -100,12 +107,12 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_event_input() -> void:
 	if not Globals.event_input_enabled:
 		return
-	
+
 	var event: Area2D = event_ray.get_collider()
 	if not event or not is_instance_valid(event) or not (event is Event):
 		return
-	
+
 	if is_moving:
 		await stopped_moving
-	
+
 	event.interact()

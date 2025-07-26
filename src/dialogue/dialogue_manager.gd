@@ -60,8 +60,8 @@ func _on_finished() -> void:
 	running = false
 	label.visible_characters = -1
 	if disable_movement:
-		Globals.movement_enabled = true
-	Globals.event_input_enabled = true
+		Globals.movement_enabled = get_meta("previous_movement", true)
+	Globals.event_input_enabled = get_meta("previous_event_input", true)
 	if clear_label:
 		label.text = ""
 
@@ -75,7 +75,9 @@ func start() -> void:
 	if Globals.player and Globals.player.is_moving and Globals.player.is_processing():
 		await Globals.player.stopped_moving
 	if disable_movement:
+		set_meta("previous_movement", Globals.movement_enabled)
 		Globals.movement_enabled = false
+	set_meta("previous_event_input", Globals.event_input_enabled)
 	Globals.event_input_enabled = false
 	running = true
 	next()

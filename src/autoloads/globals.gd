@@ -81,6 +81,14 @@ const MULTIPLE_TARGETS_MULTIPLIER: float = 0.75 ## Multiplier for multiple targe
 ## See: [url]https://bulbapedia.bulbagarden.net/wiki/Personality_value#Shininess[/url] and
 ## [url]https://bulbapedia.bulbagarden.net/wiki/Shiny_Pok%C3%A9mon#Generation_III_onwards[/url]
 const SHINY_THRESHOLD: int = 16
+const TILE_SIZE: int = 32 ## The grid tile size.
+## The four direction an actor can face and move in.
+const DIRECTIONS: Dictionary[String, Vector2] = {
+	"DOWN": Vector2.DOWN,
+	"LEFT": Vector2.LEFT,
+	"RIGHT": Vector2.RIGHT,
+	"UP": Vector2.UP,
+}
 
 ## The viewport used by the game which mantains the aspect ratio while allowing to have nodes in the empty
 ## space around. When in need for the viewport outside of the viewport itself, use this instead of [method Node.get_viewport]

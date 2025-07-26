@@ -8,6 +8,7 @@ class_name Transition extends Control
 ## the [method play_in] and [method play_in] methods. It's managed 
 ## by the [TransitionManager].
 
+@warning_ignore("unused_signal")
 signal finished ## Plays when either [method play_in] or [method play_out] are done
 
 var params: Dictionary[String, Variant] = {} ## Optional parameters the transition may use.

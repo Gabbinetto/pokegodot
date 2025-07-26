@@ -196,7 +196,7 @@ func _prompt_switch(slot: int, switch_to: Array) -> void:
 	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": false})
 	party.pokemon_selected.connect(
 		func(pokemon: Pokemon):
-			var index: int = PlayerData.team.get_array().find(pokemon)
+			var index: int = PlayerData.team.array().find(pokemon)
 			if pokemon.hp > 0 and not switch_to.has(index):
 				switch_to.append(index)
 				TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)

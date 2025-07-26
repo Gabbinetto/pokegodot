@@ -15,13 +15,13 @@ class_name WarpEvent extends Event
 
 func _validate_property(property: Dictionary) -> void:
 	super(property)
-	
+
 	if property.name == "transition_type" or property.name == "transition_params":
 		if transition:
 			property.usage |= PROPERTY_USAGE_EDITOR
 		else:
 			property.usage &= ~PROPERTY_USAGE_EDITOR
-	
+
 
 
 func _run() -> void:
@@ -44,11 +44,11 @@ func _run() -> void:
 			Globals.game_world.unload_map(Globals.game_world.current_map)
 		Globals.game_world.load_map(map)
 
-	Globals.player.global_position = map.to_global(target_position * Actor.TILE_SIZE)
+	Globals.player.global_position = map.to_global(target_position * Globals.TILE_SIZE)
 	Globals.player.update_initial_position()
 
 	var step_down: Callable = func():
-		Globals.player.input_direction = Actor.DIRECTIONS.DOWN
+		Globals.player.input_direction = Globals.DIRECTIONS.DOWN
 		Globals.player.input_enabled = false
 		Globals.player.disable_collision = true
 		Globals.player.stopped_moving.connect(func():

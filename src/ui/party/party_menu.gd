@@ -53,7 +53,7 @@ func _ready() -> void:
 	if team.size() < 2:
 		button_switch.hide()
 
-	var team_array: Array[Pokemon] = team.get_array().duplicate()
+	var team_array: Array[Pokemon] = team.array().duplicate()
 	if in_battle:
 		var mon_in_battle: Array[Pokemon]
 		var mon_out_battle: Array[Pokemon]
@@ -246,7 +246,7 @@ func swap_slots() -> void:
 #endregion
 
 func _on_summary_pressed() -> void:
-	var summary: SummaryMenu = SummaryMenu.create(team.get_array(), {"starting_index": current_panel.get_index(), "in_battle": in_battle})
+	var summary: SummaryMenu = SummaryMenu.create(team.array(), {"starting_index": current_panel.get_index(), "in_battle": in_battle})
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
 	add_sibling(summary)

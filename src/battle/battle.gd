@@ -413,7 +413,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 		printerr("Can't start a battle while another one is in progress.")
 		return
 
-	if PlayerData.team.get_array().is_empty() or not PlayerData.team.first_healthy():
+	if PlayerData.team.array().is_empty() or not PlayerData.team.first_healthy():
 		printerr("Can't start battle without a pokemon team or a healthy pokemon.")
 		return
 	var layer: CanvasLayer = CanvasLayer.new()

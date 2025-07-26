@@ -6,6 +6,7 @@ class_name DialogueSequence extends Node
 ## Resource that holds the data regarding a single sequence of a dialogue,
 ## such as a textbox or a choice. Relies on [DialogueManager].
 
+@warning_ignore("unused_signal")
 signal finished ## Emitted when the textbox is finished.
 
 @export var next_sequence: DialogueSequence ## The next sequence in the dialogue. If [code]null[/code], it's the last sequence.

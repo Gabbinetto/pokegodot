@@ -18,6 +18,7 @@ var interacting: bool = false:
 
 
 func _ready() -> void:
+	super()
 	turn_frames = 1 # NPCs don't need frames to turn
 	next_step()
 
@@ -26,11 +27,11 @@ func _ready() -> void:
 func next_step() -> void:
 	if current_step >= movement.size():
 		return
-	
+
 	var step: NPCMovement = movement[current_step]
 	var dir: Vector2i = step.direction
 	if step.random_direction:
-		dir = DIRECTIONS.values().pick_random()
+		dir = Globals.DIRECTIONS.values().pick_random()
 	if step.turn_only:
 		facing_direction = dir
 		if step.end_time_range[0] + step.end_time_range[-1] <= 0:
@@ -47,13 +48,13 @@ func next_step() -> void:
 		await Globals.get_tree().create_timer(
 			Globals.rng.randf_range(step.end_time_range[0], step.end_time_range[-1])
 		).timeout
-	
-	
+
+
 	if interacting:
 		await interact_changed
 
 	current_step += 1
 	if loop_movement and current_step >= movement.size():
 		current_step = 0
-	
+
 	next_step()

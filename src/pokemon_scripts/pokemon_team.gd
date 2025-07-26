@@ -13,17 +13,17 @@ func _init(list: Array[Pokemon] = []) -> void:
 		list = list.slice(0, 6)
 	_team.assign(list)
 
-func _iter_init(_arg) -> bool:
+func _iter_init(_arg: Array) -> bool:
 	_iterator = 0
 	return _iterator < _team.size()
 
 
-func _iter_next(_arg) -> bool:
+func _iter_next(_arg: Array) -> bool:
 	_iterator += 1
 	return _iterator < _team.size()
 
 
-func _iter_get(_arg) -> Pokemon:
+func _iter_get(_arg: Variant) -> Pokemon:
 	return _team[_iterator]
 
 
@@ -31,7 +31,7 @@ func _iter_get(_arg) -> Pokemon:
 ## Basically meant only to be used for methods like [method Array.filter] and [method Array.map]. [br][br]
 ## [b]NOTE[/b]: Be careful, as this returns not a copy of the internal array, but a direct reference to it.
 ## Modifying it means modifying the team.
-func get_array() -> Array[Pokemon]:
+func array() -> Array[Pokemon]:
 	return _team
 
 

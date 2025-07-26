@@ -76,6 +76,7 @@ texture_normal = ExtResource("4_vivct")
 texture_pressed = ExtResource("5_6ut4k")
 texture_hover = ExtResource("4_vivct")
 texture_focused = ExtResource("5_6ut4k")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/NewGame"]
 layout_mode = 1
@@ -124,6 +125,7 @@ texture_normal = ExtResource("4_vivct")
 texture_pressed = ExtResource("5_6ut4k")
 texture_hover = ExtResource("4_vivct")
 texture_focused = ExtResource("5_6ut4k")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Options"]
 layout_mode = 1
@@ -144,6 +146,7 @@ texture_normal = ExtResource("4_vivct")
 texture_pressed = ExtResource("5_6ut4k")
 texture_hover = ExtResource("4_vivct")
 texture_focused = ExtResource("5_6ut4k")
+metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Quit Game"]
 layout_mode = 1

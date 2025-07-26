@@ -1,5 +1,6 @@
 extends Control
 
+@warning_ignore("unused_signal")
 signal value_changed
 
 const DEFAULT_GRAY_LABEL: LabelSettings = preload("res://assets/resources/ui/text_resources/default_gray.tres")

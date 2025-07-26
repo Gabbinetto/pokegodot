@@ -159,8 +159,11 @@ func close() -> void:
 #region Saving
 func _save() -> void:
 	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
+	button_save.release_focus()
 	save_choice.choice_taken.connect(_on_save_selected, CONNECT_ONE_SHOT)
 	MainDialogue.run_dialogue(save_dialogue)
+	await MainDialogue.finished
+	button_save.grab_focus.call_deferred()
 
 
 

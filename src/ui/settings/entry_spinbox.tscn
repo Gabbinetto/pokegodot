@@ -72,11 +72,12 @@ func set_value(value: Variant) -> void:
 	_sync()
 
 
+@warning_ignore_start(\"incompatible_ternary\")
 func _sync() -> void:
 	var val: Variant = int(range_node.value) if range_node.value == int(range_node.value) else range_node.value
 	var max_val: Variant = int(range_node.max_value) if range_node.max_value == int(range_node.max_value) else range_node.max_value
 	content.text = prefix + content_text % [val, max_val]
-
+@warning_ignore_restore(\"incompatible_ternary\")
 
 func _on_value_changed(_value: float) -> void:
 	_sync()

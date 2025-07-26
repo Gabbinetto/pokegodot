@@ -3,6 +3,8 @@ class_name Event extends Area2D
 
 signal done ## Make sure to emit this signal when your event ends.
 
+@export var enabled: bool = true
+@export var elevation: int = 0
 @export var run_on_interaction: bool = true
 @export var run_on_collision: bool = false:
 	set(value):
@@ -23,6 +25,7 @@ func _validate_property(property: Dictionary) -> void:
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	SignalRouter.elevation_changed.connect.call_deferred(_elevation_changed)
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -33,10 +36,15 @@ func _on_area_entered(area: Area2D) -> void:
 	run()
 
 
+func _elevation_changed(new_elevation: int) -> void:
+	monitorable = elevation == new_elevation
+	monitoring = elevation == new_elevation
+
+
 func collision(direction: Vector2) -> void:
 	if run_on_collision:
 		for i: int in 4:
-			if direction == Actor.DIRECTIONS.values()[i] and not bool(valid_collision_directions & 2 ** i):
+			if direction == Globals.DIRECTIONS.values()[i] and not bool(valid_collision_directions & 2 ** i):
 				return
 		Globals.player.input_direction = Vector2.ZERO
 		run()
