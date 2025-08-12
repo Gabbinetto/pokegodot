@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bcjf5ib54kqeg" path="res://assets/graphics/ui/battle/move_buttons.png" id="1_x7oau"]
 [ext_resource type="Script" uid="uid://bumbcs7ho2d4x" path="res://src/ui/battle/move_button.gd" id="2_m01y6"]
-[ext_resource type="FontVariation" uid="uid://bcbnrhdpuihkq" path="res://assets/fonts/ds_font.tres" id="2_qlnnl"]
+[ext_resource type="FontVariation" uid="uid://btk8wgjcertlc" path="res://assets/fonts/font_narrow.tres" id="3_6dag6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vy6r7"]
 atlas = ExtResource("1_x7oau")
@@ -13,10 +13,10 @@ atlas = ExtResource("1_x7oau")
 region = Rect2(192, 0, 192, 46)
 
 [sub_resource type="LabelSettings" id="LabelSettings_b6v0y"]
-font = ExtResource("2_qlnnl")
-font_size = 32
-outline_size = 9
-outline_color = Color(0.47451, 0.47451, 0.47451, 1)
+font = ExtResource("3_6dag6")
+font_size = 24
+shadow_size = 4
+shadow_color = Color(0.627451, 0.627451, 0.658824, 1)
 
 [node name="MoveButton" type="TextureButton" node_paths=PackedStringArray("name_label")]
 texture_normal = SubResource("AtlasTexture_vy6r7")
@@ -27,13 +27,16 @@ script = ExtResource("2_m01y6")
 name_label = NodePath("MoveName")
 
 [node name="MoveName" type="Label" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.125
 anchor_top = 0.26087
 anchor_right = 0.875
 anchor_bottom = 0.76087
-text = "Move name"
+text = "Thunder Shock"
 label_settings = SubResource("LabelSettings_b6v0y")
 horizontal_alignment = 1
+vertical_alignment = 1
 text_overrun_behavior = 3
+ellipsis_char = "."
 metadata/_edit_use_anchors_ = true

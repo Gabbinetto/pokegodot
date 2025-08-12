@@ -6,12 +6,13 @@ class_name BattleEffect extends Resource
 
 const BATTLE_EFFECTS_PATH: String = "res://src/battle/battle_effects/"
 
-var owner: Variant
+var owner: Object
+var priority: int = 0
 var chance: float = 100.0
 var attributes: Dictionary[String, Variant] = {}
 
 
-func _init(_owner: Variant, _chance: float = 100.0, _attributes: Dictionary[String, Variant] = {}) -> void:
+func _init(_owner: Object, _chance: float = 100.0, _attributes: Dictionary[String, Variant] = {}) -> void:
 	owner = _owner
 	chance = _chance
 	attributes = _attributes
@@ -26,13 +27,13 @@ func _effect(_battle: Battle, _step: Battle.BattleSteps, _data: Dictionary[Strin
 	pass
 
 
-func enable() -> void:
-	SignalRouter.battle_step.connect(apply)
+func register(battle: Battle) -> void:
+	battle.effects[self] = priority
 
 
-func disable() -> void:
-	SignalRouter.battle_step.disconnect(apply)
-
+func unregister(battle: Battle) -> void:
+	battle.effects.erase(self)
+	
 
 static func get_effect(id: String) -> GDScript:
 	if id.get_extension() != "gd":

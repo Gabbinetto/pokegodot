@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://btk8wgjcertlc"]
+
+[ext_resource type="FontFile" uid="uid://wxcr3wk7xla0" path="res://assets/fonts/raw/power green narrow.ttf" id="1_ydixb"]
+
+[resource]
+base_font = ExtResource("1_ydixb")
+spacing_top = -8

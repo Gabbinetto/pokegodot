@@ -11,6 +11,14 @@ enum Actions {
 	RUN,
 }
 
+## Possible battle outcomes.
+enum Outcomes {
+	NONE,
+	RAN_AWAY,
+	WIN,
+	LOSS,
+}
+
 ## All possible battle steps that can be useful for [BattleEffect]s and such.
 enum BattleSteps {
 	BEFORE_DAMAGE_CALC,
@@ -18,7 +26,15 @@ enum BattleSteps {
 	AFTER_MOVE_ANIMATION,
 }
 
-enum BufferType {TEXT, ANIMATION, DATABOX}
+## All possible events that gets processed in the buffer.
+enum BufferType {
+	TEXT, ## Show text.
+	ANIMATION, ## Show a [BattleAnimation].
+	DATABOX, ## Update databoxes, animating them.
+	FUNCTION_CALL, ## Generic function call. Awaits the function in case of a couroutine.
+	TURN_EXECUTION, ## Execute a [Battle.TurnAction].
+	FAINTED_SWITCH, ## Prompt a switch when an ally pokemon faints.
+}
 
 ## The default battle scene.
 const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn")
@@ -28,56 +44,36 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var machine_starting_state: State
 @export_group("Setting")
 @export var background: TextureRect
-@export var ui_message_bg: TextureRect
 @export var player_ground: TextureRect
 @export var enemy_ground: TextureRect
 @export_group("Pokemon sprites")
-@export var sprites: Array[Sprite2D] = [null, null, null, null]
+@export var sprites: Array[PokemonBodySprite] = [null, null, null, null]
 @export_group("Animation")
 @export var animation_player: AnimationPlayer
 @export_group("UI")
-@export var ui_layer: CanvasLayer
-@export var all_commands: Array[CanvasItem]
-@export var databox_ally_single: Databox
-@export var databox_enemy_single: Databox
-@export_subgroup("Base commands")
-@export var base_commands: Control
-@export var fight_button: BaseButton
-@export var pokemon_button: BaseButton
-@export var bag_button: BaseButton
-@export var run_button: BaseButton
-@export_subgroup("Fight commands")
-@export var fight_commands: Control
-@export var move_buttons: Array[MoveButton]
-@export var fight_cancel_button: BaseButton
-@export var move_info: RichTextLabel
-@export_subgroup("Target selection commands")
-@export var target_commands: Control
-@export var target_buttons: Array[Button] ## Target buttons when choosing a target in double battles. Should select the allies first, then the foes.
-@export var target_cancel_button: BaseButton
-@export_group("Dialogues")
-@export var selection_dialogue: Dialogue
-@export var battle_dialogue: Dialogue
-
+@export var ui: BattleUI
 
 var double_battle: bool = false
 var trainer_battle: bool = false
 var battleback: Battlebacks.Set = Battlebacks.loaded_sets[0]
+var outcome: Outcomes = Outcomes.NONE
 var ally_trainers: Array[BattleTrainer] = []
 var enemy_trainers: Array[BattleTrainer] = []
 var trainers: Array[BattleTrainer]:
 	get: return ally_trainers + enemy_trainers
+var player_trainer: BattleTrainer
 var pokemons: Array[BattlePokemon] = [null, null, null, null]
 var ally_pokemon: Array[BattlePokemon]:
-	get: return pokemons.slice(0, 2)
+	get: return pokemons.slice(0, pokemons.size() / 2)
 var enemy_pokemon: Array[BattlePokemon]:
-	get: return pokemons.slice(2, 4)
+	get: return pokemons.slice(pokemons.size() / 2, pokemons.size())
 var current_pokemon_index: int = 0
 var current_pokemon: BattlePokemon:
 	get: return ally_pokemon[current_pokemon_index]
 var turn_order: Array[int]
 var turn_selections: Dictionary[int, TurnAction] = {}
 var escape_attempts: int = 0
+var effects: Dictionary[BattleEffect, int] = {}
 var is_buffering: bool:
 	get: return _buffering
 var _buffer: Array[Dictionary] = []
@@ -92,8 +88,6 @@ func _ready() -> void:
 		TransitionManager.play_out()
 		await TransitionManager.finished
 
-	fight_button.grab_focus.call_deferred()
-
 	state_machine.initial_state = machine_starting_state
 	state_machine.start()
 
@@ -101,18 +95,9 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if not _buffering:
+	if not _buffering and not _buffer.is_empty():
 		_execute_buffer()
 
-
-
-## Shows [param command] while hiding all other commands.
-func show_commands(command: CanvasItem) -> void:
-	for child: CanvasItem in all_commands:
-		if child == command:
-			child.show()
-		else:
-			child.hide()
 
 #region Buffer functions
 ## Shows a text in battle, adding it to the buffer.
@@ -130,24 +115,26 @@ func animate_databox(databox: Databox) -> void:
 	add_buffer(BufferType.DATABOX, databox)
 
 
-## Returns the slot (the index) of [param pokemon], which can be either [BattlePokemon] or [Pokemon].
-func get_slot(pokemon: Variant) -> int:
-	if pokemon is BattlePokemon:
-		return pokemons.find(pokemon)
-	elif pokemon is Pokemon:
-		for slot: BattlePokemon in pokemons:
-			if slot and slot.pokemon == pokemon:
-				return pokemons.find(slot)
-	return -1
+## Executes a turn, adding it to the buffer.
+func execute_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
+	add_buffer(BufferType.TURN_EXECUTION, {"action": action, "pokemon": pokemon})
+
+
+## Adds a function call to the buffer. If [param callable] is a coroutine, it will be awaited.
+func call_function(callable: Callable) -> void:
+	add_buffer(BufferType.FUNCTION_CALL, callable)
+
+
+## Prompts a switch when owned (not just ally) pokemon faint as a buffer element.
+func switch_fainted() -> void:
+	add_buffer(BufferType.FAINTED_SWITCH)
 
 
 func add_buffer(type: BufferType, data: Variant = null) -> void:
 	_buffer.append(
-		{
-			"type": type,
-			"data": data,
-		}
+		{"type": type, "data": data}
 	)
+
 
 func _execute_buffer() -> void:
 	if _buffer.is_empty():
@@ -157,17 +144,7 @@ func _execute_buffer() -> void:
 	var buffer: Dictionary = _buffer.pop_front()
 	match buffer.type:
 		BufferType.TEXT:
-			var data: String = buffer.data
-			var manager: DialogueManager = battle_dialogue.get_meta("manager") if battle_dialogue.has_meta("manager") else null
-			if not manager:
-				for child: Node in battle_dialogue.get_children():
-					if child is DialogueManager:
-						manager = child
-						battle_dialogue.set_meta("manager", manager)
-						break
-			manager.starting_sequence.text = data
-			battle_dialogue.run_dialogue(manager)
-			await battle_dialogue.finished
+			await ui.show_text(buffer.data).finished
 		BufferType.ANIMATION:
 			var data: BattleAnimation = buffer.data
 			data.play()
@@ -177,11 +154,136 @@ func _execute_buffer() -> void:
 			await data.animate_hp_bar().finished
 			if data.exp_bar:
 				await data.animate_exp_bar().finished
+		BufferType.FUNCTION_CALL:
+			var fun: Callable = buffer.data
+			await fun.call()
+		BufferType.TURN_EXECUTION:
+			@warning_ignore("redundant_await")
+			await _execute_turn(
+				buffer.data.action,
+				buffer.data.pokemon,
+			)
+		BufferType.FAINTED_SWITCH:
+			var from: int = -1
+			for i: int in pokemons.size():
+				var pokemon: BattlePokemon = pokemons[i]
+				if not pokemon or pokemon.trainer != player_trainer or pokemon.hp > 0:
+					continue
+				from = i
+				break
+			if from != -1:
+				ui.prompt_switch(false)
+				await ui.pokemon_selected
+				switch(from, ui.last_selected_pokemon)
+				print("Switched")
+		_:
+			push_error("Buffer type unknown: ", BufferType.find_key(buffer.type))
 	_buffering = false
 	buffer_ran.emit(buffer)
 	if _buffer.is_empty():
 		last_buffer_ran.emit(buffer)
+
+
+func _execute_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
+	match action.type:
+		Actions.FIGHT:
+			_execute_fight_turn(action, pokemon)
+		Actions.SWITCH:
+			switch(action.properties.from, action.properties.to)
+		Actions.RUN:
+			var success: bool = Globals.rng.randf() <= calc_escape_chance()
+			if success:
+				show_text("Ran away!")
+				call_function(set.bind("outcome", Outcomes.RAN_AWAY))
+			else:
+				show_text("Failed to run away!")
+
+
+func _execute_fight_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
+	var targets: Array[BattlePokemon]
+	var move: PokemonMove = action.properties.move
+	move.register_effects(self)
+	for i: int in action.properties.targets.size():
+		if action.properties.targets[i] and pokemons[i]:
+			targets.append(pokemons[i])
+	
+	var damage_list: Array[Battle.DamageCalculation] = damage_calc(move, pokemon, targets)
+
+	show_text("%s used %s!" % [pokemon.name, move.name])
+	
+	var move_animation_sprites: Array[Node2D] # The sprites to be affected in the move animation
+
+	for i: int in damage_list.size():
+		var damage: Battle.DamageCalculation = damage_list[i]
+		if not damage:
+			continue
+		if damage.miss:
+			show_text("%s's attack failed." % pokemon.name)
+			continue
+		if damage.type_multiplier == 0:
+			show_text("It has no effect on %s..." % damage.target.name)
+		move_animation_sprites.append(sprites[i])
+	
+	if not move_animation_sprites.is_empty():
+		var animation: BattleAnimation = BattleAnimation.get_animation("moves/" + move.name, move_animation_sprites, self)
+		if not animation:
+			animation = BattleAnimation.get_animation("moves/DEFAULT_" + Types.string_ids[move.type], move_animation_sprites, self)
+		if animation:
+			play_animation(animation)
+	
+	for damage: Battle.DamageCalculation in damage_list:
+		if not damage:
+			continue
+		var slot: int = get_slot(damage.target)
+		if damage.value() > 0:
+			var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", [sprites[slot]], self)
+			play_animation(hurt_flash)
+			call_function(damage.target.set.bind("hp", damage.target.hp - damage.value()))
+			animate_databox(ui.used_databoxes[slot])
+			if damage.type_multiplier > 1:
+				show_text("It's supereffective on %s!" % damage.target.name)
+			elif damage.type_multiplier < 1:
+				show_text("It's not very effective on %s..." % damage.target.name)
+			call_function(check_battle_end)
+
+
+
+	call_step(
+		Battle.BattleSteps.AFTER_MOVE_ANIMATION,
+		{
+			"damage": damage_list,
+			"move": move,
+			"targets": targets,
+		} as Dictionary[String, Variant]
+	)
+	move.unregister_effects(self)
 #endregion
+
+
+func call_step(step: BattleSteps, data: Dictionary[String, Variant] = {}) -> void:
+	var sorted_effects: Array[BattleEffect] = effects.keys() as Array[BattleEffect]
+	sorted_effects.sort_custom(_sort_effects)
+	for effect: BattleEffect in sorted_effects:
+		effect.apply(self, step, data)
+	SignalRouter.battle_step.emit(self, step, data)
+
+
+func _sort_effects(a: BattleEffect, b: BattleEffect) -> bool:
+	return effects[a] > effects[b]
+
+
+## Returns the slot (the index) of [param pokemon], which can be either [BattlePokemon] or [Pokemon].
+func get_slot(pokemon: Variant) -> int:
+	if pokemon is BattlePokemon:
+		return pokemons.find(pokemon)
+	elif pokemon is Pokemon:
+		for slot: BattlePokemon in pokemons:
+			if slot and slot.pokemon == pokemon:
+				return pokemons.find(slot)
+	else:
+		push_error("Attempted call of Battle.get_slot without a Pokemon or BattlePokemon argument.")
+	return -1
+
 
 ## Sets up the battle according to [param attributes].
 ## Possible attributes are: [br]
@@ -194,15 +296,16 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 
 	# Set battleback graphics
 	background.texture = battleback.background
-	ui_message_bg.texture = battleback.message
+	ui.message_background.texture = battleback.message
 	player_ground.texture = battleback.player_base
 	enemy_ground.texture = battleback.enemy_base
 
 
 	# Set trainers and first pokemon
-	ally_trainers.append(BattleTrainer.new(
+	player_trainer = BattleTrainer.new(
 		PlayerData.player_name, PlayerData.team, true
-	))
+	)
+	ally_trainers.append(player_trainer)
 	if attributes.get("ally_trainer", null):
 		ally_trainers.append(attributes.get("ally_trainer"))
 
@@ -229,77 +332,6 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 
 	refresh_visuals()
 
-	#region Connect UI signals
-	base_commands.visibility_changed.connect(_on_base_commands_visibility_changed)
-
-	#region Fight command signals
-	fight_button.pressed.connect(show_commands.bind(fight_commands))
-	fight_commands.visibility_changed.connect(_on_fight_commands_visibility_changed)
-
-	fight_cancel_button.pressed.connect(_on_fight_cancel)
-
-	fight_cancel_button.focus_entered.connect(move_info.set.bind("text", ""))
-
-	for button: MoveButton in move_buttons:
-		button.focus_entered.connect(_on_move_focus.bind(button))
-		button.pressed.connect(set.bind("last_move_button_pressed", button))
-		button.gui_input.connect(_on_move_gui_input)
-	#endregion
-
-	#region Target select signals
-	target_commands.visibility_changed.connect(_on_target_commands_visibility_changed)
-	target_cancel_button.pressed.connect(show_commands.bind(fight_commands))
-	#endregion
-
-	#endregion
-	#endregion
-
-
-#region Button functions
-func _on_base_commands_visibility_changed() -> void:
-	if not base_commands.visible:
-		return
-	fight_button.grab_focus.call_deferred()
-
-
-func _on_fight_commands_visibility_changed() -> void:
-	if not fight_commands.visible:
-		return
-	if last_move_button_pressed and last_move_button_pressed.visible:
-		last_move_button_pressed.grab_focus.call_deferred()
-	else:
-		move_buttons.front().grab_focus.call_deferred()
-
-
-func _on_fight_cancel() -> void:
-	if current_pokemon_index > 0:
-		current_pokemon_index -= 1
-		refresh_move_buttons()
-		return
-	show_commands(base_commands)
-
-
-func _on_move_focus(button: MoveButton) -> void:
-	var text: String = "PP: "
-	text += str(button.move.pp) + "/" + str(button.move.total_pp) + "\n"
-	text += str(button.move.power) + " - " + str(button.move.accuracy) + "%"
-	move_info.text = text
-	fight_cancel_button.focus_neighbor_left = button.get_path()
-
-
-func _on_move_gui_input(input: InputEvent) -> void:
-	if input.is_action_pressed("ui_cancel"):
-		_on_fight_cancel()
-
-
-func _on_target_commands_visibility_changed() -> void:
-	if not target_commands.visible:
-		return
-	for button: Button in target_buttons:
-		if not button.disabled:
-			button.grab_focus.call_deferred()
-			break
-#endregion
 
 
 ## Ends the battle, emitting all the signals needed and showing the proper animations.
@@ -313,12 +345,39 @@ func end_battle() -> void:
 	)
 
 
+## Check if the battle has ended and set [member outcome].
+func check_battle_end() -> void:
+	var lost: bool = true
+	for trainer: BattleTrainer in ally_trainers:
+		if trainer.team.is_healthy():
+			lost = false
+			break
+	if lost:
+		outcome = Outcomes.LOSS
+		return
+	var won: bool = true
+	for trainer: BattleTrainer in enemy_trainers:
+		if trainer.team.is_healthy():
+			won = false
+			break
+	if won:
+		outcome = Outcomes.WIN
+
+
+## Checks if [b]any[/b] pokemon of [param trainer] has fainted.
+func check_fainted_pokemon(trainer: BattleTrainer) -> bool:
+	for pokemon: BattlePokemon in pokemons:
+		if pokemon and pokemon.trainer == trainer and pokemon.hp <= 0:
+			return true
+	return false
+
+
 ## Calls [method refresh_databoxes], [method refresh_move_buttons], [method refresh_pokemon_sprites] and [method refresh_target_buttons].
 func refresh_visuals() -> void:
-	refresh_databoxes()
-	refresh_move_buttons()
+	ui.refresh_databoxes()
+	ui.refresh_move_buttons()
 	refresh_pokemon_sprites()
-	refresh_target_buttons()
+	ui.refresh_target_buttons()
 
 
 ## Sets the pokemon sprites to the current pokemon in [member pokemons].
@@ -326,44 +385,13 @@ func refresh_pokemon_sprites() -> void:
 	for i: int in sprites.size():
 		var pokemon: BattlePokemon = pokemons[i]
 		if not pokemon:
-			sprites[i].texture = null
-		elif pokemon in ally_pokemon:
-			sprites[i].texture = pokemon.pokemon.sprite_back
+			sprites[i].pokemon = null
+			continue
+		sprites[i].pokemon = pokemon.pokemon
+		if pokemon in ally_pokemon:
+			sprites[i].back_sprite = true
 		else:
-			sprites[i].texture = pokemon.pokemon.sprite_front
-
-
-
-## Assigns the current pokemon to the databoxes and hides them if needed.
-func refresh_databoxes() -> void:
-	if double_battle:
-		pass
-	else:
-		databox_ally_single.show()
-		databox_ally_single.enabled = true
-		databox_ally_single.pokemon = ally_pokemon.front().pokemon
-
-		databox_enemy_single.show()
-		databox_enemy_single.enabled = true
-		databox_enemy_single.pokemon = enemy_pokemon.front().pokemon
-
-
-## Shows the current pokemon's moves in the move buttons.
-func refresh_move_buttons() -> void:
-	for i: int in 4:
-		if i + 1 > ally_pokemon[current_pokemon_index].pokemon.moves.size():
-			move_buttons[i].hide()
-		else:
-			move_buttons[i].show()
-			move_buttons[i].move = ally_pokemon[current_pokemon_index].pokemon.moves[i]
-
-		#move_buttons[i].pressed.connect()
-
-
-## Update the target buttons with the current pokemon on the field.
-func refresh_target_buttons() -> void:
-	for i: int in pokemons.size():
-		target_buttons[i].text = pokemons[i].name if pokemons[i] else ""
+			sprites[i].back_sprite = false
 
 
 ## Refreshes the turn order, excluding the pokemon slots who have acted. [br][br]
@@ -391,9 +419,9 @@ func switch(from_slot: int, to: Pokemon) -> void:
 		self, to, pokemons[from_slot].trainer
 	)
 	pokemons[from_slot] = new_mon
-	refresh_databoxes()
+	ui.refresh_databoxes()
 	refresh_pokemon_sprites()
-	refresh_target_buttons()
+	ui.refresh_target_buttons()
 
 
 ## Calculates the chance to flee based on the first ally pokemon and the first enemy pokemon.
@@ -452,17 +480,19 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	return battle
 
 
-static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokemon, targets: Array[BattlePokemon]) -> Array[DamageCalculation]:
+## Given the parameters, return a list of damage calculations to apply on the respective pokemon in that slot.
+## The output [Array] has the same size as [member pokemons] and each element is [code]null[/code] if the damage is not to be applied
+## to the pokemon in that slot, a [Battle.DamageCalculation] otherwise.
+func damage_calc(move: PokemonMove, attacker: BattlePokemon, targets: Array[BattlePokemon]) -> Array[DamageCalculation]:
 	var values: Array[DamageCalculation]
-	values.resize(battle.pokemons.size())
+	values.resize(pokemons.size())
 
 	for target: BattlePokemon in targets:
-		var index: int = battle.pokemons.find(target)
+		var index: int = pokemons.find(target)
 		if index == -1:
 			continue
 
 		var calculation: DamageCalculation = DamageCalculation.new()
-		calculation.battle = battle
 		calculation.move = move
 		calculation.attacker = attacker
 		calculation.target = target
@@ -474,13 +504,14 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokem
 			calculation.attack_stat = Globals.STATS.SPECIAL_ATTACK
 			calculation.defense_stat = Globals.STATS.SPECIAL_DEFENSE
 
+
 		# TODO: Complete accuracy check: https://bulbapedia.bulbagarden.net/wiki/Accuracy#Generation_V_onward
 		var accuracy: float = move.accuracy * BattlePokemon.get_accuracy_multiplier(
 			attacker.boosts[Globals.OTHER_STATS.ACCURACY], target.boosts[Globals.OTHER_STATS.ACCURACY]
 		)
 		calculation.miss = Globals.rng.randf_range(0.0, 100.0) > accuracy
 
-		SignalRouter.battle_step.emit(battle, BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
+		call_step(BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
 		calculation.random = randf_range(0.85, 1.0)
 		calculation.critical_multiplier = Globals.CRITICAL_MULTIPLIER if randf_range(0.0, 1.0) <= (1.0 / 24.0) else 1.0
@@ -489,7 +520,7 @@ static func damage_calc(battle: Battle, move: PokemonMove, attacker: BattlePokem
 		if calculation.type_multiplier == 0:
 			calculation.miss = true
 
-		SignalRouter.battle_step.emit(battle, BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
+		call_step(BattleSteps.AFTER_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
 		values[index] = calculation
 
@@ -515,7 +546,6 @@ class TurnAction:
 class DamageCalculation:
 	var attack_stat: String ## The used attack stat.
 	var defense_stat: String ## The used defense stat.
-	var battle: Battle ## A reference to the battle this is used in.
 	var move: PokemonMove ## The used move.
 	var attacker: BattlePokemon ## The pokemon who attacks.
 	var target: BattlePokemon ## The pokemon who gets attacked.

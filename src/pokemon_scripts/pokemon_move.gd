@@ -9,6 +9,7 @@ enum Categories { ## Move categories.
 	SPECIAL, ## Does direct damage using the user's special attack stat.
 	STATUS, ## Does no direct damage, only has a secondary effect.
 }
+
 enum Targets { ## The move's possible targets.
 	USER, ## Targets the user.
 	OTHER, ## Targets one of the other pokemon on the field.
@@ -107,14 +108,14 @@ func get_possible_targets(battle: Battle, user: BattlePokemon, move_target: Targ
 	return targets
 
 
-func enable_effects() -> void:
+func register_effects(battle: Battle) -> void:
 	for effect: BattleEffect in effects:
-		effect.enable()
+		effect.register(battle)
 
 
-func disable_effects() -> void:
+func unregister_effects(battle: Battle) -> void:
 	for effect: BattleEffect in effects:
-		effect.disable()
+		effect.unregister(battle)
 
 
 func as_save_data() -> Dictionary[String, Variant]:

@@ -1,34 +1,28 @@
 extends State
 
 @export var battle: Battle
+@export var ui: BattleUI
+
+
+func _ready() -> void:
+	ui.move_selected.connect(_on_move_selected)
 
 
 func enter() -> void:
 	battle.current_pokemon_index = 0
-	battle.refresh_move_buttons()
+	ui.refresh_move_buttons()
 
-	for button: MoveButton in battle.move_buttons:
-		button.pressed.connect(_on_move_selected.bind(button.move))
+	ui.pokemon_selected.connect(_switch)
+	ui.run_selected.connect(_try_run)
 
-	battle.pokemon_button.pressed.connect(_open_party)
-	battle.run_button.pressed.connect(_try_run)
-
-	battle.show_commands(battle.base_commands)
-	battle.fight_button.grab_focus.call_deferred()
+	ui.show_screen(BattleUI.Screens.BASE)
 
 	await _show_text()
 
 
 func exit() -> void:
-	for button: MoveButton in battle.move_buttons:
-		button.pressed.disconnect(_on_move_selected)
-
-	battle.pokemon_button.pressed.disconnect(_open_party)
-	battle.run_button.pressed.disconnect(_try_run)
-
-
-	battle.base_commands.hide()
-	battle.fight_commands.hide()
+	ui.pokemon_selected.disconnect(_switch)
+	ui.run_selected.disconnect(_try_run)
 
 
 func _next(action: Battle.TurnAction) -> void:
@@ -44,9 +38,8 @@ func _next(action: Battle.TurnAction) -> void:
 
 func _on_move_selected(move: PokemonMove) -> void:
 	var targets: Array[bool]
-	targets.resize(battle.pokemons.size())
 	if battle.double_battle:
-		battle.show_commands(battle.target_commands)
+		ui.show_screen(BattleUI.Screens.TARGET_SELECT)
 		# TODO: Double battle target selection
 	else:
 		targets = move.get_possible_targets(battle, battle.current_pokemon)
@@ -58,30 +51,6 @@ func _confirm_move(move: PokemonMove, targets: Array[bool]) -> void:
 		Battle.Actions.FIGHT, {"pokemon": battle.current_pokemon, "move": move, "targets": targets}
 	)
 	_next(action)
-
-
-func _open_party() -> void:
-	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true})
-	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-	await TransitionManager.finished
-	battle.ui_layer.add_child(party)
-	party.pokemon_selected.connect(func(pokemon: Pokemon):
-		if pokemon.hp <= 0:
-			return
-		party.closed.emit()
-		_switch(pokemon)
-	)
-	party.closed.connect(_close_party.bind(party))
-	
-func _close_party(party: PartyMenu) -> void:
-	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-	await TransitionManager.finished
-	party.queue_free()
-	await party.tree_exited
-	TransitionManager.play_out()
-	await TransitionManager.finished
-	battle.pokemon_button.grab_focus.call_deferred()
-
 
 
 func _switch(to: Pokemon) -> void:
@@ -97,12 +66,5 @@ func _try_run() -> void:
 	
 
 func _show_text() -> void:
-	var manager: DialogueManager
-	for node: Node in battle.selection_dialogue.get_children():
-		if node is DialogueManager:
-			manager = node
-			node.starting_sequence.text = "What will\n%s do?" % battle.current_pokemon.name
-			break
-	battle.selection_dialogue.run_dialogue(manager)
-	await battle.selection_dialogue.finished
+	await ui.show_selection_text("What will\n%s do?" % battle.current_pokemon.name).finished
 	

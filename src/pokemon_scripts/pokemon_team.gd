@@ -132,6 +132,9 @@ func second_healthy() -> Pokemon:
 			return pokemon
 	return
 
+## Returns true if the team has at least one healthy pokemon.
+func is_healthy() -> bool:
+	return first_healthy() != null
 
 ## Heals the team.
 func heal() -> void:
