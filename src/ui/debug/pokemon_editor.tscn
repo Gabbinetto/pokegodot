@@ -94,7 +94,6 @@ layout_mode = 2
 size_flags_vertical = 3
 flat = true
 text_overrun_behavior = 3
-selected = 0
 
 [node name="Level" type="SpinBox" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2

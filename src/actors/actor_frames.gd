@@ -1,14 +1,11 @@
+@tool
 class_name ActorFrames extends SpriteFrames
 
 
-@export var texture: Texture2D:
-	set(value):
-		texture = value
-		if texture:
-			generate_animations()
-			remove_animation("default")
+@export var texture: Texture2D
 
 @export_range(1, 99, 1, "or_greater") var animation_frames: int = 4
+@export_tool_button("Generate", "SpriteFrames") var generate_button: Callable = generate_animations
 
 
 func generate_animations() -> void:
@@ -32,3 +29,5 @@ func generate_animations() -> void:
 					remove_animation(Actor.ANIMATION_IDLE_PREFIX + direction)
 				add_animation(Actor.ANIMATION_IDLE_PREFIX + direction)
 				add_frame(Actor.ANIMATION_IDLE_PREFIX + direction, frame)
+
+	remove_animation("default")

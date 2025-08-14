@@ -30,7 +30,9 @@ enum BattleSteps {
 enum BufferType {
 	TEXT, ## Show text.
 	ANIMATION, ## Show a [BattleAnimation].
-	DATABOX, ## Update databoxes, animating them.
+	DATABOX_HP, ## Update databoxes hp bar, animating them.
+	DATABOX_LEVEL, ## Update databoxes levels, animating the exp bar once.
+	EXP, ## Add EXP to the player's pokemon after a KO, animating the databoxes and learning eventual moves.
 	FUNCTION_CALL, ## Generic function call. Awaits the function in case of a couroutine.
 	TURN_EXECUTION, ## Execute a [Battle.TurnAction].
 	FAINTED_SWITCH, ## Prompt a switch when an ally pokemon faints.
@@ -53,8 +55,10 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export_group("UI")
 @export var ui: BattleUI
 
+
 var double_battle: bool = false
 var trainer_battle: bool = false
+var exp_enabled: bool = true
 var battleback: Battlebacks.Set = Battlebacks.loaded_sets[0]
 var outcome: Outcomes = Outcomes.NONE
 var ally_trainers: Array[BattleTrainer] = []
@@ -63,10 +67,12 @@ var trainers: Array[BattleTrainer]:
 	get: return ally_trainers + enemy_trainers
 var player_trainer: BattleTrainer
 var pokemons: Array[BattlePokemon] = [null, null, null, null]
+@warning_ignore_start("integer_division")
 var ally_pokemon: Array[BattlePokemon]:
 	get: return pokemons.slice(0, pokemons.size() / 2)
 var enemy_pokemon: Array[BattlePokemon]:
 	get: return pokemons.slice(pokemons.size() / 2, pokemons.size())
+@warning_ignore_restore("integer_division")
 var current_pokemon_index: int = 0
 var current_pokemon: BattlePokemon:
 	get: return ally_pokemon[current_pokemon_index]
@@ -80,7 +86,6 @@ var _buffer: Array[Dictionary] = []
 var _buffering: bool = false
 
 var last_move_button_pressed: MoveButton
-
 
 
 func _ready() -> void:
@@ -110,9 +115,19 @@ func play_animation(animation: BattleAnimation) -> void:
 	add_buffer(BufferType.ANIMATION, animation)
 
 
-## Animates the given [param databox], adding it to the buffer.
-func animate_databox(databox: Databox) -> void:
-	add_buffer(BufferType.DATABOX, databox)
+## Animates the given [param databox]'s hp with [method Databox.animate_hp_bar], adding the process to the buffer.
+func animate_hp(databox: Databox) -> void:
+	add_buffer(BufferType.DATABOX_HP, databox)
+
+
+## Animates the given [param databox]'s exp bar once with [method Databox.animate_level], adding the process to the buffer.
+func animate_level(databox: Databox) -> void:
+	add_buffer(BufferType.DATABOX_LEVEL, databox)
+
+
+## Add exp to the player's pokemon, adding the process to the buffer. [param fainted_pokemon] is the fainted pokemon giving exp.
+func add_exp(fainted_pokemon: BattlePokemon) -> void:
+	add_buffer(BufferType.EXP, fainted_pokemon)
 
 
 ## Executes a turn, adding it to the buffer.
@@ -149,11 +164,27 @@ func _execute_buffer() -> void:
 			var data: BattleAnimation = buffer.data
 			data.play()
 			await data.finished
-		BufferType.DATABOX:
+		BufferType.DATABOX_HP:
 			var data: Databox = buffer.data
 			await data.animate_hp_bar().finished
-			if data.exp_bar:
-				await data.animate_exp_bar().finished
+		BufferType.EXP:
+			var fainted_pokemon: BattlePokemon = buffer.data
+			var player_pokemon_count: float = ally_pokemon.filter(func(pokemon: BattlePokemon): return pokemon and pokemon.trainer.is_player).size()
+			for pokemon: BattlePokemon in ally_pokemon:
+				if not pokemon or not pokemon.trainer.is_player:
+					continue
+				var exp_points: int = Experience.exp_yield(
+					fainted_pokemon.species.base_exp, pokemon.level, fainted_pokemon.level, true, [1.0 / player_pokemon_count]
+				)
+				pokemon.pokemon.experience += exp_points
+				show_text("%s gained %d experience points!" % [pokemon.name, exp_points])
+				var slot: int = get_slot(pokemon)
+			
+				for i: int in pokemon.level - ui.used_databoxes[slot].shown_level + 1:
+					animate_level(ui.used_databoxes[slot])
+		BufferType.DATABOX_LEVEL:
+			var data: Databox = buffer.data
+			await data.animate_level().finished
 		BufferType.FUNCTION_CALL:
 			var fun: Callable = buffer.data
 			await fun.call()
@@ -175,7 +206,7 @@ func _execute_buffer() -> void:
 				ui.prompt_switch(false)
 				await ui.pokemon_selected
 				switch(from, ui.last_selected_pokemon)
-				print("Switched")
+	
 		_:
 			push_error("Buffer type unknown: ", BufferType.find_key(buffer.type))
 	_buffering = false
@@ -238,14 +269,13 @@ func _execute_fight_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
 		if damage.value() > 0:
 			var hurt_flash: BattleAnimation = BattleAnimation.get_animation("hurt_flash", [sprites[slot]], self)
 			play_animation(hurt_flash)
-			call_function(damage.target.set.bind("hp", damage.target.hp - damage.value()))
-			animate_databox(ui.used_databoxes[slot])
+			call_function(damage.target.apply_damage.bind(damage.value()))
+			animate_hp(ui.used_databoxes[slot])
 			if damage.type_multiplier > 1:
 				show_text("It's supereffective on %s!" % damage.target.name)
 			elif damage.type_multiplier < 1:
 				show_text("It's not very effective on %s..." % damage.target.name)
 			call_function(check_battle_end)
-
 
 
 	call_step(
@@ -291,8 +321,9 @@ func get_slot(pokemon: Variant) -> int:
 ## - [code]ally_trainer[/code]: The ally trainer for a double battle with an NPC ally.[br]
 ## - [code]enemy_trainers[/code]: The enemy trainers. If it is a single battle, it can be just [BattleTrainer] instead of being an array of these.[br]
 ## - [code]battleback[/code]: A [member Battlebacks.Sets].[br]
+## - [code]exp_enabled[/code]: If false, the player's pokemon won't gain exp.[br]
 func setup(attributes: Dictionary[String, Variant] = {}) -> void:
-	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback"), Battlebacks.loaded_sets[0])
+	battleback = Battlebacks.loaded_sets.get(attributes.get("battleback", Battlebacks.Sets.values()[0]))
 
 	# Set battleback graphics
 	background.texture = battleback.background
@@ -330,8 +361,10 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		else:
 			pokemons[1] = BattlePokemon.new(self, enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
 
-	refresh_visuals()
+	# Set exp gain
+	exp_enabled = attributes.get("exp_enabled", exp_enabled)
 
+	refresh_visuals()
 
 
 ## Ends the battle, emitting all the signals needed and showing the proper animations.
@@ -341,7 +374,7 @@ func end_battle() -> void:
 		func():
 			Globals.current_battle = null
 			SignalRouter.battle_ended.emit(self)
-			queue_free()
+			queue_free(), CONNECT_ONE_SHOT
 	)
 
 
@@ -429,8 +462,7 @@ func calc_escape_chance() -> float:
 	if ally_pokemon[0].speed >= enemy_pokemon[0].speed:
 		return 1.0
 	escape_attempts += 1
-	return (floorf((ally_pokemon[0].speed * 32.0)/(enemy_pokemon[0].speed * 4.0)) + (30.0 * escape_attempts)) / 256.0
-
+	return (floorf((ally_pokemon[0].speed * 32.0) / (enemy_pokemon[0].speed * 4.0)) + (30.0 * escape_attempts)) / 256.0
 
 
 ## Starts a battle by creating a dedicated [CanvasLayer] and adding it to [member Globals.game_root].

@@ -8,7 +8,7 @@
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xourw"]
 size = Vector2(64, 64)
 
-[node name="DebugMenu" type="PanelContainer" node_paths=PackedStringArray("main", "button_close", "buttons_edit")]
+[node name="DebugMenu" type="PanelContainer" node_paths=PackedStringArray("main", "button_close", "buttons_edit", "button_battle_menu")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,6 +19,7 @@ script = ExtResource("1_xourw")
 main = NodePath("Main")
 button_close = NodePath("Main/Close")
 buttons_edit = [NodePath("Main/HBoxContainer/GridContainer/EditSlot1"), NodePath("Main/HBoxContainer/GridContainer/EditSlot2"), NodePath("Main/HBoxContainer/GridContainer/EditSlot3"), NodePath("Main/HBoxContainer/GridContainer/EditSlot4"), NodePath("Main/HBoxContainer/GridContainer/EditSlot5"), NodePath("Main/HBoxContainer/GridContainer/EditSlot6")]
+button_battle_menu = NodePath("Main/BattleMenu")
 
 [node name="Main" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -81,3 +82,9 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 icon = SubResource("PlaceholderTexture2D_xourw")
 flat = true
+
+[node name="BattleMenu" type="Button" parent="Main"]
+layout_mode = 2
+text = "Battle menu"
+flat = true
+alignment = 0

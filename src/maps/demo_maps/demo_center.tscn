@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bmquf0qtub3c7"]
+[gd_scene load_steps=34 format=4 uid="uid://bmquf0qtub3c7"]
 
 [ext_resource type="Script" uid="uid://bcpwt1l6h7ii5" path="res://src/maps/map.gd" id="1_5uyb2"]
 [ext_resource type="TileSet" uid="uid://qix8twn4v7rn" path="res://assets/resources/tilesets/base_tileset.tres" id="2_bog2t"]
@@ -21,7 +21,172 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wdknn"]
 size = Vector2(32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_j20by"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50yq6"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdknn"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(0, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7sutq"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(0, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5st6m"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkpyg"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ci8u"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgxac"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(32, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mn2dk"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(64, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t46vf"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(96, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6tvb"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(32, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l7nfk"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(64, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tp00"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(96, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiak4"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(32, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwa51"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(64, 144, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ue3m1"]
+atlas = ExtResource("8_50yq6")
+region = Rect2(96, 144, 32, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_wdknn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j20by")
+}],
+"loop": true,
+"name": &"IDLE_DOWN",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50yq6")
+}],
+"loop": true,
+"name": &"IDLE_LEFT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdknn")
+}],
+"loop": true,
+"name": &"IDLE_RIGHT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7sutq")
+}],
+"loop": true,
+"name": &"IDLE_UP",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j20by")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5st6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkpyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ci8u")
+}],
+"loop": true,
+"name": &"WALK_DOWN",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50yq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgxac")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mn2dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t46vf")
+}],
+"loop": true,
+"name": &"WALK_LEFT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdknn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6tvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l7nfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tp00")
+}],
+"loop": true,
+"name": &"WALK_RIGHT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7sutq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wiak4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwa51")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ue3m1")
+}],
+"loop": true,
+"name": &"WALK_UP",
+"speed": 5.0
+}]
 script = ExtResource("7_dka65")
 texture = ExtResource("8_50yq6")
 animation_frames = 4
@@ -91,47 +256,48 @@ metadata/_custom_type_script = "uid://cgajx3xo0b86c"
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_55jck")
 
-[node name="Pikachu" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite", "collision_ray")]
+[node name="Nurse" type="CharacterBody2D" parent="." node_paths=PackedStringArray("sprite", "collision_ray")]
 position = Vector2(224, 64)
 script = ExtResource("6_mlj4o")
 sprite = NodePath("AnimatedSprite2D")
 collision_ray = NodePath("Collision")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pikachu"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Nurse"]
 position = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_wdknn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pikachu"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Nurse"]
 position = Vector2(16, 0)
 sprite_frames = SubResource("SpriteFrames_wdknn")
+animation = &"IDLE_DOWN"
 
-[node name="Collision" type="RayCast2D" parent="Pikachu"]
+[node name="Collision" type="RayCast2D" parent="Nurse"]
 position = Vector2(16, 16)
 target_position = Vector2(0, 16)
 
-[node name="Event" type="Area2D" parent="Pikachu" node_paths=PackedStringArray("dialogue", "choice")]
+[node name="Event" type="Area2D" parent="Nurse" node_paths=PackedStringArray("dialogue", "choice")]
 script = SubResource("GDScript_5st6m")
 dialogue = NodePath("DialogueManager")
 choice = NodePath("DialogueManager/DialogueChoiceSequence")
 metadata/_custom_type_script = "uid://da65406gveta6"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pikachu/Event"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Nurse/Event"]
 position = Vector2(16, 32)
 shape = SubResource("RectangleShape2D_j20by")
 
-[node name="DialogueManager" type="Node" parent="Pikachu/Event" node_paths=PackedStringArray("starting_sequence")]
+[node name="DialogueManager" type="Node" parent="Nurse/Event" node_paths=PackedStringArray("starting_sequence")]
 script = ExtResource("8_j20by")
 starting_sequence = NodePath("DialogueTextSequence")
 metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
 
-[node name="DialogueTextSequence" type="Node" parent="Pikachu/Event/DialogueManager" node_paths=PackedStringArray("next_sequence")]
+[node name="DialogueTextSequence" type="Node" parent="Nurse/Event/DialogueManager" node_paths=PackedStringArray("next_sequence")]
 script = ExtResource("9_50yq6")
 text = "Want me to heal your pokemon?"
 next_sequence = NodePath("../DialogueChoiceSequence")
 metadata/_custom_type_script = "uid://cjypfwj7jwa"
 
-[node name="DialogueChoiceSequence" type="Node" parent="Pikachu/Event/DialogueManager"]
+[node name="DialogueChoiceSequence" type="Node" parent="Nurse/Event/DialogueManager"]
 script = ExtResource("11_j20by")
 choices = Array[String](["Yes", "No"])
 metadata/_custom_type_script = "uid://c2p1q2x2alki"

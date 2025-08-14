@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgvks383thf1g"]
+
+[ext_resource type="Script" uid="uid://jw45e1cgfs6o" path="res://src/ui/debug/debug_battle_menu.gd" id="1_tq871"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="2_ittc6"]
+
+[node name="DebugBattleMenu" type="Control" node_paths=PackedStringArray("back_button", "wild_battle_button", "wild_battle_prompt", "wild_battle_input", "wild_battle_ok", "wild_battle_cancel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tq871")
+back_button = NodePath("VBoxContainer/Back")
+wild_battle_button = NodePath("VBoxContainer/Wild battle")
+wild_battle_prompt = NodePath("WildBattlePrompt")
+wild_battle_input = NodePath("WildBattlePrompt/VBoxContainer/Input")
+wild_battle_ok = NodePath("WildBattlePrompt/VBoxContainer/HBoxContainer/Ok")
+wild_battle_cancel = NodePath("WildBattlePrompt/VBoxContainer/HBoxContainer/Cancel")
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+flat = true
+alignment = 0
+
+[node name="Wild battle" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Start wild battle"
+flat = true
+alignment = 0
+
+[node name="WildBattlePrompt" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -66.0
+offset_right = 128.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WildBattlePrompt"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="WildBattlePrompt/VBoxContainer"]
+layout_mode = 2
+text = "Insert the foe's ID, form and level.
+(Example: BULBASAUR_0_5)"
+label_settings = ExtResource("2_ittc6")
+
+[node name="Input" type="LineEdit" parent="WildBattlePrompt/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "ID_FORM_LEVEL"
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WildBattlePrompt/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Ok" type="Button" parent="WildBattlePrompt/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "OK"
+flat = true
+
+[node name="Cancel" type="Button" parent="WildBattlePrompt/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "CANCEL"
+flat = true

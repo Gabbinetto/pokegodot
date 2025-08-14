@@ -7,6 +7,7 @@ const MENU_SCENE: PackedScene = preload("res://src/ui/debug/debug_menu.tscn")
 @export var main: Control
 @export var button_close: BaseButton
 @export var buttons_edit: Array[Button] = [null, null, null, null, null, null]
+@export var button_battle_menu: BaseButton
 
 
 func _ready() -> void:
@@ -16,6 +17,8 @@ func _ready() -> void:
 	_sync_edit_buttons()
 	for i: int in buttons_edit.size():
 		buttons_edit[i].pressed.connect(_open_pokemon_editor.bind(i))
+
+	button_battle_menu.pressed.connect(_battle_menu)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -55,6 +58,18 @@ func _open_pokemon_editor(slot: int) -> void:
 			buttons_edit[slot].grab_focus.call_deferred()
 	)
 	
+
+
+func _battle_menu() -> void:
+	var menu: DebugBattleMenu = DebugBattleMenu.create()
+	main.hide()
+	add_child(menu)
+	menu.closed.connect(
+		func():
+			menu.queue_free()
+			main.show()
+			button_battle_menu.grab_focus.call_deferred()
+	)
 
 
 static func create() -> DebugMenu:

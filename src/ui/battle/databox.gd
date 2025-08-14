@@ -69,6 +69,25 @@ func animate_hp_bar() -> Tween:
 	return tween
 
 
+## Animates a single level. That means that if the pokemon bound to the databox is of a level higher than [member shown_level],
+## this function will animate the bar up to the max and increase [member shown_level], otherwise it will just animate the bar
+## up to the current experience points. [br]
+## This helps if anything needs to happen between level ups (Like learning a move).
+func animate_level() -> Tween:
+	var tween: Tween = create_tween()
+
+	if pokemon.level > shown_level:
+		tween.tween_property(exp_bar, "value", exp_bar.max_value, EXP_BAR_TIME)
+		tween.tween_callback(exp_bar.set.bind("min_value", Experience.get_exp_at_level(shown_level + 1, pokemon.species.growth_rate)))
+		tween.tween_callback(exp_bar.set.bind("max_value", Experience.get_exp_at_level(shown_level + 2, pokemon.species.growth_rate) - 1))
+		tween.tween_callback(func(): shown_level += 1)
+		tween.tween_callback(func(): exp_bar.value = exp_bar.min_value)
+	else:
+		tween.tween_property(exp_bar, "value", pokemon.experience, EXP_BAR_TIME)
+
+	return tween
+
+
 func animate_exp_bar() -> Tween:
 	var tween: Tween = create_tween()
 

@@ -60,6 +60,14 @@ func _init(_battle: Battle, _pokemon: Pokemon, _trainer: BattleTrainer) -> void:
 	trainer = _trainer
 
 
+## Damages this pokemon, substracting [param amount] from [member hp].
+## If this pokemon faints, [method Battle.add_exp] will be called on [member battle].
+func apply_damage(amount: int) -> void:
+	hp -= amount
+	if hp <= 0:
+		battle.add_exp(self)
+
+
 ## Returns a [param stat], accounting for stat boosts.
 func get_stat(stat: String) -> int:
 	if boosts[stat] > 0:
@@ -85,7 +93,6 @@ func add_boost(stat: String, amount: int) -> bool:
 ## Same as using [code]add_boost(stat, -amount)[/code].
 func remove_boost(stat: String, amount: int) -> bool:
 	return add_boost(stat, -amount)
-
 
 
 func add_boosts(stat_changes: Dictionary[String, int]) -> void:
