@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bcsiutq1n83ma"]
+
+[node name="Slot" type="HBoxContainer"]
+size_flags_horizontal = 3
+
+[node name="ID" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PPUps" type="SpinBox" parent="."]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+tooltip_text = "PP Ups"
+max_value = 3.0
+prefix = "PP Ups:"
+select_all_on_focus = true
+
+[node name="Clear" type="Button" parent="."]
+layout_mode = 2
+text = "X"

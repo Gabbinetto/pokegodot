@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://chp11hjp4n177"]
+
+[ext_resource type="Script" uid="uid://c3vp1its2utll" path="res://addons/pkdebug/menus/battle_menu.gd" id="1_2lxgl"]
+
+[node name="Battle" type="VBoxContainer" node_paths=PackedStringArray("wild_battle_button", "wild_battle_dialog", "wild_battle_id", "wild_battle_form", "wild_battle_level")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2lxgl")
+wild_battle_button = NodePath("WildBattle")
+wild_battle_dialog = NodePath("WildBattleWindow")
+wild_battle_id = NodePath("WildBattleWindow/Control/ID")
+wild_battle_form = NodePath("WildBattleWindow/Control/Form")
+wild_battle_level = NodePath("WildBattleWindow/Control/Level")
+metadata/_tab_index = 1
+
+[node name="WildBattle" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Start wild battle"
+
+[node name="WildBattleWindow" type="ConfirmationDialog" parent="."]
+title = "Start wild battle"
+size = Vector2i(200, 162)
+
+[node name="Control" type="VBoxContainer" parent="WildBattleWindow"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ID" type="LineEdit" parent="WildBattleWindow/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Foe ID"
+
+[node name="Form" type="SpinBox" parent="WildBattleWindow/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+prefix = "Form:"
+select_all_on_focus = true
+
+[node name="Level" type="SpinBox" parent="WildBattleWindow/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+min_value = 1.0
+value = 1.0
+prefix = "Level:"
+select_all_on_focus = true

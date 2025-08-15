@@ -165,9 +165,9 @@ var marks: Array[int] # TODO: Change to enum eventually
 var fused_pokemon: Pokemon
 
 # Sprites
-var sprite_front: Texture ## This pokemon's front sprite.
-var sprite_back: Texture ## This pokemon's back sprite.
-var sprite_icon: Texture ## This pokemon's icon sprite.
+var sprite_front: Texture2D ## This pokemon's front sprite.
+var sprite_back: Texture2D ## This pokemon's back sprite.
+var sprite_icon: Texture2D ## This pokemon's icon sprite.
 
 # Shorthands
 var max_hp: int: ## Shorthand for [member stats] HP key
@@ -191,7 +191,6 @@ var speed: int: ## Shorthand for [member stats] SPEED key
 
 
 func _init(_species: Variant, form: int = 0, attributes: Dictionary[String, Variant] = {}) -> void:
-
 	if _species is PokemonSpecies:
 		species = _species
 	elif _species is String:
@@ -235,7 +234,6 @@ func _on_level_up() -> void:
 	hp += max_hp - old_max_hp
 
 
-
 ## Resets the sprites.
 func set_sprites() -> void:
 	if shiny or super_shiny:
@@ -251,13 +249,15 @@ func set_sprites() -> void:
 ## Recalculates stats. See [url]https://bulbapedia.bulbagarden.net/wiki/Stat#Generation_III_onward[/url]
 func calculate_stats() -> void:
 	for stat: String in Globals.STATS:
-		stats[stat] = calculate_stat(self, stat)
+		stats[stat] = calculate_stat_from_instance(self, stat)
 
 
 ## Heal this pokemon.
 func heal() -> void:
 	hp = max_hp
 	status = null
+	for move: PokemonMove in moves:
+		move.refresh_pp()
 
 
 ## Set this pokemon's moves to the last four moves learnt at [param _level]
@@ -358,10 +358,8 @@ static func from_save_data(data: Dictionary[String, Variant]) -> Pokemon:
 	return Pokemon.new(data.species_id, data.form, attributes)
 
 
-
 ## Generate a random pokemon. [param fixed_attributes] is a dictionary of attributes you don't want to be randomly generated, rather be set to the value held in the dictionary.
 static func generate(species_id: String, form: int = 0, fixed_attributes: Dictionary[String, Variant] = {}) -> Pokemon:
-
 	var _species: PokemonSpecies = PokemonSpecies.new(species_id, form)
 
 	# Get personality value and encryption constant as most random properties are based on that
@@ -412,15 +410,30 @@ static func generate(species_id: String, form: int = 0, fixed_attributes: Dictio
 	return pokemon
 
 
-## Calculate the [param pokemon] [param stat]. [param stat] should be in [member Globals.STATS].[br]
+## Calculate the [param stat] with the [param pokemon] instance by calling [method calculate_stat]
+## with the [param pokemon] data.
+static func calculate_stat_from_instance(pokemon: Pokemon, stat: String) -> int:
+	return Pokemon.calculate_stat(
+		stat,
+		pokemon.species.id,
+		pokemon.species.base_stats[stat],
+		pokemon.ivs[stat],
+		pokemon.evs[stat],
+		pokemon.level,
+		pokemon.nature,
+	)
+
+
+## Calculate the given [param stat]. [param stat] should be in [member Globals.STATS].[br]
 ## From [url]https://bulbapedia.bulbagarden.net/wiki/Stat#Generation_III_onward[/url]
-static func calculate_stat(pokemon: Pokemon, stat: String) -> int:
+@warning_ignore("shadowed_variable")
+static func calculate_stat(stat: String, id: String, base_stat: int, ivs: int, evs: int, level: int, nature: String) -> int:
 	if stat == Globals.STATS.HP:
-		if pokemon.species.id == "SHEDINJA":
+		if id == "SHEDINJA":
 			return 1
 		return floori(
-			(((2.0 * pokemon.species.base_stats.HP + pokemon.ivs.HP + floorf(pokemon.evs.HP / 4.0))) * pokemon.level) / 100.0
-		) + pokemon.level + 10
+			(((2.0 * base_stat + ivs + floorf(evs / 4.0))) * level) / 100.0
+		) + level + 10
 	return floori(
-		(floori((((2 * pokemon.species.base_stats[stat] + pokemon.ivs[stat] + floori(pokemon.evs[stat] / 4.0))) * pokemon.level) / 100.0) + 5) * Globals.natures[pokemon.nature][stat]
+		(floori((((2 * base_stat + ivs + floori(evs / 4.0))) * level) / 100.0) + 5) * Globals.natures[nature][stat]
 	)

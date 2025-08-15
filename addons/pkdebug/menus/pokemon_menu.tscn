@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://cneahchki35p"]
+
+[ext_resource type="Script" uid="uid://bqas8smmiurme" path="res://addons/pkdebug/menus/debug_pokemon_menu.gd" id="1_uetxj"]
+[ext_resource type="PackedScene" uid="uid://d3gokq7xmkgwc" path="res://addons/pkdebug/menus/pokemon_editor/pokemon_editor.tscn" id="2_dp8yt"]
+
+[node name="Pokemon" type="HSplitContainer" node_paths=PackedStringArray("editor", "slot_buttons", "heal_team")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+script = ExtResource("1_uetxj")
+editor = NodePath("Control/VBoxContainer/PokemonEditor")
+slot_buttons = NodePath("VBoxContainer/GridContainer")
+heal_team = NodePath("VBoxContainer/Heal")
+metadata/_tab_index = 0
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Edit slot:"
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="Slot1" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "1"
+
+[node name="Slot2" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "2"
+
+[node name="Slot3" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "3"
+
+[node name="Slot4" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "4"
+
+[node name="Slot5" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "5"
+
+[node name="Slot6" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "6"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Heal" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Heal party"
+autowrap_mode = 2
+
+[node name="Control" type="ScrollContainer" parent="."]
+layout_mode = 2
+follow_focus = true
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PokemonEditor" parent="Control/VBoxContainer" instance=ExtResource("2_dp8yt")]
+visible = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2

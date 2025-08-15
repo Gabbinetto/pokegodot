@@ -46,6 +46,9 @@ var description: String = "???" ## This move's description.
 # Properties of a single instance of a move
 var pp_upgrades: int = 0 ## The number of PP upgrades given to this move.
 var pp: int ## The number of PPs this move has right now.
+var max_pp: int: ## Getter that calculates this instance's max pp, being [member total_pp] + 20% per every [member pp_upgrades].
+	get:
+		return total_pp + floori(total_pp * 0.2 * pp_upgrades)
 
 
 func _init(_id: String) -> void:
@@ -71,10 +74,9 @@ func _init(_id: String) -> void:
 	refresh_pp()
 
 
-## Refreshes this move's PPs, setting [member pp] to [member total_pp] + 20% for every [member pp_upgrades].
+## Refreshes this move's PPs, setting [member pp] to [member max_pp]
 func refresh_pp() -> void:
-	pp = total_pp + floor(total_pp * 0.2 * pp_upgrades)
-
+	pp = max_pp
 
 ## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member Battle.pokemons]
 func get_possible_targets(battle: Battle, user: BattlePokemon, move_target: Targets = target) -> Array[bool]:
@@ -128,6 +130,6 @@ func as_save_data() -> Dictionary[String, Variant]:
 
 static func from_save_data(data: Dictionary[String, Variant]) -> PokemonMove:
 	var move: PokemonMove = PokemonMove.new(data.id)
-	move.pp_upgrades = data.pp_upgrades
-	move.pp = data.pp
+	move.pp_upgrades = data.get("pp_upgrades", 0)
+	move.pp = data.get("pp", move.total_pp)
 	return move

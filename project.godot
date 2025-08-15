@@ -44,10 +44,6 @@ window/handheld/orientation=6
 
 project/assembly_name="Pokegodot"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/explore-editor-theme/plugin.cfg")
-
 [gui]
 
 theme/custom="uid://kn74wkgbq6w5"

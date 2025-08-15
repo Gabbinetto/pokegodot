@@ -34,6 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_2350k")
 follow_focus = true
+scroll_vertical = 345
 vertical_scroll_mode = 4
 script = ExtResource("1_v2k4k")
 close = NodePath("VBoxContainer/HBoxContainer/Sprite/Close")

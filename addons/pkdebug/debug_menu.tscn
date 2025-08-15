@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://23bc1dekcr70"]
+
+[ext_resource type="Script" uid="uid://kk61ijqldk03" path="res://addons/pkdebug/debug_menu.gd" id="1_1344b"]
+[ext_resource type="PackedScene" uid="uid://cneahchki35p" path="res://addons/pkdebug/menus/pokemon_menu.tscn" id="2_kfuw3"]
+[ext_resource type="PackedScene" uid="uid://chp11hjp4n177" path="res://addons/pkdebug/menus/battle_menu.tscn" id="3_k27x4"]
+
+[node name="DebugMenu" type="Control" node_paths=PackedStringArray("tabs", "not_connected_screen", "menus")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_1344b")
+tabs = NodePath("VBoxContainer/Tabs")
+not_connected_screen = NodePath("VBoxContainer/NotConnected")
+menus = [NodePath("VBoxContainer/Tabs/Pokemon"), NodePath("VBoxContainer/Tabs/Battle")]
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Refresh" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Refresh"
+
+[node name="NotConnected" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/NotConnected"]
+layout_mode = 2
+text = "No running game is connected.
+Start the game to use the debug menu."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tabs" type="TabContainer" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="Pokemon" parent="VBoxContainer/Tabs" instance=ExtResource("2_kfuw3")]
+layout_mode = 2
+
+[node name="Battle" parent="VBoxContainer/Tabs" instance=ExtResource("3_k27x4")]
+visible = false
+layout_mode = 2
