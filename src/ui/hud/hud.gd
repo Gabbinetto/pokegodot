@@ -7,7 +7,6 @@ extends Control
 @export var button_party: BaseButton
 @export var button_save: BaseButton
 @export var button_settings: BaseButton
-@export var button_debug: BaseButton
 @export var button_quit: BaseButton
 @export var save_dialogue: DialogueManager
 @export var save_choice: DialogueChoiceSequence
@@ -22,7 +21,6 @@ func _ready() -> void:
 	button_party.pressed.connect(_open_party)
 	button_save.pressed.connect(_save)
 	button_settings.pressed.connect(_open_settings)
-	button_debug.pressed.connect(_open_debug)
 	button_quit.pressed.connect(_quit)
 
 
@@ -94,24 +92,6 @@ func _open_settings() -> void:
 	)
 
 
-func _open_debug() -> void:
-	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
-	menu.hide()
-	submenu_open = true
-	var debug: DebugMenu = DebugMenu.create()
-
-	add_child(debug)
-
-	debug.closed.connect(
-		func():
-			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
-			debug.queue_free()
-			menu.show.call_deferred()
-			submenu_open = false
-			button_debug.grab_focus.call_deferred()
-	)
-
-
 func _quit() -> void:
 	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
@@ -164,7 +144,6 @@ func _save() -> void:
 	MainDialogue.run_dialogue(save_dialogue)
 	await MainDialogue.finished
 	button_save.grab_focus.call_deferred()
-
 
 
 func _on_save_selected(choice: int) -> void:
