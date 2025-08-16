@@ -109,17 +109,17 @@ var pokedex_form: int = 0
 
 
 # Sprites
-var sprite_front_n_m: Texture ## Front normal male sprite.
-var sprite_front_n_f: Texture ## Front normal female sprite.
-var sprite_front_s_m: Texture ## Front shiny male sprite.
-var sprite_front_s_f: Texture ## Front shiny female sprite.
-var sprite_back_n_m: Texture ## Back normal male sprite.
-var sprite_back_n_f: Texture ## Back normal female sprite.
-var sprite_back_s_m: Texture ## Back shiny male sprite.
-var sprite_back_s_f: Texture ## Back shiny female sprite.
-var sprite_icon_n: Texture ## Icon normal sprite.
-var sprite_icon_s: Texture ## Icon shiny sprite.
-var sprite_footprint: Texture ## Footprint sprite.
+var sprite_front_n_m: Texture2D ## Front normal male sprite.
+var sprite_front_n_f: Texture2D ## Front normal female sprite.
+var sprite_front_s_m: Texture2D ## Front shiny male sprite.
+var sprite_front_s_f: Texture2D ## Front shiny female sprite.
+var sprite_back_n_m: Texture2D ## Back normal male sprite.
+var sprite_back_n_f: Texture2D ## Back normal female sprite.
+var sprite_back_s_m: Texture2D ## Back shiny male sprite.
+var sprite_back_s_f: Texture2D ## Back shiny female sprite.
+var sprite_icon_n: Texture2D ## Icon normal sprite.
+var sprite_icon_s: Texture2D ## Icon shiny sprite.
+var sprite_footprint: Texture2D ## Footprint sprite.
 
 # Shorthand variables
 var hp: int: ## Shorthand for [member base_stats] HP key.

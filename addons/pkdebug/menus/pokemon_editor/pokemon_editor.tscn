@@ -1,0 +1,260 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3gokq7xmkgwc"]
+
+[ext_resource type="Script" uid="uid://c0o7kj4qpkxlj" path="res://addons/pkdebug/menus/pokemon_editor/debug_pokemon_editor.gd" id="1_oq5df"]
+[ext_resource type="PackedScene" uid="uid://bcsiutq1n83ma" path="res://addons/pkdebug/menus/pokemon_editor/move_slot.tscn" id="2_dnqft"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uetxj"]
+size = Vector2(192, 192)
+
+[node name="PokemonEditor" type="VBoxContainer" node_paths=PackedStringArray("update_button", "sprite", "species", "forms", "nickname", "gender", "shiny", "super_shiny", "level", "experience", "nature", "moves", "moves_at_level", "stats")]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.32292
+offset_bottom = 265.999
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_oq5df")
+update_button = NodePath("Update")
+sprite = NodePath("HBoxContainer/TextureRect")
+species = NodePath("HBoxContainer/VBoxContainer/Species")
+forms = NodePath("HBoxContainer/VBoxContainer/Form")
+nickname = NodePath("HBoxContainer/VBoxContainer/Nickname")
+gender = NodePath("VBoxContainer/Gender")
+shiny = NodePath("VBoxContainer/Shiny")
+super_shiny = NodePath("VBoxContainer/SuperShiny")
+level = NodePath("HBoxContainer/VBoxContainer/Level")
+experience = NodePath("HBoxContainer/VBoxContainer/Experience")
+nature = NodePath("HBoxContainer/VBoxContainer/Nature")
+moves = NodePath("Moves")
+moves_at_level = NodePath("HBoxContainer2/MovesAtLevel")
+stats = NodePath("Stats")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Update" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Update in game"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Nickname" type="LineEdit" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Nickname"
+
+[node name="Species" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Form" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Level" type="SpinBox" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+prefix = "Level:"
+select_all_on_focus = true
+
+[node name="Experience" type="SpinBox" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+prefix = "Experience:"
+select_all_on_focus = true
+
+[node name="Nature" type="OptionButton" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("PlaceholderTexture2D_uetxj")
+stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Gender" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Gender"
+
+[node name="Shiny" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Shiny"
+alignment = 2
+
+[node name="SuperShiny" type="CheckButton" parent="VBoxContainer"]
+layout_mode = 2
+text = "Super shiny"
+alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Moves"
+
+[node name="MovesAtLevel" type="Button" parent="HBoxContainer2"]
+layout_mode = 2
+text = "Set moves at level"
+
+[node name="Moves" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Slot1" parent="Moves" instance=ExtResource("2_dnqft")]
+layout_mode = 2
+
+[node name="Slot2" parent="Moves" instance=ExtResource("2_dnqft")]
+layout_mode = 2
+
+[node name="Slot3" parent="Moves" instance=ExtResource("2_dnqft")]
+layout_mode = 2
+
+[node name="Slot4" parent="Moves" instance=ExtResource("2_dnqft")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Stats"
+
+[node name="Stats" type="HBoxContainer" parent="."]
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Names" type="VBoxContainer" parent="Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="RichTextLabel" parent="Stats/Names"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Name"
+fit_content = true
+scroll_active = false
+
+[node name="HP" type="Label" parent="Stats/Names"]
+layout_mode = 2
+
+[node name="ATTACK" type="Label" parent="Stats/Names"]
+layout_mode = 2
+
+[node name="DEFENSE" type="Label" parent="Stats/Names"]
+layout_mode = 2
+
+[node name="SPECIAL_ATTACK" type="Label" parent="Stats/Names"]
+layout_mode = 2
+
+[node name="SPECIAL_DEFENSE" type="Label" parent="Stats/Names"]
+layout_mode = 2
+
+[node name="SPEED" type="Label" parent="Stats/Names"]
+layout_mode = 2
+
+[node name="Values" type="VBoxContainer" parent="Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="RichTextLabel" parent="Stats/Values"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]Value"
+fit_content = true
+scroll_active = false
+
+[node name="HP" type="Label" parent="Stats/Values"]
+layout_mode = 2
+
+[node name="ATTACK" type="Label" parent="Stats/Values"]
+layout_mode = 2
+
+[node name="DEFENSE" type="Label" parent="Stats/Values"]
+layout_mode = 2
+
+[node name="SPECIAL_ATTACK" type="Label" parent="Stats/Values"]
+layout_mode = 2
+
+[node name="SPECIAL_DEFENSE" type="Label" parent="Stats/Values"]
+layout_mode = 2
+
+[node name="SPEED" type="Label" parent="Stats/Values"]
+layout_mode = 2
+
+[node name="IVs" type="VBoxContainer" parent="Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="RichTextLabel" parent="Stats/IVs"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]IVs"
+fit_content = true
+scroll_active = false
+
+[node name="HP" type="SpinBox" parent="Stats/IVs"]
+layout_mode = 2
+max_value = 31.0
+
+[node name="ATTACK" type="SpinBox" parent="Stats/IVs"]
+layout_mode = 2
+max_value = 31.0
+
+[node name="DEFENSE" type="SpinBox" parent="Stats/IVs"]
+layout_mode = 2
+max_value = 31.0
+
+[node name="SPECIAL_ATTACK" type="SpinBox" parent="Stats/IVs"]
+layout_mode = 2
+max_value = 31.0
+
+[node name="SPECIAL_DEFENSE" type="SpinBox" parent="Stats/IVs"]
+layout_mode = 2
+max_value = 31.0
+
+[node name="SPEED" type="SpinBox" parent="Stats/IVs"]
+layout_mode = 2
+max_value = 31.0
+
+[node name="EVs" type="VBoxContainer" parent="Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Header" type="RichTextLabel" parent="Stats/EVs"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]EVs"
+fit_content = true
+scroll_active = false
+
+[node name="HP" type="SpinBox" parent="Stats/EVs"]
+layout_mode = 2
+max_value = 252.0
+
+[node name="ATTACK" type="SpinBox" parent="Stats/EVs"]
+layout_mode = 2
+max_value = 252.0
+
+[node name="DEFENSE" type="SpinBox" parent="Stats/EVs"]
+layout_mode = 2
+max_value = 252.0
+
+[node name="SPECIAL_ATTACK" type="SpinBox" parent="Stats/EVs"]
+layout_mode = 2
+max_value = 252.0
+
+[node name="SPECIAL_DEFENSE" type="SpinBox" parent="Stats/EVs"]
+layout_mode = 2
+max_value = 252.0
+
+[node name="SPEED" type="SpinBox" parent="Stats/EVs"]
+layout_mode = 2
+max_value = 252.0

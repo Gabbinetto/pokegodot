@@ -478,6 +478,7 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 		return
 	var layer: CanvasLayer = CanvasLayer.new()
 	var battle: Battle = attributes.get("battle_scene", DEFAULT_BATTLE_SCENE).instantiate()
+	Globals.current_battle = battle
 	layer.add_child(battle)
 	layer.name = "BattleLayer"
 
