@@ -215,6 +215,7 @@ grow_vertical = 0
 focus_neighbor_left = NodePath("../Panels/PartyPanel6")
 focus_neighbor_top = NodePath("../Panels/PartyPanel6")
 focus_previous = NodePath("../Panels/PartyPanel6")
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_sble2")
 text = "CANCEL"
 

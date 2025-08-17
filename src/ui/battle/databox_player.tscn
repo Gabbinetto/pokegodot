@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b5l5tiw6t3228"]
+[gd_scene load_steps=13 format=3 uid="uid://b5l5tiw6t3228"]
 
 [ext_resource type="Texture2D" uid="uid://cxd32dboj1rty" path="res://assets/graphics/ui/battle/databox_normal.png" id="1_g8f86"]
 [ext_resource type="Script" uid="uid://gihojunguedm" path="res://src/ui/battle/databox.gd" id="2_ernat"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://de1fxnae5kucj" path="res://assets/fonts/raw/hgss-databox-numbers.ttf" id="8_t3ydq"]
 [ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/ui/text_resources/databox_numbers.tres" id="9_kubli"]
 [ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="9_m18us"]
+[ext_resource type="Texture2D" uid="uid://cklahfu5p60x2" path="res://assets/graphics/ui/gender_male_icon.png" id="11_t3ydq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3gi0n"]
 font = ExtResource("8_t3ydq")
@@ -18,7 +19,7 @@ font_color = Color(0.282353, 0.282353, 0.282353, 1)
 shadow_size = 4
 shadow_color = Color(0.635294, 0.635294, 0.666667, 1)
 
-[node name="DataboxPlayer" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "hp_numbers", "exp_bar", "level_text")]
+[node name="DataboxPlayer" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "hp_numbers", "exp_bar", "level_text", "gender")]
 offset_right = 260.0
 offset_bottom = 84.0
 texture = ExtResource("1_g8f86")
@@ -29,6 +30,7 @@ hp_bar = NodePath("HPBar")
 hp_numbers = NodePath("HPNumbers")
 exp_bar = NodePath("EXPBar")
 level_text = NodePath("Level")
+gender = NodePath("Gender")
 
 [node name="HPBar" type="TextureProgressBar" parent="."]
 layout_mode = 1
@@ -90,25 +92,32 @@ anchor_left = 0.677
 anchor_top = 0.81
 anchor_right = 0.677
 anchor_bottom = 0.81
-offset_left = 35.98
+offset_left = 19.98
 offset_top = -49.04
-offset_right = 83.98
+offset_right = 67.98
 offset_bottom = -38.04
 text = "100"
 label_settings = ExtResource("9_kubli")
-metadata/_edit_lock_ = true
 
 [node name="PokemonName" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.162
+anchor_left = 0.608
 anchor_top = 0.262
-anchor_right = 0.162
+anchor_right = 0.608
 anchor_bottom = 0.262
-offset_left = -0.119999
+offset_left = -116.08
 offset_top = -12.008
-offset_right = 143.88
+offset_right = -0.0800171
 offset_bottom = 11.992
+grow_horizontal = 0
 text = "Pikachu"
 label_settings = ExtResource("9_m18us")
-metadata/_edit_lock_ = true
+
+[node name="Gender" type="TextureRect" parent="."]
+offset_left = 160.0
+offset_top = 12.0
+offset_right = 172.0
+offset_bottom = 32.0
+texture = ExtResource("11_t3ydq")
+stretch_mode = 2

@@ -11,6 +11,7 @@ anchor_right = 0.796875
 anchor_bottom = 0.578125
 offset_right = -408.0
 offset_bottom = -222.0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_4xawk")
 texture_pressed = ExtResource("2_6andc")
 texture_hover = ExtResource("1_4xawk")

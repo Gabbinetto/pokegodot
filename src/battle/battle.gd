@@ -32,7 +32,7 @@ enum BufferType {
 	ANIMATION, ## Show a [BattleAnimation].
 	DATABOX_HP, ## Update databoxes hp bar, animating them.
 	DATABOX_LEVEL, ## Update databoxes levels, animating the exp bar once.
-	EXP, ## Add EXP to the player's pokemon after a KO, animating the databoxes and learning eventual moves.
+	POKEMON_FAINT, ## Add EXP to the player's pokemon after a KO, animating the databoxes and learning eventual moves.
 	FUNCTION_CALL, ## Generic function call. Awaits the function in case of a couroutine.
 	TURN_EXECUTION, ## Execute a [Battle.TurnAction].
 	FAINTED_SWITCH, ## Prompt a switch when an ally pokemon faints.
@@ -75,9 +75,10 @@ var enemy_pokemon: Array[BattlePokemon]:
 @warning_ignore_restore("integer_division")
 var current_pokemon_index: int = 0
 var current_pokemon: BattlePokemon:
-	get: return ally_pokemon[current_pokemon_index]
+	get: return pokemons[current_pokemon_index] if current_pokemon_index in range(0, pokemons.size()) else null
 var turn_order: Array[int]
 var turn_selections: Dictionary[int, TurnAction] = {}
+var acted: Array[int] = []
 var escape_attempts: int = 0
 var effects: Dictionary[BattleEffect, int] = {}
 var is_buffering: bool:
@@ -126,8 +127,8 @@ func animate_level(databox: Databox) -> void:
 
 
 ## Add exp to the player's pokemon, adding the process to the buffer. [param fainted_pokemon] is the fainted pokemon giving exp.
-func add_exp(fainted_pokemon: BattlePokemon) -> void:
-	add_buffer(BufferType.EXP, fainted_pokemon)
+func pokemon_fainted(fainted_pokemon: BattlePokemon) -> void:
+	add_buffer(BufferType.POKEMON_FAINT, fainted_pokemon)
 
 
 ## Executes a turn, adding it to the buffer.
@@ -167,21 +168,28 @@ func _execute_buffer() -> void:
 		BufferType.DATABOX_HP:
 			var data: Databox = buffer.data
 			await data.animate_hp_bar().finished
-		BufferType.EXP:
+		BufferType.POKEMON_FAINT:
 			var fainted_pokemon: BattlePokemon = buffer.data
-			var player_pokemon_count: float = ally_pokemon.filter(func(pokemon: BattlePokemon): return pokemon and pokemon.trainer.is_player).size()
-			for pokemon: BattlePokemon in ally_pokemon:
-				if not pokemon or not pokemon.trainer.is_player:
-					continue
-				var exp_points: int = Experience.exp_yield(
-					fainted_pokemon.species.base_exp, pokemon.level, fainted_pokemon.level, true, [1.0 / player_pokemon_count]
-				)
-				pokemon.pokemon.experience += exp_points
-				show_text("%s gained %d experience points!" % [pokemon.name, exp_points])
-				var slot: int = get_slot(pokemon)
-			
-				for i: int in pokemon.level - ui.used_databoxes[slot].shown_level + 1:
-					animate_level(ui.used_databoxes[slot])
+			turn_selections.erase(pokemons.find(fainted_pokemon))
+			pokemons[pokemons.find(fainted_pokemon)] = null
+			refresh_visuals()
+			refresh_turn_order()
+			show_text("%s fainted!" % fainted_pokemon.name)
+
+			if fainted_pokemon.trainer in enemy_trainers:
+				var player_pokemon_count: float = ally_pokemon.filter(func(pokemon: BattlePokemon): return pokemon and pokemon.trainer.is_player).size()
+				for pokemon: BattlePokemon in ally_pokemon:
+					if not pokemon or not pokemon.trainer.is_player:
+						continue
+					var exp_points: int = Experience.exp_yield(
+						fainted_pokemon.species.base_exp, pokemon.level, fainted_pokemon.level, true, [1.0 / player_pokemon_count]
+					)
+					pokemon.pokemon.experience += exp_points
+					show_text("%s gained %d experience points!" % [pokemon.name, exp_points])
+					var slot: int = get_slot(pokemon)
+				
+					for i: int in pokemon.level - ui.used_databoxes[slot].shown_level + 1:
+						animate_level(ui.used_databoxes[slot])
 		BufferType.DATABOX_LEVEL:
 			var data: Databox = buffer.data
 			await data.animate_level().finished
@@ -249,10 +257,11 @@ func _execute_fight_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
 		if not damage:
 			continue
 		if damage.miss:
-			show_text("%s's attack failed." % pokemon.name)
+			if damage.type_multiplier == 0:
+				show_text("It has no effect on %s..." % damage.target.name)
+			else:
+				show_text("%s's attack failed." % pokemon.name)
 			continue
-		if damage.type_multiplier == 0:
-			show_text("It has no effect on %s..." % damage.target.name)
 		move_animation_sprites.append(sprites[i])
 	
 	if not move_animation_sprites.is_empty():
@@ -357,9 +366,22 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 		else:
 			pokemons[1] = BattlePokemon.new(self, ally_trainers[0].team.second_healthy(), ally_trainers[0])
 		if enemy_trainers.size() > 1:
-			pokemons[1] = BattlePokemon.new(self, enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
+			pokemons[3] = BattlePokemon.new(self, enemy_trainers[1].team.first_healthy(), enemy_trainers[1])
 		else:
-			pokemons[1] = BattlePokemon.new(self, enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
+			pokemons[3] = BattlePokemon.new(self, enemy_trainers[0].team.second_healthy(), enemy_trainers[0])
+
+		# Set sprites positions
+		sprites[0].position.x -= sprites[0].texture.get_width() * 0.25
+		sprites[1].position.x += sprites[1].texture.get_width() * 0.25
+		sprites[2].position.x -= sprites[2].texture.get_width() * 0.25
+		sprites[3].position.x += sprites[3].texture.get_width() * 0.25
+
+	# If any BattlePokemon has no pokemon set
+	# (Might happen if the pokemon isn't healthy and team.second_healthy returns null)
+	for i: int in pokemons.size():
+		var pokemon: BattlePokemon = pokemons[i]
+		if pokemon and not pokemon.pokemon:
+			pokemons[i] = null
 
 	# Set exp gain
 	exp_enabled = attributes.get("exp_enabled", exp_enabled)
@@ -429,10 +451,10 @@ func refresh_pokemon_sprites() -> void:
 
 ## Refreshes the turn order, excluding the pokemon slots who have acted. [br][br]
 ## [param acted] Holds the indexes of the pokemon in [member pokemons].
-func refresh_turn_order(acted: Array[int] = []) -> void:
+func refresh_turn_order() -> void:
 	turn_order.clear()
 	for i: int in pokemons.size():
-		if pokemons[i] and not acted.has(i) and pokemons[i].hp > 0:
+		if turn_selections.keys().has(i) and pokemons[i] and not acted.has(i):
 			turn_order.append(i)
 
 	var sort_by_speed: Callable = func(a: int, b: int):
@@ -459,10 +481,22 @@ func switch(from_slot: int, to: Pokemon) -> void:
 
 ## Calculates the chance to flee based on the first ally pokemon and the first enemy pokemon.
 func calc_escape_chance() -> float:
-	if ally_pokemon[0].speed >= enemy_pokemon[0].speed:
+	var first_ally: BattlePokemon
+	for pokemon: BattlePokemon in ally_pokemon:
+		if pokemon:
+			first_ally = pokemon
+			break
+	var first_enemy: BattlePokemon
+	for pokemon: BattlePokemon in enemy_pokemon:
+		if pokemon:
+			first_enemy = pokemon
+			break
+	if not first_ally:
+		return 0.0
+	if not first_enemy or first_ally.speed >= first_enemy.speed:
 		return 1.0
 	escape_attempts += 1
-	return (floorf((ally_pokemon[0].speed * 32.0) / (enemy_pokemon[0].speed * 4.0)) + (30.0 * escape_attempts)) / 256.0
+	return (floorf((first_ally.speed * 32.0) / (first_enemy.speed * 4.0)) + (30.0 * escape_attempts)) / 256.0
 
 
 ## Starts a battle by creating a dedicated [CanvasLayer] and adding it to [member Globals.game_root].
@@ -492,21 +526,20 @@ static func start_battle(attributes: Dictionary[String, Variant] = {}) -> Battle
 	# Stop running the game world while the battle is happening
 	Globals.game_world.process_mode = Node.PROCESS_MODE_DISABLED
 
-	var on_finish: Callable = func(finished_battle: Battle):
-		if finished_battle == battle:
-			# Make sure movement and event input is enabled after battle.
-			layer.queue_free()
-			layer.tree_exited.connect(
-				func():
-					if TransitionManager.transition:
-						TransitionManager.play_out()
-						await TransitionManager.finished
-						TransitionManager.layer -= 5
-					Globals.movement_enabled = true
-			)
+	var on_finish: Callable = func(_finished_battle: Battle):
+		layer.queue_free()
+
+	layer.tree_exited.connect(
+		# Make sure movement and event input is enabled after battle.
+		func():
+			if TransitionManager.transition:
+				TransitionManager.play_out()
+				await TransitionManager.finished
+				TransitionManager.layer -= 5
 			Globals.movement_enabled = true
 			Globals.event_input_enabled = true
 			Globals.game_world.process_mode = Node.PROCESS_MODE_PAUSABLE
+	)
 
 
 	SignalRouter.battle_ended.connect(on_finish, CONNECT_ONE_SHOT)

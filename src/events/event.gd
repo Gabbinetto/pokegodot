@@ -63,12 +63,12 @@ func run() -> void:
 			)
 		bound_npc.can_move = false
 		bound_npc.interacting = true
-	_run()
+	@warning_ignore("redundant_await")
+	await _run()
 	if bound_npc:
 		await done
 		bound_npc.can_move = true
 		bound_npc.interacting = false
-
 
 
 func _run() -> void:

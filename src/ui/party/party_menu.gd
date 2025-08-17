@@ -62,8 +62,10 @@ func _ready() -> void:
 				mon_in_battle.append(pokemon)
 			else:
 				mon_out_battle.append(pokemon)
-		if Globals.current_battle.ally_pokemon[0].pokemon != mon_in_battle[0]:
-			mon_in_battle.reverse()
+		mon_in_battle.sort_custom(
+			func(a: Pokemon, b: Pokemon):
+				return Globals.current_battle.get_slot(a) < Globals.current_battle.get_slot(b)
+		)
 		team_array = mon_in_battle + mon_out_battle
 
 	for i: int in panels.size():
@@ -102,8 +104,6 @@ func _ready() -> void:
 		await TransitionManager.finished
 
 
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if swapping:
 		return
@@ -121,7 +121,6 @@ func _on_panel_focus(panel: PartyPanel) -> void:
 	current_panel = panel
 	if swapping_from != null:
 		swapping_to = panel
-
 
 
 func _on_panel_unfocus(_panel: PartyPanel) -> void:
@@ -175,8 +174,8 @@ func _on_menu_visibility_changed() -> void:
 
 #region In battle functions
 func _is_pokemon_in_battle(pokemon: Pokemon) -> bool:
-	for info: BattlePokemon in Globals.current_battle.pokemons:
-		if info != null and pokemon == info.pokemon:
+	for b_pokemon: BattlePokemon in Globals.current_battle.pokemons:
+		if b_pokemon != null and pokemon == b_pokemon.pokemon:
 			return true
 	return false
 
@@ -220,7 +219,7 @@ func swap_slots() -> void:
 		panel.set_meta("original_position", panel.position)
 		var target_position: Vector2 = Vector2(0, panel.position.y)
 		if panel.get_index() % 2 == 0:
-			target_position.x = -panel.size.x - SWAP_OFFSET
+			target_position.x = - panel.size.x - SWAP_OFFSET
 		else:
 			target_position.x = size.x + SWAP_OFFSET
 		panel.set_meta("target_position", target_position)

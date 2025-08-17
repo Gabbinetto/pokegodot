@@ -37,6 +37,7 @@ size = Vector2(64, 28)
 anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 0.1875
+mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxTexture_qljio")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_8psyh")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_lomps")

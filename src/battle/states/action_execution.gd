@@ -4,12 +4,11 @@ extends State
 @export var ui: BattleUI
 
 var current_pokemon: BattlePokemon
-var acted: Array[int]
 var switching: bool = false
 
 
 func enter() -> void:
-	acted.clear()
+	battle.acted.clear()
 	var callable: Callable = func(_buffer: Dictionary): _process_turn()
 	set_meta("connected_callable", callable)
 	battle.last_buffer_ran.connect(callable)
@@ -34,16 +33,14 @@ func _process_turn() -> void:
 		return
 	
 
-	battle.refresh_turn_order(acted)
+	battle.refresh_turn_order()
 	if battle.turn_order.is_empty():
-		if battle.is_buffering:
-			await battle.last_buffer_ran
 		transition.emit(self, "ActionSelection")
 		return
 
 	current_pokemon = battle.pokemons[battle.turn_order.pop_front()]
 	var action: Battle.TurnAction = battle.turn_selections.get(battle.pokemons.find(current_pokemon))
-	acted.append(battle.get_slot(current_pokemon))
+	battle.acted.append(battle.get_slot(current_pokemon))
 	if not action:
 		return
 

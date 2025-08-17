@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=4 uid="uid://dbl03yj3owea"]
+[gd_scene load_steps=99 format=4 uid="uid://dbl03yj3owea"]
 
 [ext_resource type="Script" uid="uid://bcpwt1l6h7ii5" path="res://src/maps/map.gd" id="1_hsde7"]
 [ext_resource type="TileSet" uid="uid://dvc77ktqssxqf" path="res://assets/resources/tilesets/special.tres" id="2_bbmgv"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bh1hw5g2y2wwe" path="res://assets/graphics/actors/pokemon/PIKACHU.png" id="15_oj3fe"]
 [ext_resource type="Script" uid="uid://b5sb2uk10yj7p" path="res://src/events/stair_event.gd" id="16_sq0ut"]
 [ext_resource type="Texture2D" uid="uid://drynnmp8ux8rd" path="res://assets/graphics/actors/npc/NPC 05.png" id="16_xxuhm"]
+[ext_resource type="Texture2D" uid="uid://dho372fotuvc5" path="res://assets/graphics/actors/pokemon/CHARMANDER.png" id="17_m5ivj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m0hbh"]
 size = Vector2(3008, 2176)
@@ -251,68 +252,257 @@ func _run() -> void:
 	ran = true
 "
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_12yt4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kxnk"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u6nx0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3bcd"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(0, 64, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q1hln"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vre0o"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(0, 128, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4l0so"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctedi"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(0, 192, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_id8h7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_im8d1"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(64, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ptgwg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4qt8"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lf8pl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5gfr"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vtbgl"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_whi0g"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(64, 64, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pko5u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6j3a"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(128, 64, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iivnv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wi05"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(192, 64, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ipl6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_t1bo8"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(64, 128, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e00et"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_14n8r"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(128, 128, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aqgpv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyuhu"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(192, 128, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mxrkk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmgw6"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(64, 192, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_usaje"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_igcwp"]
 atlas = ExtResource("15_oj3fe")
 region = Rect2(128, 192, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yftuk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgp37"]
 atlas = ExtResource("15_oj3fe")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ncdn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kxnk")
+}],
+"loop": true,
+"name": &"IDLE_DOWN",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3bcd")
+}],
+"loop": true,
+"name": &"IDLE_LEFT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vre0o")
+}],
+"loop": true,
+"name": &"IDLE_RIGHT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctedi")
+}],
+"loop": true,
+"name": &"IDLE_UP",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kxnk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_im8d1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4qt8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l5gfr")
+}],
+"loop": true,
+"name": &"WALK_DOWN",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3bcd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whi0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6j3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wi05")
+}],
+"loop": true,
+"name": &"WALK_LEFT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vre0o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t1bo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14n8r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyuhu")
+}],
+"loop": true,
+"name": &"WALK_RIGHT",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctedi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmgw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_igcwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgp37")
+}],
+"loop": true,
+"name": &"WALK_UP",
+"speed": 5.0
+}]
+script = ExtResource("13_k775h")
+id = "PIKACHU"
+form = 0
+shiny = false
+texture = ExtResource("15_oj3fe")
+animation_frames = 4
+metadata/_custom_type_script = "uid://cpstyjck0anod"
+
+[sub_resource type="GDScript" id="GDScript_rmhm5"]
+resource_name = "Pikachu"
+script/source = "@tool
+extends Event
+
+@export var dialogue: DialogueManager
+
+func _run() -> void:
+	MainDialogue.run_dialogue(dialogue)
+	await MainDialogue.finished
+	var pokemon: Pokemon = Pokemon.generate(\"PIKACHU\", 0, {\"level\": 5})
+	PlayerData.team.add_pokemon(pokemon)
+	bound_npc.queue_free()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12yt4"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6nx0"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1hln"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l0so"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_id8h7"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptgwg"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf8pl"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtbgl"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pko5u"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iivnv"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ipl6"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e00et"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqgpv"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxrkk"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usaje"]
+atlas = ExtResource("17_m5ivj")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yftuk"]
+atlas = ExtResource("17_m5ivj")
 region = Rect2(192, 192, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hsxv0"]
@@ -418,15 +608,15 @@ animations = [{
 "speed": 5.0
 }]
 script = ExtResource("13_k775h")
-id = "PIKACHU"
+id = "CHARMANDER"
 form = 0
 shiny = false
-texture = ExtResource("15_oj3fe")
+texture = ExtResource("17_m5ivj")
 animation_frames = 4
 metadata/_custom_type_script = "uid://cpstyjck0anod"
 
-[sub_resource type="GDScript" id="GDScript_rmhm5"]
-resource_name = "Pikachu"
+[sub_resource type="GDScript" id="GDScript_oj3fe"]
+resource_name = "DoubleBattleTest"
 script/source = "@tool
 extends Event
 
@@ -435,9 +625,19 @@ extends Event
 func _run() -> void:
 	MainDialogue.run_dialogue(dialogue)
 	await MainDialogue.finished
-	var pokemon: Pokemon = Pokemon.generate(\"PIKACHU\", 0, {\"level\": 5})
-	PlayerData.team.add_pokemon(pokemon)
-	bound_npc.queue_free()
+	var pokemon_1: Pokemon = Pokemon.generate(\"CHARMANDER\", 0, {\"level\": 5})
+	var pokemon_2: Pokemon = Pokemon.generate(\"SQUIRTLE\", 0, {\"level\": 5})
+
+	Battle.start_battle(
+		{
+			\"double_battle\": true,
+			\"enemy_trainers\": [
+				BattleTrainer.make_wild(pokemon_1),
+				BattleTrainer.make_wild(pokemon_2),
+			],
+		}
+	)
+	await SignalRouter.battle_ended
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m5ivj"]
@@ -754,7 +954,7 @@ shape = SubResource("RectangleShape2D_6uvlq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MapLevel0/Special1/Pikachu"]
 position = Vector2(16, 0)
-sprite_frames = SubResource("SpriteFrames_hsxv0")
+sprite_frames = SubResource("SpriteFrames_3ncdn")
 animation = &"IDLE_DOWN"
 
 [node name="Collision" type="RayCast2D" parent="MapLevel0/Special1/Pikachu"]
@@ -779,6 +979,46 @@ metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
 [node name="DialogueTextSequence" type="Node" parent="MapLevel0/Special1/Pikachu/Event/DialogueManager"]
 script = ExtResource("11_dhpha")
 text = "Pika pi!"
+metadata/_custom_type_script = "uid://cjypfwj7jwa"
+
+[node name="DoubleBattleTest" type="CharacterBody2D" parent="MapLevel0/Special1" node_paths=PackedStringArray("sprite", "collision_ray")]
+position = Vector2(-160, 160)
+script = ExtResource("6_oj3fe")
+movement = Array[ExtResource("7_m5ivj")]([SubResource("Resource_tdvcr")])
+sprite = NodePath("AnimatedSprite2D")
+collision_ray = NodePath("Collision")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapLevel0/Special1/DoubleBattleTest"]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_6uvlq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MapLevel0/Special1/DoubleBattleTest"]
+position = Vector2(16, 0)
+sprite_frames = SubResource("SpriteFrames_hsxv0")
+animation = &"IDLE_DOWN"
+
+[node name="Collision" type="RayCast2D" parent="MapLevel0/Special1/DoubleBattleTest"]
+position = Vector2(16, 16)
+target_position = Vector2(0, 16)
+
+[node name="Event" type="Area2D" parent="MapLevel0/Special1/DoubleBattleTest" node_paths=PackedStringArray("dialogue")]
+script = SubResource("GDScript_oj3fe")
+dialogue = NodePath("DialogueManager")
+metadata/_custom_type_script = "uid://da65406gveta6"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapLevel0/Special1/DoubleBattleTest/Event"]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_6uvlq")
+
+[node name="DialogueManager" type="Node" parent="MapLevel0/Special1/DoubleBattleTest/Event" node_paths=PackedStringArray("starting_sequence")]
+script = ExtResource("10_yq41x")
+starting_sequence = NodePath("DialogueTextSequence")
+metadata/_custom_type_script = "uid://d2fpdqp3x0k67"
+
+[node name="DialogueTextSequence" type="Node" parent="MapLevel0/Special1/DoubleBattleTest/Event/DialogueManager"]
+script = ExtResource("11_dhpha")
+text = "Double battle test."
 metadata/_custom_type_script = "uid://cjypfwj7jwa"
 
 [node name="StairEvent" type="Area2D" parent="MapLevel0/Special1"]

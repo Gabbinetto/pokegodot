@@ -19,6 +19,8 @@ func setup(parent_plugin: PKDebug) -> void:
 
 	heal_team.pressed.connect(plugin.send_message.bind("heal_team"))
 
+	plugin.disconnected.connect(editor.hide)
+
 func _on_slot_pressed(slot: int) -> void:
 	var pokemon: Dictionary[String, Variant] = await plugin.get_pokemon(slot)
 	if pokemon.is_empty():

@@ -42,6 +42,7 @@ size = Vector2(64, 64)
 [node name="PartyPanel" type="TextureButton" node_paths=PackedStringArray("pokemon_name", "level", "hp_bar", "health_text", "gender_icon", "pokemon_icon", "pokeball_icon", "item_icon")]
 offset_right = 256.0
 offset_bottom = 98.0
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("1_xaxhu")
 texture_pressed = ExtResource("2_vbe4v")
 texture_hover = ExtResource("1_xaxhu")

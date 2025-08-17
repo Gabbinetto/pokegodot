@@ -4,16 +4,19 @@ extends State
 
 
 func enter() -> void:
-
 	# TODO: Make actual AI
-	for pokemon: BattlePokemon in battle.enemy_pokemon:
-		if not pokemon:
+	for pokemon: BattlePokemon in battle.pokemons:
+		if not pokemon or pokemon.trainer.is_player:
 			continue
-		var move: PokemonMove = pokemon.pokemon.moves[Globals.rng.randi_range(0, pokemon.pokemon.moves.size() - 1)]
+		var move: PokemonMove = pokemon.pokemon.moves.pick_random()
 		var targets: Array[bool] = []
 		targets.resize(battle.pokemons.size())
 		if battle.double_battle:
-			pass
+			var possible: Array[bool] = move.get_possible_targets(battle, pokemon)
+			var chosen: int = Globals.rng.randi_range(0, possible.size() - 1)
+			while not possible[chosen]:
+				chosen = Globals.rng.randi_range(0, possible.size() - 1)
+			targets = move.select_targets(battle, pokemon, chosen)
 		else:
 			targets = move.get_possible_targets(battle, pokemon)
 		

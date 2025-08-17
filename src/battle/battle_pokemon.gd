@@ -65,7 +65,7 @@ func _init(_battle: Battle, _pokemon: Pokemon, _trainer: BattleTrainer) -> void:
 func apply_damage(amount: int) -> void:
 	hp -= amount
 	if hp <= 0:
-		battle.add_exp(self)
+		battle.pokemon_fainted(self)
 
 
 ## Returns a [param stat], accounting for stat boosts.

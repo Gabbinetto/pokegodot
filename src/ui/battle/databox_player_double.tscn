@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=3 uid="uid://1b8kmqgc0i1y"]
+
+[ext_resource type="Texture2D" uid="uid://wgr5ftd1l6u1" path="res://assets/graphics/ui/battle/databox_thin.png" id="1_sbso5"]
+[ext_resource type="Script" uid="uid://gihojunguedm" path="res://src/ui/battle/databox.gd" id="2_utmf8"]
+[ext_resource type="Texture2D" uid="uid://db7wwvkp6e32m" path="res://assets/resources/hp_bar_textures/hp_bar_battle_high.tres" id="3_40ijs"]
+[ext_resource type="Script" uid="uid://ciis2yphy0kq4" path="res://src/ui/misc/hp_bar.gd" id="4_hjtet"]
+[ext_resource type="Texture2D" uid="uid://ciylakjyru70a" path="res://assets/resources/hp_bar_textures/hp_bar_battle_middle.tres" id="5_ou140"]
+[ext_resource type="Texture2D" uid="uid://cd5dl6y687btc" path="res://assets/resources/hp_bar_textures/hp_bar_battle_low.tres" id="6_sk1nb"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="7_1b54i"]
+[ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/ui/text_resources/databox_numbers.tres" id="8_lek7l"]
+[ext_resource type="Texture2D" uid="uid://cklahfu5p60x2" path="res://assets/graphics/ui/gender_male_icon.png" id="9_utmf8"]
+
+[node name="DataboxPlayerDouble" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "level_text", "gender")]
+offset_right = 260.0
+offset_bottom = 62.0
+texture = ExtResource("1_sbso5")
+stretch_mode = 2
+script = ExtResource("2_utmf8")
+name_label = NodePath("PokemonName")
+hp_bar = NodePath("HPBar")
+level_text = NodePath("Level")
+gender = NodePath("Gender")
+
+[node name="HPBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.454
+anchor_top = 0.645
+anchor_right = 0.454
+anchor_bottom = 0.645
+offset_left = 17.96
+offset_top = 0.0100021
+offset_right = 113.96
+offset_bottom = 6.01
+step = 0.1
+value = 50.0
+texture_progress = ExtResource("3_40ijs")
+script = ExtResource("4_hjtet")
+high_texture = ExtResource("3_40ijs")
+middle_texture = ExtResource("5_ou140")
+low_texture = ExtResource("6_sk1nb")
+metadata/_custom_type_script = "uid://ciis2yphy0kq4"
+
+[node name="PokemonName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.355
+anchor_right = 0.608
+anchor_bottom = 0.355
+offset_left = -124.08
+offset_top = -12.01
+offset_right = -0.0800171
+offset_bottom = 11.99
+grow_horizontal = 0
+text = "Pikachu"
+label_settings = ExtResource("7_1b54i")
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="Level" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.677
+anchor_top = 0.81
+anchor_right = 0.677
+anchor_bottom = 0.81
+offset_left = 19.98
+offset_top = -31.22
+offset_right = 67.98
+offset_bottom = -20.22
+text = "100"
+label_settings = ExtResource("8_lek7l")
+
+[node name="Gender" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 12.0
+offset_right = 172.0
+offset_bottom = 32.0
+texture = ExtResource("9_utmf8")
+stretch_mode = 2

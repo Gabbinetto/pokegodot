@@ -30,6 +30,7 @@ func _refresh() -> void:
 offset_right = 20.0
 offset_bottom = 36.0
 size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 32
 theme_override_styles/focus = SubResource("StyleBoxEmpty_1i2a7")
 icon = ExtResource("2_6easr")

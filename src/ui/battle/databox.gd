@@ -2,6 +2,8 @@ class_name Databox extends Control
 
 ## Pokegodot Databox
 
+const ICON_MALE: Texture2D = preload("res://assets/graphics/ui/gender_male_icon.png")
+const ICON_FEMALE: Texture2D = preload("res://assets/graphics/ui/gender_female_icon.png")
 const HP_BAR_TIME: float = 1.0 ## Time needed for the HP bar to go from full to empty.
 const EXP_BAR_TIME: float = 0.5 ## Time needed for the EXP bar to move.
 
@@ -15,6 +17,7 @@ const EXP_BAR_TIME: float = 0.5 ## Time needed for the EXP bar to move.
 @export var hp_numbers: Label
 @export var exp_bar: TextureProgressBar
 @export var level_text: Label
+@export var gender: TextureRect
 
 var shown_level: int = 0:
 	set(value):
@@ -47,6 +50,14 @@ func _refresh() -> void:
 
 	shown_level = pokemon.level
 
+	match pokemon.gender:
+		Pokemon.Genders.MALE:
+			gender.texture = ICON_MALE
+		Pokemon.Genders.FEMALE:
+			gender.texture = ICON_FEMALE
+		Pokemon.Genders.GENDERLESS:
+			gender.texture = null
+
 
 func _set_hp_numbers() -> void:
 	if not is_instance_valid(hp_numbers):
@@ -77,13 +88,19 @@ func animate_level() -> Tween:
 	var tween: Tween = create_tween()
 
 	if pokemon.level > shown_level:
-		tween.tween_property(exp_bar, "value", exp_bar.max_value, EXP_BAR_TIME)
-		tween.tween_callback(exp_bar.set.bind("min_value", Experience.get_exp_at_level(shown_level + 1, pokemon.species.growth_rate)))
-		tween.tween_callback(exp_bar.set.bind("max_value", Experience.get_exp_at_level(shown_level + 2, pokemon.species.growth_rate) - 1))
-		tween.tween_callback(func(): shown_level += 1)
-		tween.tween_callback(func(): exp_bar.value = exp_bar.min_value)
+		if exp_bar:
+			tween.tween_property(exp_bar, "value", exp_bar.max_value, EXP_BAR_TIME)
+			tween.tween_callback(exp_bar.set.bind("min_value", Experience.get_exp_at_level(shown_level + 1, pokemon.species.growth_rate)))
+			tween.tween_callback(exp_bar.set.bind("max_value", Experience.get_exp_at_level(shown_level + 2, pokemon.species.growth_rate) - 1))
+			tween.tween_callback(func(): shown_level += 1)
+			tween.tween_callback(func(): exp_bar.value = exp_bar.min_value)
+		else:
+			tween.tween_interval(EXP_BAR_TIME)
 	else:
-		tween.tween_property(exp_bar, "value", pokemon.experience, EXP_BAR_TIME)
+		if exp_bar:
+			tween.tween_property(exp_bar, "value", pokemon.experience, EXP_BAR_TIME)
+		else:
+			tween.tween_interval(EXP_BAR_TIME)
 
 	return tween
 

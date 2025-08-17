@@ -74,18 +74,18 @@ func _init(_id: String) -> void:
 	refresh_pp()
 
 
-## Refreshes this move's PPs, setting [member pp] to [member max_pp]
+## Refreshes this move's PPs, setting [member pp] to [member max_pp].
 func refresh_pp() -> void:
 	pp = max_pp
 
-## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member Battle.pokemons]
-func get_possible_targets(battle: Battle, user: BattlePokemon, move_target: Targets = target) -> Array[bool]:
+## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member Battle.pokemons].
+func get_possible_targets(battle: Battle, user: BattlePokemon) -> Array[bool]:
 	var targets: Array[bool]
 	var user_is_enemy: bool = battle.enemy_pokemon.has(user)
 	targets.resize(battle.pokemons.size())
 	for i: int in targets.size():
 		var current: BattlePokemon = battle.pokemons[i]
-		match move_target:
+		match target:
 			Targets.USER:
 				targets[i] = user == current
 			Targets.OTHER, Targets.ALL_OTHER:
@@ -109,6 +109,33 @@ func get_possible_targets(battle: Battle, user: BattlePokemon, move_target: Targ
 				targets[i] = true
 	return targets
 
+
+## Returns [code]true[/code] if this move selects al possible targets.
+func hits_all() -> bool:
+	return target in [Targets.ALL_OTHER, Targets.FOE_SIDE, Targets.ALLY_SIDE, Targets.ALL, Targets.RANDOM_FOE]
+
+
+## Returns the actual targets from a move selection, similar to [method get_possible_targets].
+func select_targets(battle: Battle, user: BattlePokemon, selected_target_index: int) -> Array[bool]:
+	var targets: Array[bool] = get_possible_targets(battle, user)
+	if target == Targets.RANDOM_FOE:
+		var indexes: Array[int]
+		for i: int in targets.size():
+			if targets[i]:
+				indexes.append(i)
+		var chosen_index: int = indexes.pick_random()
+		targets.fill(false)
+		targets[chosen_index] = true
+		return targets
+	elif hits_all():
+		return targets
+	if targets[selected_target_index]:
+		targets.fill(false)
+		targets[selected_target_index] = true
+	else:
+		targets.fill(false)
+	return targets
+		
 
 func register_effects(battle: Battle) -> void:
 	for effect: BattleEffect in effects:

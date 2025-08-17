@@ -1,8 +1,10 @@
 class_name BattleUI extends Node
 
 signal move_selected(move: PokemonMove)
+signal target_selected(index: int)
 signal pokemon_selected
 signal run_selected
+signal base_cancel_selected
 
 
 enum Screens {
@@ -17,14 +19,20 @@ enum Screens {
 @export var battle: Battle
 @export var message_background: TextureRect
 @export var all_screens: Array[CanvasItem]
+@export_group("Databoxes", "databox_")
+@export var databox_singles_container: Control
+@export var databox_doubles_container: Control
 @export var databox_ally_single: Databox
 @export var databox_enemy_single: Databox
+@export var databox_allies_double: Array[Databox]
+@export var databox_enemies_double: Array[Databox]
 @export_group("Base screen")
 @export var base_screen: Control
 @export var fight_button: BaseButton
 @export var pokemon_button: BaseButton
 @export var bag_button: BaseButton
 @export var run_button: BaseButton
+@export var base_cancel_button: BaseButton
 @export_group("Fight screen")
 @export var fight_screen: Control
 @export var move_buttons: Array[MoveButton]
@@ -58,18 +66,21 @@ var current_screen: Screens:
 			battle_dialogue: return Screens.DIALOGUE
 			_: return Screens.NONE
 
+
 func _ready() -> void:
-	
 	base_screen.visibility_changed.connect(_on_base_visible)
 	fight_button.pressed.connect(show_screen.bind(Screens.FIGHT))
 	pokemon_button.pressed.connect(prompt_switch)
 	run_button.pressed.connect(run_selected.emit)
+	base_cancel_button.pressed.connect(base_cancel_selected.emit)
 	
 	fight_screen.visibility_changed.connect(_on_fight_visible)
 	fight_cancel_button.pressed.connect(_on_fight_cancel)
 	
-	target_screen.visibility_changed.connect(_on_target_visible)
+	target_screen.visibility_changed.connect(_on_target_visible.call_deferred)
 	target_cancel_button.pressed.connect(show_screen.bind(Screens.FIGHT))
+	for button: BaseButton in target_buttons:
+		button.pressed.connect(target_selected.emit.bind(target_buttons.find(button)))
 	
 	for button: MoveButton in move_buttons:
 		button.focus_entered.connect(_on_move_focus.bind(button))
@@ -85,6 +96,7 @@ func show_screen(screen: Screens) -> void:
 	match screen:
 		Screens.BASE:
 			node = base_screen
+			fight_button.grab_focus.call_deferred()
 		Screens.FIGHT:
 			node = fight_screen
 		Screens.TARGET_SELECT:
@@ -97,6 +109,17 @@ func show_screen(screen: Screens) -> void:
 			child.show()
 		else:
 			child.hide()
+
+
+func set_base_cancel_button(enabled: bool) -> void:
+	var button: BaseButton = base_cancel_button if enabled else run_button
+	if enabled:
+		run_button.hide()
+	else:
+		base_cancel_button.hide()
+	button.show()
+	pokemon_button.focus_neighbor_bottom = button.get_path()
+	bag_button.focus_neighbor_right = button.get_path()
 
 
 ## Shows the current pokemon's moves in the move buttons.
@@ -112,25 +135,53 @@ func refresh_move_buttons() -> void:
 ## Assigns the current pokemon to the databoxes and hides them if needed.
 func refresh_databoxes() -> void:
 	if battle.double_battle:
-		pass
+		databox_doubles_container.show()
+		databox_singles_container.hide()
+
+		used_databoxes = databox_allies_double + databox_enemies_double
 	else:
+		databox_doubles_container.hide()
+		databox_singles_container.show()
 		used_databoxes.fill(null)
 		used_databoxes[0] = databox_ally_single
 		used_databoxes[2] = databox_enemy_single
-		
-		databox_ally_single.show()
-		databox_ally_single.enabled = true
-		databox_ally_single.pokemon = battle.ally_pokemon.front().pokemon
+	
+	for i: int in battle.pokemons.size():
+		var pokemon: BattlePokemon = battle.pokemons[i]
+		if not used_databoxes[i]:
+			continue
+		if not pokemon:
+			used_databoxes[i].hide()
+			used_databoxes[i].enabled = false
+			continue
+		used_databoxes[i].pokemon = pokemon.pokemon
+		used_databoxes[i].show()
+		used_databoxes[i].enabled = true
 
-		databox_enemy_single.show()
-		databox_enemy_single.enabled = true
-		databox_enemy_single.pokemon = battle.enemy_pokemon.front().pokemon
 
-
+#region Target screen functions
 ## Update the target buttons with the current pokemon on the field.
 func refresh_target_buttons() -> void:
 	for i: int in battle.pokemons.size():
 		target_buttons[i].text = battle.pokemons[i].name if battle.pokemons[i] else ""
+
+
+func set_target_buttons_to_move(move: PokemonMove, user: BattlePokemon) -> void:
+	var possible_targets: Array[bool] = move.get_possible_targets(battle, user)
+	for i: int in target_buttons.size():
+		var button: BaseButton = target_buttons[i]
+		button.disabled = not possible_targets[i] or not battle.pokemons[i]
+		button.focus_mode = Control.FOCUS_NONE if button.disabled else Control.FOCUS_ALL
+		button.mouse_filter = Control.MOUSE_FILTER_IGNORE if button.disabled else Control.MOUSE_FILTER_STOP
+		# Make buttons appear as focused if a move selects all targets
+		if move.hits_all() and not button.disabled:
+			var style: StyleBox = button.get_theme_stylebox("focus")
+			button.add_theme_stylebox_override("normal", style)
+			button.add_theme_stylebox_override("hover", style)
+		else:
+			button.remove_theme_stylebox_override("normal")
+			button.remove_theme_stylebox_override("hover")
+#endregion
 
 
 func prompt_switch(can_cancel: bool = true) -> void:
@@ -195,16 +246,20 @@ func _on_fight_visible() -> void:
 
 
 func _on_fight_cancel() -> void:
-	if battle.current_pokemon_index > 0:
-		battle.current_pokemon_index -= 1
-		return
 	show_screen(Screens.BASE)
 
 
 func _on_target_visible() -> void:
 	if not target_screen.visible:
 		return
-	for button: Button in target_buttons:
+	
+	var selection_order: Array[BaseButton]
+	@warning_ignore("integer_division")
+	selection_order.assign(
+		target_buttons.slice(target_buttons.size() / 2) + target_buttons.slice(0, target_buttons.size() / 2)
+	)
+
+	for button: Button in selection_order:
 		if not button.disabled:
 			button.grab_focus.call_deferred()
 			break
@@ -222,10 +277,9 @@ func show_selection_text(text: String) -> Dialogue:
 	return selection_dialogue
 
 
-
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if current_screen == Screens.FIGHT:
+		if current_screen == Screens.BASE and base_cancel_button.visible:
+			base_cancel_button.pressed.emit()
+		elif current_screen == Screens.FIGHT:
 			fight_cancel_button.pressed.emit()

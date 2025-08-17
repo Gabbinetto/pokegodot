@@ -1,10 +1,12 @@
-[gd_scene load_steps=30 format=3 uid="uid://dlob4s7soq2c1"]
+[gd_scene load_steps=34 format=3 uid="uid://dlob4s7soq2c1"]
 
 [ext_resource type="PackedScene" uid="uid://b5l5tiw6t3228" path="res://src/ui/battle/databox_player.tscn" id="1_1a0jq"]
 [ext_resource type="Script" uid="uid://bwx71y1b6q41a" path="res://src/ui/battle/battle_ui.gd" id="1_yflnp"]
 [ext_resource type="PackedScene" uid="uid://new8ewxbug0r" path="res://src/ui/battle/databox_enemy.tscn" id="2_yflnp"]
 [ext_resource type="Texture2D" uid="uid://bly3i2pq8csog" path="res://assets/graphics/battlebacks/messages/cave1.png" id="3_8xclu"]
+[ext_resource type="PackedScene" uid="uid://bsfthdo4m2kxf" path="res://src/ui/battle/databox_enemy_double.tscn" id="4_1uvy5"]
 [ext_resource type="Texture2D" uid="uid://c6vwom3yu3uxu" path="res://assets/graphics/ui/battle/command_buttons.png" id="4_o2pa3"]
+[ext_resource type="PackedScene" uid="uid://1b8kmqgc0i1y" path="res://src/ui/battle/databox_player_double.tscn" id="5_4cmk5"]
 [ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/misc/z_index_focus.gd" id="5_waql5"]
 [ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="6_l81dq"]
 [ext_resource type="Texture2D" uid="uid://cuw1ql6wgmr0d" path="res://assets/graphics/ui/speech_boxes/hgss/box_full0.png" id="7_cd5j2"]
@@ -47,6 +49,14 @@ region = Rect2(0, 138, 130, 46)
 atlas = ExtResource("4_o2pa3")
 region = Rect2(130, 138, 130, 46)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cmk5"]
+atlas = ExtResource("4_o2pa3")
+region = Rect2(0, 414, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kioon"]
+atlas = ExtResource("4_o2pa3")
+region = Rect2(130, 414, 130, 46)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xt6a1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ljkqi"]
@@ -66,18 +76,23 @@ region = Rect2(130, 460, 130, 46)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nrsi4"]
 size = Vector2(64, 28)
 
-[node name="BattleUI" type="CanvasLayer" node_paths=PackedStringArray("message_background", "all_screens", "databox_ally_single", "databox_enemy_single", "base_screen", "fight_button", "pokemon_button", "bag_button", "run_button", "fight_screen", "move_buttons", "fight_cancel_button", "info_box", "info_pp", "info_type", "target_screen", "target_buttons", "target_cancel_button", "selection_dialogue", "selection_dialogue_manager", "battle_dialogue", "battle_dialogue_manager")]
+[node name="BattleUI" type="CanvasLayer" node_paths=PackedStringArray("message_background", "all_screens", "databox_singles_container", "databox_doubles_container", "databox_ally_single", "databox_enemy_single", "databox_allies_double", "databox_enemies_double", "base_screen", "fight_button", "pokemon_button", "bag_button", "run_button", "base_cancel_button", "fight_screen", "move_buttons", "fight_cancel_button", "info_box", "info_pp", "info_type", "target_screen", "target_buttons", "target_cancel_button", "selection_dialogue", "selection_dialogue_manager", "battle_dialogue", "battle_dialogue_manager")]
 layer = 2
 script = ExtResource("1_yflnp")
 message_background = NodePath("MessageBackground")
 all_screens = [NodePath("BaseCommands"), NodePath("FightCommands"), NodePath("TargetSelectCommands"), NodePath("BattleDialogue")]
-databox_ally_single = NodePath("DataboxPlayer")
-databox_enemy_single = NodePath("DataboxEnemy")
+databox_singles_container = NodePath("DataboxSingle")
+databox_doubles_container = NodePath("DataboxDouble")
+databox_ally_single = NodePath("DataboxSingle/DataboxPlayer")
+databox_enemy_single = NodePath("DataboxSingle/DataboxEnemy")
+databox_allies_double = [NodePath("DataboxDouble/DataboxPlayer1"), NodePath("DataboxDouble/DataboxPlayer2")]
+databox_enemies_double = [NodePath("DataboxDouble/DataboxEnemy1"), NodePath("DataboxDouble/DataboxEnemy2")]
 base_screen = NodePath("BaseCommands")
 fight_button = NodePath("BaseCommands/CommandButtons/FightButton")
 pokemon_button = NodePath("BaseCommands/CommandButtons/PokemonButton")
 bag_button = NodePath("BaseCommands/CommandButtons/BagButton")
-run_button = NodePath("BaseCommands/CommandButtons/RunButton")
+run_button = NodePath("BaseCommands/CommandButtons/4THButton/RunButton")
+base_cancel_button = NodePath("BaseCommands/CommandButtons/4THButton/CancelButton")
 fight_screen = NodePath("FightCommands")
 move_buttons = [NodePath("FightCommands/GridContainer/MoveButton1"), NodePath("FightCommands/GridContainer/MoveButton2"), NodePath("FightCommands/GridContainer/MoveButton3"), NodePath("FightCommands/GridContainer/MoveButton4")]
 fight_cancel_button = NodePath("FightCommands/CancelButton")
@@ -92,25 +107,74 @@ selection_dialogue_manager = NodePath("BaseCommands/SelectionDialogue/SelectionD
 battle_dialogue = NodePath("BattleDialogue")
 battle_dialogue_manager = NodePath("BattleDialogue/BattleDialogue")
 
-[node name="DataboxPlayer" parent="." instance=ExtResource("1_1a0jq")]
+[node name="DataboxSingle" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="DataboxPlayer" parent="DataboxSingle" instance=ExtResource("1_1a0jq")]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.615
 anchor_right = 1.0
 anchor_bottom = 0.615
-offset_left = -260.0
-offset_top = -42.16
-offset_right = 0.0
-offset_bottom = 41.84
-metadata/_edit_lock_ = true
+offset_left = -244.0
+offset_top = -44.16
+offset_right = 16.0
+offset_bottom = 39.84
 
-[node name="DataboxEnemy" parent="." instance=ExtResource("2_yflnp")]
+[node name="DataboxEnemy" parent="DataboxSingle" instance=ExtResource("2_yflnp")]
+layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.174
 anchor_bottom = 0.174
+offset_left = -16.0
 offset_top = -30.816
+offset_right = 244.0
 offset_bottom = 31.184
+
+[node name="DataboxDouble" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
 metadata/_edit_lock_ = true
+
+[node name="DataboxEnemy2" parent="DataboxDouble" instance=ExtResource("4_1uvy5")]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -4.0
+offset_top = 2.0
+offset_right = 256.0
+offset_bottom = 64.0
+
+[node name="DataboxEnemy1" parent="DataboxDouble" instance=ExtResource("4_1uvy5")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.227
+anchor_bottom = 0.227
+offset_left = -16.0
+offset_top = 56.0
+offset_right = 244.0
+offset_bottom = 118.0
+
+[node name="DataboxPlayer2" parent="DataboxDouble" instance=ExtResource("5_4cmk5")]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 172.0
+offset_right = 516.0
+offset_bottom = 234.0
+
+[node name="DataboxPlayer1" parent="DataboxDouble" instance=ExtResource("5_4cmk5")]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 226.0
+offset_right = 528.0
+offset_bottom = 288.0
 
 [node name="MessageBackground" type="TextureRect" parent="."]
 anchors_preset = 7
@@ -148,8 +212,9 @@ layout_mode = 2
 focus_neighbor_right = NodePath("../PokemonButton")
 focus_neighbor_bottom = NodePath("../BagButton")
 focus_next = NodePath("../PokemonButton")
-focus_previous = NodePath("../RunButton")
+focus_previous = NodePath("../4THButton/RunButton")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 action_mode = 0
 texture_normal = SubResource("AtlasTexture_tt4el")
 texture_pressed = SubResource("AtlasTexture_va54n")
@@ -162,10 +227,11 @@ script = ExtResource("5_waql5")
 [node name="PokemonButton" type="TextureButton" parent="BaseCommands/CommandButtons"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../FightButton")
-focus_neighbor_bottom = NodePath("../RunButton")
+focus_neighbor_bottom = NodePath("../4THButton/RunButton")
 focus_next = NodePath("../BagButton")
 focus_previous = NodePath("../FightButton")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 action_mode = 0
 texture_normal = SubResource("AtlasTexture_13ou7")
 texture_pressed = SubResource("AtlasTexture_kognc")
@@ -178,10 +244,11 @@ script = ExtResource("5_waql5")
 [node name="BagButton" type="TextureButton" parent="BaseCommands/CommandButtons"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../FightButton")
-focus_neighbor_right = NodePath("../RunButton")
-focus_next = NodePath("../RunButton")
+focus_neighbor_right = NodePath("../4THButton/RunButton")
+focus_next = NodePath("../4THButton/RunButton")
 focus_previous = NodePath("../PokemonButton")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 action_mode = 0
 texture_normal = SubResource("AtlasTexture_xw20v")
 texture_pressed = SubResource("AtlasTexture_lgps0")
@@ -190,20 +257,50 @@ texture_focused = SubResource("AtlasTexture_lgps0")
 [node name="ZIndexFocus" type="Node" parent="BaseCommands/CommandButtons/BagButton"]
 script = ExtResource("5_waql5")
 
-[node name="RunButton" type="TextureButton" parent="BaseCommands/CommandButtons"]
+[node name="4THButton" type="Control" parent="BaseCommands/CommandButtons"]
 layout_mode = 2
-focus_neighbor_left = NodePath("../BagButton")
-focus_neighbor_top = NodePath("../PokemonButton")
-focus_next = NodePath("../FightButton")
-focus_previous = NodePath("../BagButton")
+
+[node name="RunButton" type="TextureButton" parent="BaseCommands/CommandButtons/4THButton"]
+layout_mode = 1
+offset_right = 130.0
+offset_bottom = 46.0
+focus_neighbor_left = NodePath("../../BagButton")
+focus_neighbor_top = NodePath("../../PokemonButton")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../FightButton")
+focus_previous = NodePath("../../BagButton")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 action_mode = 0
 texture_normal = SubResource("AtlasTexture_l3q3p")
 texture_pressed = SubResource("AtlasTexture_5djbx")
 texture_hover = SubResource("AtlasTexture_l3q3p")
 texture_focused = SubResource("AtlasTexture_5djbx")
 
-[node name="ZIndexFocus" type="Node" parent="BaseCommands/CommandButtons/RunButton"]
+[node name="ZIndexFocus" type="Node" parent="BaseCommands/CommandButtons/4THButton/RunButton"]
+script = ExtResource("5_waql5")
+
+[node name="CancelButton" type="TextureButton" parent="BaseCommands/CommandButtons/4THButton"]
+visible = false
+layout_mode = 1
+offset_right = 130.0
+offset_bottom = 46.0
+focus_neighbor_left = NodePath("../../BagButton")
+focus_neighbor_top = NodePath("../../PokemonButton")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../FightButton")
+focus_previous = NodePath("../../BagButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_4cmk5")
+texture_pressed = SubResource("AtlasTexture_kioon")
+texture_hover = SubResource("AtlasTexture_4cmk5")
+texture_focused = SubResource("AtlasTexture_kioon")
+
+[node name="ZIndexFocus" type="Node" parent="BaseCommands/CommandButtons/4THButton/CancelButton"]
 script = ExtResource("5_waql5")
 
 [node name="SelectionDialogue" type="Control" parent="BaseCommands" node_paths=PackedStringArray("box", "label")]
@@ -305,6 +402,7 @@ focus_neighbor_bottom = NodePath("../MoveButton3")
 focus_next = NodePath("../MoveButton2")
 focus_previous = NodePath("../../CancelButton")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 
 [node name="ZIndexFocus" type="Node" parent="FightCommands/GridContainer/MoveButton1"]
 script = ExtResource("5_waql5")
@@ -318,6 +416,7 @@ focus_neighbor_bottom = NodePath("../MoveButton4")
 focus_next = NodePath("../MoveButton3")
 focus_previous = NodePath("../MoveButton1")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 
 [node name="ZIndexFocus" type="Node" parent="FightCommands/GridContainer/MoveButton2"]
 script = ExtResource("5_waql5")
@@ -331,6 +430,7 @@ focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../MoveButton4")
 focus_previous = NodePath("../MoveButton2")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 
 [node name="ZIndexFocus" type="Node" parent="FightCommands/GridContainer/MoveButton3"]
 script = ExtResource("5_waql5")
@@ -344,6 +444,7 @@ focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../../CancelButton")
 focus_previous = NodePath("../MoveButton3")
 mouse_filter = 1
+mouse_default_cursor_shape = 2
 
 [node name="ZIndexFocus" type="Node" parent="FightCommands/GridContainer/MoveButton4"]
 script = ExtResource("5_waql5")
@@ -365,6 +466,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath("../GridContainer/MoveButton1")
 focus_previous = NodePath("../GridContainer/MoveButton4")
+mouse_default_cursor_shape = 2
 texture_normal = SubResource("AtlasTexture_ohmtx")
 texture_pressed = SubResource("AtlasTexture_lweyj")
 texture_hover = SubResource("AtlasTexture_ohmtx")
@@ -438,6 +540,7 @@ offset_left = -131.952
 offset_top = -45.984
 offset_right = -1.95203
 offset_bottom = 0.0159988
+mouse_default_cursor_shape = 2
 texture_normal = SubResource("AtlasTexture_ohmtx")
 texture_pressed = SubResource("AtlasTexture_lweyj")
 texture_hover = SubResource("AtlasTexture_ohmtx")
@@ -454,11 +557,19 @@ theme_override_constants/h_separation = -4
 theme_override_constants/v_separation = -4
 columns = 2
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="Enemy1" type="Button" parent="TargetSelectCommands/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Enemy2")
+focus_neighbor_bottom = NodePath("../Ally1")
+focus_next = NodePath("../Enemy2")
+focus_previous = NodePath("../../CancelButton")
+mouse_default_cursor_shape = 2
 theme_type_variation = &"RedButton"
 text = "Pokemon name"
 text_overrun_behavior = 3
@@ -470,6 +581,13 @@ script = ExtResource("5_waql5")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Enemy1")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../CancelButton")
+focus_neighbor_bottom = NodePath("../Ally2")
+focus_next = NodePath("../Ally1")
+focus_previous = NodePath("../Enemy1")
+mouse_default_cursor_shape = 2
 theme_type_variation = &"RedButton"
 text = "Pokemon name"
 text_overrun_behavior = 3
@@ -481,6 +599,13 @@ script = ExtResource("5_waql5")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Enemy1")
+focus_neighbor_right = NodePath("../Ally2")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Ally2")
+focus_previous = NodePath("../Enemy2")
+mouse_default_cursor_shape = 2
 theme_type_variation = &"GreyButton"
 text = "Pokemon name"
 text_overrun_behavior = 3
@@ -492,6 +617,13 @@ script = ExtResource("5_waql5")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Ally1")
+focus_neighbor_top = NodePath("../Enemy2")
+focus_neighbor_right = NodePath("../../CancelButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../CancelButton")
+focus_previous = NodePath("../Ally1")
+mouse_default_cursor_shape = 2
 theme_type_variation = &"GreyButton"
 text = "Pokemon name"
 text_overrun_behavior = 3
