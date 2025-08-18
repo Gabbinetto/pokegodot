@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://bru1w7goqxjm3"]
+
+[ext_resource type="Script" uid="uid://dsjeujkniyq3" path="res://addons/pkdebug/menus/battle_explorer/debug_battle_explorer.gd" id="1_ft0ub"]
+[ext_resource type="PackedScene" uid="uid://dyd55hs5jua33" path="res://addons/pkdebug/menus/battle_explorer/debug_battle_pokemon_explorer.tscn" id="2_gdgav"]
+
+[node name="BattleExplorer" type="VBoxContainer" node_paths=PackedStringArray("battle_pokemon_explorers", "update_timer")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ft0ub")
+battle_pokemon_explorers = [NodePath("GridContainer/BattlePokemonExplorer"), NodePath("GridContainer/BattlePokemonExplorer3"), NodePath("GridContainer/BattlePokemonExplorer2"), NodePath("GridContainer/BattlePokemonExplorer4")]
+update_timer = NodePath("HBoxContainer/TimeUpdateSlider")
+metadata/_edit_lock_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Battle update timer:"
+
+[node name="TimeUpdateSlider" type="SpinBox" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 0.5
+alignment = 2
+suffix = "s"
+select_all_on_focus = true
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 2
+theme_override_constants/h_separation = 64
+theme_override_constants/v_separation = 32
+columns = 2
+
+[node name="BattlePokemonExplorer" parent="GridContainer" instance=ExtResource("2_gdgav")]
+layout_mode = 2
+
+[node name="BattlePokemonExplorer2" parent="GridContainer" instance=ExtResource("2_gdgav")]
+layout_mode = 2
+
+[node name="BattlePokemonExplorer3" parent="GridContainer" instance=ExtResource("2_gdgav")]
+layout_mode = 2
+
+[node name="BattlePokemonExplorer4" parent="GridContainer" instance=ExtResource("2_gdgav")]
+layout_mode = 2

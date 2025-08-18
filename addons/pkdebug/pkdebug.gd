@@ -27,6 +27,7 @@ func _enter_tree() -> void:
 	add_debugger_plugin(debugger)
 	add_autoload_singleton("PKDebugAutoload", "res://addons/pkdebug/pkdebug_autoload.gd")
 	EditorInterface.get_editor_main_screen().add_child(menu)
+
 	menu.hide()
 	menu.setup(self)
 
@@ -112,6 +113,9 @@ class Debugger extends EditorDebuggerPlugin:
 	signal data_requested
 	signal connected
 	signal disconnected
+	signal battle_started
+	signal battle_update(pokemon: Array[Dictionary])
+	signal battle_ended
 
 	
 	var last_session: EditorDebuggerSession
@@ -146,6 +150,15 @@ class Debugger extends EditorDebuggerPlugin:
 			return true
 		elif message == "pkdebug:toast":
 			EditorInterface.get_editor_toaster().push_toast(data[0], data[1])
+			return true
+		elif message == "pkdebug:battle_started":
+			battle_started.emit()
+			return true
+		elif message == "pkdebug:battle_update":
+			battle_update.emit(data)
+			return true
+		elif message == "pkdebug:battle_ended":
+			battle_ended.emit()
 			return true
 		
 		return false

@@ -89,6 +89,7 @@ const DIRECTIONS: Dictionary[String, Vector2] = {
 	"RIGHT": Vector2.RIGHT,
 	"UP": Vector2.UP,
 }
+const SPEEDUP: float = 2.0 ## Speed multiplier for the speed up.
 
 ## The viewport used by the game which mantains the aspect ratio while allowing to have nodes in the empty
 ## space around. When in need for the viewport outside of the viewport itself, use this instead of [method Node.get_viewport]
@@ -139,3 +140,7 @@ func _input(event: InputEvent) -> void:
 		]
 		image.save_png(SCREENSHOT_PATH + filename)
 		print_rich("[color=#55FF55]Saved screenshot at %s" % filename)
+	elif event.is_action_pressed("SpeedUp"):
+		Engine.time_scale = SPEEDUP
+	elif event.is_action_released("SpeedUp"):
+		Engine.time_scale = 1.0

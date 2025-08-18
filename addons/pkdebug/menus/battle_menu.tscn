@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://chp11hjp4n177"]
+[gd_scene load_steps=3 format=3 uid="uid://chp11hjp4n177"]
 
 [ext_resource type="Script" uid="uid://c3vp1its2utll" path="res://addons/pkdebug/menus/battle_menu.gd" id="1_2lxgl"]
+[ext_resource type="PackedScene" uid="uid://bru1w7goqxjm3" path="res://addons/pkdebug/menus/battle_explorer/debug_battle_explorer.tscn" id="2_v1o4s"]
 
-[node name="Battle" type="VBoxContainer" node_paths=PackedStringArray("wild_battle_button", "wild_battle_dialog", "wild_battle_id", "wild_battle_form", "wild_battle_level")]
+[node name="Battle" type="HSplitContainer" node_paths=PackedStringArray("explorer", "connect_to_battle", "wild_battle_button", "wild_battle_dialog", "wild_battle_id", "wild_battle_form", "wild_battle_level")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,23 +12,34 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_2lxgl")
-wild_battle_button = NodePath("WildBattle")
-wild_battle_dialog = NodePath("WildBattleWindow")
-wild_battle_id = NodePath("WildBattleWindow/Control/ID")
-wild_battle_form = NodePath("WildBattleWindow/Control/Form")
-wild_battle_level = NodePath("WildBattleWindow/Control/Level")
+explorer = NodePath("ScrollContainer2/VBoxContainer/BattleExplorer")
+connect_to_battle = NodePath("ScrollContainer2/VBoxContainer/No Battle/Connect")
+wild_battle_button = NodePath("ScrollContainer/VBoxContainer/WildBattle")
+wild_battle_dialog = NodePath("ScrollContainer/VBoxContainer/WildBattleWindow")
+wild_battle_id = NodePath("ScrollContainer/VBoxContainer/WildBattleWindow/Control/ID")
+wild_battle_form = NodePath("ScrollContainer/VBoxContainer/WildBattleWindow/Control/Form")
+wild_battle_level = NodePath("ScrollContainer/VBoxContainer/WildBattleWindow/Control/Level")
 metadata/_tab_index = 1
 
-[node name="WildBattle" type="Button" parent="."]
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="WildBattle" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
 text = "Start wild battle"
 
-[node name="WildBattleWindow" type="ConfirmationDialog" parent="."]
+[node name="WildBattleWindow" type="ConfirmationDialog" parent="ScrollContainer/VBoxContainer"]
 title = "Start wild battle"
 size = Vector2i(200, 162)
 
-[node name="Control" type="VBoxContainer" parent="WildBattleWindow"]
+[node name="Control" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/WildBattleWindow"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -38,21 +50,44 @@ offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ID" type="LineEdit" parent="WildBattleWindow/Control"]
+[node name="ID" type="LineEdit" parent="ScrollContainer/VBoxContainer/WildBattleWindow/Control"]
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "Foe ID"
 
-[node name="Form" type="SpinBox" parent="WildBattleWindow/Control"]
+[node name="Form" type="SpinBox" parent="ScrollContainer/VBoxContainer/WildBattleWindow/Control"]
 layout_mode = 2
 size_flags_vertical = 3
 prefix = "Form:"
 select_all_on_focus = true
 
-[node name="Level" type="SpinBox" parent="WildBattleWindow/Control"]
+[node name="Level" type="SpinBox" parent="ScrollContainer/VBoxContainer/WildBattleWindow/Control"]
 layout_mode = 2
 size_flags_vertical = 3
 min_value = 1.0
 value = 1.0
 prefix = "Level:"
 select_all_on_focus = true
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="No Battle" type="CenterContainer" parent="ScrollContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Connect" type="Button" parent="ScrollContainer2/VBoxContainer/No Battle"]
+layout_mode = 2
+text = "Connect to
+current battle"
+
+[node name="BattleExplorer" parent="ScrollContainer2/VBoxContainer" instance=ExtResource("2_v1o4s")]
+visible = false
+layout_mode = 2

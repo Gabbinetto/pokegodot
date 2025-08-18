@@ -1,7 +1,7 @@
 extends Node
 
-
 var connected: bool = false
+var battle_update_timer: Timer
 
 
 func _ready() -> void:
@@ -88,6 +88,30 @@ func _capture(message: String, data: Array) -> bool:
 				}
 			)
 			_toast("Battle started.")
+		"connect_battle":
+			if not Globals.in_battle:
+				_toast("There's no battle happening")
+				return true
+			EngineDebugger.send_message("pkdebug:battle_started", [])
+			battle_update_timer = Timer.new()
+			if not data.is_empty():
+				battle_update_timer.wait_time = data[0]
+			battle_update_timer.timeout.connect(_on_battle_update)
+			add_child(battle_update_timer)
+			battle_update_timer.start()
+			_on_battle_update()
+		"set_battle_timer":
+			if battle_update_timer:
+				battle_update_timer.wait_time = data[0]
+		"battle_boost_pokemon":
+			var slot: int = data[0]
+			if slot == -1 or not Globals.current_battle.pokemons[slot]:
+				_toast("There's no pokemon in slot %d." % slot)
+				return true
+			Globals.current_battle.pokemons[slot].add_boost(data[1], data[2])
+			_toast("Boosted pokemon.")
+
+
 	return false
 
 
@@ -97,3 +121,26 @@ func _data_send(data: Array) -> void:
 
 func _toast(text: String, severity: int = 0) -> void:
 	EngineDebugger.send_message("pkdebug:toast", [text, severity])
+
+
+func _on_battle_update() -> void:
+	if not Globals.in_battle:
+		battle_update_timer.tree_exiting.connect(set.bind("battle_update_timer", null))
+		battle_update_timer.queue_free()
+		EngineDebugger.send_message("pkdebug:battle_ended", [])
+		return
+	
+	var data: Array[Dictionary] = []
+	for pokemon: BattlePokemon in Globals.current_battle.pokemons:
+		var dict: Dictionary[String, Variant] = {}
+		data.append(dict)
+		if not pokemon:
+			continue
+		dict["slot"] = Globals.current_battle.get_slot(pokemon)
+		dict["name"] = pokemon.name
+		dict["level"] = pokemon.level
+		dict["max_hp"] = pokemon.max_hp
+		dict["hp"] = pokemon.hp
+		dict["boosts"] = pokemon.boosts
+
+	EngineDebugger.send_message("pkdebug:battle_update", data)

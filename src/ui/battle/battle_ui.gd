@@ -124,6 +124,8 @@ func set_base_cancel_button(enabled: bool) -> void:
 
 ## Shows the current pokemon's moves in the move buttons.
 func refresh_move_buttons() -> void:
+	if not battle.current_pokemon:
+		return
 	for i: int in 4:
 		if i + 1 > battle.current_pokemon.pokemon.moves.size():
 			move_buttons[i].hide()

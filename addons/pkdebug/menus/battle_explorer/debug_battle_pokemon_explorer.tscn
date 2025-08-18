@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyd55hs5jua33"]
+
+[ext_resource type="Script" uid="uid://vqhj3vkxia62" path="res://addons/pkdebug/menus/battle_explorer/debug_battle_pokemon_explorer.gd" id="1_8iw51"]
+
+[sub_resource type="Gradient" id="Gradient_8iw51"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.2, 0.51)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d1u6l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8iw51"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0.6, 0.6, 0.6, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.117647)
+shadow_size = 1
+shadow_offset = Vector2(1, 2)
+anti_aliasing_size = 0.2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8iw51"]
+
+[node name="BattlePokemonExplorer" type="VBoxContainer" node_paths=PackedStringArray("name_label", "level_label", "health_bar", "stat_template", "stats_button", "stats_container")]
+size_flags_horizontal = 3
+script = ExtResource("1_8iw51")
+name_label = NodePath("HBoxContainer/Name")
+level_label = NodePath("HBoxContainer/Level")
+health_bar = NodePath("HealthBar")
+health_bar_gradient = SubResource("Gradient_8iw51")
+stat_template = NodePath("StatsContainer/Stat")
+stats_button = NodePath("StatsButton")
+stats_container = NodePath("StatsContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pikachu"
+
+[node name="Level" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Lv.100"
+horizontal_alignment = 2
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxEmpty_d1u6l")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8iw51")
+value = 100.0
+show_percentage = false
+
+[node name="StatsButton" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8iw51")
+text = "Stats"
+alignment = 0
+icon_alignment = 2
+
+[node name="StatsContainer" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Stat" type="HBoxContainer" parent="StatsContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="StatsContainer/Stat"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STAT:"
+
+[node name="Value" type="Label" parent="StatsContainer/Stat"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="Buttons" type="VBoxContainer" parent="StatsContainer/Stat"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Up" type="Button" parent="StatsContainer/Stat/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_hover_color = Color(1, 0.392157, 0, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0.235294, 0, 1)
+flat = true
+
+[node name="Down" type="Button" parent="StatsContainer/Stat/Buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/icon_hover_color = Color(0, 0.254902, 1, 1)
+theme_override_colors/icon_pressed_color = Color(0, 0.137255, 1, 1)
+flat = true
