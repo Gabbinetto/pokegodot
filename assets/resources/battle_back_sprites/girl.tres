@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://bfuxkp0r1dfuv"]
+
+[ext_resource type="Texture2D" uid="uid://cgiolpbwjpmql" path="res://assets/graphics/actors/player/girl_battle_back.png" id="1_3fb6b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_at780"]
+atlas = ExtResource("1_3fb6b")
+region = Rect2(0, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtjwh"]
+atlas = ExtResource("1_3fb6b")
+region = Rect2(160, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5n8x"]
+atlas = ExtResource("1_3fb6b")
+region = Rect2(320, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu0ik"]
+atlas = ExtResource("1_3fb6b")
+region = Rect2(480, 0, 160, 160)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_libal"]
+atlas = ExtResource("1_3fb6b")
+region = Rect2(640, 0, 160, 160)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at780")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtjwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5n8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu0ik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_libal")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]

@@ -40,6 +40,8 @@ enum BufferType {
 
 ## The default battle scene.
 const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn")
+const BOY_SPRITEFRAMES: SpriteFrames = preload("res://assets/resources/battle_back_sprites/boy.tres")
+const GIRL_SPRITEFRAMES: SpriteFrames = preload("res://assets/resources/battle_back_sprites/girl.tres")
 
 @export_group("State machine")
 @export var state_machine: StateMachine
@@ -48,10 +50,10 @@ const DEFAULT_BATTLE_SCENE: PackedScene = preload("res://src/battle/battle.tscn"
 @export var background: TextureRect
 @export var player_ground: TextureRect
 @export var enemy_ground: TextureRect
-@export_group("Pokemon sprites")
+@export_group("Sprites")
 @export var sprites: Array[PokemonBodySprite] = [null, null, null, null]
-@export_group("Animation")
-@export var animation_player: AnimationPlayer
+@export var ally_trainer_sprites: Array[AnimatedSprite2D] = []
+@export var enemy_trainer_sprites: Array[Sprite2D] = []
 @export_group("UI")
 @export var ui: BattleUI
 
@@ -92,7 +94,6 @@ var last_move_button_pressed: MoveButton
 func _ready() -> void:
 	if TransitionManager.transition:
 		TransitionManager.play_out()
-		await TransitionManager.finished
 
 	state_machine.initial_state = machine_starting_state
 	state_machine.start()
@@ -192,7 +193,10 @@ func _execute_buffer() -> void:
 						animate_level(ui.used_databoxes[slot])
 		BufferType.DATABOX_LEVEL:
 			var data: Databox = buffer.data
+			var old_level: int = data.shown_level
 			await data.animate_level().finished
+			if old_level != data.shown_level:
+				show_text("%s grew to level %d!" % [data.pokemon.name, data.shown_level])
 		BufferType.FUNCTION_CALL:
 			var fun: Callable = buffer.data
 			await fun.call()
@@ -345,6 +349,7 @@ func setup(attributes: Dictionary[String, Variant] = {}) -> void:
 	player_trainer = BattleTrainer.new(
 		PlayerData.player_name, PlayerData.team, true
 	)
+	player_trainer.back_frames = BOY_SPRITEFRAMES if PlayerData.gender == PlayerData.MALE else GIRL_SPRITEFRAMES
 	ally_trainers.append(player_trainer)
 	if attributes.get("ally_trainer", null):
 		ally_trainers.append(attributes.get("ally_trainer"))

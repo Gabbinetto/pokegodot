@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 32
+- Started adding a battle start animation;
+- Now level up dialogue is shown in battle.
 
 ## Version 31
 - Added a real time battle viewer in the debug menu, able to influence the battle;

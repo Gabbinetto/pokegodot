@@ -16,7 +16,6 @@ func enter() -> void:
 	battle.current_pokemon_index = 0
 	selection_buffer.clear()
 	if not battle.current_pokemon or not battle.current_pokemon.trainer.is_player:
-		print("palle")
 		battle.current_pokemon_index += 1
 
 	ui.pokemon_selected.connect(_switch)

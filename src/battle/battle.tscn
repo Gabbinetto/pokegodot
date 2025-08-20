@@ -1,15 +1,17 @@
-[gd_scene load_steps=16 format=3 uid="uid://bqh1fa6ynb5cm"]
+[gd_scene load_steps=19 format=3 uid="uid://bqh1fa6ynb5cm"]
 
 [ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="1_2jehi"]
 [ext_resource type="Script" uid="uid://dlykwa3kus8p6" path="res://src/battle/battle.gd" id="1_lx70w"]
 [ext_resource type="Texture2D" uid="uid://dqy8y4f2v3df3" path="res://assets/graphics/battlebacks/bases/cave1.png" id="2_0a26x"]
 [ext_resource type="Script" uid="uid://dmmsho54qkrac" path="res://src/state_machine/state_machine.gd" id="2_ody6j"]
+[ext_resource type="Script" uid="uid://dcsl4435axph1" path="res://src/battle/states/battle_start.gd" id="3_817hq"]
 [ext_resource type="Script" uid="uid://djv86kb5oktdd" path="res://src/battle/states/action_selection.gd" id="3_ekmyp"]
 [ext_resource type="Script" uid="uid://dlqsheilwlr0v" path="res://src/battle/states/npc_action_selection.gd" id="4_7dsqg"]
 [ext_resource type="Script" uid="uid://c8wa6amducgum" path="res://src/battle/states/action_execution.gd" id="5_deknt"]
 [ext_resource type="Script" uid="uid://bvtwrwapru5pt" path="res://src/battle/states/battle_finish.gd" id="7_libal"]
 [ext_resource type="Script" uid="uid://dyby6xenjcup1" path="res://src/battle/pokemon_body_sprite.gd" id="9_htieh"]
 [ext_resource type="PackedScene" uid="uid://dlob4s7soq2c1" path="res://src/ui/battle/battle_ui.tscn" id="10_htieh"]
+[ext_resource type="SpriteFrames" uid="uid://cftasgpa36q7v" path="res://assets/resources/battle_back_sprites/boy.tres" id="11_o24p5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1fi4"]
 atlas = ExtResource("2_0a26x")
@@ -28,7 +30,9 @@ size = Vector2(288, 288)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_blac8"]
 size = Vector2(288, 288)
 
-[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "player_ground", "enemy_ground", "sprites", "ui")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_o24p5"]
+
+[node name="Battle" type="Control" node_paths=PackedStringArray("state_machine", "machine_starting_state", "background", "player_ground", "enemy_ground", "sprites", "ally_trainer_sprites", "ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,17 +42,24 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_lx70w")
 state_machine = NodePath("StateMachine")
-machine_starting_state = NodePath("StateMachine/ActionSelection")
+machine_starting_state = NodePath("StateMachine/BattleStart")
 background = NodePath("Background")
 player_ground = NodePath("PlayerGround")
 enemy_ground = NodePath("EnemyGround")
 sprites = [NodePath("PlayerGround/AllyPokemon1"), NodePath("PlayerGround/AllyPokemon2"), NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
+ally_trainer_sprites = [NodePath("PlayerGround/AllyTrainer1")]
 ui = NodePath("BattleUI")
 metadata/_edit_lock_ = true
 metadata/_edit_horizontal_guides_ = [278.0]
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("2_ody6j")
+
+[node name="BattleStart" type="Node" parent="StateMachine" node_paths=PackedStringArray("battle", "ui")]
+script = ExtResource("3_817hq")
+battle = NodePath("../..")
+ui = NodePath("../../BattleUI")
+metadata/_custom_type_script = "uid://cbm2x8wea3k64"
 
 [node name="ActionSelection" type="Node" parent="StateMachine" node_paths=PackedStringArray("battle", "ui")]
 script = ExtResource("3_ekmyp")
@@ -124,16 +135,28 @@ stretch_mode = 4
 metadata/_edit_lock_ = true
 
 [node name="AllyPokemon1" type="Sprite2D" parent="PlayerGround"]
+visible = false
 position = Vector2(256, 64)
 texture = SubResource("PlaceholderTexture2D_21y0c")
 offset = Vector2(0, -144)
 script = ExtResource("9_htieh")
 
 [node name="AllyPokemon2" type="Sprite2D" parent="PlayerGround"]
+visible = false
 position = Vector2(256, 64)
 texture = SubResource("PlaceholderTexture2D_blac8")
 offset = Vector2(0, -144)
 script = ExtResource("9_htieh")
+
+[node name="AllyTrainer1" type="AnimatedSprite2D" parent="PlayerGround"]
+position = Vector2(256, 64)
+sprite_frames = ExtResource("11_o24p5")
+offset = Vector2(0, -96)
+
+[node name="AllyTrainer2" type="AnimatedSprite2D" parent="PlayerGround"]
+position = Vector2(256, 64)
+sprite_frames = SubResource("SpriteFrames_o24p5")
+offset = Vector2(0, -96)
 
 [node name="BattleUI" parent="." node_paths=PackedStringArray("battle") instance=ExtResource("10_htieh")]
 battle = NodePath("..")
