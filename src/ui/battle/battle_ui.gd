@@ -51,7 +51,7 @@ enum Screens {
 @export var battle_dialogue_manager: DialogueManager
 
 var used_databoxes: Array[Databox] = [null, null, null, null]
-var last_move_button: MoveButton
+var last_move_buttons: Dictionary[int, MoveButton]
 var last_selected_pokemon: Pokemon
 var current_screen: Screens:
 	get:
@@ -222,7 +222,7 @@ func _on_base_visible() -> void:
 
 
 func _on_move_focus(button: MoveButton) -> void:
-	last_move_button = button
+	last_move_buttons[battle.current_pokemon_index] = button
 	info_box.show()
 	info_pp.text = "PP: %d/%d" % [button.move.pp, button.move.total_pp]
 	info_type.texture = Types.ICONS[button.move.type]
@@ -241,6 +241,7 @@ func _on_move_pressed(button: MoveButton) -> void:
 func _on_fight_visible() -> void:
 	if not fight_screen.visible:
 		return
+	var last_move_button: MoveButton = last_move_buttons.get(battle.current_pokemon_index)
 	if last_move_button and last_move_button.visible:
 		last_move_button.grab_focus.call_deferred()
 	else:

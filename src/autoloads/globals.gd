@@ -141,6 +141,7 @@ func _input(event: InputEvent) -> void:
 		image.save_png(SCREENSHOT_PATH + filename)
 		print_rich("[color=#55FF55]Saved screenshot at %s" % filename)
 	elif event.is_action_pressed("SpeedUp"):
-		Engine.time_scale = SPEEDUP
-	elif event.is_action_released("SpeedUp"):
-		Engine.time_scale = 1.0
+		if Engine.time_scale == 1.0:
+			Engine.time_scale = SPEEDUP
+		else:
+			Engine.time_scale = 1.0

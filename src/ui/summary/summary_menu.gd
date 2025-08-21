@@ -230,7 +230,6 @@ func _refresh_pokemon() -> void:
 	# TODO: Add ribbons
 
 
-
 func _on_move_button_pressed(button: SummaryMoveButton) -> void:
 	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	if not selected_move_button:
@@ -250,7 +249,8 @@ func _on_move_button_pressed(button: SummaryMoveButton) -> void:
 
 
 func _on_move_button_unfocused() -> void:
-	if not moves_buttons.has(get_viewport().gui_get_focus_owner()):
+	var focus: Control = get_viewport().gui_get_focus_owner()
+	if not focus is SummaryMoveButton or not moves_buttons.has(focus):
 		moves_detail_panel.hide()
 		moves_screen_button.grab_focus.call_deferred()
 		Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
@@ -291,9 +291,10 @@ func _swap_moves(from: int, to: int) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		var focus: Control = get_viewport().gui_get_focus_owner()
 		if selected_move_button:
 			_reset_move_buttons_state()
-		elif not selected_move_button and moves_buttons.has(get_viewport().gui_get_focus_owner()):
+		elif not selected_move_button and focus is SummaryMoveButton and moves_buttons.has(focus):
 			moves_screen_button.grab_focus.call_deferred()
 		else:
 			closed.emit()

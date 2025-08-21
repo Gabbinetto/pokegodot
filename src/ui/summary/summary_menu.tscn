@@ -51,13 +51,13 @@
 [ext_resource type="Texture2D" uid="uid://cnxrnq1lvbov6" path="res://assets/graphics/ui/summary/summary_cross.png" id="47_wm2h6"]
 [ext_resource type="Texture2D" uid="uid://ctdypc3001cfm" path="res://assets/graphics/ui/summary/summary_cross_focus.png" id="48_4r0kn"]
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_p04ah"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_sy5fp"]
-
 [sub_resource type="ButtonGroup" id="ButtonGroup_uxp8c"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_m3kt2"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_s1nqi"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_eisxq"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_p04ah"]
 size = Vector2(128, 64)
@@ -849,7 +849,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../../../ScreenButtons/Moves")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Move2")
-button_group = SubResource("ButtonGroup_p04ah")
+button_group = SubResource("ButtonGroup_uxp8c")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move1"]
 script = ExtResource("28_qljio")
@@ -865,7 +865,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Move1")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Move3")
-button_group = SubResource("ButtonGroup_sy5fp")
+button_group = SubResource("ButtonGroup_m3kt2")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move2"]
 script = ExtResource("28_qljio")
@@ -881,7 +881,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Move2")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Move4")
-button_group = SubResource("ButtonGroup_uxp8c")
+button_group = SubResource("ButtonGroup_s1nqi")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move3"]
 script = ExtResource("28_qljio")
@@ -897,7 +897,7 @@ focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Move3")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
-button_group = SubResource("ButtonGroup_m3kt2")
+button_group = SubResource("ButtonGroup_eisxq")
 
 [node name="ZIndexFocus" type="Node" parent="Moves/InfoPanel/Move4"]
 script = ExtResource("28_qljio")

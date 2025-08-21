@@ -100,8 +100,7 @@ func _set_pp_ups(value: int, slot: int) -> void:
 
 
 func _set_moves_at_level() -> void:
-	var level_moves = _form_data.moves.duplicate()
-	level_moves.filter(func(move: Dictionary): move.level <= pokemon.level)
+	var level_moves: Array = _form_data.moves.filter(func(move: Dictionary): return move.level <= pokemon.level)
 	level_moves.reverse()
 	pokemon.moves.clear()
 	for i: int in min(moves.get_child_count(), level_moves.size()):

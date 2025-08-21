@@ -102,7 +102,7 @@ func _send_out_pokemon_animation() -> Tween:
 	var subtween: Tween = create_tween()
 
 	var mons_text: String = " and ".join(
-		battle.enemy_pokemon \
+		battle.ally_pokemon \
 			.filter(func(pokemon: BattlePokemon): return pokemon != null) \
 			.map(func(pokemon: BattlePokemon): return pokemon.name)
 	)

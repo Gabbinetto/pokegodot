@@ -1,5 +1,15 @@
 # CHANGELOG
 
+
+## Version 33
+Small version with minor changes, in preparation to start adding Items and the Bag.
+- Now moves with 0 accuracy (Such as Aerial Ace) don't check for accuracy;
+- The BattleUI now remembers the last focused move for every ally pokemon, not just the last one;
+- Made speed up into a toggle;
+- Fixed setting moves at a level in the debug pokemon editor;
+- Fixed text showing the enemy pokemon's name when sending out the player pokemon;
+- Fixed type safety errors in the summary menu.
+
 ## Version 32
 - Started adding a battle start animation;
 - Now level up dialogue is shown in battle.

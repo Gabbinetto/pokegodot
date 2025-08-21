@@ -580,7 +580,7 @@ func damage_calc(move: PokemonMove, attacker: BattlePokemon, targets: Array[Batt
 		var accuracy: float = move.accuracy * BattlePokemon.get_accuracy_multiplier(
 			attacker.boosts[Globals.OTHER_STATS.ACCURACY], target.boosts[Globals.OTHER_STATS.ACCURACY]
 		)
-		calculation.miss = Globals.rng.randf_range(0.0, 100.0) > accuracy
+		calculation.miss = move.accuracy != 0 and Globals.rng.randf_range(0.0, 100.0) > accuracy
 
 		call_step(BattleSteps.BEFORE_DAMAGE_CALC, {"damage": calculation} as Dictionary[String, Variant])
 
