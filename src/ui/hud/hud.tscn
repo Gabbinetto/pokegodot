@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="8_raafm"]
 [ext_resource type="Script" uid="uid://c2p1q2x2alki" path="res://src/dialogue/dialogue_choice_sequence.gd" id="9_4u0hr"]
 
-[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_save", "button_settings", "button_quit", "save_dialogue", "save_choice")]
+[node name="HUD" type="Control" node_paths=PackedStringArray("menu", "buttons_container", "button_party", "button_bag", "button_save", "button_settings", "button_quit", "save_dialogue", "save_choice")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,6 +22,7 @@ script = ExtResource("1_076te")
 menu = NodePath("Menu")
 buttons_container = NodePath("Menu/VBoxContainer")
 button_party = NodePath("Menu/VBoxContainer/Pokemon")
+button_bag = NodePath("Menu/VBoxContainer/Bag")
 button_save = NodePath("Menu/VBoxContainer/Save")
 button_settings = NodePath("Menu/VBoxContainer/Options")
 button_quit = NodePath("Menu/VBoxContainer/Quit")

@@ -62,10 +62,23 @@ func _init(_battle: Battle, _pokemon: Pokemon, _trainer: BattleTrainer) -> void:
 
 ## Damages this pokemon, substracting [param amount] from [member hp].
 ## If this pokemon faints, [method Battle.add_exp] will be called on [member battle].
+## If [param amount] is negative, [method apply_heal] will be called instead with a negative [param amount].
 func apply_damage(amount: int) -> void:
+	if amount < 0:
+		apply_heal(-amount)
+		return
 	hp -= amount
 	if hp <= 0:
 		battle.pokemon_fainted(self)
+
+
+## Heals the pokemon, adding [param amount] to [member hp].
+## If [param amount] is negative, [method apply_damage] will be called instead with a negative [param amount].
+func apply_heal(amount: int) -> void:
+	if amount < 0:
+		apply_damage(-amount)
+		return
+	hp += amount
 
 
 ## Returns a [param stat], accounting for stat boosts.

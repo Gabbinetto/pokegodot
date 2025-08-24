@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://vcjt8u25xidc"]
+
+[ext_resource type="FontFile" uid="uid://b2qbal8o47yhc" path="res://assets/fonts/raw/power green.ttf" id="1_p8fv5"]
+
+[resource]
+base_font = ExtResource("1_p8fv5")
+spacing_top = 3

@@ -215,7 +215,7 @@ func _execute_buffer() -> void:
 				from = i
 				break
 			if from != -1:
-				ui.prompt_switch(false)
+				ui.prompt_selection(false)
 				await ui.pokemon_selected
 				switch(from, ui.last_selected_pokemon)
 	

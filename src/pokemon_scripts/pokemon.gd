@@ -306,7 +306,7 @@ func as_save_data() -> Dictionary[String, Variant]:
 		"pokerus_day_left": pokerus_day_left,
 		"hp": hp,
 		"status": status.as_save_data() if status else {},
-		"held_item": held_item.as_save_data() if held_item else {},
+		"held_item": held_item.id if held_item else "",
 		"egg_cycles_left": egg_cycles_left,
 		"original_trainer_id": original_trainer_id,
 		"original_trainer_secret_id": original_trainer_secret_id,
@@ -343,8 +343,10 @@ static func from_save_data(data: Dictionary[String, Variant]) -> Pokemon:
 	var buffer: Dictionary[String, Variant] = {}
 	buffer.assign(data.status)
 	attributes.status = PokemonStatus.from_save_data(buffer)
-	buffer.assign(data.held_item)
-	attributes.held_item = Item.from_save_data(buffer)
+
+	# Held item
+	if data.get("held_item", ""):
+		attributes.held_item = Item.copy_from_id(data["held_item"])
 
 	# Add moves
 	attributes.moves = []

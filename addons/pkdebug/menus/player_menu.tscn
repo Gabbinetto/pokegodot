@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtb7wvg7eoqet"]
+
+[ext_resource type="Script" uid="uid://71oiw3hlhfwd" path="res://addons/pkdebug/menus/player_menu.gd" id="1_n71bk"]
+
+[node name="Player" type="MarginContainer" node_paths=PackedStringArray("fill_bag")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_n71bk")
+fill_bag = NodePath("HFlowContainer/FillBag")
+
+[node name="HFlowContainer" type="HFlowContainer" parent="."]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+
+[node name="FillBag" type="Button" parent="HFlowContainer"]
+layout_mode = 2
+text = "Fill bag"

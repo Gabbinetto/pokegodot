@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemHeal" load_steps=3 format=3 uid="uid://nn2plx2gr0c4"]
+
+[ext_resource type="Script" uid="uid://dba5yr3tybvit" path="res://src/item_scripts/item_heal.gd" id="1_0yrs0"]
+[ext_resource type="Texture2D" uid="uid://b3hyxakvvg8uj" path="res://assets/graphics/items/POTION.png" id="2_0gaff"]
+
+[resource]
+resource_name = "POTION"
+script = ExtResource("1_0yrs0")
+heal_amount = 20
+name = "Potion"
+plural_name = "Potions"
+description = "A spray-type medicine for treating wounds. It can be used to restore 20 HP to a single Pokémon."
+texture = ExtResource("2_0gaff")
+pocket = 1
+price = 200
+sell_price = 100
+bp_price = 0
+consumable = true
+trashable = true
+can_use_in_bag = true
+can_use_in_battle = true
+can_be_held = true
+flags = Array[String]([])
+show_quantity = true
+metadata/_custom_type_script = "uid://dba5yr3tybvit"

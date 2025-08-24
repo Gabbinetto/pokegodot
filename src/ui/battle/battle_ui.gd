@@ -3,6 +3,7 @@ class_name BattleUI extends Node
 signal move_selected(move: PokemonMove)
 signal target_selected(index: int)
 signal pokemon_selected
+signal pokemon_selection_closed
 signal run_selected
 signal base_cancel_selected
 
@@ -70,7 +71,7 @@ var current_screen: Screens:
 func _ready() -> void:
 	base_screen.visibility_changed.connect(_on_base_visible)
 	fight_button.pressed.connect(show_screen.bind(Screens.FIGHT))
-	pokemon_button.pressed.connect(prompt_switch)
+	pokemon_button.pressed.connect(prompt_selection)
 	run_button.pressed.connect(run_selected.emit)
 	base_cancel_button.pressed.connect(base_cancel_selected.emit)
 	
@@ -186,7 +187,7 @@ func set_target_buttons_to_move(move: PokemonMove, user: BattlePokemon) -> void:
 #endregion
 
 
-func prompt_switch(can_cancel: bool = true) -> void:
+func prompt_selection(can_cancel: bool = true) -> void:
 	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": can_cancel})
 	party.pokemon_selected.connect(_on_pokemon_selected.bind(party))
 	party.closed.connect(_on_party_closed.bind(party))
@@ -210,9 +211,10 @@ func _on_party_closed(party: PartyMenu) -> void:
 	await party.tree_exited
 	TransitionManager.play_out()
 	await TransitionManager.finished
+	pokemon_selection_closed.emit()
 	if base_screen.visible:
 		pokemon_button.grab_focus.call_deferred()
-
+	
 
 ## Grab focus on the fight button when visible
 func _on_base_visible() -> void:

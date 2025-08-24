@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemHeal" load_steps=3 format=3 uid="uid://lgkby33rg2aq"]
+
+[ext_resource type="Script" uid="uid://dba5yr3tybvit" path="res://src/item_scripts/item_heal.gd" id="1_mrvo0"]
+[ext_resource type="Texture2D" uid="uid://prgt8s6ed7js" path="res://assets/graphics/items/MAXPOTION.png" id="2_mrvo0"]
+
+[resource]
+resource_name = "MAXPOTION"
+script = ExtResource("1_mrvo0")
+heal_amount = 999999
+name = "Max Potion"
+plural_name = "Max Potions"
+description = "A spray-type medicine for treating wounds. It can completely restore the max HP of a single Pokémon."
+texture = ExtResource("2_mrvo0")
+pocket = 1
+price = 2500
+sell_price = 1250
+bp_price = 0
+consumable = true
+trashable = true
+can_use_in_bag = true
+can_use_in_battle = true
+can_be_held = true
+flags = Array[String]([])
+show_quantity = true
+metadata/_custom_type_script = "uid://dba5yr3tybvit"

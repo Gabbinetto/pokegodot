@@ -5,6 +5,7 @@ extends Control
 @export var buttons_container: Control
 @export_group("Buttons", "button_")
 @export var button_party: BaseButton
+@export var button_bag: BaseButton
 @export var button_save: BaseButton
 @export var button_settings: BaseButton
 @export var button_quit: BaseButton
@@ -19,6 +20,7 @@ func _ready() -> void:
 		node.focus_entered.connect(set.bind("last_menu_option", node))
 
 	button_party.pressed.connect(_open_party)
+	button_bag.pressed.connect(_open_bag)
 	button_save.pressed.connect(_save)
 	button_settings.pressed.connect(_open_settings)
 	button_quit.pressed.connect(_quit)
@@ -71,6 +73,35 @@ func _open_party() -> void:
 			TransitionManager.layer -= 1
 
 			button_party.grab_focus.call_deferred()
+	)
+
+
+func _open_bag() -> void:
+	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+
+	menu.hide()
+
+	submenu_open = true
+	var bag_menu: BagMenu = BagMenu.create()
+	add_child(bag_menu)
+	bag_menu.closed.connect(
+		func():
+			Audio.play_sfx(Audio.SOUNDS.GUI_MENU_CLOSE)
+			TransitionManager.layer += 1
+			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+			await TransitionManager.finished
+			bag_menu.queue_free()
+			await bag_menu.tree_exited
+			menu.show()
+			submenu_open = false
+
+			TransitionManager.play_out()
+			await TransitionManager.finished
+			TransitionManager.layer -= 1
+
+			button_bag.grab_focus.call_deferred()
 	)
 
 

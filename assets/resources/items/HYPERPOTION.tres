@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemHeal" load_steps=3 format=3 uid="uid://cymyndf23op1y"]
+
+[ext_resource type="Script" uid="uid://dba5yr3tybvit" path="res://src/item_scripts/item_heal.gd" id="1_pgbnf"]
+[ext_resource type="Texture2D" uid="uid://bmm7j4b3jnyv4" path="res://assets/graphics/items/HYPERPOTION.png" id="2_pgbnf"]
+
+[resource]
+resource_name = "HYPERPOTION"
+script = ExtResource("1_pgbnf")
+heal_amount = 120
+name = "Hyper Potion"
+plural_name = "Hyper Potions"
+description = "A spray-type medicine for treating wounds. It can be used to restore 120 HP to a single Pokémon."
+texture = ExtResource("2_pgbnf")
+pocket = 1
+price = 1500
+sell_price = 750
+bp_price = 0
+consumable = true
+trashable = true
+can_use_in_bag = true
+can_use_in_battle = true
+can_be_held = true
+flags = Array[String]([])
+show_quantity = true
+metadata/_custom_type_script = "uid://dba5yr3tybvit"

@@ -38,5 +38,3 @@ func _shift() -> void:
 		new_offset = Vector2(metrics.get("front_sprite_x", 0), metrics.get("front_sprite_y", 0))
 	
 	offset = Vector2(0, -texture.get_height() / 2.0) + new_offset
-	
-	

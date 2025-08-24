@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cjyq0t0ny1k3b"]
+
+[ext_resource type="FontVariation" uid="uid://vcjt8u25xidc" path="res://assets/fonts/gba_font.tres" id="1_rd57u"]
+
+[resource]
+font = ExtResource("1_rd57u")
+font_size = 24
+font_color = Color(0.972549, 0.972549, 0.972549, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)

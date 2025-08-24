@@ -1,0 +1,306 @@
+[gd_scene load_steps=44 format=3 uid="uid://d3y5whuc0xkw5"]
+
+[ext_resource type="Texture2D" uid="uid://fe6sf6ycotoy" path="res://assets/graphics/ui/bag/backgrounds/bg_0.png" id="1_sjumi"]
+[ext_resource type="Script" uid="uid://y2aghe1hawmy" path="res://src/ui/bag/bag_menu.gd" id="1_x58hj"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="2_gnv8k"]
+[ext_resource type="Texture2D" uid="uid://mqfyu7b3cyao" path="res://assets/graphics/ui/bag/bag_0_m.png" id="3_3w60q"]
+[ext_resource type="Texture2D" uid="uid://cie6a800qosdx" path="res://assets/graphics/ui/bag/backgrounds/bg_1.png" id="3_og8bc"]
+[ext_resource type="Texture2D" uid="uid://bo7injke1gr3d" path="res://assets/graphics/ui/bag/backgrounds/bg_2.png" id="4_caa7t"]
+[ext_resource type="Texture2D" uid="uid://cpnqgtuya0d3" path="res://assets/graphics/ui/bag/scroll_grabber.png" id="4_vgieq"]
+[ext_resource type="PackedScene" uid="uid://cd7yvgjgx0l6t" path="res://src/ui/bag/bag_item.tscn" id="5_3qs4w"]
+[ext_resource type="Texture2D" uid="uid://dmeoqsbs4wr3n" path="res://assets/graphics/ui/bag/backgrounds/bg_3.png" id="5_mipjn"]
+[ext_resource type="Texture2D" uid="uid://d1gisy5ho5vax" path="res://assets/graphics/ui/bag/scroll_up.png" id="5_yta36"]
+[ext_resource type="Texture2D" uid="uid://dexy4e60ka8yj" path="res://assets/graphics/ui/bag/backgrounds/bg_4.png" id="6_uufrd"]
+[ext_resource type="Texture2D" uid="uid://drx78fq24xjne" path="res://assets/graphics/ui/bag/scroll_down.png" id="6_vw6jk"]
+[ext_resource type="Texture2D" uid="uid://cjha28nwkith5" path="res://assets/graphics/ui/bag/backgrounds/bg_5.png" id="7_nhyn5"]
+[ext_resource type="Texture2D" uid="uid://bocx4lr6c8pyi" path="res://assets/graphics/ui/bag/backgrounds/bg_6.png" id="8_b2epy"]
+[ext_resource type="Texture2D" uid="uid://cxqeym814mmla" path="res://assets/graphics/ui/bag/slot_focus.png" id="8_r03ub"]
+[ext_resource type="Texture2D" uid="uid://boubq1eb0yjlr" path="res://assets/graphics/ui/bag/backgrounds/bg_7.png" id="9_w3hys"]
+[ext_resource type="Texture2D" uid="uid://ct7tbx2rgqng4" path="res://assets/graphics/ui/bag/bag_1_m.png" id="11_ftktp"]
+[ext_resource type="Texture2D" uid="uid://dnageq38io5wg" path="res://assets/graphics/ui/bag/bag_2_m.png" id="12_65y2e"]
+[ext_resource type="Texture2D" uid="uid://dn82lla1ddt78" path="res://assets/graphics/ui/bag/bag_3_m.png" id="13_sogrl"]
+[ext_resource type="Texture2D" uid="uid://xwcca6r2edg7" path="res://assets/graphics/ui/bag/bag_4_m.png" id="14_58c4e"]
+[ext_resource type="Texture2D" uid="uid://i8if3d7wdiii" path="res://assets/graphics/ui/bag/bag_5_m.png" id="15_fs50s"]
+[ext_resource type="Texture2D" uid="uid://cwke4w0o4adrf" path="res://assets/graphics/ui/bag/bag_6_m.png" id="16_pwje0"]
+[ext_resource type="Texture2D" uid="uid://bpuujco0pk61s" path="res://assets/graphics/ui/bag/bag_7_m.png" id="17_3kj4i"]
+[ext_resource type="Texture2D" uid="uid://b1vcj26r0nbvs" path="res://assets/graphics/ui/bag/icon_pocket_0.png" id="17_caa7t"]
+[ext_resource type="Texture2D" uid="uid://cjtoiaw30yfi1" path="res://assets/graphics/ui/bag/icon_pocket_1.png" id="18_0hp1u"]
+[ext_resource type="Texture2D" uid="uid://48jbvsd1v1yw" path="res://assets/graphics/ui/bag/bag_0_f.png" id="18_o67dj"]
+[ext_resource type="Texture2D" uid="uid://bmfaju6m5w3pg" path="res://assets/graphics/ui/bag/bag_1_f.png" id="19_3m6ng"]
+[ext_resource type="Texture2D" uid="uid://dmyqcwrm3entd" path="res://assets/graphics/ui/bag/icon_pocket_2.png" id="19_6rvu7"]
+[ext_resource type="Texture2D" uid="uid://bnss6l2sfiq3n" path="res://assets/graphics/ui/bag/icon_pocket_3.png" id="20_dlpkl"]
+[ext_resource type="Texture2D" uid="uid://bcqkwct5vfx01" path="res://assets/graphics/ui/bag/bag_2_f.png" id="20_hjeop"]
+[ext_resource type="Texture2D" uid="uid://b0tqam13hgsyq" path="res://assets/graphics/ui/bag/icon_pocket_4.png" id="21_eodya"]
+[ext_resource type="Texture2D" uid="uid://d221k18sex03j" path="res://assets/graphics/ui/bag/bag_3_f.png" id="21_xhx61"]
+[ext_resource type="Texture2D" uid="uid://b38a0n80dsyfg" path="res://assets/graphics/ui/bag/icon_pocket_5.png" id="22_kbhmd"]
+[ext_resource type="Texture2D" uid="uid://lejcem027esd" path="res://assets/graphics/ui/bag/bag_4_f.png" id="22_rexpy"]
+[ext_resource type="Texture2D" uid="uid://cnc25nottht4x" path="res://assets/graphics/ui/bag/icon_pocket_6.png" id="23_aa4eo"]
+[ext_resource type="Texture2D" uid="uid://7gxqqh5sc3qc" path="res://assets/graphics/ui/bag/bag_5_f.png" id="23_xurs8"]
+[ext_resource type="Texture2D" uid="uid://h6cafni8saft" path="res://assets/graphics/ui/bag/icon_pocket_7.png" id="24_6gc2g"]
+[ext_resource type="Texture2D" uid="uid://3sau1y2ekayo" path="res://assets/graphics/ui/bag/bag_6_f.png" id="24_woh2f"]
+[ext_resource type="LabelSettings" uid="uid://cjyq0t0ny1k3b" path="res://assets/resources/ui/text_resources/white_on_black.tres" id="25_6rvu7"]
+[ext_resource type="Texture2D" uid="uid://dppdr35ramrgj" path="res://assets/graphics/ui/bag/bag_7_f.png" id="25_baxyn"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sjumi"]
+size = Vector2(48, 48)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgieq"]
+bg_color = Color(0.972549, 0.972549, 0.972549, 1)
+expand_margin_left = 2.0
+expand_margin_right = 2.0
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_0hp1u"]
+
+[node name="BagMenu" type="Control" node_paths=PackedStringArray("focus_rect", "pocket_name", "description", "scroll_bar", "scroll_container", "item_icon", "background", "bag_sprite", "slots_container", "dummy_bag_item", "close_button", "pocket_buttons")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x58hj")
+focus_rect = NodePath("ItemFocus")
+pocket_name = NodePath("PocketName")
+description = NodePath("Description")
+scroll_bar = NodePath("ScrollBar")
+scroll_container = NodePath("SlotsScroller")
+item_icon = NodePath("Icon")
+background = NodePath("Background")
+bag_sprite = NodePath("BagSprite")
+slots_container = NodePath("SlotsScroller/SlotsContainer")
+dummy_bag_item = NodePath("SlotsScroller/SlotsContainer/BagItem")
+close_button = NodePath("SlotsScroller/SlotsContainer/CloseButton")
+pocket_buttons = NodePath("PocketButtons")
+backgrounds = Dictionary[int, Texture2D]({
+0: ExtResource("1_sjumi"),
+1: ExtResource("3_og8bc"),
+2: ExtResource("4_caa7t"),
+3: ExtResource("5_mipjn"),
+4: ExtResource("6_uufrd"),
+5: ExtResource("7_nhyn5"),
+6: ExtResource("8_b2epy"),
+7: ExtResource("9_w3hys")
+})
+male_bag_sprites = Dictionary[int, Texture2D]({
+0: ExtResource("3_3w60q"),
+1: ExtResource("11_ftktp"),
+2: ExtResource("12_65y2e"),
+3: ExtResource("13_sogrl"),
+4: ExtResource("14_58c4e"),
+5: ExtResource("15_fs50s"),
+6: ExtResource("16_pwje0"),
+7: ExtResource("17_3kj4i")
+})
+female_bag_sprites = Dictionary[int, Texture2D]({
+0: ExtResource("18_o67dj"),
+1: ExtResource("19_3m6ng"),
+2: ExtResource("20_hjeop"),
+3: ExtResource("21_xhx61"),
+4: ExtResource("22_rexpy"),
+5: ExtResource("23_xurs8"),
+6: ExtResource("24_woh2f"),
+7: ExtResource("25_baxyn")
+})
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_sjumi")
+metadata/_edit_lock_ = true
+
+[node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 0
+anchor_left = 0.046875
+anchor_top = 0.8125
+anchor_right = 0.140625
+anchor_bottom = 0.9375
+texture = SubResource("PlaceholderTexture2D_sjumi")
+stretch_mode = 2
+
+[node name="BagSprite" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0585937
+anchor_top = 0.0520833
+anchor_right = 0.308594
+anchor_bottom = 0.385417
+offset_right = -9.15527e-05
+offset_bottom = -4.57764e-05
+texture = ExtResource("3_3w60q")
+stretch_mode = 2
+
+[node name="PocketName" type="Label" parent="."]
+layout_mode = 0
+anchor_top = 0.46875
+anchor_right = 0.363281
+anchor_bottom = 0.552083
+label_settings = ExtResource("2_gnv8k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SlotsScroller" type="ScrollContainer" parent="."]
+layout_mode = 0
+anchor_left = 0.390625
+anchor_top = 0.078125
+anchor_right = 0.878906
+anchor_bottom = 0.708333
+mouse_filter = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="SlotsContainer" type="VBoxContainer" parent="SlotsScroller"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="BagItem" parent="SlotsScroller/SlotsContainer" instance=ExtResource("5_3qs4w")]
+layout_mode = 2
+
+[node name="CloseButton" parent="SlotsScroller/SlotsContainer" instance=ExtResource("5_3qs4w")]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+is_close_button = true
+
+[node name="ScrollBar" type="VSlider" parent="."]
+layout_mode = 0
+anchor_left = 0.917969
+anchor_top = 0.140625
+anchor_right = 0.988281
+anchor_bottom = 0.59375
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+theme_override_icons/grabber = ExtResource("4_vgieq")
+theme_override_icons/grabber_highlight = ExtResource("4_vgieq")
+theme_override_icons/grabber_disabled = ExtResource("4_vgieq")
+theme_override_styles/slider = SubResource("StyleBoxFlat_vgieq")
+value = 100.0
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="ScrollUp" type="TextureButton" parent="ScrollBar"]
+layout_mode = 0
+anchor_top = -0.229885
+anchor_right = 1.11111
+texture_normal = ExtResource("5_yta36")
+texture_pressed = ExtResource("5_yta36")
+texture_hover = ExtResource("5_yta36")
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollDown" type="TextureButton" parent="ScrollBar"]
+layout_mode = 0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.21839
+texture_normal = ExtResource("6_vw6jk")
+texture_pressed = ExtResource("6_vw6jk")
+texture_hover = ExtResource("6_vw6jk")
+metadata/_edit_use_anchors_ = true
+
+[node name="ItemFocus" type="NinePatchRect" parent="."]
+layout_mode = 0
+anchor_left = 0.359375
+anchor_top = 0.0520833
+anchor_right = 0.910156
+anchor_bottom = 0.166667
+texture = ExtResource("8_r03ub")
+patch_margin_left = 14
+patch_margin_top = 14
+patch_margin_right = 14
+patch_margin_bottom = 14
+metadata/_edit_use_anchors_ = true
+metadata/offset = Vector2(-16, -10)
+
+[node name="PocketButtons" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00390625
+anchor_top = 0.588542
+anchor_right = 0.359375
+anchor_bottom = 0.661458
+offset_right = -142.0
+theme_override_constants/separation = -6
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Pocket0" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("17_caa7t")
+
+[node name="Pocket1" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("18_0hp1u")
+
+[node name="Pocket2" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("19_6rvu7")
+
+[node name="Pocket3" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("20_dlpkl")
+
+[node name="Pocket4" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("21_eodya")
+
+[node name="Pocket5" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("22_kbhmd")
+
+[node name="Pocket6" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("23_aa4eo")
+
+[node name="Pocket7" type="TextureButton" parent="PocketButtons"]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+button_group = SubResource("ButtonGroup_0hp1u")
+texture_pressed = ExtResource("24_6gc2g")
+
+[node name="Description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 283.0
+offset_right = 480.0
+offset_bottom = 384.0
+text = "A spray-type medicine for treating wounds. It can be used to restore 60 HP to a single Pokémon."
+label_settings = ExtResource("25_6rvu7")
+autowrap_mode = 2
+metadata/_edit_lock_ = true

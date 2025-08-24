@@ -110,6 +110,16 @@ func _capture(message: String, data: Array) -> bool:
 				return true
 			Globals.current_battle.pokemons[slot].add_boost(data[1], data[2])
 			_toast("Boosted pokemon.")
+		"get_item_list":
+			var files: PackedStringArray = DirAccess.get_files_at(Item.RESOURCES_PATH)
+			_data_send(Array(files).map(func(file: String): return file.get_basename()))
+			return true
+		"fill_bag":
+			var files: PackedStringArray = DirAccess.get_files_at(Item.RESOURCES_PATH)
+			for file: String in files:
+				Bag.set_item(file.get_basename(), data[0] if not data.is_empty() else Bag.MAX_ITEM_AMOUNT)
+			_toast("Filled bag")
+			return true
 
 
 	return false
