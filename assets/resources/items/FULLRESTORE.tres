@@ -7,6 +7,8 @@
 resource_name = "FULLRESTORE"
 script = ExtResource("1_5eeua")
 heal_amount = 999999
+heal_max = true
+heal_status = true
 name = "Full Restore"
 plural_name = "Full Restores"
 description = "A medicine that fully restores the HP and heals any status problems of a single Pokémon."

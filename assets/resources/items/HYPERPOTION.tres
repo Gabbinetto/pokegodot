@@ -7,6 +7,8 @@
 resource_name = "HYPERPOTION"
 script = ExtResource("1_pgbnf")
 heal_amount = 120
+heal_max = false
+heal_status = false
 name = "Hyper Potion"
 plural_name = "Hyper Potions"
 description = "A spray-type medicine for treating wounds. It can be used to restore 120 HP to a single Pokémon."

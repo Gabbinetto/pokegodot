@@ -1,7 +1,17 @@
 @tool
 class_name ItemHeal extends Item
 
-@export var heal_amount: int = 0
+@export var heal_amount: int = 0 ## The amount of HP to heal.
+@export var heal_max: bool = false ## If true, ignore [member heal_amount] and heal HP to the max.
+@export var heal_status: bool = false ## If true, also heal status effects.
+
+
+func _validate_property(property: Dictionary) -> void:
+	if property.name == "heal_amount":
+		if heal_max:
+			property.usage &= ~PROPERTY_USAGE_EDITOR
+		else:
+			property.usage |= PROPERTY_USAGE_EDITOR
 
 
 func battle_use() -> void:
@@ -26,8 +36,8 @@ func _on_pokemon_selected(pokemon: Pokemon) -> void:
 
 func heal(target: Variant) -> void:
 	if target is Pokemon:
-		target.hp += heal_amount
+		target.hp += heal_amount if not heal_max else target.max_hp - target.hp
 	elif target is BattlePokemon:
-		target.apply_heal(heal_amount)
+		target.apply_heal(heal_amount if not heal_max else target.max_hp - target.hp)
 	else:
 		printerr("Chosen target is not a Pokemon or BattlePokemon.")

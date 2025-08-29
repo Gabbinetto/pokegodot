@@ -34,6 +34,12 @@ var id: String: ## Shorthand to get [Resource.resource_name]. Useful for coheren
 	get: return resource_name
 
 
+## Returns the text shown in the bag to use the item. [br]
+## By default it's "Use", but for items like the Bicycle, it returns "Walk" when riding the bike.
+func get_use_text() -> String:
+	return "Use"
+
+
 ## Effect when used from the bag. Virtual.
 func bag_use() -> void:
 	pass

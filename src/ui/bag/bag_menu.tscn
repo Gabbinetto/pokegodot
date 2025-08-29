@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://d3y5whuc0xkw5"]
+[gd_scene load_steps=45 format=3 uid="uid://d3y5whuc0xkw5"]
 
 [ext_resource type="Texture2D" uid="uid://fe6sf6ycotoy" path="res://assets/graphics/ui/bag/backgrounds/bg_0.png" id="1_sjumi"]
 [ext_resource type="Script" uid="uid://y2aghe1hawmy" path="res://src/ui/bag/bag_menu.gd" id="1_x58hj"]
@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://3sau1y2ekayo" path="res://assets/graphics/ui/bag/bag_6_f.png" id="24_woh2f"]
 [ext_resource type="LabelSettings" uid="uid://cjyq0t0ny1k3b" path="res://assets/resources/ui/text_resources/white_on_black.tres" id="25_6rvu7"]
 [ext_resource type="Texture2D" uid="uid://dppdr35ramrgj" path="res://assets/graphics/ui/bag/bag_7_f.png" id="25_baxyn"]
+[ext_resource type="PackedScene" uid="uid://becpqudgln3rp" path="res://src/ui/misc/menu_button.tscn" id="41_3m6ng"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sjumi"]
 size = Vector2(48, 48)
@@ -51,7 +52,7 @@ expand_margin_right = 2.0
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_0hp1u"]
 
-[node name="BagMenu" type="Control" node_paths=PackedStringArray("focus_rect", "pocket_name", "description", "scroll_bar", "scroll_container", "item_icon", "background", "bag_sprite", "slots_container", "dummy_bag_item", "close_button", "pocket_buttons")]
+[node name="BagMenu" type="Control" node_paths=PackedStringArray("focus_rect", "pocket_name", "description", "scroll_bar", "scroll_up", "scroll_down", "scroll_container", "item_icon", "background", "bag_sprite", "slots_container", "dummy_bag_item", "close_button", "pocket_buttons", "choice_menu", "button_container", "button_use", "button_give", "button_toss", "button_register", "button_cancel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,6 +64,8 @@ focus_rect = NodePath("ItemFocus")
 pocket_name = NodePath("PocketName")
 description = NodePath("Description")
 scroll_bar = NodePath("ScrollBar")
+scroll_up = NodePath("ScrollBar/ScrollUp")
+scroll_down = NodePath("ScrollBar/ScrollDown")
 scroll_container = NodePath("SlotsScroller")
 item_icon = NodePath("Icon")
 background = NodePath("Background")
@@ -101,6 +104,13 @@ female_bag_sprites = Dictionary[int, Texture2D]({
 6: ExtResource("24_woh2f"),
 7: ExtResource("25_baxyn")
 })
+choice_menu = NodePath("ChoiceMenu")
+button_container = NodePath("ChoiceMenu/Panel/VBoxContainer")
+button_use = NodePath("ChoiceMenu/Panel/VBoxContainer/Use")
+button_give = NodePath("ChoiceMenu/Panel/VBoxContainer/Give")
+button_toss = NodePath("ChoiceMenu/Panel/VBoxContainer/Toss")
+button_register = NodePath("ChoiceMenu/Panel/VBoxContainer/Register")
+button_cancel = NodePath("ChoiceMenu/Panel/VBoxContainer/Cancel")
 metadata/_edit_lock_ = true
 
 [node name="Background" type="TextureRect" parent="."]
@@ -304,3 +314,78 @@ text = "A spray-type medicine for treating wounds. It can be used to restore 60 
 label_settings = ExtResource("25_6rvu7")
 autowrap_mode = 2
 metadata/_edit_lock_ = true
+
+[node name="ChoiceMenu" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="ChoiceMenu"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -212.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChoiceMenu/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Use" parent="ChoiceMenu/Panel/VBoxContainer" instance=ExtResource("41_3m6ng")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Give")
+focus_next = NodePath("../Give")
+focus_previous = NodePath("../Cancel")
+text = "Use"
+
+[node name="Give" parent="ChoiceMenu/Panel/VBoxContainer" instance=ExtResource("41_3m6ng")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Use")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Toss")
+focus_next = NodePath("../Toss")
+focus_previous = NodePath("../Use")
+text = "Give"
+
+[node name="Toss" parent="ChoiceMenu/Panel/VBoxContainer" instance=ExtResource("41_3m6ng")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Give")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Register")
+focus_next = NodePath("../Register")
+focus_previous = NodePath("../Give")
+text = "Toss"
+
+[node name="Register" parent="ChoiceMenu/Panel/VBoxContainer" instance=ExtResource("41_3m6ng")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Toss")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Cancel")
+focus_next = NodePath("../Cancel")
+focus_previous = NodePath("../Toss")
+text = "Register"
+
+[node name="Cancel" parent="ChoiceMenu/Panel/VBoxContainer" instance=ExtResource("41_3m6ng")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Register")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Use")
+focus_previous = NodePath("../Register")
+text = "Cancel"

@@ -7,6 +7,8 @@
 resource_name = "MAXPOTION"
 script = ExtResource("1_mrvo0")
 heal_amount = 999999
+heal_max = true
+heal_status = false
 name = "Max Potion"
 plural_name = "Max Potions"
 description = "A spray-type medicine for treating wounds. It can completely restore the max HP of a single Pokémon."
