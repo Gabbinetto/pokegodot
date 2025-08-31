@@ -48,7 +48,7 @@ Button/styles/hover = SubResource("StyleBoxTexture_vk85n")
 Button/styles/normal = SubResource("StyleBoxTexture_vk85n")
 Button/styles/pressed = SubResource("StyleBoxTexture_sble2")
 
-[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_switch_in", "button_summary", "button_switch", "button_nickname", "button_item", "button_menu_cancel")]
+[node name="PartyMenu" type="Control" node_paths=PackedStringArray("panels_container", "cancel_button", "menu", "menu_buttons_container", "button_select", "button_summary", "button_switch", "button_nickname", "button_item", "button_menu_cancel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,7 +61,7 @@ panels_container = NodePath("Panels")
 cancel_button = NodePath("CancelButton")
 menu = NodePath("Menu")
 menu_buttons_container = NodePath("Menu/VBoxContainer")
-button_switch_in = NodePath("Menu/VBoxContainer/SwitchIn")
+button_select = NodePath("Menu/VBoxContainer/Select")
 button_summary = NodePath("Menu/VBoxContainer/Summary")
 button_switch = NodePath("Menu/VBoxContainer/Switch")
 button_nickname = NodePath("Menu/VBoxContainer/Nickname")
@@ -246,15 +246,15 @@ theme = ExtResource("15_wqgli")
 theme_override_constants/separation = 0
 alignment = 2
 
-[node name="SwitchIn" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
+[node name="Select" parent="Menu/VBoxContainer" instance=ExtResource("16_71sut")]
 visible = false
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
 focus_neighbor_right = NodePath(".")
-text = "Switch in"
+text = "Select"
 
-[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/SwitchIn"]
+[node name="ControlFocusSound" type="AudioStreamPlayer" parent="Menu/VBoxContainer/Select"]
 stream = ExtResource("11_71sut")
 script = ExtResource("12_x0f6l")
 metadata/_custom_type_script = "uid://dni7erlf70lfg"

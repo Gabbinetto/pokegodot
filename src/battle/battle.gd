@@ -172,7 +172,6 @@ func _execute_buffer() -> void:
 		BufferType.POKEMON_FAINT:
 			var fainted_pokemon: BattlePokemon = buffer.data
 			turn_selections.erase(pokemons.find(fainted_pokemon))
-			pokemons[pokemons.find(fainted_pokemon)] = null
 			refresh_visuals()
 			refresh_turn_order()
 			show_text("%s fainted!" % fainted_pokemon.name)
@@ -215,7 +214,7 @@ func _execute_buffer() -> void:
 				from = i
 				break
 			if from != -1:
-				ui.prompt_selection(false)
+				ui.prompt_selection(false, true)
 				await ui.pokemon_selected
 				switch(from, ui.last_selected_pokemon)
 	

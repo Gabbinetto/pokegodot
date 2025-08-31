@@ -1,5 +1,12 @@
 extends Node
 
+## Bag autoload
+##
+## Singleton representing the bag. Has functionality to add, remove and set
+## the number of items in the bag. [Item]s are stored by their [b]id[/b], they
+## aren't stored as resources.
+
+
 enum Pockets {
 	ITEMS,
 	MEDICINE,

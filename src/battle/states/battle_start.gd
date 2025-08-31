@@ -45,7 +45,6 @@ func enter() -> void:
 		_animate_wild_battle()
 	
 	await tween.finished
-	print("Finish")
 	transition.emit(self, "ActionSelection")
 
 

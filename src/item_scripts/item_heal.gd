@@ -14,6 +14,20 @@ func _validate_property(property: Dictionary) -> void:
 			property.usage |= PROPERTY_USAGE_EDITOR
 
 
+func bag_use() -> void:
+	var party: PartyMenu = await PartyMenu.open(null, {"select": true})
+
+	party.pokemon_selected.connect(
+		func(pokemon: Pokemon):
+			# TODO: Add animations in the party screen
+			if pokemon.hp == pokemon.max_hp:
+				return
+			if consumable:
+				Bag.remove_item(id)
+			party.closed.emit()
+	)
+
+
 func battle_use() -> void:
 	var battle: Battle = Globals.current_battle
 	battle.ui.pokemon_selected.connect(_on_pokemon_selected, CONNECT_ONE_SHOT)
@@ -32,6 +46,8 @@ func _on_pokemon_selected(pokemon: Pokemon) -> void:
 	battle.animate_hp(
 		battle.ui.used_databoxes[battle.get_slot(battle_pokemon)]
 	)
+	if consumable:
+		Bag.remove_item(id)
 
 
 func heal(target: Variant) -> void:

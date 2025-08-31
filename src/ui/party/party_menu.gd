@@ -14,7 +14,7 @@ const SOUND_PARTY_SWITCH = preload("res://assets/audio/sfx/GUI party switch.ogg"
 @export var menu: Control
 @export var menu_buttons_container: Control
 @export_group("Menu buttons", "button_")
-@export var button_switch_in: BaseButton
+@export var button_select: BaseButton
 @export var button_summary: BaseButton
 @export var button_switch: BaseButton
 @export var button_nickname: BaseButton
@@ -23,6 +23,7 @@ const SOUND_PARTY_SWITCH = preload("res://assets/audio/sfx/GUI party switch.ogg"
 
 
 var in_battle: bool = false
+var select: bool = false
 var can_cancel: bool = true
 var team: PokemonTeam
 var panels: Array[PartyPanel]
@@ -88,16 +89,19 @@ func _ready() -> void:
 	button_summary.pressed.connect(_on_summary_pressed)
 	button_switch.pressed.connect(_on_switch_pressed)
 	button_nickname.pressed.connect(_on_nickname_pressed)
-	button_switch_in.pressed.connect(_on_switch_in_pressed)
+	button_select.pressed.connect(_on_selected_pressed)
 	button_menu_cancel.pressed.connect(_menu_cancel)
 	cancel_button.pressed.connect(closed.emit)
 	cancel_button.disabled = not can_cancel
 
 	menu.visibility_changed.connect(_on_menu_visibility_changed)
 
+	if select:
+		button_select.show()
+
 	if in_battle:
 		for button: BaseButton in menu_buttons_container.get_children():
-			button.visible = [button_switch_in, button_summary, button_menu_cancel].has(button)
+			button.visible = [button_select, button_summary, button_menu_cancel].has(button)
 
 	if TransitionManager.transition:
 		TransitionManager.play_out()
@@ -132,12 +136,10 @@ func _on_panel_pressed(_panel: PartyPanel) -> void:
 		return
 	if swapping_from == null:
 		menu.show()
-		var first: Control
 		for node: Control in menu_buttons_container.get_children():
 			if node.visible:
-				first = node
+				node.grab_focus.call_deferred()
 				break
-		first.grab_focus.call_deferred()
 	else:
 		swap_slots()
 
@@ -180,9 +182,10 @@ func _is_pokemon_in_battle(pokemon: Pokemon) -> bool:
 	return false
 
 
-func _on_switch_in_pressed() -> void:
-	if not _is_pokemon_in_battle(current_panel.pokemon):
-		pokemon_selected.emit(current_panel.pokemon)
+func _on_selected_pressed() -> void:
+	if in_battle and _is_pokemon_in_battle(current_panel.pokemon):
+		return
+	pokemon_selected.emit(current_panel.pokemon)
 #endregion
 
 #region Swap only functions
@@ -307,4 +310,30 @@ static func create(pokemon_team: PokemonTeam = null, attributes: Dictionary[Stri
 	party_menu.team = pokemon_team
 	party_menu.in_battle = attributes.get("in_battle", false)
 	party_menu.can_cancel = attributes.get("can_cancel", true)
+	party_menu.select = attributes.get("select", false)
+	if attributes.has("select_text") and "text" in party_menu.button_select:
+		party_menu.button_select.text = attributes.get("select_text")
+	return party_menu
+
+
+static func open(pokemon_team: PokemonTeam = null, attributes: Dictionary[String, Variant] = {}) -> PartyMenu:
+	var party_menu: PartyMenu = PartyMenu.create(pokemon_team, attributes)
+
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+
+	HUD.add_child(party_menu)
+	party_menu.closed.connect(
+		func():
+			TransitionManager.layer += 1
+			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+			await TransitionManager.finished
+			party_menu.queue_free()
+			await party_menu.tree_exited
+
+			TransitionManager.play_out()
+			await TransitionManager.finished
+			TransitionManager.layer -= 1
+	)
+
 	return party_menu

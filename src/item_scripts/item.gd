@@ -40,14 +40,18 @@ func get_use_text() -> String:
 	return "Use"
 
 
-## Effect when used from the bag. Virtual.
+## Effect when used from the bag. If [member consumable], removes one unit of this item from the [Bag],
+## so [method super] should be called when extending this class and this method's functionality.
+## To implement custom consuming logic, implement it in the extended function and don't call [methos Globals.super].
 func bag_use() -> void:
-	pass
+	if consumable:
+		Bag.remove_item(id)
 
 
-## Effect when used in battle. Virtual.
+## Same as [methond bag_use], but when used in battle.
 func battle_use() -> void:
-	pass
+	if consumable:
+		Bag.remove_item(id)
 
 
 ## Duplicates the item along with [member held_effect] if not null. 

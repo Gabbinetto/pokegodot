@@ -1,6 +1,15 @@
 # CHANGELOG
 
 
+## Version 34
+- Started the actual implementation of the Item class;
+  - Actual items have to be implemented, only potions have been for now;
+- Implemented a Bag autoload, which holds the amount of items in the bag;
+- Implemented the bag menu;
+  - Not fully done and needs **heavy** refactoring;
+  - Using items is heavily bugged and needs a lot of work;
+- Implemented a debug function to fill the bag with every item.
+
 ## Version 33
 Small version with minor changes, in preparation to start adding Items and the Bag.
 - Now moves with 0 accuracy (Such as Aerial Ace) don't check for accuracy;

@@ -71,7 +71,7 @@ var current_screen: Screens:
 func _ready() -> void:
 	base_screen.visibility_changed.connect(_on_base_visible)
 	fight_button.pressed.connect(show_screen.bind(Screens.FIGHT))
-	pokemon_button.pressed.connect(prompt_selection)
+	pokemon_button.pressed.connect(prompt_selection.bind(true, true))
 	run_button.pressed.connect(run_selected.emit)
 	base_cancel_button.pressed.connect(base_cancel_selected.emit)
 	
@@ -187,8 +187,11 @@ func set_target_buttons_to_move(move: PokemonMove, user: BattlePokemon) -> void:
 #endregion
 
 
-func prompt_selection(can_cancel: bool = true) -> void:
-	var party: PartyMenu = PartyMenu.create(PlayerData.team, {"in_battle": true, "can_cancel": can_cancel})
+func prompt_selection(can_cancel: bool = true, switch_out: bool = false) -> void:
+	var attributes: Dictionary[String, Variant] = {"in_battle": true, "can_cancel": can_cancel}
+	if switch_out:
+		attributes["select_text"] = "Switch in"
+	var party: PartyMenu = PartyMenu.create(PlayerData.team, attributes)
 	party.pokemon_selected.connect(_on_pokemon_selected.bind(party))
 	party.closed.connect(_on_party_closed.bind(party))
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
