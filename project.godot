@@ -8,12 +8,16 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Pokegodot"
 config/description="A Pokemon Essentials-like template for Godot 4"
 run/main_scene="uid://bmh2ortvoisba"
-config/features=PackedStringArray("4.4")
+config/features=PackedStringArray("4.6")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -32,7 +36,7 @@ MainDialogue="*res://src/ui/dialogue/dialogue.tscn"
 TransitionManager="*res://src/autoloads/transition_manager.gd"
 Audio="*res://src/autoloads/audio.gd"
 Bag="*res://src/autoloads/bag.gd"
-PKDebugAutoload="*res://addons/pkdebug/pkdebug_autoload.gd"
+PKDebugAutoload="*uid://cwq7nm543yrak"
 
 [display]
 
