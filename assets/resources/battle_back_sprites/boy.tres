@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://cftasgpa36q7v"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://cftasgpa36q7v"]
 
 [ext_resource type="Texture2D" uid="uid://d1pgu3w50bbsn" path="res://assets/graphics/actors/player/boy_battle_back.png" id="2_rkivw"]
 

@@ -187,7 +187,7 @@ func _execute_buffer() -> void:
 					pokemon.pokemon.experience += exp_points
 					show_text("%s gained %d experience points!" % [pokemon.name, exp_points])
 					var slot: int = get_slot(pokemon)
-				
+
 					for i: int in pokemon.level - ui.used_databoxes[slot].shown_level + 1:
 						animate_level(ui.used_databoxes[slot])
 		BufferType.DATABOX_LEVEL:
@@ -217,7 +217,7 @@ func _execute_buffer() -> void:
 				ui.prompt_selection(false, true)
 				await ui.pokemon_selected
 				switch(from, ui.last_selected_pokemon)
-	
+
 		_:
 			push_error("Buffer type unknown: ", BufferType.find_key(buffer.type))
 	_buffering = false
@@ -248,11 +248,11 @@ func _execute_fight_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
 	for i: int in action.properties.targets.size():
 		if action.properties.targets[i] and pokemons[i]:
 			targets.append(pokemons[i])
-	
+
 	var damage_list: Array[Battle.DamageCalculation] = damage_calc(move, pokemon, targets)
 
 	show_text("%s used %s!" % [pokemon.name, move.name])
-	
+
 	var move_animation_sprites: Array[Node2D] # The sprites to be affected in the move animation
 
 	for i: int in damage_list.size():
@@ -266,14 +266,14 @@ func _execute_fight_turn(action: TurnAction, pokemon: BattlePokemon) -> void:
 				show_text("%s's attack failed." % pokemon.name)
 			continue
 		move_animation_sprites.append(sprites[i])
-	
+
 	if not move_animation_sprites.is_empty():
 		var animation: BattleAnimation = BattleAnimation.get_animation("moves/" + move.name, move_animation_sprites, self)
 		if not animation:
 			animation = BattleAnimation.get_animation("moves/DEFAULT_" + Types.string_ids[move.type], move_animation_sprites, self)
 		if animation:
 			play_animation(animation)
-	
+
 	for damage: Battle.DamageCalculation in damage_list:
 		if not damage:
 			continue

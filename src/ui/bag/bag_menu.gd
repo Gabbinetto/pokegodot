@@ -1,7 +1,4 @@
-class_name BagMenu extends Control
-
-signal item_used(item: Item)
-signal closed
+class_name BagMenu extends UIStackElement
 
 const MENU_SCENE: PackedScene = preload("res://src/ui/bag/bag_menu.tscn")
 const BAG_ITEM_SCENE: PackedScene = preload("res://src/ui/bag/bag_item.tscn")
@@ -37,6 +34,7 @@ static var last_opened_pocket: Bag.Pockets = Bag.Pockets.ITEMS
 var in_battle: bool = false
 var _bag_item_size: Vector2
 var _selected_item: BagItem
+var _used_item: Item
 
 # TODO: Finish whole implementation and refactor
 
@@ -47,7 +45,7 @@ func _ready() -> void:
 	scroll_container.scroll_vertical_custom_step = _bag_item_size.y + slots_container.get_theme_constant("separation")
 
 	close_button.refresh()
-	close_button.pressed.connect(closed.emit)
+	close_button.pressed.connect(close)
 
 
 	button_use.pressed.connect(func():
@@ -69,9 +67,6 @@ func _ready() -> void:
 	scroll_bar.value_changed.connect(_on_scroll_value_changed)
 	scroll_up.pressed.connect(func(): scroll_bar.value += scroll_bar.step)
 	scroll_down.pressed.connect(func(): scroll_bar.value -= scroll_bar.step)
-
-	if TransitionManager.transition:
-		TransitionManager.play_out()
 
 
 func set_pocket(pocket: Bag.Pockets, force: bool = false) -> void:
@@ -104,7 +99,7 @@ func set_pocket(pocket: Bag.Pockets, force: bool = false) -> void:
 	for i: int in items.size():
 		var item: Item = Item.get_item(items[i])
 		slots_container.get_child(i).item = item
-	
+
 	for node: Control in slots_container.get_children():
 		var index: int = node.get_index()
 		if index == 0:
@@ -117,8 +112,8 @@ func set_pocket(pocket: Bag.Pockets, force: bool = false) -> void:
 			node.focus_neighbor_bottom = node.get_path()
 		else:
 			node.focus_neighbor_bottom = slots_container.get_child(index + 1).get_path()
-		
-	
+
+
 	slots_container.get_child(0).grab_focus.call_deferred()
 
 	scroll_bar.max_value = slots_container.get_child_count() - 1
@@ -126,7 +121,8 @@ func set_pocket(pocket: Bag.Pockets, force: bool = false) -> void:
 
 func use() -> void:
 	if in_battle:
-		item_used.emit(_selected_item.item)
+		_used_item = _selected_item.item
+		close()
 	else:
 		_selected_item.item.bag_use()
 
@@ -160,7 +156,7 @@ func _on_gui_focus(node: Control) -> void:
 
 func _open_choice_menu(bag_item: BagItem) -> void:
 	_selected_item = bag_item
-	
+
 	button_use.visible = bag_item.item.can_use_in_bag if not in_battle else bag_item.item.can_use_in_battle
 	if "text" in button_use:
 		button_use.text = bag_item.item.get_use_text()
@@ -192,11 +188,24 @@ func _input(event: InputEvent) -> void:
 		if choice_menu.visible:
 			choice_menu.hide()
 			return
-		closed.emit()
+		close()
 
 
-@warning_ignore("shadowed_variable")
-static func create(in_battle: bool = false) -> BagMenu:
+func close() -> void:
+	TransitionManager.play_in(
+		TransitionManager.TransitionTypes.FADE
+	)
+	await TransitionManager.finished
+	UIStack.pop()
+	data_sent.emit(_used_item)
+	TransitionManager.play_out()
+	await TransitionManager.finished
+	queue_free()
+	closed.emit()
+
+
+
+static func build(options: Dictionary[String, Variant] = {}) -> UIStackElement:
 	var menu: BagMenu = MENU_SCENE.instantiate()
-	menu.in_battle = in_battle
+	menu.in_battle = options.get("in_battle", false)
 	return menu

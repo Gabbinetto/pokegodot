@@ -32,22 +32,12 @@ func _open_settings() -> void:
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
 
-	var settings: SettingsMenu = SettingsMenu.create()
-	add_child(settings)
+	var settings: SettingsMenu = SettingsMenu.build()
+	settings.closed.connect(button_settings.grab_focus.call_deferred, CONNECT_ONE_SHOT)
+	UIStack.push(settings)
 
 	TransitionManager.play_out()
 	await TransitionManager.finished
-
-	settings.closed.connect(
-		func():
-			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-			await TransitionManager.finished
-
-			settings.queue_free()
-
-			TransitionManager.play_out()
-			await TransitionManager.finished
-	)
 
 
 func _new_game_pressed() -> void:
@@ -77,9 +67,7 @@ func _go_to_game() -> void:
 	queue_free()
 
 	TransitionManager.play_out()
-	await TransitionManager.finished
-
-	Globals.in_game = true
+	TransitionManager.finished.connect(func(): Globals.in_game = true, CONNECT_ONE_SHOT)
 
 
 func _go_to_intro() -> void:

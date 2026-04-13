@@ -5,4 +5,4 @@ extends State
 
 
 func enter() -> void:
-	battle.end_battle()
+	battle.close()

@@ -5,7 +5,6 @@ extends Control
 @export var touchscreen_controls: CanvasItem
 @export var controls_visibility_button: BaseButton
 @export_group("Autoload reparenting")
-@export var hud_layer: CanvasLayer
 @export var main_dialogue_layer: CanvasLayer
 
 
@@ -17,7 +16,8 @@ func _ready() -> void:
 	await get_tree().process_frame
 	MainDialogue.reparent(main_dialogue_layer)
 	MainDialogue.hide()
-	HUD.reparent(hud_layer)
-	HUD.hide()
+	UIStack.reparent(viewport)
 	TransitionManager.reparent(viewport)
+	# Show Transitions above UI. If needed, temporarily reduce layer index to show below UI
+	TransitionManager.layer += 1
 	viewport.move_child(TransitionManager, main_dialogue_layer.get_index()) # Dialogues should appear above

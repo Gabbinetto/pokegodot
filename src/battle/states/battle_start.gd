@@ -43,7 +43,7 @@ func enter() -> void:
 		pass
 	else:
 		_animate_wild_battle()
-	
+
 	await tween.finished
 	transition.emit(self, "ActionSelection")
 
@@ -55,7 +55,7 @@ func _animate_wild_battle() -> void:
 		var sprite: Node2D = battle.sprites[battle.get_slot(pokemon)]
 		sprite.show()
 		sprite.modulate = Color(0.5, 0.5, 0.5, 1)
-	
+
 	for pokemon: BattlePokemon in battle.ally_pokemon:
 		if not pokemon:
 			continue
@@ -111,7 +111,7 @@ func _send_out_pokemon_animation() -> Tween:
 		subtween.parallel().tween_property(
 			sprite, "position:x", -sprite.sprite_frames.get_frame_texture("default", 0).get_width(), 1.0
 		)
-	
+
 	# TODO: Add pokeball animation
 
 	for pokemon: BattlePokemon in battle.ally_pokemon:
@@ -120,7 +120,7 @@ func _send_out_pokemon_animation() -> Tween:
 		var sprite: Node2D = battle.sprites[battle.get_slot(pokemon)]
 		subtween.parallel().tween_callback(sprite.show)
 		subtween.parallel().tween_property(sprite, "scale", Vector2.ONE, 0.75).set_delay(0.2)
-	
+
 	if battle.double_battle:
 		for databox: Databox in ui.databox_allies_double:
 			subtween.parallel().tween_property(databox, "position", _positions[databox], 0.3)

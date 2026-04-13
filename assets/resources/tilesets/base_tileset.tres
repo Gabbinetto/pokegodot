@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=49 format=3 uid="uid://qix8twn4v7rn"]
+[gd_resource type="TileSet" format=3 uid="uid://qix8twn4v7rn"]
 
 [ext_resource type="Texture2D" uid="uid://rjq7xkhcl40n" path="res://assets/graphics/tilesets/animated_tiles.png" id="1_plb1r"]
 [ext_resource type="Texture2D" uid="uid://c3octglebmana" path="res://assets/graphics/tilesets/bike_shop_interior.png" id="2_so6wn"]

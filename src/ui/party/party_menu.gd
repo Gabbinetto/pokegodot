@@ -1,7 +1,4 @@
-class_name PartyMenu extends Control
-
-signal closed
-signal pokemon_selected(pokemon: Pokemon)
+class_name PartyMenu extends UIStackElement
 
 const MENU_SCENE: PackedScene = preload("res://src/ui/party/party_menu.tscn")
 const SWAP_ANIMATION_DURATION: float = 1.0
@@ -45,6 +42,7 @@ var swapping_to: PartyPanel:
 			value.swapping_to = true
 		_disable_cancel_on_swap()
 var swapping: bool = false
+var selected_pokemon: Pokemon
 
 
 func _ready() -> void:
@@ -91,7 +89,7 @@ func _ready() -> void:
 	button_nickname.pressed.connect(_on_nickname_pressed)
 	button_select.pressed.connect(_on_selected_pressed)
 	button_menu_cancel.pressed.connect(_menu_cancel)
-	cancel_button.pressed.connect(closed.emit)
+	cancel_button.pressed.connect(close)
 	cancel_button.disabled = not can_cancel
 
 	menu.visibility_changed.connect(_on_menu_visibility_changed)
@@ -117,7 +115,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			swapping_to = null
 			_refresh_panels()
 		elif not menu.visible:
-			closed.emit()
+			close()
 
 
 func _on_panel_focus(panel: PartyPanel) -> void:
@@ -185,7 +183,8 @@ func _is_pokemon_in_battle(pokemon: Pokemon) -> bool:
 func _on_selected_pressed() -> void:
 	if in_battle and _is_pokemon_in_battle(current_panel.pokemon):
 		return
-	pokemon_selected.emit(current_panel.pokemon)
+	selected_pokemon = current_panel.pokemon
+	close()
 #endregion
 
 #region Swap only functions
@@ -248,29 +247,18 @@ func swap_slots() -> void:
 #endregion
 
 func _on_summary_pressed() -> void:
-	var summary: SummaryMenu = SummaryMenu.create(team.array(), {"starting_index": current_panel.get_index(), "in_battle": in_battle})
+	var summary: SummaryMenu = SummaryMenu.build({"list": team.array(), "starting_index": current_panel.get_index(), "in_battle": in_battle})
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
-	add_sibling(summary)
-	hide()
-	summary.closed.connect(
-		func():
-			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-			await TransitionManager.finished
-			summary.queue_free()
-			await summary.tree_exited
-			show()
-			TransitionManager.play_out()
-			await TransitionManager.finished
-			# Await to make sure focus is grabbed after closing (Especially when in moves screen)
-			await get_tree().process_frame
-			button_summary.grab_focus()
-	)
+	summary.closed.connect(current_panel.grab_focus.call_deferred, CONNECT_ONE_SHOT)
+	UIStack.push(summary)
+	TransitionManager.play_out()
+	await TransitionManager.finished
 
 
 func _on_nickname_pressed() -> void:
 	var pokemon: Pokemon = current_panel.pokemon
-	var text_input: TextInput = TextInput.create(
+	var text_input: TextInput = TextInput.build(
 		{
 			"label": "What is %s's name?" % pokemon.species.name,
 			"length": Pokemon.MAX_NICKNAME_SIZE,
@@ -278,24 +266,13 @@ func _on_nickname_pressed() -> void:
 	)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
-	add_sibling(text_input)
-	hide()
+	UIStack.push(text_input)
 	TransitionManager.play_out()
 	await TransitionManager.finished
-	text_input.submitted.connect(
+	text_input.data_sent.connect(
 		func(text: String):
 			pokemon.name = text
 			_refresh_panels()
-
-			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-			await TransitionManager.finished
-
-			text_input.queue_free()
-			show()
-
-			TransitionManager.play_out()
-			await TransitionManager.finished
-
 			button_nickname.grab_focus.call_deferred()
 	)
 
@@ -305,35 +282,24 @@ func _refresh_panels():
 		panel.refresh()
 
 
-static func create(pokemon_team: PokemonTeam = null, attributes: Dictionary[String, Variant] = {}) -> PartyMenu:
-	var party_menu: PartyMenu = MENU_SCENE.instantiate()
-	party_menu.team = pokemon_team
-	party_menu.in_battle = attributes.get("in_battle", false)
-	party_menu.can_cancel = attributes.get("can_cancel", true)
-	party_menu.select = attributes.get("select", false)
-	if attributes.has("select_text") and "text" in party_menu.button_select:
-		party_menu.button_select.text = attributes.get("select_text")
-	return party_menu
-
-
-static func open(pokemon_team: PokemonTeam = null, attributes: Dictionary[String, Variant] = {}) -> PartyMenu:
-	var party_menu: PartyMenu = PartyMenu.create(pokemon_team, attributes)
-
+func close() -> void:
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
+	UIStack.pop()
+	TransitionManager.play_out()
+	await TransitionManager.finished
+	if select:
+		data_sent.emit(selected_pokemon)
+	queue_free()
+	closed.emit()
 
-	HUD.add_child(party_menu)
-	party_menu.closed.connect(
-		func():
-			TransitionManager.layer += 1
-			TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-			await TransitionManager.finished
-			party_menu.queue_free()
-			await party_menu.tree_exited
 
-			TransitionManager.play_out()
-			await TransitionManager.finished
-			TransitionManager.layer -= 1
-	)
-
+static func build(options: Dictionary[String, Variant] = {}) -> PartyMenu:
+	var party_menu: PartyMenu = MENU_SCENE.instantiate()
+	party_menu.team = options.get("pokemon_team")
+	party_menu.in_battle = options.get("in_battle", false)
+	party_menu.can_cancel = options.get("can_cancel", true)
+	party_menu.select = options.get("select", false)
+	if options.has("select_text") and "text" in party_menu.button_select:
+		party_menu.button_select.text = options.get("select_text")
 	return party_menu

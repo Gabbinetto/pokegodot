@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bmh2ortvoisba"]
+[gd_scene format=3 uid="uid://bmh2ortvoisba"]
 
 [ext_resource type="Script" uid="uid://jixbdsepoqj7" path="res://src/main.gd" id="1_y8srd"]
 [ext_resource type="PackedScene" uid="uid://big45i1vk04m3" path="res://src/ui/main_menu/main_menu.tscn" id="2_okx7f"]
@@ -150,7 +150,7 @@ func _ready() -> void:
 	check.call_deferred()
 "
 
-[node name="Main" type="Control" node_paths=PackedStringArray("viewport", "touchscreen_controls", "controls_visibility_button", "hud_layer", "main_dialogue_layer")]
+[node name="Main" type="Control" unique_id=2018970874 node_paths=PackedStringArray("viewport", "touchscreen_controls", "controls_visibility_button", "main_dialogue_layer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -162,11 +162,10 @@ script = ExtResource("1_y8srd")
 viewport = NodePath("SubViewportContainer/SubViewport")
 touchscreen_controls = NodePath("TouchScreenControls")
 controls_visibility_button = NodePath("ControlsVisibilityButton")
-hud_layer = NodePath("SubViewportContainer/SubViewport/HUDLayer")
 main_dialogue_layer = NodePath("SubViewportContainer/SubViewport/DialogueLayer")
 metadata/_edit_lock_ = true
 
-[node name="BG" type="ColorRect" parent="."]
+[node name="BG" type="ColorRect" parent="." unique_id=491519568]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -176,7 +175,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1026923395]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -188,26 +187,24 @@ grow_horizontal = 2
 pivot_offset = Vector2(256, 0)
 metadata/_edit_lock_ = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=316593091]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 size = Vector2i(512, 384)
 render_target_update_mode = 4
 
-[node name="MainMenu" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_okx7f")]
+[node name="MainMenu" parent="SubViewportContainer/SubViewport" unique_id=2107001734 instance=ExtResource("2_okx7f")]
 
-[node name="HUDLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
-
-[node name="DialogueLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
+[node name="DialogueLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport" unique_id=882107780]
 layer = 3
 
-[node name="TouchScreenControls" type="Node2D" parent="."]
+[node name="TouchScreenControls" type="Node2D" parent="." unique_id=1960057198]
 editor_description = "The controls in the buttons stop them from stealing focus, thus making possible interacting with GUI through buttons."
 visible = false
 modulate = Color(1, 1, 1, 0.5)
 script = SubResource("GDScript_rlaii")
 
-[node name="Container" type="Control" parent="TouchScreenControls" node_paths=PackedStringArray("viewport")]
+[node name="Container" type="Control" parent="TouchScreenControls" unique_id=815252732 node_paths=PackedStringArray("viewport")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 512.0
@@ -217,10 +214,10 @@ script = ExtResource("5_sif16")
 viewport = NodePath("../../SubViewportContainer")
 metadata/_edit_lock_ = true
 
-[node name="LeftUpper" type="Node2D" parent="TouchScreenControls/Container"]
+[node name="LeftUpper" type="Node2D" parent="TouchScreenControls/Container" unique_id=1283145297]
 scale = Vector2(1.1, 1.1)
 
-[node name="L" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper"]
+[node name="L" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper" unique_id=751520136]
 position = Vector2(18, 15)
 texture_normal = SubResource("AtlasTexture_c2usk")
 texture_pressed = SubResource("AtlasTexture_luju6")
@@ -228,7 +225,7 @@ shape = SubResource("RectangleShape2D_mlv6i")
 action = "L"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftUpper/L"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftUpper/L" unique_id=1953878198]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -236,7 +233,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftUpper/L/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftUpper/L/TouchScreenFocusBlocker" unique_id=672727570]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -244,7 +241,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Select" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper"]
+[node name="Select" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftUpper" unique_id=461564071]
 position = Vector2(18, 87)
 texture_normal = SubResource("AtlasTexture_lovvn")
 texture_pressed = SubResource("AtlasTexture_jitvu")
@@ -252,7 +249,7 @@ shape = SubResource("RectangleShape2D_mlv6i")
 action = "Select"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftUpper/Select"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftUpper/Select" unique_id=968510873]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -260,7 +257,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftUpper/Select/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftUpper/Select/TouchScreenFocusBlocker" unique_id=1101070641]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -268,11 +265,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RightUpper" type="Node2D" parent="TouchScreenControls/Container"]
+[node name="RightUpper" type="Node2D" parent="TouchScreenControls/Container" unique_id=1532314754]
 position = Vector2(512, 0)
 scale = Vector2(1.1, 1.1)
 
-[node name="R" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper"]
+[node name="R" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper" unique_id=959415133]
 position = Vector2(-94, 15)
 texture_normal = SubResource("AtlasTexture_tovjm")
 texture_pressed = SubResource("AtlasTexture_hxsd3")
@@ -280,7 +277,7 @@ shape = SubResource("RectangleShape2D_mlv6i")
 action = "R"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightUpper/R"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightUpper/R" unique_id=1063614839]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -288,7 +285,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightUpper/R/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightUpper/R/TouchScreenFocusBlocker" unique_id=230626249]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -296,7 +293,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Start" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper"]
+[node name="Start" type="TouchScreenButton" parent="TouchScreenControls/Container/RightUpper" unique_id=620261876]
 position = Vector2(-94, 87)
 texture_normal = SubResource("AtlasTexture_ocmcv")
 texture_pressed = SubResource("AtlasTexture_adv81")
@@ -304,7 +301,7 @@ shape = SubResource("RectangleShape2D_mlv6i")
 action = "Start"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightUpper/Start"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightUpper/Start" unique_id=1540571585]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -312,7 +309,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightUpper/Start/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightUpper/Start/TouchScreenFocusBlocker" unique_id=120215209]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -320,11 +317,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LeftLower" type="Node2D" parent="TouchScreenControls/Container"]
+[node name="LeftLower" type="Node2D" parent="TouchScreenControls/Container" unique_id=70212544]
 position = Vector2(0, 384)
 scale = Vector2(1.1, 1.1)
 
-[node name="DPad" type="Marker2D" parent="TouchScreenControls/Container/LeftLower" node_paths=PackedStringArray("buttons")]
+[node name="DPad" type="Marker2D" parent="TouchScreenControls/Container/LeftLower" unique_id=126275969 node_paths=PackedStringArray("buttons")]
 position = Vector2(80, -81)
 gizmo_extents = 50.0
 script = ExtResource("5_kf8lf")
@@ -332,7 +329,7 @@ buttons = [NodePath("Up"), NodePath("Right"), NodePath("Down"), NodePath("Left")
 buttons_size = Vector2i(56, 56)
 metadata/_edit_group_ = true
 
-[node name="Up" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+[node name="Up" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad" unique_id=2064042420]
 position = Vector2(-28, -66.7273)
 texture_normal = SubResource("AtlasTexture_kf8lf")
 texture_pressed = SubResource("AtlasTexture_5mrjc")
@@ -344,7 +341,7 @@ extra_action = "Up"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Up"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Up" unique_id=762876936]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -352,7 +349,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Up/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Up/TouchScreenFocusBlocker" unique_id=1983484397]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -360,7 +357,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Right" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+[node name="Right" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad" unique_id=1526723705]
 position = Vector2(10.7273, -28)
 texture_normal = SubResource("AtlasTexture_uewes")
 texture_pressed = SubResource("AtlasTexture_kqbth")
@@ -372,7 +369,7 @@ extra_action = "Right"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Right"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Right" unique_id=825530397]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -380,7 +377,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Right/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Right/TouchScreenFocusBlocker" unique_id=479172665]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,7 +385,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Down" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+[node name="Down" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad" unique_id=1856046308]
 position = Vector2(-28, 10.7272)
 texture_normal = SubResource("AtlasTexture_srxbw")
 texture_pressed = SubResource("AtlasTexture_d3u4l")
@@ -400,7 +397,7 @@ extra_action = "Down"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Down"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Down" unique_id=1192675442]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -408,7 +405,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Down/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Down/TouchScreenFocusBlocker" unique_id=298591884]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -416,7 +413,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Left" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad"]
+[node name="Left" type="TouchScreenButton" parent="TouchScreenControls/Container/LeftLower/DPad" unique_id=521504555]
 position = Vector2(-66.7273, -28)
 texture_normal = SubResource("AtlasTexture_mlv6i")
 texture_pressed = SubResource("AtlasTexture_tb146")
@@ -428,7 +425,7 @@ extra_action = "Left"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Left"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/LeftLower/DPad/Left" unique_id=1558489153]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -436,7 +433,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Left/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/LeftLower/DPad/Left/TouchScreenFocusBlocker" unique_id=307839004]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -444,11 +441,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RightLower" type="Node2D" parent="TouchScreenControls/Container"]
+[node name="RightLower" type="Node2D" parent="TouchScreenControls/Container" unique_id=1234489775]
 position = Vector2(512, 384)
 scale = Vector2(1.1, 1.1)
 
-[node name="Buttons" type="Marker2D" parent="TouchScreenControls/Container/RightLower" node_paths=PackedStringArray("buttons")]
+[node name="Buttons" type="Marker2D" parent="TouchScreenControls/Container/RightLower" unique_id=2096888261 node_paths=PackedStringArray("buttons")]
 position = Vector2(-80, -81)
 gizmo_extents = 50.0
 script = ExtResource("5_kf8lf")
@@ -456,7 +453,7 @@ buttons = [null, NodePath("A"), NodePath("B"), null]
 buttons_size = Vector2i(56, 56)
 metadata/_edit_group_ = true
 
-[node name="X" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+[node name="X" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons" unique_id=1358076381]
 position = Vector2(-28, -66.7273)
 texture_normal = SubResource("AtlasTexture_okx7f")
 texture_pressed = SubResource("AtlasTexture_sta5p")
@@ -464,7 +461,7 @@ shape = SubResource("CircleShape2D_rlaii")
 action = "X"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/X"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/X" unique_id=1468737777]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -472,7 +469,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/X/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/X/TouchScreenFocusBlocker" unique_id=732257176]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -480,7 +477,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="A" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+[node name="A" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons" unique_id=604307791]
 position = Vector2(10.7273, -28)
 texture_normal = SubResource("AtlasTexture_mgm53")
 texture_pressed = SubResource("AtlasTexture_e7lu8")
@@ -491,7 +488,7 @@ extra_action = "A"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/A"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/A" unique_id=1636207810]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -499,7 +496,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/A/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/A/TouchScreenFocusBlocker" unique_id=540949254]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -507,7 +504,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="B" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+[node name="B" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons" unique_id=1724328656]
 position = Vector2(-28, 10.7272)
 texture_normal = SubResource("AtlasTexture_sif16")
 texture_pressed = SubResource("AtlasTexture_d7bab")
@@ -518,7 +515,7 @@ extra_action = "B"
 metadata/_custom_type_script = "uid://gb4ibe018bn1"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/B"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/B" unique_id=1930398837]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -526,7 +523,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/B/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/B/TouchScreenFocusBlocker" unique_id=1753827966]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -534,7 +531,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Y" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons"]
+[node name="Y" type="TouchScreenButton" parent="TouchScreenControls/Container/RightLower/Buttons" unique_id=1973826171]
 position = Vector2(-66.7271, -28)
 texture_normal = SubResource("AtlasTexture_ib8ht")
 texture_pressed = SubResource("AtlasTexture_43aqp")
@@ -542,7 +539,7 @@ shape = SubResource("CircleShape2D_rlaii")
 action = "Y"
 metadata/_edit_group_ = true
 
-[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/Y"]
+[node name="TouchScreenFocusBlocker" type="Control" parent="TouchScreenControls/Container/RightLower/Buttons/Y" unique_id=261106848]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -550,7 +547,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/Y/TouchScreenFocusBlocker"]
+[node name="ReferenceRect" type="ReferenceRect" parent="TouchScreenControls/Container/RightLower/Buttons/Y/TouchScreenFocusBlocker" unique_id=1732125599]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -558,7 +555,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ControlsVisibilityButton" type="TextureButton" parent="." node_paths=PackedStringArray("controls")]
+[node name="ControlsVisibilityButton" type="TextureButton" parent="." unique_id=1848786012 node_paths=PackedStringArray("controls")]
 modulate = Color(1, 1, 1, 0.5)
 layout_mode = 1
 anchors_preset = 7

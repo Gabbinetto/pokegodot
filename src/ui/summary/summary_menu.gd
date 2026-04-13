@@ -1,6 +1,4 @@
-class_name SummaryMenu extends Control
-
-signal closed
+class_name SummaryMenu extends UIStackElement
 
 const MENU_SCENE: PackedScene = preload("res://src/ui/summary/summary_menu.tscn")
 const GENDER_FEMALE_ICON = preload("res://assets/graphics/ui/gender_female_icon.png")
@@ -85,7 +83,7 @@ func _ready() -> void:
 		screen_buttons[i].set_meta("pressed", screen_buttons_pressed[i])
 		screen_buttons[i].focus_entered.connect(set.bind("current_screen_index", i))
 
-	close_button.pressed.connect(closed.emit)
+	close_button.pressed.connect(close)
 
 	for button: SummaryMoveButton in moves_buttons:
 		button.disabled = not can_switch_moves
@@ -99,10 +97,6 @@ func _ready() -> void:
 
 	_refresh_pokemon()
 	_refresh_screen()
-
-	if TransitionManager.transition:
-		TransitionManager.play_out()
-		await TransitionManager.finished
 
 
 func _process(_delta: float) -> void:
@@ -297,7 +291,7 @@ func _input(event: InputEvent) -> void:
 		elif not selected_move_button and focus is SummaryMoveButton and moves_buttons.has(focus):
 			moves_screen_button.grab_focus.call_deferred()
 		else:
-			closed.emit()
+			close()
 	if get_viewport().gui_get_focus_owner() is SummaryMoveButton:
 		return
 	if event.is_action_pressed("ui_up"):
@@ -306,9 +300,19 @@ func _input(event: InputEvent) -> void:
 		current_index = min(current_index + 1, pokemon_list.size() - 1)
 
 
-static func create(list: Array[Pokemon], attributes: Dictionary[String, Variant] = {}) -> SummaryMenu:
+func close() -> void:
+	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
+	await TransitionManager.finished
+	UIStack.pop()
+	TransitionManager.play_out()
+	await TransitionManager.finished
+	queue_free()
+	closed.emit()
+
+
+static func build(options: Dictionary[String, Variant] = {}) -> SummaryMenu:
 	var summary_menu: SummaryMenu = MENU_SCENE.instantiate()
-	summary_menu.pokemon_list.assign(list)
-	summary_menu.current_index = attributes.get("starting_index", 0)
-	summary_menu.can_switch_moves = not attributes.get("in_battle", false)
+	summary_menu.pokemon_list.assign(options.get("list", []))
+	summary_menu.current_index = options.get("starting_index", 0)
+	summary_menu.can_switch_moves = not options.get("in_battle", false)
 	return summary_menu

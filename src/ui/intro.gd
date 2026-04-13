@@ -99,24 +99,18 @@ func _open_name_input() -> void:
 	MainDialogue.run_dialogue(dialogue_fifth)
 	await MainDialogue.finished
 
-	var name_input: TextInput = TextInput.create({"length": PlayerData.MAX_PLAYER_NAME, "label": "What is your name?"})
+	var name_input: TextInput = TextInput.build({"length": PlayerData.MAX_PLAYER_NAME, "label": "What is your name?"})
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
-	add_child(name_input)
+	UIStack.push(name_input)
 	TransitionManager.play_out()
 	await TransitionManager.finished
-	name_input.submitted.connect(_name_inputted.bind(name_input), CONNECT_ONE_SHOT)
+	name_input.data_sent.connect(_name_inputted, CONNECT_ONE_SHOT)
 
 
-func _name_inputted(submission: String, name_input: TextInput) -> void:
+func _name_inputted(submission: String) -> void:
 	if submission.is_empty():
 		submission = PlayerData.DEFAULT_MALE_NAME if PlayerData.gender == PlayerData.MALE else PlayerData.DEFAULT_FEMALE_NAME
-
-	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-	await TransitionManager.finished
-	name_input.queue_free()
-	TransitionManager.play_out()
-	await TransitionManager.finished
 
 	PlayerData.player_name = submission
 

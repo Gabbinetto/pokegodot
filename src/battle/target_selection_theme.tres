@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://crr2mnxmq6k88"]
+[gd_resource type="Theme" format=3 uid="uid://crr2mnxmq6k88"]
 
 [ext_resource type="FontVariation" uid="uid://btk8wgjcertlc" path="res://assets/fonts/font_narrow.tres" id="1_k3ay1"]
 [ext_resource type="Texture2D" uid="uid://tpcx2b0r2pf6" path="res://assets/graphics/ui/battle/target_button.png" id="2_k3ay1"]

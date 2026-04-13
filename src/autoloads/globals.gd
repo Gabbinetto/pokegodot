@@ -145,3 +145,8 @@ func _input(event: InputEvent) -> void:
 			Engine.time_scale = SPEEDUP
 		else:
 			Engine.time_scale = 1.0
+	elif in_game and (event.is_action_pressed("Start") or event.is_action_pressed("X")):
+		if UIStack.is_empty() and not MainDialogue.running:
+			UIStack.push(Hud.build())
+		elif UIStack.top() is Hud:
+			UIStack.top().close()

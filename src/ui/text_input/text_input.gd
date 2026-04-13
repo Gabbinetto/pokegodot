@@ -1,6 +1,4 @@
-class_name TextInput extends Control
-
-signal submitted(text: String)
+class_name TextInput extends UIStackElement
 
 const MENU_SCENE: PackedScene = preload("res://src/ui/text_input/text_input.tscn")
 const TAB_SWITCH_TIME: float = 0.5
@@ -37,7 +35,7 @@ func _ready() -> void:
 	back_button.pressed.connect(field.remove_character)
 	ok_button.pressed.connect(
 		func():
-			submitted.emit(field.text)
+			close()
 	)
 
 	for i: int in tabs.size():
@@ -95,10 +93,17 @@ func _change_to_tab(index: int) -> void:
 	tween.tween_callback(set.bind("_current_tab", tab))
 
 
-static func create(attributes: Dictionary[String, Variant] = {}) -> TextInput:
+func close() -> void:
+	UIStack.pop()
+	data_sent.emit(field.text)
+	queue_free()
+	closed.emit()
+
+
+static func build(options: Dictionary[String, Variant] = {}) -> TextInput:
 	var menu: TextInput = MENU_SCENE.instantiate()
-	menu.label.text = attributes.get("label", "")
-	menu.field.length = attributes.get("length", 10)
-	menu.field.set_deferred("text", attributes.get("text", ""))
+	menu.label.text = options.get("label", "")
+	menu.field.length = options.get("length", 10)
+	menu.field.set_deferred("text", options.get("text", ""))
 
 	return menu

@@ -1,6 +1,4 @@
-class_name SettingsMenu extends Control
-
-signal closed
+class_name SettingsMenu extends UIStackElement
 
 const SETTINGS_MENU: PackedScene = preload("res://src/ui/settings/settings_menu.tscn")
 const SettingsMenuEntry: GDScript = preload("res://src/ui/settings/settings_menu_entry.gd")
@@ -16,7 +14,7 @@ const SettingsMenuEntry: GDScript = preload("res://src/ui/settings/settings_menu
 @export var give_nickname: SettingsMenuEntry
 @export var box_frame: SettingsMenuEntry
 @export var window_size: SettingsMenuEntry
-@export var close: SettingsMenuEntry
+@export var close_entry: SettingsMenuEntry
 
 
 func _ready() -> void:
@@ -33,7 +31,7 @@ func _ready() -> void:
 	give_nickname.value_changed.connect(_set_setting.bind("give_nickname", func(): return default_run.get_value() == 0))
 	box_frame.value_changed.connect(_set_setting.bind("box_frame", func(): return box_frame.get_value() - 1))
 	window_size.value_changed.connect(_window_size_changed)
-	close.value_changed.connect(_close)
+	close_entry.value_changed.connect(func(): close())
 
 	_sync()
 	entries.get_child(0).grab_focus.call_deferred()
@@ -41,11 +39,12 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		_close()
+		close()
 
 
-func _close() -> void:
+func close() -> void:
 	Settings.save_settings()
+	UIStack.pop()
 	closed.emit()
 
 
@@ -77,5 +76,5 @@ func _window_size_changed():
 	Settings.set_screen_size(window_size.get_value() as Settings.ScreenSizes)
 
 
-static func create() -> SettingsMenu:
+static func build(_options: Dictionary[String, Variant] = {}) -> UIStackElement:
 	return SETTINGS_MENU.instantiate()

@@ -3,7 +3,6 @@ class_name BattleUI extends Node
 signal move_selected(move: PokemonMove)
 signal target_selected(index: int)
 signal pokemon_selected
-signal pokemon_selection_closed
 signal run_selected
 signal base_cancel_selected
 
@@ -74,15 +73,15 @@ func _ready() -> void:
 	pokemon_button.pressed.connect(prompt_selection.bind(true, true))
 	run_button.pressed.connect(run_selected.emit)
 	base_cancel_button.pressed.connect(base_cancel_selected.emit)
-	
+
 	fight_screen.visibility_changed.connect(_on_fight_visible)
 	fight_cancel_button.pressed.connect(_on_fight_cancel)
-	
+
 	target_screen.visibility_changed.connect(_on_target_visible.call_deferred)
 	target_cancel_button.pressed.connect(show_screen.bind(Screens.FIGHT))
 	for button: BaseButton in target_buttons:
 		button.pressed.connect(target_selected.emit.bind(target_buttons.find(button)))
-	
+
 	for button: MoveButton in move_buttons:
 		button.focus_entered.connect(_on_move_focus.bind(button))
 		button.focus_exited.connect(_on_move_unfocus)
@@ -104,7 +103,7 @@ func show_screen(screen: Screens) -> void:
 			node = target_screen
 		Screens.DIALOGUE:
 			node = battle_dialogue
-	
+
 	for child: CanvasItem in all_screens:
 		if child == node:
 			child.show()
@@ -148,7 +147,7 @@ func refresh_databoxes() -> void:
 		used_databoxes.fill(null)
 		used_databoxes[0] = databox_ally_single
 		used_databoxes[2] = databox_enemy_single
-	
+
 	for i: int in battle.pokemons.size():
 		var pokemon: BattlePokemon = battle.pokemons[i]
 		if not used_databoxes[i]:
@@ -188,36 +187,28 @@ func set_target_buttons_to_move(move: PokemonMove, user: BattlePokemon) -> void:
 
 
 func prompt_selection(can_cancel: bool = true, switch_out: bool = false) -> void:
-	var attributes: Dictionary[String, Variant] = {"in_battle": true, "can_cancel": can_cancel}
+	var options: Dictionary[String, Variant] = {"team": PlayerData.team, "in_battle": true, "can_cancel": can_cancel}
 	if switch_out:
-		attributes["select_text"] = "Switch in"
-	var party: PartyMenu = PartyMenu.create(PlayerData.team, attributes)
-	party.pokemon_selected.connect(_on_pokemon_selected.bind(party))
-	party.closed.connect(_on_party_closed.bind(party))
+		options["select_text"] = "Switch in"
+	var party: PartyMenu = PartyMenu.build(options)
+	party.data_sent.connect(_on_pokemon_selected)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
-	add_child(party)
-
-
-func _on_pokemon_selected(pokemon: Pokemon, party: PartyMenu) -> void:
-	if pokemon.hp <= 0:
-		return
-	await _on_party_closed(party)
-	last_selected_pokemon = pokemon
-	pokemon_selected.emit(pokemon)
-
-
-func _on_party_closed(party: PartyMenu) -> void:
-	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
-	await TransitionManager.finished
-	party.queue_free()
-	await party.tree_exited
+	UIStack.push(party)
+	party.closed.connect(pokemon_button.grab_focus.call_deferred, CONNECT_ONE_SHOT)
 	TransitionManager.play_out()
 	await TransitionManager.finished
-	pokemon_selection_closed.emit()
-	if base_screen.visible:
-		pokemon_button.grab_focus.call_deferred()
-	
+
+
+
+func _on_pokemon_selected(pokemon: Pokemon) -> void:
+	if pokemon != null:
+		if pokemon.hp <= 0:
+			return
+		last_selected_pokemon = pokemon
+		pokemon_selected.emit(pokemon)
+	pokemon_button.grab_focus.call_deferred()
+
 
 ## Grab focus on the fight button when visible
 func _on_base_visible() -> void:
@@ -260,7 +251,7 @@ func _on_fight_cancel() -> void:
 func _on_target_visible() -> void:
 	if not target_screen.visible:
 		return
-	
+
 	var selection_order: Array[BaseButton]
 	@warning_ignore("integer_division")
 	selection_order.assign(
