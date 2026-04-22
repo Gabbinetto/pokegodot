@@ -79,8 +79,8 @@ func _capture(message: String, data: Array) -> bool:
 			if form >= DB.pokemon[id]["forms"].size():
 				_toast("%s has no form number %d." % [id, form], 1)
 				return true
-			
-			Battle.start_battle(
+
+			BattleServer.start_battle(
 				{
 					"enemy_trainers": BattleTrainer.make_wild(
 						Pokemon.generate(id, form, {"level": level})
@@ -139,7 +139,7 @@ func _on_battle_update() -> void:
 		battle_update_timer.queue_free()
 		EngineDebugger.send_message("pkdebug:battle_ended", [])
 		return
-	
+
 	var data: Array[Dictionary] = []
 	for pokemon: BattlePokemon in Globals.current_battle.pokemons:
 		var dict: Dictionary[String, Variant] = {}

@@ -12,7 +12,9 @@ func pop() -> UIStackElement:
 	return control
 
 func top() -> UIStackElement:
-	return stack[stack.size() - 1]
+	if stack.is_empty():
+		return null
+	return stack.back()
 
 func is_empty() -> bool:
 	return stack.is_empty()

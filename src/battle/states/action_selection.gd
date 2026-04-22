@@ -1,6 +1,6 @@
 extends State
 
-@export var battle: Battle
+@export var battle: BattleServer
 @export var ui: BattleUI
 
 var last_selected_move: PokemonMove
@@ -35,17 +35,17 @@ func exit() -> void:
 	ui.base_cancel_selected.disconnect(_cancel_selection)
 
 
-func _next(action: Battle.TurnAction, force_transition: bool = false) -> void:
+func _next(action: BattleServer.TurnChoice, force_transition: bool = false) -> void:
 	if action:
 		selection_buffer.append([battle.current_pokemon_index, action])
 	battle.current_pokemon_index += 1
-	
+
 	if force_transition or not battle.current_pokemon or not battle.current_pokemon.trainer.is_player:
 		for elem: Array in selection_buffer:
 			battle.turn_selections[elem[0]] = elem[1]
 		transition.emit(self, "NPCActionSelection")
 		return
-	
+
 	ui.show_screen(BattleUI.Screens.BASE)
 	ui.set_base_cancel_button(not selection_buffer.is_empty())
 	ui.refresh_move_buttons()
@@ -70,34 +70,34 @@ func _on_target_selected(index: int) -> void:
 
 
 func _confirm_move(move: PokemonMove, targets: Array[bool]) -> void:
-	var action: Battle.TurnAction = Battle.TurnAction.new(
-		Battle.Actions.FIGHT, {"pokemon": battle.current_pokemon, "move": move, "targets": targets}
+	var action: BattleServer.TurnChoice = BattleServer.TurnChoice.new(
+		BattleServer.Choices.FIGHT, {"pokemon": battle.current_pokemon, "move": move, "targets": targets}
 	)
 	_next(action)
 
 
 func _switch(to: Pokemon) -> void:
-	var action: Battle.TurnAction = Battle.TurnAction.new(
-		Battle.Actions.SWITCH, {"from": battle.current_pokemon_index, "to": to}
+	var action: BattleServer.TurnChoice = BattleServer.TurnChoice.new(
+		BattleServer.Choices.SWITCH, {"from": battle.current_pokemon_index, "to": to}
 	)
 	_next(action)
 
 
 func _try_run() -> void:
 	selection_buffer.clear()
-	var action: Battle.TurnAction = Battle.TurnAction.new(Battle.Actions.RUN)
+	var action: BattleServer.TurnChoice = BattleServer.TurnChoice.new(BattleServer.Choices.RUN)
 	_next(action, true)
-	
+
 
 func _cancel_selection() -> void:
 	if selection_buffer.is_empty():
 		ui.set_base_cancel_button(false)
 		return
-	
+
 	selection_buffer.pop_back()
 	battle.current_pokemon_index -= 2
 	_next(null)
-	
+
 
 func _show_text() -> void:
 	await ui.show_selection_text("What will\n%s do?" % battle.current_pokemon.name).finished

@@ -16,7 +16,7 @@ enum Screens {
 }
 
 
-@export var battle: Battle
+@export var battle: BattleServer
 @export var message_background: TextureRect
 @export var all_screens: Array[CanvasItem]
 @export_group("Databoxes", "databox_")

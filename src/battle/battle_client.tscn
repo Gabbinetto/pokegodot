@@ -1,0 +1,814 @@
+[gd_scene format=3 uid="uid://bqh1fa6ynb5cm"]
+
+[ext_resource type="Script" uid="uid://d0o2hxuidp2sr" path="res://src/battle/battle_client.gd" id="1_elhnd"]
+[ext_resource type="PackedScene" uid="uid://b5l5tiw6t3228" path="res://src/ui/battle/databox_player.tscn" id="7_sgjgy"]
+[ext_resource type="PackedScene" uid="uid://new8ewxbug0r" path="res://src/ui/battle/databox_enemy.tscn" id="8_etati"]
+[ext_resource type="Texture2D" uid="uid://23w2aru3t02u" path="res://assets/graphics/battlebacks/backgrounds/cave1.png" id="8_v32ak"]
+[ext_resource type="Texture2D" uid="uid://dqy8y4f2v3df3" path="res://assets/graphics/battlebacks/bases/cave1.png" id="9_amu4j"]
+[ext_resource type="PackedScene" uid="uid://bsfthdo4m2kxf" path="res://src/ui/battle/databox_enemy_double.tscn" id="9_g1t84"]
+[ext_resource type="PackedScene" uid="uid://1b8kmqgc0i1y" path="res://src/ui/battle/databox_player_double.tscn" id="10_80v32"]
+[ext_resource type="Script" uid="uid://dyby6xenjcup1" path="res://src/battle/pokemon_body_sprite.gd" id="10_gjkef"]
+[ext_resource type="Texture2D" uid="uid://bly3i2pq8csog" path="res://assets/graphics/battlebacks/messages/cave1.png" id="11_nnuwk"]
+[ext_resource type="SpriteFrames" uid="uid://cftasgpa36q7v" path="res://assets/resources/battle_back_sprites/boy.tres" id="11_sgjgy"]
+[ext_resource type="Texture2D" uid="uid://c6vwom3yu3uxu" path="res://assets/graphics/ui/battle/command_buttons.png" id="12_48mt0"]
+[ext_resource type="Script" uid="uid://ba5nka84o1geb" path="res://src/ui/misc/z_index_focus.gd" id="13_2ij5c"]
+[ext_resource type="Script" uid="uid://ctrsrrpf088yx" path="res://src/ui/dialogue/dialogue.gd" id="14_rjk3x"]
+[ext_resource type="Texture2D" uid="uid://cuw1ql6wgmr0d" path="res://assets/graphics/ui/speech_boxes/hgss/box_full0.png" id="15_eo0dh"]
+[ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/ui/text_resources/default_gray_theme.tres" id="16_7al23"]
+[ext_resource type="Script" uid="uid://d2fpdqp3x0k67" path="res://src/dialogue/dialogue_manager.gd" id="17_5xbgf"]
+[ext_resource type="Script" uid="uid://cjypfwj7jwa" path="res://src/dialogue/dialogue_text_sequence.gd" id="18_48u0p"]
+[ext_resource type="PackedScene" uid="uid://blsfywo74uggc" path="res://src/ui/battle/move_button.tscn" id="19_5h14k"]
+[ext_resource type="LabelSettings" uid="uid://bc0sqo8bbbip3" path="res://assets/resources/ui/text_resources/default_gray.tres" id="20_ml2if"]
+[ext_resource type="Theme" uid="uid://crr2mnxmq6k88" path="res://src/battle/target_selection_theme.tres" id="21_nu85y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1fi4"]
+atlas = ExtResource("9_amu4j")
+region = Rect2(0, 64, 256, 128)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_obt0m"]
+size = Vector2(192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj75k"]
+atlas = ExtResource("9_amu4j")
+region = Rect2(0, 0, 512, 64)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_21y0c"]
+size = Vector2(288, 288)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_blac8"]
+size = Vector2(288, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o24p5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tt4el"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(0, 0, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va54n"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(130, 0, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13ou7"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(0, 46, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kognc"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(130, 46, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw20v"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(0, 92, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lgps0"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(130, 92, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3q3p"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(0, 138, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5djbx"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(130, 138, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cmk5"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(0, 414, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kioon"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(130, 414, 130, 46)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18qcr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xc4c4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohmtx"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(0, 460, 130, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lweyj"]
+atlas = ExtResource("12_48mt0")
+region = Rect2(130, 460, 130, 46)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nrsi4"]
+size = Vector2(64, 28)
+
+[node name="BattleClient" type="Control" unique_id=1021392517 node_paths=PackedStringArray("background", "player_ground", "enemy_ground", "sprites", "ally_trainer_sprites", "enemy_trainer_sprites", "databox_singles_container", "databox_doubles_container", "databox_ally_single", "databox_enemy_single", "databox_allies_double", "databox_enemies_double", "message_background", "all_screens", "base_screen", "fight_button", "pokemon_button", "bag_button", "run_button", "base_cancel_button", "fight_screen", "move_buttons", "fight_cancel_button", "info_box", "info_pp", "info_type", "target_screen", "target_buttons", "target_cancel_button", "selection_dialogue", "selection_dialogue_manager", "battle_dialogue", "battle_dialogue_manager")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_elhnd")
+background = NodePath("Background")
+player_ground = NodePath("PlayerGround")
+enemy_ground = NodePath("EnemyGround")
+sprites = [NodePath("PlayerGround/AllyPokemon1"), NodePath("PlayerGround/AllyPokemon2"), NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
+ally_trainer_sprites = [NodePath("PlayerGround/AllyTrainer1"), NodePath("PlayerGround/AllyTrainer2")]
+enemy_trainer_sprites = [NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
+databox_singles_container = NodePath("BattleUI/DataboxSingle")
+databox_doubles_container = NodePath("BattleUI/DataboxDouble")
+databox_ally_single = NodePath("BattleUI/DataboxSingle/DataboxPlayer")
+databox_enemy_single = NodePath("BattleUI/DataboxSingle/DataboxEnemy")
+databox_allies_double = [NodePath("BattleUI/DataboxDouble/DataboxPlayer1"), NodePath("BattleUI/DataboxDouble/DataboxPlayer2")]
+databox_enemies_double = [NodePath("BattleUI/DataboxDouble/DataboxEnemy1"), NodePath("BattleUI/DataboxDouble/DataboxEnemy2")]
+message_background = NodePath("BattleUI/MessageBackground")
+all_screens = [NodePath("BattleUI/BaseCommands"), NodePath("BattleUI/FightCommands"), NodePath("BattleUI/TargetSelectCommands"), NodePath("BattleUI/BattleDialogue")]
+base_screen = NodePath("BattleUI/BaseCommands")
+fight_button = NodePath("BattleUI/BaseCommands/CommandButtons/FightButton")
+pokemon_button = NodePath("BattleUI/BaseCommands/CommandButtons/PokemonButton")
+bag_button = NodePath("BattleUI/BaseCommands/CommandButtons/BagButton")
+run_button = NodePath("BattleUI/BaseCommands/CommandButtons/4THButton/RunButton")
+base_cancel_button = NodePath("BattleUI/BaseCommands/CommandButtons/4THButton/CancelButton")
+fight_screen = NodePath("BattleUI/FightCommands")
+move_buttons = [NodePath("BattleUI/FightCommands/GridContainer/MoveButton1"), NodePath("BattleUI/FightCommands/GridContainer/MoveButton2"), NodePath("BattleUI/FightCommands/GridContainer/MoveButton3"), NodePath("BattleUI/FightCommands/GridContainer/MoveButton4")]
+fight_cancel_button = NodePath("BattleUI/FightCommands/CancelButton")
+info_box = NodePath("BattleUI/FightCommands/InfoBox")
+info_pp = NodePath("BattleUI/FightCommands/InfoBox/PPLabel")
+info_type = NodePath("BattleUI/FightCommands/InfoBox/Type")
+target_screen = NodePath("BattleUI/TargetSelectCommands")
+target_buttons = [NodePath("BattleUI/TargetSelectCommands/GridContainer/Ally1"), NodePath("BattleUI/TargetSelectCommands/GridContainer/Ally2"), NodePath("BattleUI/TargetSelectCommands/GridContainer/Enemy1"), NodePath("BattleUI/TargetSelectCommands/GridContainer/Enemy2")]
+target_cancel_button = NodePath("BattleUI/TargetSelectCommands/CancelButton")
+selection_dialogue = NodePath("BattleUI/BaseCommands/SelectionDialogue")
+selection_dialogue_manager = NodePath("BattleUI/BaseCommands/SelectionDialogue/SelectionDialogue")
+battle_dialogue = NodePath("BattleUI/BattleDialogue")
+battle_dialogue_manager = NodePath("BattleUI/BattleDialogue/BattleDialogue")
+metadata/_edit_lock_ = true
+metadata/_edit_horizontal_guides_ = [278.0]
+
+[node name="Background" type="TextureRect" parent="." unique_id=1155875465]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.75
+offset_right = -512.0
+offset_bottom = -288.0
+texture = ExtResource("8_v32ak")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="EnemyGround" type="TextureRect" parent="." unique_id=1784838999]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.458
+anchor_right = 0.75
+anchor_bottom = 0.458
+offset_left = -128.0
+offset_top = -63.872
+offset_right = 128.0
+offset_bottom = 64.128
+texture = SubResource("AtlasTexture_i1fi4")
+stretch_mode = 4
+metadata/_edit_lock_ = true
+
+[node name="EnemyPokemon1" type="Sprite2D" parent="EnemyGround" unique_id=1669093602]
+position = Vector2(128, 64)
+texture = SubResource("PlaceholderTexture2D_obt0m")
+offset = Vector2(0, -96)
+script = ExtResource("10_gjkef")
+
+[node name="EnemyPokemon2" type="Sprite2D" parent="EnemyGround" unique_id=855281372]
+position = Vector2(128, 64)
+texture = SubResource("PlaceholderTexture2D_obt0m")
+offset = Vector2(0, -96)
+script = ExtResource("10_gjkef")
+
+[node name="PlayerGround" type="TextureRect" parent="." unique_id=1999709887]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.708
+anchor_right = 0.25
+anchor_bottom = 0.708
+offset_left = -256.0
+offset_top = -31.872
+offset_right = 256.0
+offset_bottom = 32.128
+texture = SubResource("AtlasTexture_fj75k")
+stretch_mode = 4
+metadata/_edit_lock_ = true
+
+[node name="AllyPokemon1" type="Sprite2D" parent="PlayerGround" unique_id=1076141845]
+visible = false
+position = Vector2(256, 64)
+texture = SubResource("PlaceholderTexture2D_21y0c")
+offset = Vector2(0, -144)
+script = ExtResource("10_gjkef")
+
+[node name="AllyPokemon2" type="Sprite2D" parent="PlayerGround" unique_id=839900897]
+visible = false
+position = Vector2(256, 64)
+texture = SubResource("PlaceholderTexture2D_blac8")
+offset = Vector2(0, -144)
+script = ExtResource("10_gjkef")
+
+[node name="AllyTrainer1" type="AnimatedSprite2D" parent="PlayerGround" unique_id=1350626674]
+position = Vector2(256, 64)
+sprite_frames = ExtResource("11_sgjgy")
+offset = Vector2(0, -96)
+
+[node name="AllyTrainer2" type="AnimatedSprite2D" parent="PlayerGround" unique_id=1920197086]
+position = Vector2(256, 64)
+sprite_frames = SubResource("SpriteFrames_o24p5")
+offset = Vector2(0, -96)
+
+[node name="BattleUI" type="Control" parent="." unique_id=651970742]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DataboxSingle" type="Control" parent="BattleUI" unique_id=1401306672]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="DataboxPlayer" parent="BattleUI/DataboxSingle" unique_id=1717549949 instance=ExtResource("7_sgjgy")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.615
+anchor_right = 1.0
+anchor_bottom = 0.615
+offset_left = -244.0
+offset_top = -44.16
+offset_right = 16.0
+offset_bottom = 39.84
+
+[node name="DataboxEnemy" parent="BattleUI/DataboxSingle" unique_id=407775615 instance=ExtResource("8_etati")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.174
+anchor_bottom = 0.174
+offset_left = -16.0
+offset_top = -30.816
+offset_right = 244.0
+offset_bottom = 31.184
+
+[node name="DataboxDouble" type="Control" parent="BattleUI" unique_id=249546061]
+visible = false
+anchors_preset = 0
+metadata/_edit_lock_ = true
+
+[node name="DataboxEnemy2" parent="BattleUI/DataboxDouble" unique_id=1818706085 instance=ExtResource("9_g1t84")]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -4.0
+offset_top = 2.0
+offset_right = 256.0
+offset_bottom = 64.0
+
+[node name="DataboxEnemy1" parent="BattleUI/DataboxDouble" unique_id=222471794 instance=ExtResource("9_g1t84")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.227
+anchor_bottom = 0.227
+offset_left = -16.0
+offset_top = 56.0
+offset_right = 244.0
+offset_bottom = 118.0
+
+[node name="DataboxPlayer2" parent="BattleUI/DataboxDouble" unique_id=96517581 instance=ExtResource("10_80v32")]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 172.0
+offset_right = 516.0
+offset_bottom = 234.0
+
+[node name="DataboxPlayer1" parent="BattleUI/DataboxDouble" unique_id=260668288 instance=ExtResource("10_80v32")]
+layout_mode = 0
+offset_left = 268.0
+offset_top = 226.0
+offset_right = 528.0
+offset_bottom = 288.0
+
+[node name="MessageBackground" type="TextureRect" parent="BattleUI" unique_id=500803674]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -96.0
+offset_right = 256.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("11_nnuwk")
+stretch_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="BaseCommands" type="Control" parent="BattleUI" unique_id=2045757241]
+layout_mode = 1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CommandButtons" type="GridContainer" parent="BattleUI/BaseCommands" unique_id=1351252183]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 6.0
+offset_right = 508.0
+offset_bottom = 94.0
+theme_override_constants/h_separation = -4
+theme_override_constants/v_separation = -4
+columns = 2
+metadata/_edit_lock_ = true
+
+[node name="FightButton" type="TextureButton" parent="BattleUI/BaseCommands/CommandButtons" unique_id=1955483047]
+layout_mode = 2
+focus_neighbor_right = NodePath("../PokemonButton")
+focus_neighbor_bottom = NodePath("../BagButton")
+focus_next = NodePath("../PokemonButton")
+focus_previous = NodePath("../4THButton/RunButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_tt4el")
+texture_pressed = SubResource("AtlasTexture_va54n")
+texture_hover = SubResource("AtlasTexture_tt4el")
+texture_focused = SubResource("AtlasTexture_va54n")
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/BaseCommands/CommandButtons/FightButton" unique_id=2075603264]
+script = ExtResource("13_2ij5c")
+
+[node name="PokemonButton" type="TextureButton" parent="BattleUI/BaseCommands/CommandButtons" unique_id=704346155]
+layout_mode = 2
+focus_neighbor_left = NodePath("../FightButton")
+focus_neighbor_bottom = NodePath("../4THButton/RunButton")
+focus_next = NodePath("../BagButton")
+focus_previous = NodePath("../FightButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_13ou7")
+texture_pressed = SubResource("AtlasTexture_kognc")
+texture_hover = SubResource("AtlasTexture_13ou7")
+texture_focused = SubResource("AtlasTexture_kognc")
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/BaseCommands/CommandButtons/PokemonButton" unique_id=772023606]
+script = ExtResource("13_2ij5c")
+
+[node name="BagButton" type="TextureButton" parent="BattleUI/BaseCommands/CommandButtons" unique_id=568411712]
+layout_mode = 2
+focus_neighbor_top = NodePath("../FightButton")
+focus_neighbor_right = NodePath("../4THButton/RunButton")
+focus_next = NodePath("../4THButton/RunButton")
+focus_previous = NodePath("../PokemonButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_xw20v")
+texture_pressed = SubResource("AtlasTexture_lgps0")
+texture_focused = SubResource("AtlasTexture_lgps0")
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/BaseCommands/CommandButtons/BagButton" unique_id=1704453196]
+script = ExtResource("13_2ij5c")
+
+[node name="4THButton" type="Control" parent="BattleUI/BaseCommands/CommandButtons" unique_id=134993038]
+layout_mode = 2
+
+[node name="RunButton" type="TextureButton" parent="BattleUI/BaseCommands/CommandButtons/4THButton" unique_id=1346485651]
+layout_mode = 1
+offset_right = 130.0
+offset_bottom = 46.0
+focus_neighbor_left = NodePath("../../BagButton")
+focus_neighbor_top = NodePath("../../PokemonButton")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../FightButton")
+focus_previous = NodePath("../../BagButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_l3q3p")
+texture_pressed = SubResource("AtlasTexture_5djbx")
+texture_hover = SubResource("AtlasTexture_l3q3p")
+texture_focused = SubResource("AtlasTexture_5djbx")
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/BaseCommands/CommandButtons/4THButton/RunButton" unique_id=269845590]
+script = ExtResource("13_2ij5c")
+
+[node name="CancelButton" type="TextureButton" parent="BattleUI/BaseCommands/CommandButtons/4THButton" unique_id=530135260]
+visible = false
+layout_mode = 1
+offset_right = 130.0
+offset_bottom = 46.0
+focus_neighbor_left = NodePath("../../BagButton")
+focus_neighbor_top = NodePath("../../PokemonButton")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../FightButton")
+focus_previous = NodePath("../../BagButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_4cmk5")
+texture_pressed = SubResource("AtlasTexture_kioon")
+texture_hover = SubResource("AtlasTexture_4cmk5")
+texture_focused = SubResource("AtlasTexture_kioon")
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/BaseCommands/CommandButtons/4THButton/CancelButton" unique_id=2053471599]
+script = ExtResource("13_2ij5c")
+
+[node name="SelectionDialogue" type="Control" parent="BattleUI/BaseCommands" unique_id=1528498 node_paths=PackedStringArray("box", "label")]
+layout_mode = 1
+anchor_top = 0.0416667
+anchor_right = 0.492188
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+script = ExtResource("14_rjk3x")
+box = NodePath("DialogueBox")
+label = NodePath("DialogueBox/DialogueLabel")
+metadata/_custom_type_script = "uid://ctrsrrpf088yx"
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+
+[node name="DialogueBox" type="NinePatchRect" parent="BattleUI/BaseCommands/SelectionDialogue" unique_id=1866756030]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("15_eo0dh")
+region_rect = Rect2(0, 0, 80, 48)
+patch_margin_left = 22
+patch_margin_top = 14
+patch_margin_right = 22
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="DialogueLabel" type="RichTextLabel" parent="BattleUI/BaseCommands/SelectionDialogue/DialogueBox" unique_id=680055530]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00124494
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.6863
+offset_top = 20.0
+offset_right = -30.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("16_7al23")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_18qcr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
+bbcode_enabled = true
+text = "What will
+{POKèMON} do?"
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="SelectionDialogue" type="Node" parent="BattleUI/BaseCommands/SelectionDialogue" unique_id=976667659 node_paths=PackedStringArray("starting_sequence", "label")]
+script = ExtResource("17_5xbgf")
+starting_sequence = NodePath("SelectionDialogueSequence")
+hide_box = false
+disable_movement = false
+clear_label = false
+label = NodePath("../DialogueBox/DialogueLabel")
+
+[node name="SelectionDialogueSequence" type="Node" parent="BattleUI/BaseCommands/SelectionDialogue/SelectionDialogue" unique_id=2079508845]
+script = ExtResource("18_48u0p")
+needs_input_on_finish = false
+end_pause = 0.0
+can_skip_text = false
+
+[node name="FightCommands" type="Control" parent="BattleUI" unique_id=125756307]
+visible = false
+layout_mode = 1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+metadata/_edit_use_anchors_ = true
+
+[node name="GridContainer" type="GridContainer" parent="BattleUI/FightCommands" unique_id=1273107527]
+layout_mode = 1
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 384.0
+offset_bottom = 94.0
+theme_override_constants/h_separation = -4
+theme_override_constants/v_separation = -4
+columns = 2
+metadata/_edit_group_ = true
+
+[node name="MoveButton1" parent="BattleUI/FightCommands/GridContainer" unique_id=1807013407 instance=ExtResource("19_5h14k")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../MoveButton2")
+focus_neighbor_bottom = NodePath("../MoveButton3")
+focus_next = NodePath("../MoveButton2")
+focus_previous = NodePath("../../CancelButton")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/FightCommands/GridContainer/MoveButton1" unique_id=1411542477]
+script = ExtResource("13_2ij5c")
+
+[node name="MoveButton2" parent="BattleUI/FightCommands/GridContainer" unique_id=526402681 instance=ExtResource("19_5h14k")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../MoveButton1")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../CancelButton")
+focus_neighbor_bottom = NodePath("../MoveButton4")
+focus_next = NodePath("../MoveButton3")
+focus_previous = NodePath("../MoveButton1")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/FightCommands/GridContainer/MoveButton2" unique_id=1306969949]
+script = ExtResource("13_2ij5c")
+
+[node name="MoveButton3" parent="BattleUI/FightCommands/GridContainer" unique_id=2099427534 instance=ExtResource("19_5h14k")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../MoveButton1")
+focus_neighbor_right = NodePath("../MoveButton4")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../MoveButton4")
+focus_previous = NodePath("../MoveButton2")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/FightCommands/GridContainer/MoveButton3" unique_id=1436222922]
+script = ExtResource("13_2ij5c")
+
+[node name="MoveButton4" parent="BattleUI/FightCommands/GridContainer" unique_id=627324265 instance=ExtResource("19_5h14k")]
+layout_mode = 2
+focus_neighbor_left = NodePath("../MoveButton3")
+focus_neighbor_top = NodePath("../MoveButton2")
+focus_neighbor_right = NodePath("../../CancelButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../CancelButton")
+focus_previous = NodePath("../MoveButton3")
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/FightCommands/GridContainer/MoveButton4" unique_id=1481431628]
+script = ExtResource("13_2ij5c")
+
+[node name="CancelButton" type="TextureButton" parent="BattleUI/FightCommands" unique_id=615266658]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.977
+anchor_top = 0.979
+anchor_right = 0.977
+anchor_bottom = 0.979
+offset_left = -110.224
+offset_top = -45.984
+offset_right = 7.776
+offset_bottom = 0.0159988
+focus_neighbor_left = NodePath("../GridContainer/MoveButton4")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../GridContainer/MoveButton1")
+focus_previous = NodePath("../GridContainer/MoveButton4")
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_ohmtx")
+texture_pressed = SubResource("AtlasTexture_lweyj")
+texture_hover = SubResource("AtlasTexture_ohmtx")
+texture_focused = SubResource("AtlasTexture_lweyj")
+ignore_texture_size = true
+
+[node name="InfoBox" type="NinePatchRect" parent="BattleUI/FightCommands" unique_id=570004015]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.583333
+anchor_right = 0.488281
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("15_eo0dh")
+region_rect = Rect2(0, 0, 80, 48)
+patch_margin_left = 22
+patch_margin_top = 14
+patch_margin_right = 22
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+
+[node name="PPLabel" type="Label" parent="BattleUI/FightCommands/InfoBox" unique_id=1932794537]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.128
+anchor_top = 0.285714
+anchor_right = 0.536
+anchor_bottom = 0.73399
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("16_7al23")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_18qcr")
+text = "PP: 40/40"
+label_settings = ExtResource("20_ml2if")
+metadata/_edit_use_anchors_ = true
+
+[node name="Type" type="TextureRect" parent="BattleUI/FightCommands/InfoBox" unique_id=391663816]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.624
+anchor_top = 0.25
+anchor_right = 0.88
+anchor_bottom = 0.75
+texture = SubResource("PlaceholderTexture2D_nrsi4")
+metadata/_edit_use_anchors_ = true
+
+[node name="TargetSelectCommands" type="Control" parent="BattleUI" unique_id=709419682]
+visible = false
+layout_mode = 1
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("21_nu85y")
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="CancelButton" type="TextureButton" parent="BattleUI/TargetSelectCommands" unique_id=1035520722]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.996
+anchor_top = 0.979
+anchor_right = 0.996
+anchor_bottom = 0.979
+offset_left = -131.952
+offset_top = -45.984
+offset_right = -1.95203
+offset_bottom = 0.0159988
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_ohmtx")
+texture_pressed = SubResource("AtlasTexture_lweyj")
+texture_hover = SubResource("AtlasTexture_ohmtx")
+texture_focused = SubResource("AtlasTexture_lweyj")
+metadata/_edit_lock_ = true
+
+[node name="GridContainer" type="GridContainer" parent="BattleUI/TargetSelectCommands" unique_id=754026004]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 374.0
+offset_bottom = 92.0
+theme_override_constants/h_separation = -4
+theme_override_constants/v_separation = -4
+columns = 2
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Enemy1" type="Button" parent="BattleUI/TargetSelectCommands/GridContainer" unique_id=1307449971]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../Enemy2")
+focus_neighbor_bottom = NodePath("../Ally1")
+focus_next = NodePath("../Enemy2")
+focus_previous = NodePath("../../CancelButton")
+mouse_default_cursor_shape = 2
+theme_type_variation = &"RedButton"
+text = "Pokemon name"
+text_overrun_behavior = 3
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/TargetSelectCommands/GridContainer/Enemy1" unique_id=167345979]
+script = ExtResource("13_2ij5c")
+
+[node name="Enemy2" type="Button" parent="BattleUI/TargetSelectCommands/GridContainer" unique_id=514426928]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Enemy1")
+focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath("../../CancelButton")
+focus_neighbor_bottom = NodePath("../Ally2")
+focus_next = NodePath("../Ally1")
+focus_previous = NodePath("../Enemy1")
+mouse_default_cursor_shape = 2
+theme_type_variation = &"RedButton"
+text = "Pokemon name"
+text_overrun_behavior = 3
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/TargetSelectCommands/GridContainer/Enemy2" unique_id=354253252]
+script = ExtResource("13_2ij5c")
+
+[node name="Ally1" type="Button" parent="BattleUI/TargetSelectCommands/GridContainer" unique_id=632631650]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Enemy1")
+focus_neighbor_right = NodePath("../Ally2")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../Ally2")
+focus_previous = NodePath("../Enemy2")
+mouse_default_cursor_shape = 2
+theme_type_variation = &"GreyButton"
+text = "Pokemon name"
+text_overrun_behavior = 3
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/TargetSelectCommands/GridContainer/Ally1" unique_id=435839119]
+script = ExtResource("13_2ij5c")
+
+[node name="Ally2" type="Button" parent="BattleUI/TargetSelectCommands/GridContainer" unique_id=596527731]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_neighbor_left = NodePath("../Ally1")
+focus_neighbor_top = NodePath("../Enemy2")
+focus_neighbor_right = NodePath("../../CancelButton")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath("../../CancelButton")
+focus_previous = NodePath("../Ally1")
+mouse_default_cursor_shape = 2
+theme_type_variation = &"GreyButton"
+text = "Pokemon name"
+text_overrun_behavior = 3
+
+[node name="ZIndexFocus" type="Node" parent="BattleUI/TargetSelectCommands/GridContainer/Ally2" unique_id=905069727]
+script = ExtResource("13_2ij5c")
+
+[node name="BattleDialogue" type="Control" parent="BattleUI" unique_id=1736244207 node_paths=PackedStringArray("box", "label")]
+visible = false
+anchors_preset = 0
+offset_top = 288.0
+offset_right = 512.0
+offset_bottom = 382.0
+script = ExtResource("14_rjk3x")
+box = NodePath("BattleDialogueBox")
+label = NodePath("BattleDialogueBox/BattleDialogueLabel")
+metadata/_custom_type_script = "uid://ctrsrrpf088yx"
+metadata/_edit_group_ = true
+
+[node name="BattleDialogueBox" type="NinePatchRect" parent="BattleUI/BattleDialogue" unique_id=588392572]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0425532
+anchor_right = 1.0
+anchor_bottom = 1.02128
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+texture = ExtResource("15_eo0dh")
+region_rect = Rect2(0, 0, 80, 48)
+patch_margin_left = 22
+patch_margin_top = 14
+patch_margin_right = 22
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BattleDialogueLabel" type="RichTextLabel" parent="BattleUI/BattleDialogue/BattleDialogueBox" unique_id=642400140]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00124494
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.6863
+offset_top = 20.0
+offset_right = -30.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("16_7al23")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_18qcr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xc4c4")
+bbcode_enabled = true
+scroll_active = false
+metadata/_edit_use_anchors_ = true
+
+[node name="BattleDialogue" type="Node" parent="BattleUI/BattleDialogue" unique_id=69650604 node_paths=PackedStringArray("starting_sequence", "label")]
+script = ExtResource("17_5xbgf")
+starting_sequence = NodePath("BattleDialogueSequence")
+hide_box = false
+disable_movement = false
+label = NodePath("../BattleDialogueBox/BattleDialogueLabel")
+
+[node name="BattleDialogueSequence" type="Node" parent="BattleUI/BattleDialogue/BattleDialogue" unique_id=1502889867]
+script = ExtResource("18_48u0p")
+needs_input_on_finish = false
+end_pause = 0.8

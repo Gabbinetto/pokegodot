@@ -1,7 +1,7 @@
 extends State
 
 
-@export var battle: Battle
+@export var battle: BattleServer
 
 
 func enter() -> void:

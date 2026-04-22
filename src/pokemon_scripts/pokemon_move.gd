@@ -55,7 +55,7 @@ func _init(_id: String) -> void:
 	id = _id
 
 	var data: Dictionary[String, Variant]
-	data.assign(DB.moves[id].duplicate(true))
+	data.assign(DB.fetch_move_data(id))
 
 	for effect: Dictionary in data.effects:
 		var effect_script: GDScript = BattleEffect.get_effect(effect.script)
@@ -78,8 +78,8 @@ func _init(_id: String) -> void:
 func refresh_pp() -> void:
 	pp = max_pp
 
-## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member Battle.pokemons].
-func get_possible_targets(battle: Battle, user: BattlePokemon) -> Array[bool]:
+## Returns a list that tells whether a pokemon on the field is a valid target. The index matches that of the [BattlePokemon] in [member BattleServer.pokemons].
+func get_possible_targets(battle: BattleServer, user: BattlePokemon) -> Array[bool]:
 	var targets: Array[bool]
 	var user_is_enemy: bool = battle.enemy_pokemon.has(user)
 	targets.resize(battle.pokemons.size())
@@ -116,7 +116,7 @@ func hits_all() -> bool:
 
 
 ## Returns the actual targets from a move selection, similar to [method get_possible_targets].
-func select_targets(battle: Battle, user: BattlePokemon, selected_target_index: int) -> Array[bool]:
+func select_targets(battle: BattleServer, user: BattlePokemon, selected_target_index: int) -> Array[bool]:
 	var targets: Array[bool] = get_possible_targets(battle, user)
 	if target == Targets.RANDOM_FOE:
 		var indexes: Array[int]
@@ -135,14 +135,14 @@ func select_targets(battle: Battle, user: BattlePokemon, selected_target_index: 
 	else:
 		targets.fill(false)
 	return targets
-		
 
-func register_effects(battle: Battle) -> void:
+
+func register_effects(battle: BattleServer) -> void:
 	for effect: BattleEffect in effects:
 		effect.register(battle)
 
 
-func unregister_effects(battle: Battle) -> void:
+func unregister_effects(battle: BattleServer) -> void:
 	for effect: BattleEffect in effects:
 		effect.unregister(battle)
 

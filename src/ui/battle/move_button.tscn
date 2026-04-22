@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://blsfywo74uggc"]
+[gd_scene format=3 uid="uid://blsfywo74uggc"]
 
 [ext_resource type="Texture2D" uid="uid://bcjf5ib54kqeg" path="res://assets/graphics/ui/battle/move_buttons.png" id="1_x7oau"]
 [ext_resource type="Script" uid="uid://bumbcs7ho2d4x" path="res://src/ui/battle/move_button.gd" id="2_m01y6"]
@@ -13,12 +13,13 @@ atlas = ExtResource("1_x7oau")
 region = Rect2(192, 0, 192, 46)
 
 [sub_resource type="LabelSettings" id="LabelSettings_b6v0y"]
+resource_local_to_scene = true
 font = ExtResource("3_6dag6")
 font_size = 24
 shadow_size = 4
 shadow_color = Color(0.627451, 0.627451, 0.658824, 1)
 
-[node name="MoveButton" type="TextureButton" node_paths=PackedStringArray("name_label")]
+[node name="MoveButton" type="TextureButton" unique_id=1906429481 node_paths=PackedStringArray("name_label")]
 texture_normal = SubResource("AtlasTexture_vy6r7")
 texture_pressed = SubResource("AtlasTexture_aaj5l")
 texture_hover = SubResource("AtlasTexture_vy6r7")
@@ -26,7 +27,7 @@ texture_focused = SubResource("AtlasTexture_aaj5l")
 script = ExtResource("2_m01y6")
 name_label = NodePath("MoveName")
 
-[node name="MoveName" type="Label" parent="."]
+[node name="MoveName" type="Label" parent="." unique_id=639016615]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.125

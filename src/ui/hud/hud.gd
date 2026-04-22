@@ -39,8 +39,6 @@ func _open_menu(menu_builder: Callable, transition: bool = true) -> void:
 		TransitionManager.play_out()
 
 
-
-
 func _open_party() -> void:
 	Audio.play_sfx(Audio.SOUNDS.GUI_SEL_DECISION)
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)

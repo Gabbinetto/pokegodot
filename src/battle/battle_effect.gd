@@ -18,22 +18,22 @@ func _init(_owner: Object, _chance: float = 100.0, _attributes: Dictionary[Strin
 	attributes = _attributes
 
 
-func apply(battle: Battle, step: Battle.BattleSteps, data: Dictionary[String, Variant]) -> void:
+func apply(battle: BattleServer, step: BattleServer.BattleSteps, data: Dictionary[String, Variant]) -> void:
 	if Globals.rng.randf_range(0.0, 100.0) <= chance:
 		_effect(battle, step, data)
 
 
-func _effect(_battle: Battle, _step: Battle.BattleSteps, _data: Dictionary[String, Variant]) -> void:
+func _effect(_battle: BattleServer, _step: BattleServer.BattleSteps, _data: Dictionary[String, Variant]) -> void:
 	pass
 
 
-func register(battle: Battle) -> void:
+func register(battle: BattleServer) -> void:
 	battle.effects[self] = priority
 
 
-func unregister(battle: Battle) -> void:
+func unregister(battle: BattleServer) -> void:
 	battle.effects.erase(self)
-	
+
 
 static func get_effect(id: String) -> GDScript:
 	if id.get_extension() != "gd":

@@ -107,20 +107,6 @@ var unmega_form: int = 0
 ## [code]pokedex_form[/code] set to the first complete form.
 var pokedex_form: int = 0
 
-
-# Sprites
-var sprite_front_n_m: Texture2D ## Front normal male sprite.
-var sprite_front_n_f: Texture2D ## Front normal female sprite.
-var sprite_front_s_m: Texture2D ## Front shiny male sprite.
-var sprite_front_s_f: Texture2D ## Front shiny female sprite.
-var sprite_back_n_m: Texture2D ## Back normal male sprite.
-var sprite_back_n_f: Texture2D ## Back normal female sprite.
-var sprite_back_s_m: Texture2D ## Back shiny male sprite.
-var sprite_back_s_f: Texture2D ## Back shiny female sprite.
-var sprite_icon_n: Texture2D ## Icon normal sprite.
-var sprite_icon_s: Texture2D ## Icon shiny sprite.
-var sprite_footprint: Texture2D ## Footprint sprite.
-
 # Shorthand variables
 var hp: int: ## Shorthand for [member base_stats] HP key.
 	get: return base_stats.HP
@@ -140,8 +126,6 @@ var spdefense: int: ## Shorthand for [member base_stats] SPECIAL_DEFENSE key.
 var speed: int: ## Shorthand for [member base_stats] SPEED key.
 	get: return base_stats.SPEED
 	set(value): base_stats.SPEED = value
-var metrics: Dictionary[String, int]: ## Shorthand for [method get_metrics] of a species instance.
-	get: return get_metrics(id, form_number)
 var exp_table: Array[int]: ## Shorthand for the EXP table from [member Experience.tables] of a species instance.
 	get: return Experience.tables[growth_rate]
 
@@ -150,15 +134,7 @@ func _init(_id: String, _form_number: int = 0) -> void:
 	id = _id
 	form_number = _form_number
 
-	var data: Dictionary[String, Variant]
-	data.assign(DB.pokemon[id].forms[0])
-	if form_number != 0:
-		for form: Dictionary in DB.pokemon.get(id).forms:
-			if form.form_number != form_number:
-				continue
-			for key: String in form:
-				data[key] = form[key]
-			break
+	var data: Dictionary[String, Variant] = DB.fetch_pokemon_data(id, form_number)
 
 	# Typed arrays and dictionaries
 	types.assign(data.get("types", types))
@@ -192,54 +168,3 @@ func _init(_id: String, _form_number: int = 0) -> void:
 	for attribute: String in data:
 		if attribute in self:
 			set(attribute, data[attribute])
-
-	_set_sprites()
-
-
-func _set_sprites() -> void:
-	sprite_front_n_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_m.png")
-	if not sprite_front_n_m:
-		sprite_front_n_m = DB.default_front_sprite
-	sprite_front_n_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_n_f.png")
-	if not sprite_front_n_f:
-		sprite_front_n_f = sprite_front_n_m
-	sprite_front_s_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_m.png")
-	if not sprite_front_s_m:
-		sprite_front_s_m = sprite_front_n_m
-	sprite_front_s_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/front_s_f.png")
-	if not sprite_front_s_f:
-		sprite_front_s_f = sprite_front_s_m
-
-	sprite_back_n_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_m.png")
-	if not sprite_back_n_m:
-		sprite_back_n_m = DB.default_back_sprite
-	sprite_back_n_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_n_f.png")
-	if not sprite_back_n_f:
-		sprite_back_n_f = sprite_back_n_m
-	sprite_back_s_m = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_m.png")
-	if not sprite_back_s_m:
-		sprite_back_s_m = sprite_back_n_m
-	sprite_back_s_f = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/back_s_f.png")
-	if not sprite_back_s_f:
-		sprite_back_s_f = sprite_back_s_m
-
-	sprite_icon_n = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_n.png")
-	if not sprite_icon_n:
-		sprite_icon_n = DB.default_icon_sprite
-	sprite_icon_s = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_s.png")
-	if not sprite_icon_s:
-		sprite_icon_s = sprite_icon_n
-
-	sprite_footprint = Utils.load_no_error(DB.POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png")
-
-
-## Get the pokemon metrics from [member DB.metrics].
-static func get_metrics(pokemon_id: String, form: int = 0) -> Dictionary[String, int]:
-	var data: Dictionary[String, int] = {}
-	for form_data: Dictionary in DB.metrics.get(pokemon_id, []):
-		if form_data.form_number == form:
-			data.assign(form_data)
-			break
-	if form > 0 and data.is_empty():
-		data.assign(DB.metrics.get(pokemon_id)[0])
-	return data

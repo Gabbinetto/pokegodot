@@ -99,7 +99,7 @@ var game_world: World ## The game world which holds maps, the player and similar
 var player: Player ## Reference to the [Player] actor. Set by the player itself as there should only be one.
 var movement_enabled: bool = true ## Enable or disable the player's movement.
 var event_input_enabled: bool = true ## Enable or disable the player's ability to interact with events.
-var current_battle: Battle = null ## The battle currently happening. [code]null[/code] if there's no battle.
+var current_battle: BattleServer = null ## The battle currently happening. [code]null[/code] if there's no battle.
 var in_battle: bool: ## True if a battle is happening. Checks if [member current_battle] is not [code]null[/code]. Can't be set.
 	get: return current_battle != null
 ## A global random number generator. Useful to be "coherent" with randomness.
@@ -148,5 +148,5 @@ func _input(event: InputEvent) -> void:
 	elif in_game and (event.is_action_pressed("Start") or event.is_action_pressed("X")):
 		if UIStack.is_empty() and not MainDialogue.running:
 			UIStack.push(Hud.build())
-		elif UIStack.top() is Hud:
-			UIStack.top().close()
+	elif UIStack.top() and UIStack.top() is Hud and (event.is_action_pressed("Start") or event.is_action_pressed("X") or event.is_action_pressed("ui_cancel")):
+		UIStack.top().close()

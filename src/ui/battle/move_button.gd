@@ -23,35 +23,32 @@ const FONT_TYPE_COLORS: Dictionary[int, Color] = {
 }
 
 
-@export var move: PokemonMove:
-	set(value):
-		move = value
-		refresh()
+@export var move_id: String
 @export var name_label: Label
 @export var buttons_texture: Texture2D = preload("res://assets/graphics/ui/battle/move_buttons.png")
 
 
 func _ready() -> void:
-	name_label.label_settings = name_label.label_settings.duplicate()
-	
 	refresh()
 
 
 func refresh() -> void:
-	if not move:
+	if not move_id:
 		return
+
+	var data: Dictionary[String, Variant] = DB.fetch_move_data(move_id)
 
 	var button_size: Vector2 = buttons_texture.get_size() / Vector2(2.0, Types.count)
 
 	var normal: AtlasTexture = AtlasTexture.new()
 	normal.atlas = buttons_texture
 	normal.region = Rect2(
-		Vector2(0, button_size.y * move.type), button_size
+		Vector2(0, button_size.y * data.type), button_size
 	)
 	var highlighted: AtlasTexture = AtlasTexture.new()
 	highlighted.atlas = buttons_texture
 	highlighted.region = Rect2(
-		Vector2(button_size.x, button_size.y * move.type), button_size
+		Vector2(button_size.x, button_size.y * data.type), button_size
 	)
 
 	texture_normal = normal
@@ -59,5 +56,5 @@ func refresh() -> void:
 	texture_pressed = highlighted
 	texture_focused = highlighted
 
-	name_label.text = move.name
-	name_label.label_settings.font_color = FONT_TYPE_COLORS.get(move.type, Color.BLACK)
+	name_label.text = data.name
+	name_label.label_settings.font_color = FONT_TYPE_COLORS.get(data.type, Color.BLACK)

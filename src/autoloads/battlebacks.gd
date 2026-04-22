@@ -105,10 +105,10 @@ var loaded_sets: Dictionary[Sets, Set] = {
 
 
 class Set:
-	var background: Texture
-	var message: Texture
-	var player_base: Texture
-	var enemy_base: Texture
+	var background: Texture2D
+	var message: Texture2D
+	var player_base: Texture2D
+	var enemy_base: Texture2D
 
 	func _init(_base: String, _background: String, _message: String) -> void:
 

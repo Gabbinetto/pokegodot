@@ -36,7 +36,7 @@ func _init() -> void:
 	else:
 		print_debug("Pokemon graphics exist")
 
-	
+
 	default_front_sprite = load(POKEMON_SPRITES_PATH + "_default/front_n_m.png")
 	default_back_sprite = load(POKEMON_SPRITES_PATH + "_default/back_n_m.png")
 	default_icon_sprite = load(POKEMON_SPRITES_PATH + "_default/icon_n.png")
@@ -65,7 +65,7 @@ func load_external_archive() -> void:
 	if error:
 		printerr("Couldn't open %s: %s" % [ProjectSettings.globalize_path("user://"), error_string(error)])
 		return
-	
+
 	print("Reading zip, ", FileAccess.file_exists(EXTERNAL_GRAPHICS_ARCHIVE))
 	var zip: ZIPReader = ZIPReader.new()
 	error = zip.open(EXTERNAL_GRAPHICS_ARCHIVE)
@@ -89,7 +89,7 @@ func load_external_archive() -> void:
 			if dir.file_exists(path):
 				zip_checked_files += 1
 				continue
-		
+
 		dir.make_dir_recursive(path.get_base_dir())
 		if path.ends_with("/"):
 			zip_checked_files += 1
@@ -99,3 +99,63 @@ func load_external_archive() -> void:
 		file.store_buffer(buffer)
 		file.close()
 		zip_checked_files += 1
+
+#region Data fetching
+func fetch_pokemon_data(id: String, form_number: int = 0) -> Dictionary[String, Variant]:
+	var data: Dictionary[String, Variant]
+	data.assign(pokemon[id]["forms"][0])
+	# Fetch additional form data
+	if form_number > 0:
+		for form: Dictionary in pokemon[id]["forms"]:
+			if form.number != form_number:
+				continue
+			for key: String in form:
+				data[key] = form[key]
+			break
+	return data
+
+func fetch_move_data(id: String) -> Dictionary[String, Variant]:
+	var data: Dictionary[String, Variant]
+	data.assign(moves.get(id, {}).duplicate())
+	return data
+
+
+func fetch_pokemon_sprite(id: String, form_number: int, shiny: bool, gender: Pokemon.Genders, back: bool = false) -> Texture2D:
+	var dir: String = POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/"
+	var path: String = dir + "%s_%s" % [
+		"back" if back else "front",
+		"s" if shiny else "n",
+	]
+	if gender == Pokemon.Genders.FEMALE and FileAccess.file_exists(path + "_f.png"):
+		path += "_f.png"
+	else:
+		path += "_m.png"
+
+	var texture: Texture2D = Utils.load_no_error(path)
+	if not texture:
+		return default_back_sprite if back else default_front_sprite
+	return texture
+
+func fetch_pokemon_icon(id: String, form_number: int, shiny: bool) -> Texture2D:
+	var path: String = POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/icon_" + ("s.png" if shiny else "n.png")
+	var texture: Texture2D = Utils.load_no_error(path)
+	if not texture:
+		return default_icon_sprite
+	return texture
+
+func fetch_pokemon_footprint(id: String, form_number: int) -> Texture2D:
+	var path: String = POKEMON_SPRITES_PATH + id + "_" + str(form_number) + "/footprint.png"
+	var texture: Texture2D = Utils.load_no_error(path)
+	return texture
+
+func fetch_pokemon_metrics(id: String, form_number: int = 0) -> Dictionary[String, int]:
+	var data: Dictionary[String, int] = {}
+	for form_data: Dictionary in metrics.get(id, []):
+		if form_data.form_number == form_number:
+			data.assign(form_data)
+			break
+	if form_number > 0 and data.is_empty():
+		data.assign(metrics.get(id)[0])
+	return data
+
+#endregion

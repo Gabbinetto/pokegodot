@@ -1,6 +1,6 @@
 extends State
 
-@export var battle: Battle
+@export var battle: BattleServer
 
 
 func enter() -> void:
@@ -19,9 +19,9 @@ func enter() -> void:
 			targets = move.select_targets(battle, pokemon, chosen)
 		else:
 			targets = move.get_possible_targets(battle, pokemon)
-		
-		var action: Battle.TurnAction = Battle.TurnAction.new(
-			Battle.Actions.FIGHT,
+
+		var action: BattleServer.TurnChoice = BattleServer.TurnChoice.new(
+			BattleServer.Choices.FIGHT,
 			{
 				"pokemon": pokemon,
 				"move": move,
@@ -30,7 +30,7 @@ func enter() -> void:
 		)
 
 		battle.turn_selections[battle.pokemons.find(pokemon)] = action
-	
+
 	await get_tree().create_timer(0.2).timeout
 
 	transition.emit(self, "ActionExecution")

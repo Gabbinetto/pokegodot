@@ -1,7 +1,7 @@
 extends State
 
 
-@export var battle: Battle
+@export var battle: BattleServer
 @export var ui: BattleUI
 
 var tween: Tween

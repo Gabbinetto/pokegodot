@@ -250,7 +250,7 @@ func _on_summary_pressed() -> void:
 	var summary: SummaryMenu = SummaryMenu.build({"list": team.array(), "starting_index": current_panel.get_index(), "in_battle": in_battle})
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
 	await TransitionManager.finished
-	summary.closed.connect(current_panel.grab_focus.call_deferred, CONNECT_ONE_SHOT)
+	summary.closed.connect(button_summary.grab_focus.call_deferred, CONNECT_ONE_SHOT)
 	UIStack.push(summary)
 	TransitionManager.play_out()
 	await TransitionManager.finished

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://1b8kmqgc0i1y"]
+[gd_scene format=3 uid="uid://1b8kmqgc0i1y"]
 
 [ext_resource type="Texture2D" uid="uid://wgr5ftd1l6u1" path="res://assets/graphics/ui/battle/databox_thin.png" id="1_sbso5"]
 [ext_resource type="Script" uid="uid://gihojunguedm" path="res://src/ui/battle/databox.gd" id="2_utmf8"]
@@ -10,7 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://cinq5f0xsksr1" path="res://assets/resources/ui/text_resources/databox_numbers.tres" id="8_lek7l"]
 [ext_resource type="Texture2D" uid="uid://cklahfu5p60x2" path="res://assets/graphics/ui/gender_male_icon.png" id="9_utmf8"]
 
-[node name="DataboxPlayerDouble" type="TextureRect" node_paths=PackedStringArray("name_label", "hp_bar", "level_text", "gender")]
+[node name="DataboxPlayerDouble" type="TextureRect" unique_id=484170035 node_paths=PackedStringArray("name_label", "hp_bar", "level_text", "gender_sprite")]
 offset_right = 260.0
 offset_bottom = 62.0
 texture = ExtResource("1_sbso5")
@@ -19,9 +19,9 @@ script = ExtResource("2_utmf8")
 name_label = NodePath("PokemonName")
 hp_bar = NodePath("HPBar")
 level_text = NodePath("Level")
-gender = NodePath("Gender")
+gender_sprite = NodePath("Gender")
 
-[node name="HPBar" type="TextureProgressBar" parent="."]
+[node name="HPBar" type="TextureProgressBar" parent="." unique_id=934909898]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.454
@@ -41,7 +41,7 @@ middle_texture = ExtResource("5_ou140")
 low_texture = ExtResource("6_sk1nb")
 metadata/_custom_type_script = "uid://ciis2yphy0kq4"
 
-[node name="PokemonName" type="Label" parent="."]
+[node name="PokemonName" type="Label" parent="." unique_id=1003524434]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.608
@@ -58,7 +58,7 @@ label_settings = ExtResource("7_1b54i")
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Level" type="Label" parent="."]
+[node name="Level" type="Label" parent="." unique_id=238146932]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.677
@@ -72,7 +72,7 @@ offset_bottom = -20.22
 text = "100"
 label_settings = ExtResource("8_lek7l")
 
-[node name="Gender" type="TextureRect" parent="."]
+[node name="Gender" type="TextureRect" parent="." unique_id=431706332]
 layout_mode = 0
 offset_left = 160.0
 offset_top = 12.0

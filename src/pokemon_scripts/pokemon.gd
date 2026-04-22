@@ -236,14 +236,9 @@ func _on_level_up() -> void:
 
 ## Resets the sprites.
 func set_sprites() -> void:
-	if shiny or super_shiny:
-		sprite_front = species.sprite_front_s_f if gender == Genders.FEMALE else species.sprite_front_s_m
-		sprite_back = species.sprite_back_s_f if gender == Genders.FEMALE else species.sprite_back_s_m
-		sprite_icon = species.sprite_icon_s
-		return
-	sprite_front = species.sprite_front_n_f if gender == Genders.FEMALE else species.sprite_front_n_m
-	sprite_back = species.sprite_back_n_f if gender == Genders.FEMALE else species.sprite_back_n_m
-	sprite_icon = species.sprite_icon_n
+	sprite_front = DB.fetch_pokemon_sprite(species.id, species.form_number, shiny, gender, false)
+	sprite_back = DB.fetch_pokemon_sprite(species.id, species.form_number, shiny, gender, true)
+	sprite_icon = DB.fetch_pokemon_icon(species.id, species.form_number, shiny)
 
 
 ## Recalculates stats. See [url]https://bulbapedia.bulbagarden.net/wiki/Stat#Generation_III_onward[/url]

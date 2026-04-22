@@ -22,7 +22,7 @@ func _on_area_entered(area: Area2D) -> void:
 		var encounter: MapEncounter = pool.pick_random()
 		var level: int = Globals.rng.randi_range(encounter.min_level, encounter.max_level)
 		var pokemon: Pokemon = Pokemon.generate(encounter.id, encounter.form, {"level": level})
-		Battle.start_battle(
+		BattleServer.start_battle(
 			{
 				"enemy_trainers": BattleTrainer.make_wild(pokemon),
 				"battleback": battleback

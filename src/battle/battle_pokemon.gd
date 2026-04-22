@@ -5,7 +5,7 @@ class_name BattlePokemon extends Resource
 ## Used for temporary pokemon data during battle, mainly volatile
 ## effects such as confusion, substitute... But also stat changes.
 
-var battle: Battle
+var battle: BattleServer
 
 var pokemon: Pokemon ## The pokemon bound to this class.
 var trainer: BattleTrainer ## This pokemon's trainer.
@@ -54,14 +54,14 @@ var boosts: Dictionary[String, int] = { ## Stat boosts.
 	Globals.OTHER_STATS.CRITICAL: 0,
 }
 
-func _init(_battle: Battle, _pokemon: Pokemon, _trainer: BattleTrainer) -> void:
+func _init(_battle: BattleServer, _pokemon: Pokemon, _trainer: BattleTrainer) -> void:
 	battle = _battle
 	pokemon = _pokemon
 	trainer = _trainer
 
 
 ## Damages this pokemon, substracting [param amount] from [member hp].
-## If this pokemon faints, [method Battle.add_exp] will be called on [member battle].
+## If this pokemon faints, [method BattleServer.add_exp] will be called on [member battle].
 ## If [param amount] is negative, [method apply_heal] will be called instead with a negative [param amount].
 func apply_damage(amount: int) -> void:
 	if amount < 0:
@@ -120,7 +120,7 @@ func add_boosts(stat_changes: Dictionary[String, int]) -> void:
 			else:
 				boost_happened |= 0b100
 		else:
-			battle.show_text("%s's %s can't go %s!" % [
+			battle.send_text("%s's %s can't go %s!" % [
 				name, stat.capitalize(), "lower" if stat_changes[stat] < 1 else "higher"
 			])
 	if boost_happened & 0b010 > 0:
@@ -133,8 +133,8 @@ func add_boosts(stat_changes: Dictionary[String, int]) -> void:
 		battle.play_animation(down_animation)
 		for stat: String in stat_changes:
 			battle.show_text("%s's %s drops!" % [name, stat.capitalize()])
-	
-	await battle.last_buffer_ran
+
+	await battle.last_event_ran
 
 
 static func get_accuracy_multiplier(accuracy: int, evasion: int) -> float:

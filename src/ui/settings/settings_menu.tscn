@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://crn2m03o3vu58"]
+[gd_scene format=3 uid="uid://crn2m03o3vu58"]
 
 [ext_resource type="Theme" uid="uid://kn74wkgbq6w5" path="res://assets/resources/ui/default_theme.tres" id="1_o05gs"]
 [ext_resource type="Script" uid="uid://b5bpj13ecj3av" path="res://src/ui/settings/settings_menu.gd" id="2_bte7v"]
@@ -8,15 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cmm70q3nwac64" path="res://src/ui/settings/entry_button.tscn" id="4_cqgto"]
 [ext_resource type="Theme" uid="uid://dnv4vpuph555u" path="res://assets/resources/ui/text_resources/default_gray_theme.tres" id="5_cqgto"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_unrsy"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6itg"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vcw7t"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fepe5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vcw7t"]
-
-[node name="SettingsMenu" type="Control" node_paths=PackedStringArray("entries", "description", "text_speed", "battle_effects", "battle_style", "default_run", "automatic_box", "give_nickname", "box_frame", "window_size", "close")]
+[node name="SettingsMenu" type="Control" unique_id=470590416 node_paths=PackedStringArray("entries", "description", "text_speed", "battle_effects", "battle_style", "default_run", "automatic_box", "give_nickname", "box_frame", "window_size", "close_entry")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,10 +31,10 @@ automatic_box = NodePath("PanelContainer/ScrollContainer/Entries/AutomaticBox")
 give_nickname = NodePath("PanelContainer/ScrollContainer/Entries/GiveNickname")
 box_frame = NodePath("PanelContainer/ScrollContainer/Entries/BoxFrame")
 window_size = NodePath("PanelContainer/ScrollContainer/Entries/WindowSize")
-close = NodePath("PanelContainer/ScrollContainer/Entries/Close")
+close_entry = NodePath("PanelContainer/ScrollContainer/Entries/Close")
 metadata/_edit_lock_ = true
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=426243733]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -48,62 +44,62 @@ grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer" unique_id=1818120007]
 layout_mode = 2
 follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 3
 scroll_deadzone = 10
 
-[node name="Entries" type="VBoxContainer" parent="PanelContainer/ScrollContainer"]
+[node name="Entries" type="VBoxContainer" parent="PanelContainer/ScrollContainer" unique_id=1011096201]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="TextSpeed" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="TextSpeed" parent="PanelContainer/ScrollContainer/Entries" unique_id=1992548430 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["Slow", "Mid", "Fast", "Inst."])
 text = "Text speed"
 description = "Choose the speed at which text
 appears."
 
-[node name="BattleEffects" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="BattleEffects" parent="PanelContainer/ScrollContainer/Entries" unique_id=454302554 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["On", "Off"])
 text = "Battle effects"
 description = "Choose whether you wish to see move
 animations in battle."
 
-[node name="BattleStyle" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="BattleStyle" parent="PanelContainer/ScrollContainer/Entries" unique_id=986666671 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["Switch", "Set"])
 text = "Battle style"
 description = "Choose whether you can switch Pokemon
 when an opponent's Pokemon faints."
 
-[node name="DefaultRun" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="DefaultRun" parent="PanelContainer/ScrollContainer/Entries" unique_id=597505416 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["Walk", "Run"])
 text = "Default movement"
 description = "Choose your movement speed. Hold B to
 move at the other speed."
 
-[node name="AutomaticBox" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="AutomaticBox" parent="PanelContainer/ScrollContainer/Entries" unique_id=1773526829 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["Manual", "Automatic"])
 text = "Send to Boxes"
 description = "Choose whether caught Pokémon are
 sent to Boxes when your party is full."
 
-[node name="GiveNickname" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="GiveNickname" parent="PanelContainer/ScrollContainer/Entries" unique_id=922787494 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["Give", "Don't give"])
 text = "Give nickname"
 description = "Choose whether you can give a nickname
 to a Pokémon when you obtain it."
 
-[node name="BoxFrame" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("3_unrsy")]
+[node name="BoxFrame" parent="PanelContainer/ScrollContainer/Entries" unique_id=157430823 instance=ExtResource("3_unrsy")]
 layout_mode = 2
 starting_value = 1.0
 min_value = 1.0
@@ -112,18 +108,18 @@ text = "Box frame"
 description = "Choose the appearance of
 interface boxes."
 
-[node name="WindowSize" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("2_mfqe4")]
+[node name="WindowSize" parent="PanelContainer/ScrollContainer/Entries" unique_id=1581143925 instance=ExtResource("2_mfqe4")]
 layout_mode = 2
 choices = Array[String](["S", "M", "L", "XL", "Full"])
 text = "Window size"
 description = "Choose the size of the game window."
 
-[node name="Close" parent="PanelContainer/ScrollContainer/Entries" instance=ExtResource("4_cqgto")]
+[node name="Close" parent="PanelContainer/ScrollContainer/Entries" unique_id=650617647 instance=ExtResource("4_cqgto")]
 layout_mode = 2
 text = "Close"
 description = "Closes this screen."
 
-[node name="DescriptionBox" type="PanelContainer" parent="."]
+[node name="DescriptionBox" type="PanelContainer" parent="." unique_id=370336574]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.75
@@ -133,12 +129,12 @@ theme_override_styles/panel = ExtResource("4_bte7v")
 metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
-[node name="Control" type="Control" parent="DescriptionBox"]
+[node name="Control" type="Control" parent="DescriptionBox" unique_id=2047881492]
 layout_mode = 2
 mouse_filter = 1
 metadata/_edit_group_ = true
 
-[node name="DialogueLabel" type="RichTextLabel" parent="DescriptionBox/Control"]
+[node name="DialogueLabel" type="RichTextLabel" parent="DescriptionBox/Control" unique_id=756423294]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.00921659
@@ -149,10 +145,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("5_cqgto")
-theme_override_styles/fill = SubResource("StyleBoxEmpty_unrsy")
-theme_override_styles/background = SubResource("StyleBoxEmpty_c6itg")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_fepe5")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_vcw7t")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fepe5")
 bbcode_enabled = true
 scroll_active = false
 autowrap_mode = 0

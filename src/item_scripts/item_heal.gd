@@ -29,7 +29,7 @@ func bag_use() -> void:
 
 
 func battle_use() -> void:
-	var battle: Battle = Globals.current_battle
+	var battle: BattleServer = Globals.current_battle
 	battle.ui.pokemon_selected.connect(_on_pokemon_selected, CONNECT_ONE_SHOT)
 	battle.ui.pokemon_selection_closed.connect(
 		func():
@@ -40,7 +40,7 @@ func battle_use() -> void:
 
 
 func _on_pokemon_selected(pokemon: Pokemon) -> void:
-	var battle: Battle = Globals.current_battle
+	var battle: BattleServer = Globals.current_battle
 	var battle_pokemon: BattlePokemon = battle.pokemons[battle.get_slot(pokemon)]
 	heal(battle_pokemon)
 	battle.animate_hp(

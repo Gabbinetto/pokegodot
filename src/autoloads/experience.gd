@@ -33,6 +33,11 @@ func _init() -> void:
 			tables[rate].append(calculate_exp(level, rate))
 
 
+## Returns the growth rate for a specific species by its [param id].
+func get_growth_rate_by_id(id: String, form_number: int = 0) -> GrowthRates:
+	var data: Dictionary[String, Variant] = DB.fetch_pokemon_data(id, form_number)
+	return data["growth_rate"] as GrowthRates
+
 ## Returns the experience needed for a specific [param level] given a [param growth_rate]. [br]
 ## If [param level] is negative, it is subtracted from [constant MAX_LEVEL]. [br]
 ## If out of range (0 or greater than [constant MAX_LEVEL]), returns -1.
