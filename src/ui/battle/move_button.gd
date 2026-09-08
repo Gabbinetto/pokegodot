@@ -34,9 +34,11 @@ func _ready() -> void:
 
 func refresh() -> void:
 	if not move_id:
+		disabled = true
 		return
 
 	var data: Dictionary[String, Variant] = DB.fetch_move_data(move_id)
+	disabled = false
 
 	var button_size: Vector2 = buttons_texture.get_size() / Vector2(2.0, Types.count)
 

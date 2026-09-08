@@ -95,6 +95,14 @@ func _make_turn_state() -> Dictionary[String, Variant]:
 	var pokemon_data: Array[Dictionary] = []
 	for pokemon in pokemons:
 		if pokemon:
+			var moves: Array[Dictionary] = [{}, {}, {}, {}]
+			for i: int in pokemon.moves.size():
+				var move: PokemonMove = pokemon.moves[i]
+				moves[i] = {
+					"id": move.id,
+					"pp": move.pp,
+					"max_pp": move.max_pp,
+				}
 			pokemon_data.push_back({
 				"id": pokemon.species.id,
 				"form_number": pokemon.species.form_number,
@@ -104,7 +112,8 @@ func _make_turn_state() -> Dictionary[String, Variant]:
 				"max_hp": pokemon.max_hp,
 				"experience": pokemon.pokemon.experience,
 				"gender": pokemon.pokemon.gender,
-				"shiny": pokemon.pokemon.shiny
+				"shiny": pokemon.pokemon.shiny,
+				"moves": moves,
 			})
 		else:
 			pokemon_data.push_back({})

@@ -16,7 +16,7 @@ const GIRL_SPRITEFRAMES: SpriteFrames = preload("res://assets/resources/battle_b
 
 @export_group("Setting")
 @export var background: TextureRect
-@export var player_ground: TextureRect
+@export var ally_ground: TextureRect
 @export var enemy_ground: TextureRect
 @export_group("Sprites")
 @export var sprites: Array[PokemonBodySprite] = [null, null, null, null]
@@ -58,6 +58,12 @@ const GIRL_SPRITEFRAMES: SpriteFrames = preload("res://assets/resources/battle_b
 
 var double_battle: bool = false
 var active_databoxes: Array[Databox] = [null, null, null, null]
+var ally_databoxes: Array[Databox]:
+	get:
+		return active_databoxes.slice(0, int(active_databoxes.size() / 2.0))
+var enemy_databoxes: Array[Databox]:
+	get:
+		return active_databoxes.slice(int(active_databoxes.size() / 2.0))
 var last_move_buttons: Dictionary[int, MoveButton]
 var last_selected_pokemon: Pokemon
 var current_screen: Screens:
@@ -72,7 +78,20 @@ var current_screen: Screens:
 			target_screen: return Screens.TARGET_SELECT
 			battle_dialogue: return Screens.DIALOGUE
 			_: return Screens.NONE
+var ally_sprites: Array[PokemonBodySprite]:
+	get:
+		return sprites.slice(0, int(sprites.size() / 2.0))
+var enemy_sprites: Array[PokemonBodySprite]:
+	get:
+		return sprites.slice(int(sprites.size() / 2.0))
 var pokemon_states: Array[Dictionary] = [{}, {}, {}, {}]
+var ally_pokemon_states: Array[Dictionary]:
+	get:
+		return pokemon_states.slice(0, int(pokemon_states.size() / 2.0))
+var enemy_pokemon_states: Array[Dictionary]:
+	get:
+		return pokemon_states.slice(int(pokemon_states.size() / 2.0))
+
 
 var _event_queue: Array[Dictionary] = []
 var _event_running: bool = false
@@ -125,16 +144,31 @@ func _on_battle_data_received(data: Dictionary[String, Variant]) -> void:
 		"setup":
 			var state: Dictionary[String, Variant] = data["turn_state"]
 			pokemon_states.assign(state["pokemons"])
+			# Setup sprites
+			for i: int in ally_sprites.size():
+				var sprite: PokemonBodySprite = ally_sprites[i]
+				sprite.position.x = (i + 1) * (ally_ground.size.x * (1.0 / (ally_sprites.size() + 1)))
+			for i: int in enemy_sprites.size():
+				var sprite: PokemonBodySprite = enemy_sprites[i]
+				sprite.position.x = (i + 1) * (ally_ground.size.x * (1.0 / (enemy_sprites.size() + 1)))
 			_sync_sprites()
 			# Setup databoxes
 			if double_battle:
 				active_databoxes.assign(databox_allies_double + databox_enemies_double)
+				databox_doubles_container.show()
+				databox_singles_container.queue_free()
 			else:
 				active_databoxes[0] = databox_ally_single
 				active_databoxes[1] = null
 				active_databoxes[2] = databox_enemy_single
 				active_databoxes[3] = null
+				databox_doubles_container.queue_free()
+				databox_singles_container.show()
 			_sync_databoxes()
+			show_screen(Screens.NONE)
+			# Animate
+			await _animate_wild_battle().finished
+			show_screen(Screens.BASE)
 		_:
 			printerr("Unhandled data type: %s" % [data["type"]])
 
@@ -144,7 +178,7 @@ func _run_event(event: Dictionary) -> void:
 
 	match event["type"]:
 		"text":
-			await show_text(event["text"]).finished
+			await run_text(event["text"]).finished
 		_:
 			printerr("Unhandled event type: %s" % [event["type"]])
 
@@ -164,7 +198,9 @@ func _sync_sprites() -> void:
 		else:
 			sprites[i].id = ""
 
+
 func _sync_databoxes() -> void:
+	print(active_databoxes)
 	for i in range(pokemon_states.size()):
 		var pokemon: Dictionary[String, Variant]
 		pokemon.assign(pokemon_states[i])
@@ -181,6 +217,18 @@ func _sync_databoxes() -> void:
 			databox.max_hp = pokemon["max_hp"]
 			databox.refresh()
 
+func _sync_moves() -> void:
+	# TODO: Adapt to double battle
+	var moves: Array[Dictionary] = []
+	moves.assign( ally_pokemon_states[0]["moves"])
+	for i: int in moves.size():
+		if moves[i]:
+			move_buttons[i].move_id = moves[i]["id"]
+		else:
+			move_buttons[i].move_id = ""
+		move_buttons[i].refresh()
+
+
 ## Grab focus on the fight button when visible
 func _on_base_visible() -> void:
 	if not base_screen.visible:
@@ -192,6 +240,7 @@ func _on_fight_visible() -> void:
 	if not fight_screen.visible:
 		return
 	var last_move_button: MoveButton = null # TODO: get last move button for current pokemon
+	_sync_moves()
 	if last_move_button and last_move_button.visible:
 		last_move_button.grab_focus.call_deferred()
 	else:
@@ -202,9 +251,10 @@ func _on_fight_cancel() -> void:
 
 func _on_move_focus(button: MoveButton) -> void:
 	last_move_buttons[0] = button # TODO: handle last move button for current pokemon
+	var move: Dictionary[String, Variant] = DB.fetch_move_data(button.move_id)
 	info_box.show()
 	info_pp.text = "PP: %d/%d" % [0, 0] # TODO: handle pps
-	info_type.texture = Types.ICONS[button.move.type]
+	info_type.texture = Types.ICONS[move["type"]]
 
 
 func _on_move_unfocus() -> void:
@@ -234,13 +284,13 @@ func _on_target_visible() -> void:
 			break
 
 
-func show_text(text: String) -> Dialogue:
+func run_text(text: String) -> Dialogue:
 	battle_dialogue_manager.starting_sequence.text = text
 	battle_dialogue.run_dialogue(battle_dialogue_manager)
 	return battle_dialogue
 
 
-func show_selection_text(text: String) -> Dialogue:
+func run_selection_text(text: String) -> Dialogue:
 	selection_dialogue_manager.starting_sequence.text = text
 	selection_dialogue.run_dialogue(selection_dialogue_manager)
 	return selection_dialogue
@@ -280,6 +330,79 @@ func show_screen(screen: Screens) -> void:
 		else:
 			child.hide()
 
+#region Animation functions
+func _text_tween(text: String) -> Tween:
+	# TODO: Use AwaitTweener when 4.7 stable is out
+	var tween: Tween = create_tween()
+	tween.tween_callback(func():
+		var old_screen: Screens = current_screen
+		show_screen(Screens.DIALOGUE)
+		await run_text(text).finished
+		show_screen(old_screen)
+		tween.custom_step(INF) # Finish tween
+	)
+	tween.tween_interval(INF) # Wait indefinitely until custom_step is called
+	return tween
+
+
+func _animate_wild_battle() -> Tween:
+	var tween: Tween = create_tween()
+
+	var databox_positions: Dictionary[Databox, Vector2] = {}
+	for databox: Databox in ally_databoxes:
+		if databox:
+			databox_positions[databox] = databox.position
+			databox.position.x = get_viewport_rect().size.x
+	for databox: Databox in enemy_databoxes:
+		if databox:
+			databox_positions[databox] = databox.position
+			databox.position.x = -databox.size.x
+	print(databox_positions)
+
+	for sprite: Sprite2D in ally_sprites:
+		sprite.scale = Vector2.ZERO
+
+	for sprite: Sprite2D in enemy_sprites:
+		sprite.modulate = Color(0.5, 0.5, 0.5, 1.0)
+
+	var ally_ground_pos: Vector2 = ally_ground.position
+	ally_ground.position.x = get_viewport_rect().size.x
+	var enemy_ground_pos: Vector2 = enemy_ground.position
+	enemy_ground.position.x = -enemy_ground.size.x
+
+	# Start animation
+	tween.tween_property(ally_ground, "position", ally_ground_pos, 1.0)
+	tween.parallel().tween_property(enemy_ground, "position", enemy_ground_pos, 1.0)
+	tween.tween_interval(0.05)
+	for sprite: Sprite2D in enemy_sprites:
+		if sprite:
+			tween.tween_property(sprite, "modulate", Color.WHITE, 0.3)
+	tween.tween_interval(0.05)
+
+	var parallel: bool = false
+	for databox: Databox in enemy_databoxes:
+		if not databox:
+			continue
+		if parallel:
+			tween.parallel()
+		tween.tween_property(databox, "position", databox_positions[databox], 0.3)
+		parallel = true
+
+	# Show wild text
+	var text: String = ""
+	var enemies: Array[String] = Array(enemy_pokemon_states \
+		.filter(func(p): return p != {}) \
+		.map(func(p): return p["name"]), TYPE_STRING, "", null)
+	if enemies.size() > 1:
+		text = "Wild " + " and ".join(enemies) + " appeared!"
+	else:
+		text = "A wild " + enemies[0] + " appeared!"
+	tween.tween_subtween(_text_tween(text))
+
+	return tween
+
+#endregion
+
 
 func close() -> void:
 	TransitionManager.play_in(TransitionManager.TransitionTypes.FADE)
@@ -303,7 +426,7 @@ static func build(options: Dictionary[String, Variant] = {}) -> UIStackElement:
 	# If no battleback is provided, fetch the first one available
 	var battleback: Battlebacks.Set = Battlebacks.loaded_sets.get(options.get("battleback", Battlebacks.Sets.values()[0]))
 	battle_client.background.texture = battleback.background
-	battle_client.player_ground.texture = battleback.player_base
+	battle_client.ally_ground.texture = battleback.player_base
 	battle_client.enemy_ground.texture = battleback.enemy_base
 
 	return battle_client

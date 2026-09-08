@@ -95,7 +95,7 @@ region = Rect2(130, 460, 130, 46)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nrsi4"]
 size = Vector2(64, 28)
 
-[node name="BattleClient" type="Control" unique_id=1021392517 node_paths=PackedStringArray("background", "player_ground", "enemy_ground", "sprites", "ally_trainer_sprites", "enemy_trainer_sprites", "databox_singles_container", "databox_doubles_container", "databox_ally_single", "databox_enemy_single", "databox_allies_double", "databox_enemies_double", "message_background", "all_screens", "base_screen", "fight_button", "pokemon_button", "bag_button", "run_button", "base_cancel_button", "fight_screen", "move_buttons", "fight_cancel_button", "info_box", "info_pp", "info_type", "target_screen", "target_buttons", "target_cancel_button", "selection_dialogue", "selection_dialogue_manager", "battle_dialogue", "battle_dialogue_manager")]
+[node name="BattleClient" type="Control" unique_id=1021392517 node_paths=PackedStringArray("background", "ally_ground", "enemy_ground", "sprites", "databox_singles_container", "databox_doubles_container", "databox_ally_single", "databox_enemy_single", "databox_allies_double", "databox_enemies_double", "message_background", "all_screens", "base_screen", "fight_button", "pokemon_button", "bag_button", "run_button", "base_cancel_button", "fight_screen", "move_buttons", "fight_cancel_button", "info_box", "info_pp", "info_type", "target_screen", "target_cancel_button", "selection_dialogue", "selection_dialogue_manager", "battle_dialogue", "battle_dialogue_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,11 +105,9 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_elhnd")
 background = NodePath("Background")
-player_ground = NodePath("PlayerGround")
+ally_ground = NodePath("AllyGround")
 enemy_ground = NodePath("EnemyGround")
-sprites = [NodePath("PlayerGround/AllyPokemon1"), NodePath("PlayerGround/AllyPokemon2"), NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
-ally_trainer_sprites = [NodePath("PlayerGround/AllyTrainer1"), NodePath("PlayerGround/AllyTrainer2")]
-enemy_trainer_sprites = [NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
+sprites = [NodePath("AllyGround/AllyPokemon1"), NodePath("AllyGround/AllyPokemon2"), NodePath("EnemyGround/EnemyPokemon1"), NodePath("EnemyGround/EnemyPokemon2")]
 databox_singles_container = NodePath("BattleUI/DataboxSingle")
 databox_doubles_container = NodePath("BattleUI/DataboxDouble")
 databox_ally_single = NodePath("BattleUI/DataboxSingle/DataboxPlayer")
@@ -131,7 +129,6 @@ info_box = NodePath("BattleUI/FightCommands/InfoBox")
 info_pp = NodePath("BattleUI/FightCommands/InfoBox/PPLabel")
 info_type = NodePath("BattleUI/FightCommands/InfoBox/Type")
 target_screen = NodePath("BattleUI/TargetSelectCommands")
-target_buttons = [NodePath("BattleUI/TargetSelectCommands/GridContainer/Ally1"), NodePath("BattleUI/TargetSelectCommands/GridContainer/Ally2"), NodePath("BattleUI/TargetSelectCommands/GridContainer/Enemy1"), NodePath("BattleUI/TargetSelectCommands/GridContainer/Enemy2")]
 target_cancel_button = NodePath("BattleUI/TargetSelectCommands/CancelButton")
 selection_dialogue = NodePath("BattleUI/BaseCommands/SelectionDialogue")
 selection_dialogue_manager = NodePath("BattleUI/BaseCommands/SelectionDialogue/SelectionDialogue")
@@ -179,7 +176,7 @@ texture = SubResource("PlaceholderTexture2D_obt0m")
 offset = Vector2(0, -96)
 script = ExtResource("10_gjkef")
 
-[node name="PlayerGround" type="TextureRect" parent="." unique_id=1999709887]
+[node name="AllyGround" type="TextureRect" parent="." unique_id=1999709887]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25
@@ -194,26 +191,26 @@ texture = SubResource("AtlasTexture_fj75k")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
-[node name="AllyPokemon1" type="Sprite2D" parent="PlayerGround" unique_id=1076141845]
+[node name="AllyPokemon1" type="Sprite2D" parent="AllyGround" unique_id=1076141845]
 visible = false
 position = Vector2(256, 64)
 texture = SubResource("PlaceholderTexture2D_21y0c")
 offset = Vector2(0, -144)
 script = ExtResource("10_gjkef")
 
-[node name="AllyPokemon2" type="Sprite2D" parent="PlayerGround" unique_id=839900897]
+[node name="AllyPokemon2" type="Sprite2D" parent="AllyGround" unique_id=839900897]
 visible = false
 position = Vector2(256, 64)
 texture = SubResource("PlaceholderTexture2D_blac8")
 offset = Vector2(0, -144)
 script = ExtResource("10_gjkef")
 
-[node name="AllyTrainer1" type="AnimatedSprite2D" parent="PlayerGround" unique_id=1350626674]
+[node name="AllyTrainer1" type="AnimatedSprite2D" parent="AllyGround" unique_id=1350626674]
 position = Vector2(256, 64)
 sprite_frames = ExtResource("11_sgjgy")
 offset = Vector2(0, -96)
 
-[node name="AllyTrainer2" type="AnimatedSprite2D" parent="PlayerGround" unique_id=1920197086]
+[node name="AllyTrainer2" type="AnimatedSprite2D" parent="AllyGround" unique_id=1920197086]
 position = Vector2(256, 64)
 sprite_frames = SubResource("SpriteFrames_o24p5")
 offset = Vector2(0, -96)

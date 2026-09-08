@@ -15,6 +15,8 @@ var species: PokemonSpecies: ## Shorthand for [member Pokemon.species]
 var name: String: ## Shorthand for [member Pokemon.name]
 	get: return pokemon.name
 	set(value): pokemon.name = value
+var moves: Array[PokemonMove]: ## The pokemon's moves.
+	get: return pokemon.moves
 var hp: int: ## Shorthand for [member Pokemon.hp]
 	get: return pokemon.hp
 	set(value): pokemon.hp = value
