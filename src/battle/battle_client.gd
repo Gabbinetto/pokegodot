@@ -332,16 +332,17 @@ func show_screen(screen: Screens) -> void:
 
 #region Animation functions
 func _text_tween(text: String) -> Tween:
-	# TODO: Use AwaitTweener when 4.7 stable is out
+	var pool: Utils.SignalPool = Utils.SignalPool.new()
+
 	var tween: Tween = create_tween()
-	tween.tween_callback(func():
-		var old_screen: Screens = current_screen
-		show_screen(Screens.DIALOGUE)
-		await run_text(text).finished
-		show_screen(old_screen)
-		tween.custom_step(INF) # Finish tween
+	var old_screen: Screens = current_screen
+	tween.tween_callback(show_screen.bind(Screens.DIALOGUE))
+	tween.tween_callback(
+		func():
+			pool.register_signal(run_text(text).finished)
 	)
-	tween.tween_interval(INF) # Wait indefinitely until custom_step is called
+	tween.tween_await(pool.all)
+	tween.tween_callback(show_screen.bind(old_screen))
 	return tween
 
 
@@ -397,6 +398,8 @@ func _animate_wild_battle() -> Tween:
 		text = "Wild " + " and ".join(enemies) + " appeared!"
 	else:
 		text = "A wild " + enemies[0] + " appeared!"
+
+
 	tween.tween_subtween(_text_tween(text))
 
 	return tween
